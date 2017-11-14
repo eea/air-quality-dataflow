@@ -8,8 +8,9 @@ xquery version "3.0";
 
 import module namespace obligations = "http://converters.eionet.europa.eu" at "aqd-obligation.xquery";
 
-declare variable $source_url as xs:string external;
+(:declare variable $source_url as xs:string external;:)
 declare option output:method "html";
 declare option db:inlinelimit '0';
 
-obligations:proceed($source_url)
+(:obligations:proceed($source_url):)
+obligations:proceed('resources/dataflow-k/K_BE.xml')

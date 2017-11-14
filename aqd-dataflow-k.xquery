@@ -66,6 +66,11 @@ let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
+let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
+
+let $namespaces := distinct-values($docRoot//base:namespace)
+let $allMeasures := query:getAllMeasureIds($namespaces)
+
 (: File prefix/namespace check :)
 let $NSinvalid :=
     try {
@@ -94,7 +99,7 @@ let $NSinvalid :=
     }
 
 (: K0 :)
-let $K0table :=
+(:let $K0table :=
     try {
         let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
         for $x in $docRoot//aqd:aqdZoneType
@@ -109,12 +114,92 @@ let $K0table :=
             <td title="Error code">{$err:code}</td>
             <td title="Error description">{$err:description}</td>
         </tr>
+    }:)
+(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+let $K0table :=
+    try {
+        if ($reportingYear = "") then
+            <tr class="{$errors:ERROR}">
+                <td title="Status">Reporting Year is missing.</td>
+            </tr>
+        else if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear)) then
+            <tr class="{$errors:WARNING}">
+                <td title="Status">Updating delivery for {$reportingYear}</td>
+            </tr>
+        else
+            <tr class="{$errors:INFO}">
+                <td title="Status">New delivery for {$reportingYear}</td>
+            </tr>
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code">{$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
     }
+let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
+let $knownMeasures :=
+    if ($isNewDelivery) then
+        distinct-values(data(sparqlx:run(query:getAttainment($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+    else
+        distinct-values(data(sparqlx:run(query:getAttainment($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
+
+(: K01 Number of Measures reported :)
+let $countMeasures := count($docRoot//aqd:AQD_Measures)
+let $tblAllMeasures :=
+    try {
+        for $rec in $docRoot//aqd:AQD_Measures
+        return
+            <tr>
+                <td title="gml:id">{data($rec/@gml:id)}</td>
+                <td title="base:localId">{data($rec/aqd:inspireId/base:Identifier/base:localId)}</td>
+                <td title="base:namespace">{data($rec/aqd:inspireId/base:Identifier/base:namespace)}</td>
+                <td title="base:versionId">{data($rec/aqd:inspireId/base:Identifier/base:versionId)}</td>
+            </tr>
+    }  catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code">{$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
+
+let $K02table :=
+    try {
+        for $x in $docRoot//aqd:AQD_Measures
+        let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
+        where (not($inspireId = $knownMeasures))
+        return
+            <tr>
+                <td title="gml:id">{data($x/@gml:id)}</td>
+                <td title="aqd:inspireId">{$inspireId}</td>
+                <td title="aqd:pollutant">{common:checkLink(distinct-values(data($x/aqd:pollutant/@xlink:href)))}</td>
+                <td title="aqd:objectiveType">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType/@xlink:href)))}</td>
+                <td title="aqd:reportingMetric">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric/@xlink:href)))}</td>
+                <td title="aqd:protectionTarget">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget/@xlink:href)))}</td>
+                <td title="aqd:zone">{common:checkLink(distinct-values(data($x/aqd:zone/@xlink:href)))}</td>
+                <td title="aqd:assessment">{common:checkLink(distinct-values(data($x/aqd:assessment/@xlink:href)))}</td>
+            </tr>
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code">{$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
+let $K02errorLevel :=
+    if ($isNewDelivery and count(
+        for $x in $docRoot//aqd:AQD_Measures
+            let $id := $x/aqd:inspireId/base:Identifier/base:namespace || "/" || $x/aqd:inspireId/base:Identifier/base:localId
+        where ($allMeasures = $id)
+        return 1) > 0) then
+            $errors:K02
+        else
+            $errors:INFO
 
 return
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("K0", $labels:K0, $labels:H0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build3("K0", $labels:K0, $labels:K0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build1("K01", $labels:K01, $labels:K01_SHORT, $tblAllMeasures, "", string($countMeasures), "", "", $errors:K01)}
+        {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
     </table>
 };
 
