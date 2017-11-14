@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="10624368-1a64-4113-b6f1-0032ba1b30b1" name="Default" comment="Add files for dataflows H, I, J, K and basic Java class to run xquery scripts.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aqd-dataflow-h.xquery" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aqd-dataflow-i.xquery" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aqd-dataflow-j.xquery" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/aqd-dataflow-k.xquery" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$" afterPath="$PROJECT_DIR$" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aqd-dataflow-b.xquery" afterPath="$PROJECT_DIR$/aqd-dataflow-b.xquery" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aqd-dataflow-d.xquery" afterPath="$PROJECT_DIR$/aqd-dataflow-d.xquery" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aqd-labels-xq.xml" afterPath="$PROJECT_DIR$/aqd-labels-xq.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aqd-labels.xquery" afterPath="$PROJECT_DIR$/aqd-labels.xquery" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aqd-obligation.xquery" afterPath="$PROJECT_DIR$/aqd-obligation.xquery" />
-    </list>
+    <list default="true" readonly="true" id="10624368-1a64-4113-b6f1-0032ba1b30b1" name="Default" comment="Add files for dataflows H, I, J, K and basic Java class to run xquery scripts." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,12 +9,74 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="aqd-labels-xq.xml" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/aqd-labels-xq.xml">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="840">
+                    <caret line="1307" column="34" lean-forward="false" selection-start-line="1307" selection-start-column="34" selection-end-line="1307" selection-end-column="34" />
+                    <folding>
+                      <element signature="e#124844#124849#0" expanded="true" />
+                      <element signature="e#125001#125006#0" expanded="true" />
+                      <element signature="e#125241#125246#0" expanded="true" />
+                      <element signature="e#125703#125708#0" expanded="true" />
+                      <element signature="e#127250#127254#0" expanded="true" />
+                      <element signature="e#128699#128704#0" expanded="true" />
+                      <element signature="e#130127#130131#0" expanded="true" />
+                      <element signature="e#130178#130182#0" expanded="true" />
+                      <element signature="e#134473#134478#0" expanded="true" />
+                      <element signature="e#134648#134653#0" expanded="true" />
+                      <element signature="e#135070#135075#0" expanded="true" />
+                      <element signature="e#135510#135515#0" expanded="true" />
+                      <element signature="e#137001#137006#0" expanded="true" />
+                      <element signature="e#137295#137300#0" expanded="true" />
+                      <element signature="e#137971#137975#0" expanded="true" />
+                      <element signature="e#138072#138076#0" expanded="true" />
+                      <element signature="e#138084#138088#0" expanded="true" />
+                      <element signature="e#138101#138105#0" expanded="true" />
+                      <element signature="e#138368#138372#0" expanded="true" />
+                      <element signature="e#138438#138442#0" expanded="true" />
+                      <element signature="e#152841#152846#0" expanded="true" />
+                      <element signature="e#153406#153411#0" expanded="true" />
+                      <element signature="e#153559#153564#0" expanded="true" />
+                      <element signature="e#153872#153877#0" expanded="true" />
+                      <element signature="e#154332#154337#0" expanded="true" />
+                      <element signature="e#155739#155744#0" expanded="true" />
+                      <element signature="e#156159#156164#0" expanded="true" />
+                      <element signature="e#160504#160509#0" expanded="true" />
+                      <element signature="e#162415#162420#0" expanded="true" />
+                      <element signature="e#162838#162843#0" expanded="true" />
+                      <element signature="e#162990#162995#0" expanded="true" />
+                      <element signature="e#163388#163393#0" expanded="true" />
+                      <element signature="e#163822#163827#0" expanded="true" />
+                      <element signature="e#165239#165244#0" expanded="true" />
+                      <element signature="e#165511#165516#0" expanded="true" />
+                      <element signature="e#171577#171581#0" expanded="true" />
+                      <element signature="e#171675#171679#0" expanded="true" />
+                      <element signature="e#171682#171686#0" expanded="true" />
+                      <element signature="e#171699#171703#0" expanded="true" />
+                      <element signature="e#171979#171983#0" expanded="true" />
+                      <element signature="e#172049#172053#0" expanded="true" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="build.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="403">
+            <state relative-caret-position="565">
               <caret line="138" column="67" lean-forward="true" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="67" />
               <folding />
             </state>
@@ -167,11 +218,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataflow-h.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="dataflow-h.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trash/dataflow-h.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="375">
+              <caret line="70" column="29" lean-forward="true" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
@@ -202,63 +253,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="aqd-labels-xq.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/aqd-labels-xq.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1232">
-              <caret line="1324" column="10" lean-forward="false" selection-start-line="1305" selection-start-column="3" selection-end-line="1324" selection-end-column="10" />
-              <folding>
-                <element signature="e#124844#124849#0" expanded="true" />
-                <element signature="e#125001#125006#0" expanded="true" />
-                <element signature="e#125241#125246#0" expanded="true" />
-                <element signature="e#125703#125708#0" expanded="true" />
-                <element signature="e#127250#127254#0" expanded="true" />
-                <element signature="e#128699#128704#0" expanded="true" />
-                <element signature="e#130127#130131#0" expanded="true" />
-                <element signature="e#130178#130182#0" expanded="true" />
-                <element signature="e#134473#134478#0" expanded="true" />
-                <element signature="e#134648#134653#0" expanded="true" />
-                <element signature="e#135070#135075#0" expanded="true" />
-                <element signature="e#135510#135515#0" expanded="true" />
-                <element signature="e#137001#137006#0" expanded="true" />
-                <element signature="e#137295#137300#0" expanded="true" />
-                <element signature="e#137971#137975#0" expanded="true" />
-                <element signature="e#138072#138076#0" expanded="true" />
-                <element signature="e#138084#138088#0" expanded="true" />
-                <element signature="e#138101#138105#0" expanded="true" />
-                <element signature="e#138368#138372#0" expanded="true" />
-                <element signature="e#138438#138442#0" expanded="true" />
-                <element signature="e#152841#152846#0" expanded="true" />
-                <element signature="e#153406#153411#0" expanded="true" />
-                <element signature="e#153559#153564#0" expanded="true" />
-                <element signature="e#153872#153877#0" expanded="true" />
-                <element signature="e#154332#154337#0" expanded="true" />
-                <element signature="e#155739#155744#0" expanded="true" />
-                <element signature="e#156159#156164#0" expanded="true" />
-                <element signature="e#160504#160509#0" expanded="true" />
-                <element signature="e#162415#162420#0" expanded="true" />
-                <element signature="e#162838#162843#0" expanded="true" />
-                <element signature="e#162990#162995#0" expanded="true" />
-                <element signature="e#163388#163393#0" expanded="true" />
-                <element signature="e#163822#163827#0" expanded="true" />
-                <element signature="e#165239#165244#0" expanded="true" />
-                <element signature="e#165511#165516#0" expanded="true" />
-                <element signature="e#171577#171581#0" expanded="true" />
-                <element signature="e#171675#171679#0" expanded="true" />
-                <element signature="e#171682#171686#0" expanded="true" />
-                <element signature="e#171699#171703#0" expanded="true" />
-                <element signature="e#171979#171983#0" expanded="true" />
-                <element signature="e#172049#172053#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="aqd-labels.xquery" pinned="false" current-in-tab="false">
+      <file leaf-file-name="aqd-labels.xquery" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/aqd-labels.xquery">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="720" column="60" lean-forward="false" selection-start-line="720" selection-start-column="58" selection-end-line="720" selection-end-column="60" />
+            <state relative-caret-position="298">
+              <caret line="747" column="62" lean-forward="false" selection-start-line="747" selection-start-column="62" selection-end-line="747" selection-end-column="62" />
               <folding>
                 <element signature="e#143#214#0" expanded="true" />
               </folding>
@@ -357,11 +356,11 @@
         <option value="$PROJECT_DIR$/aqd-dataflow-j.xquery" />
         <option value="$PROJECT_DIR$/aqd-dataflow-k.xquery" />
         <option value="$PROJECT_DIR$/aqd-labels-xq.xml" />
-        <option value="$PROJECT_DIR$/aqd-labels.xquery" />
         <option value="$PROJECT_DIR$/src/ro/edw/RunQuery.java" />
         <option value="$PROJECT_DIR$/trash/dataflow-b.html" />
         <option value="$PROJECT_DIR$/aqd-vocabulary.xquery" />
         <option value="$PROJECT_DIR$/trash/dataflow-h.html" />
+        <option value="$PROJECT_DIR$/aqd-labels.xquery" />
       </list>
     </option>
   </component>
@@ -371,7 +370,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-1" />
     <option name="y" value="910" />
     <option name="width" value="1922" />
@@ -655,15 +654,16 @@
       <workItem from="1510570783338" duration="6540000" />
       <workItem from="1510590612308" duration="1152000" />
       <workItem from="1510647354330" duration="12464000" />
-      <workItem from="1510661414243" duration="5020000" />
+      <workItem from="1510661414243" duration="6345000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35161000" />
+    <option name="totallyTimeSpent" value="36486000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="910" width="1922" height="1053" extended-state="6" />
+    <frame x="-1" y="910" width="1922" height="1053" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -675,7 +675,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23425826" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23425826" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -689,6 +689,31 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23425826" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2497332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -754,7 +779,7 @@
         <state relative-caret-position="900">
           <caret line="70" column="55" lean-forward="false" selection-start-line="70" selection-start-column="46" selection-end-line="70" selection-end-column="55" />
           <folding>
-            <element signature="e#891#1001#0" expanded="true" />
+            <element signature="e#891#1001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -991,7 +1016,7 @@
         <state relative-caret-position="268">
           <caret line="60" column="14" lean-forward="true" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
           <folding>
-            <element signature="e#612#693#0" expanded="true" />
+            <element signature="e#612#693#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1060,7 +1085,7 @@
         <state relative-caret-position="405">
           <caret line="27" column="69" lean-forward="false" selection-start-line="27" selection-start-column="69" selection-end-line="27" selection-end-column="69" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1070,7 +1095,7 @@
         <state relative-caret-position="120">
           <caret line="55" column="102" lean-forward="true" selection-start-line="55" selection-start-column="102" selection-end-line="55" selection-end-column="102" />
           <folding>
-            <element signature="e#891#1001#0" expanded="true" />
+            <element signature="e#891#1001#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1206,7 +1231,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="403">
+        <state relative-caret-position="565">
           <caret line="138" column="67" lean-forward="true" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="67" />
           <folding />
         </state>
@@ -1228,10 +1253,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/aqd-vocabulary.xquery">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="755">
+          <caret line="58" column="107" lean-forward="true" selection-start-line="58" selection-start-column="107" selection-end-line="58" selection-end-column="107" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trash/dataflow-h.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="70" column="29" lean-forward="true" selection-start-line="70" selection-start-column="29" selection-end-line="70" selection-end-column="29" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/aqd-labels.xquery">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="720" column="60" lean-forward="false" selection-start-line="720" selection-start-column="58" selection-end-line="720" selection-end-column="60" />
+        <state relative-caret-position="298">
+          <caret line="747" column="62" lean-forward="false" selection-start-line="747" selection-start-column="62" selection-end-line="747" selection-end-column="62" />
           <folding>
             <element signature="e#143#214#0" expanded="true" />
           </folding>
@@ -1240,8 +1306,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/aqd-labels-xq.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1232">
-          <caret line="1324" column="10" lean-forward="false" selection-start-line="1305" selection-start-column="3" selection-end-line="1324" selection-end-column="10" />
+        <state relative-caret-position="840">
+          <caret line="1307" column="34" lean-forward="false" selection-start-line="1307" selection-start-column="34" selection-end-line="1307" selection-end-column="34" />
           <folding>
             <element signature="e#124844#124849#0" expanded="true" />
             <element signature="e#125001#125006#0" expanded="true" />
@@ -1284,47 +1350,6 @@
             <element signature="e#171699#171703#0" expanded="true" />
             <element signature="e#171979#171983#0" expanded="true" />
             <element signature="e#172049#172053#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aqd-vocabulary.xquery">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="755">
-          <caret line="58" column="107" lean-forward="true" selection-start-line="58" selection-start-column="107" selection-end-line="58" selection-end-column="107" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trash/dataflow-h.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#span#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#0;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#1;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#2;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#3;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#0;n#li#4;n#ul#0;n#fieldset#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#0;n#tr#0;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
