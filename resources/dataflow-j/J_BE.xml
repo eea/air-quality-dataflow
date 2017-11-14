@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gml:FeatureCollection xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:aqd="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:ad="urn:x-inspire:specification:gmlas:Addresses:3.0" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/1.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/3.0" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" xmlns:am="http://inspire.ec.europa.eu/schemas/am/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Evaluation_Scenario" xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
+    <gml:featureMember>
+        <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_Draft_2016_12_22_11_15_601">
+            <aqd:change>true</aqd:change>
+            <aqd:changeDescription>La mise en place d'une zone de basses émissions a été adoptée le 2 juin 2016 par la Gouvernement Bruxellois.</aqd:changeDescription>
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>HDR_Draft_2016-12-22.11.15.601</base:localId>
+                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
+                    <base:versionId>2017-03-16.12.37.685</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:reportingAuthority>
+                <base2:RelatedParty>
+                    <base2:individualName>
+                        <gco:CharacterString>Anne Cheymol</gco:CharacterString>
+                    </base2:individualName>
+                    <base2:organisationName>
+                        <gco:CharacterString>Bruxelles Environnement</gco:CharacterString>
+                    </base2:organisationName>
+                    <base2:contact>
+                        <base2:Contact>
+                            <base2:address>
+<ad:AddressRepresentation>
+    <ad:adminUnit>
+        <gn:GeographicalName>
+            <gn:language nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nativeness nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nameStatus nilReason="unpopulated" xsi:nil="true"/>
+            <gn:sourceOfName nilReason="unpopulated" xsi:nil="true"/>
+            <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
+            <gn:spelling>
+                <gn:SpellingOfName>
+                    <gn:text></gn:text>
+                    <gn:script nilReason="unpopulated" xsi:nil="true"/>
+                </gn:SpellingOfName>
+            </gn:spelling>
+        </gn:GeographicalName>
+    </ad:adminUnit>
+    <ad:locatorDesignator>86C avenue du Port 1000 Bruxelles</ad:locatorDesignator>
+</ad:AddressRepresentation>
+                            </base2:address>
+                            <base2:electronicMailAddress>acheymol@environnement.irisnet.be</base2:electronicMailAddress>
+                            <base2:telephoneVoice>003225634128</base2:telephoneVoice>
+                            <base2:website>acheymol@environnement.irisnet.be</base2:website>
+                        </base2:Contact>
+                    </base2:contact>
+                </base2:RelatedParty>
+            </aqd:reportingAuthority>
+            <aqd:reportingPeriod>
+                <gml:TimePeriod gml:id="REPORTING_START_DATE_5b29d3a90923606f70201410d74b86ce">
+                    <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
+                    <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
+                </gml:TimePeriod>
+            </aqd:reportingPeriod>
+            <aqd:content xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.11.15.601"/>
+        </aqd:AQD_ReportingHeader>
+    </gml:featureMember>
+    <gml:featureMember>
+        <aqd:AQD_EvaluationScenario gml:id="ATTR_Draft_2016_12_22_11_15_601">
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>Draft_2016-12-22.11.15.601</base:localId>
+                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
+                    <base:versionId>2017-03-16.12.37.685</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:codeOfScenario>ISO 3166-2:BE</aqd:codeOfScenario>
+            <aqd:publication>
+                <aqd:Publication>
+                    <aqd:description>réponse à la mise en demeure de la Région de Bruxelles Capitale C(2016)2360 final-Infraction n°2016/2005</aqd:description>
+                    <aqd:title>réponse à la mise en demeure de la Région de Bruxelles Capitale C(2016)2360 final-Infraction n°2016/2005</aqd:title>
+                    <aqd:author></aqd:author>
+                    <aqd:publicationDate>
+                        <gml:TimeInstant gml:id="PUBLICATION_DATE_932d2a2b6bc3b65a2dd2b664f356fe5b">
+                            <gml:timePosition>2016</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:publicationDate>
+                    <aqd:publisher>Bruxelles Environnement</aqd:publisher>
+                    <aqd:webLink></aqd:webLink>
+                </aqd:Publication>
+            </aqd:publication>
+            <aqd:attainmentYear>
+                <gml:TimeInstant gml:id="ATTAINMENT_YEAR_5b29d3a90923606f70201410d74b86ce">
+                    <gml:timePosition>2020</gml:timePosition>
+                </gml:TimeInstant>
+            </aqd:attainmentYear>
+            <aqd:startYear>
+                <gml:TimeInstant gml:id="START_YEAR_5b29d3a90923606f70201410d74b86ce">
+                    <gml:timePosition>2014</gml:timePosition>
+                </gml:TimeInstant>
+            </aqd:startYear>
+            <aqd:baselineScenario>
+                <aqd:Scenario>
+                    <aqd:description>Voir réponse à la mise en demeure du 29 juin 2016, annexe 5.</aqd:description>
+                    <aqd:totalEmissions uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1">2.3</aqd:totalEmissions>
+                    <aqd:measuresApplied xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.11.43.835"/>
+                </aqd:Scenario>
+            </aqd:baselineScenario>
+            <aqd:projectionScenario>
+                <aqd:Scenario>
+                    <aqd:description>Voir réponse à la mise en demeure du 29 juin 2016, annexe 5.</aqd:description>
+                    <aqd:totalEmissions uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1">2.2</aqd:totalEmissions>
+                    <aqd:comment>Voir la réponse de la Région de Bruxelles Capitale à la mise en demeure envoyée le 29 juin 2016 à la commission européenne.</aqd:comment>
+                    <aqd:measuresApplied xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.11.43.835"/>
+                </aqd:Scenario>
+            </aqd:projectionScenario>
+            <aqd:usedInPlan xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.10.41.585"/>
+            <aqd:sourceApportionment xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-21.09.40.182"/>
+        </aqd:AQD_EvaluationScenario>
+    </gml:featureMember>
+</gml:FeatureCollection>

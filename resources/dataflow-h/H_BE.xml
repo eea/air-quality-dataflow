@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gml:FeatureCollection xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:aqd="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:ad="urn:x-inspire:specification:gmlas:Addresses:3.0" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/1.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/3.0" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" xmlns:am="http://inspire.ec.europa.eu/schemas/am/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Plan" xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
+    <gml:featureMember>
+        <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_Draft_2016_12_22_10_41_585">
+            <aqd:change>true</aqd:change>
+            <aqd:changeDescription>Le Plan air climat énergie fait office de plan bruxellois de qualité de l’air exigé en vertu de l’article 23 de la directive. Il a été adopté le 2 juin 2016 ainsi que la mise en place d'une zone de basses émissions.</aqd:changeDescription>
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>HDR_Draft_2016-12-22.10.41.585</base:localId>
+                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
+                    <base:versionId>2017-03-16.11.24.382</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:reportingAuthority>
+                <base2:RelatedParty>
+                    <base2:individualName>
+                        <gco:CharacterString>Anne Cheymol</gco:CharacterString>
+                    </base2:individualName>
+                    <base2:organisationName>
+                        <gco:CharacterString>Bruxelles Environnement</gco:CharacterString>
+                    </base2:organisationName>
+                    <base2:contact>
+                        <base2:Contact>
+                            <base2:address>
+<ad:AddressRepresentation>
+    <ad:adminUnit>
+        <gn:GeographicalName>
+            <gn:language nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nativeness nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nameStatus nilReason="unpopulated" xsi:nil="true"/>
+            <gn:sourceOfName nilReason="unpopulated" xsi:nil="true"/>
+            <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
+            <gn:spelling>
+                <gn:SpellingOfName>
+                    <gn:text></gn:text>
+                    <gn:script nilReason="unpopulated" xsi:nil="true"/>
+                </gn:SpellingOfName>
+            </gn:spelling>
+        </gn:GeographicalName>
+    </ad:adminUnit>
+    <ad:locatorDesignator>86C avenue du Port 1000 Bruxelles</ad:locatorDesignator>
+</ad:AddressRepresentation>
+                            </base2:address>
+                            <base2:electronicMailAddress>acheymol@environnement.irisnet.be</base2:electronicMailAddress>
+                            <base2:telephoneVoice>003225634128</base2:telephoneVoice>
+                            <base2:website>www.ibgebim.be</base2:website>
+                        </base2:Contact>
+                    </base2:contact>
+                </base2:RelatedParty>
+            </aqd:reportingAuthority>
+            <aqd:reportingPeriod>
+                <gml:TimePeriod gml:id="REPORTING_START_DATE_9dbea4157b1cbe4e6013cf0a5aff01e8">
+                    <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
+                    <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
+                </gml:TimePeriod>
+            </aqd:reportingPeriod>
+            <aqd:content xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.10.41.585"/>
+        </aqd:AQD_ReportingHeader>
+    </gml:featureMember>
+    <gml:featureMember>
+        <aqd:AQD_Plan gml:id="ATTR_Draft_2016_12_22_10_41_585">
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>Draft_2016-12-22.10.41.585</base:localId>
+                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
+                    <base:versionId>2017-03-16.11.24.382</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:code>ISO 3166-2:BE</aqd:code>
+            <aqd:name>Plan régional air climat énergie</aqd:name>
+            <aqd:competentAuthority>
+                <base2:RelatedParty>
+                    <base2:individualName>
+                        <gco:CharacterString>Anne Cheymol</gco:CharacterString>
+                    </base2:individualName>
+                    <base2:organisationName>
+                        <gco:CharacterString>Bruxelles Environenment</gco:CharacterString>
+                    </base2:organisationName>
+                    <base2:contact>
+                        <base2:Contact>
+                            <base2:address>
+<ad:AddressRepresentation>
+    <ad:adminUnit>
+        <gn:GeographicalName>
+            <gn:language nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nativeness nilReason="unpopulated" xsi:nil="true"/>
+            <gn:nameStatus nilReason="unpopulated" xsi:nil="true"/>
+            <gn:sourceOfName nilReason="unpopulated" xsi:nil="true"/>
+            <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
+            <gn:spelling>
+                <gn:SpellingOfName>
+                    <gn:text></gn:text>
+                    <gn:script nilReason="unpopulated" xsi:nil="true"/>
+                </gn:SpellingOfName>
+            </gn:spelling>
+        </gn:GeographicalName>
+    </ad:adminUnit>
+    <ad:locatorDesignator>86C avenue du port 1000 Bruxelles</ad:locatorDesignator>
+</ad:AddressRepresentation>
+                            </base2:address>
+                            <base2:electronicMailAddress>acheymol@environnement.irisnet.be</base2:electronicMailAddress>
+                            <base2:telephoneVoice>003225634128</base2:telephoneVoice>
+                            <base2:website>acheymol@environnement.irisnet.be</base2:website>
+                        </base2:Contact>
+                    </base2:contact>
+                </base2:RelatedParty>
+            </aqd:competentAuthority>
+            <aqd:firstExceedanceYear>
+                <gml:TimeInstant gml:id="FIRST_EXCEEDANCE_YEAR_9dbea4157b1cbe4e6013cf0a5aff01e8">
+                    <gml:timePosition>2014</gml:timePosition>
+                </gml:TimeInstant>
+            </aqd:firstExceedanceYear>
+            <aqd:status xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/first-year"/>
+            <aqd:pollutants>
+                <aqd:Pollutant>
+                    <aqd:pollutantCode xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8"/>
+                    <aqd:protectionTarget xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H"/>
+                </aqd:Pollutant>
+            </aqd:pollutants>
+            <aqd:adoptionDate>
+                <gml:TimeInstant gml:id="ADOPTION_DATE_9dbea4157b1cbe4e6013cf0a5aff01e8">
+                    <gml:timePosition>2016-06-02</gml:timePosition>
+                </gml:TimeInstant>
+            </aqd:adoptionDate>
+            <aqd:timeTable>voir réponse à mise en demeure du 29 juin 2016</aqd:timeTable>
+            <aqd:referenceAQPlan>http://document.environnement.brussels/opac_css/elecfile/PLAN_AIR_CLIMAT_ENERGIE_FR_DEF.pdf</aqd:referenceAQPlan>
+            <aqd:referenceImplementation>http://document.environnement.brussels/opac_css/elecfile/PLAN_AIR_CLIMAT_ENERGIE_FR_DEF.pdf</aqd:referenceImplementation>
+            <aqd:publication>
+                <aqd:Publication>
+                    <aqd:description>plan air climat énergie</aqd:description>
+                    <aqd:title>plan régional air climat énergie</aqd:title>
+                    <aqd:author></aqd:author>
+                    <aqd:publicationDate>
+                        <gml:TimeInstant gml:id="PUBLICATION_DATE_015b1edc5f8d0be5eb597e4b0078055d">
+                            <gml:timePosition>2016</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:publicationDate>
+                    <aqd:publisher>Bruxelles Environnement</aqd:publisher>
+                    <aqd:webLink>http://document.environnement.brussels/opac_css/elecfile/PLAN_AIR_CLIMAT_ENERGIE_FR_DEF.pdf</aqd:webLink>
+                </aqd:Publication>
+            </aqd:publication>
+            <aqd:publication>
+                <aqd:Publication>
+                    <aqd:description>texte législatif pour la mise en place d'une zone de basses émissions</aqd:description>
+                    <aqd:title>Arrêté du gouvernement de la Région de Bruxelles Capitale du xx/XX/2016 relatif à la création d'une zone de basses émissions</aqd:title>
+                    <aqd:author></aqd:author>
+                    <aqd:publicationDate>
+                        <gml:TimeInstant gml:id="PUBLICATION_DATE_d8021702eda7369463c5060718784851">
+                            <gml:timePosition>2016</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:publicationDate>
+                    <aqd:publisher>Gouvernement de la Région de Bruxelles Capitale</aqd:publisher>
+                    <aqd:webLink></aqd:webLink>
+                </aqd:Publication>
+            </aqd:publication>
+            <aqd:publication>
+                <aqd:Publication>
+                    <aqd:description>Rapport sur les incidences environnementales de l'avant-projet de plan régional air climat énergie</aqd:description>
+                    <aqd:title>Rapport sur les incidences environnementales de l'avant-projet de plan régional air climat énergie</aqd:title>
+                    <aqd:author></aqd:author>
+                    <aqd:publicationDate>
+                        <gml:TimeInstant gml:id="PUBLICATION_DATE_b42d97fe8e23d537c29662270f7cc936">
+                            <gml:timePosition>2015</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:publicationDate>
+                    <aqd:publisher>Bruxelles Environnement</aqd:publisher>
+                    <aqd:webLink>http://www.environnement.brussels/sites/default/files/user_files/rie_ace_20150420_fr_final_version.pdf</aqd:webLink>
+                </aqd:Publication>
+            </aqd:publication>
+            <aqd:publication>
+                <aqd:Publication>
+                    <aqd:description>Réponse à la mise en demeure dans le cadre de la procédure d'infraction 2016/2005</aqd:description>
+                    <aqd:title>Réponse à la mise en demeure dans le cadre de la procédure d'infraction 2016/2005</aqd:title>
+                    <aqd:author></aqd:author>
+                    <aqd:publicationDate>
+                        <gml:TimeInstant gml:id="PUBLICATION_DATE_5475f64527f8fa4be524db16d2154a67">
+                            <gml:timePosition>2016</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:publicationDate>
+                    <aqd:publisher>Bruxelles Environnement</aqd:publisher>
+                    <aqd:webLink></aqd:webLink>
+                </aqd:Publication>
+            </aqd:publication>
+            <aqd:comment>La description de ce plan a été réalisée dans le cadre de la réponse à la mise en demeure envoyée le 29 juin 2016 à la commission européenne dans le cadre de la procédure d'infraction 2016/2005. Le plan air climat énergie a également été envoyé dans son intégralité ainsi que son rapport d'incidence environnementale.</aqd:comment>
+            <aqd:exceedanceSituation xlink:href="BE.CELINE-IRCEL.AQ/ATT_BEB10A_00008_LV_H_aMean_2014"/>
+        </aqd:AQD_Plan>
+    </gml:featureMember>
+</gml:FeatureCollection>

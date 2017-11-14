@@ -1,0 +1,202 @@
+<div class="feedbacktext">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css"> </link>
+  <style>
+        
+        .bullet {
+            font-size: 0.8em;
+            color: white;
+            padding-left:5px;
+            padding-right:5px;
+            margin-right:5px;
+            margin-top:2px;
+            text-align:center;
+            width: 5%;
+        }
+        table.maintable.hover tbody tr th {
+            text-align:left;
+            width: 75%;
+        }
+        table.maintable.hover tbody tr {
+            border-top:1px solid #666666;
+        }
+        table.maintable.hover tbody tr th.separator {
+            font-size: 1.1em;
+            text-align:center;
+            color:#666666;
+        }
+        .datatable {
+            font-size: 0.9em;
+            text-align:left;
+            vertical-align:top;
+            display:none;
+            border:0px;
+        }
+        .datatable tbody tr.warning {
+            font-size: 1.2em;
+            color:red;
+        }
+        .datatable tbody tr.error {
+            font-size: 1.2em;
+            color:red;
+        }
+        .datatable tbody tr {
+            font-size: 0.9em;
+            color:#666666;
+        }
+        .smalltable {
+            display:none;
+        }
+        .smalltable tbody tr {
+             font-size: 0.9em;
+             color:grey;
+        }
+        .smalltable tbody td {
+            font-style:italic;
+            vertical-align:top;
+        }
+        .header {
+            text-align:right;
+            vertical-align:top;
+            background-color:#F6F6F6;
+            font-weight: bold;
+        }
+        .largeText {
+            font-size:1.3em;
+        }
+        .box {
+            padding:10px;
+            border:1px solid rgba(0,0,0,0.5);
+        }
+        .bg-failed {
+            background:white;
+        }
+        .bg-blocker {
+            background:firebrick;
+        }
+        .bg-error {
+            background:red;
+        }
+        .bg-warning {
+            background:bisque;
+        }
+        .bg-info {
+            background:#A0D3E8;
+        }
+        .reveal {
+            width:900px;
+            border: 7px solid #cacaca;
+        }
+        
+    </style>
+  <span id="feedbackStatus" class="INFO" style="display:none">This XML file passed all checks without errors or warnings</span>
+  <div class="column row">
+    <p>Checked XML file: <a href="../resources/dataflow-j/J_BE.xml">../resources/dataflow-j/J_BE.xml</a>
+    </p>
+  </div>
+  <div class="column row">
+    <div>
+      <script type="text/javascript">function showLegend(){ document.getElementById('legend').style.display='table'; document.getElementById('legendLink').style.display='none'; } function hideLegend(){ document.getElementById('legend').style.display='none'; document.getElementById('legendLink').style.display='table'; } function toggle(divName, linkName, checkId) {{ toggleItem(divName, linkName, checkId, 'record'); }} function toggleItem(divName, linkName, checkId, itemLabel) {{ divName = divName + "-" + checkId; linkName = linkName + "-" + checkId; var elem = document.getElementById(divName); var text = document.getElementById(linkName); if(elem.style.display == "table") {{ elem.style.display = "none"; text.innerHTML = "Show " + itemLabel + "s"; }} else {{ elem.style.display = "table"; text.innerHTML = "Hide " + itemLabel + "s"; }} }} function toggleComb(divName, linkName, checkId, itemLabel) {{ divName = divName + "-" + checkId; linkName = linkName + "-" + checkId; var elem = document.getElementById(divName); var text = document.getElementById(linkName); if(elem.style.display == "table") {{ elem.style.display = "none"; text.innerHTML = "Show " + itemLabel + "s"; }} else {{ elem.style.display = "table"; text.innerHTML = "Hide " + itemLabel + "s"; }} }}</script>
+      <p>The envelope is attached to the following obligation: <a href="http://rod.eionet.europa.eu/obligations/682">http://rod.eionet.europa.eu/obligations/682</a>
+      </p>
+      <div>
+        <h2>Check air quality zones - Dataflow J</h2>
+        <div>
+          <p class="info bg-info box" style="color:white">
+            <strong>This XML file passed all BLOCKER checks.</strong>
+          </p>
+          <p class="info bg-info box" style="color:white">
+            <strong>This XML file passed all ERROR checks.</strong>
+          </p>
+          <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow J as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>
+          <div>
+            <a id="legendLink" href="javascript: showLegend()" style="padding-left:10px;">How to read the test results?</a>
+          </div>
+          <fieldset style="font-size: 90%; display:none" id="legend">
+            <legend>How to read the test results</legend>
+                        All test results are labeled with coloured bullets. The number in the bullet reffers to the rule code. The background colour of the bullets means:
+                        <ul style="list-style-type: none;">
+              <li>
+                <div style="width:50px; display:inline-block;margin-left:10px">
+                  <div class="info" style="background-color: deepskyblue;">
+                    <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/Blue" style="color: inherit">Blue</a>
+                  </div>
+                </div> - the data confirms to the rule, but additional feedback could be provided in QA result.</li>
+              <li>
+                <div style="width:50px; display:inline-block;margin-left:10px">
+                  <div class="blocker" style="background-color: firebrick;">
+                    <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/Red" style="color: inherit">Red</a>
+                  </div>
+                </div> - the crucial check did NOT pass and errenous records found from the delivery.</li>
+              <li>
+                <div style="width:50px; display:inline-block;margin-left:10px">
+                  <div class="error" style="background-color: red;">
+                    <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/Red" style="color: inherit">Red</a>
+                  </div>
+                </div> - the serious check did NOT pass and errenous records found from the delivery.</li>
+              <li>
+                <div style="width:50px; display:inline-block;margin-left:10px">
+                  <div class="warning" style="background-color: orange;">
+                    <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/Orange" style="color: inherit">Orange</a>
+                  </div>
+                </div> - the non-crucial check did NOT pass.</li>
+              <li>
+                <div style="width:50px; display:inline-block;margin-left:10px">
+                  <div class="skipped" style="background-color: grey;">
+                    <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/Grey" style="color: inherit">Grey</a>
+                  </div>
+                </div> - the check was skipped due to no relevant values found to check.</li>
+            </ul>
+            <p>Click on the "Show Records" link to see more details about the test result.</p>
+          </fieldset>
+          <h3>Test results</h3>
+          <table class="maintable hover">
+            <tr>
+              <td class="bullet">
+                <div class="info" style="background-color: deepskyblue;">NS</div>
+              </td>
+              <th colspan="2">Check that the XML correctly provides XML's prefix/namespaces<span>
+                  <a class="largeText" data-open="text-modal-NS">ⅈ</a>
+                </span>
+                <div class="reveal" id="text-modal-NS" data-reveal="">
+                  <h4>NS</h4>
+                  <hr>
+                  <p>Check prefix and namespaces of the gml:featureCollection according to expected root elements (More information at http://www.eionet.europa.eu/aqportal/datamodel)</p>
+                  <button class="close-button" data-close="" aria-label="Close modal" type="button">x</button>
+                </div>
+              </th>
+              <td>
+                <span class="largeText">All values are valid</span>
+              </td>
+            </tr>
+            <tr>
+              <td class="bullet">
+                <div class="info" style="background-color: deepskyblue;">
+                  <a target="_blank" href="http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/J0" style="color: inherit">J0</a>
+                </div>
+              </td>
+              <th colspan="2">
+                <span>
+                  <a class="largeText" data-open="text-modal-J0">ⅈ</a>
+                </span>
+                <div class="reveal" id="text-modal-J0" data-reveal="">
+                  <h4>J0</h4>
+                  <hr>
+                  <p></p>
+                  <button class="close-button" data-close="" aria-label="Close modal" type="button">x</button>
+                </div>
+              </th>
+              <td>
+                <span class="largeText"></span>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.js"> </script>
+    <script type="text/javascript">
+        $(document).foundation();
+    </script>
+  </div>
+</div>

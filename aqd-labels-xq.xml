@@ -1,0 +1,1552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<labels xml:lang="en">
+  <XML>
+      <VALIDATION>XML validation to confirm that it is both well-formed and also "valid" in that it follows a defined structure. A well-formed document follows the basic syntactic rules of XML, which are the same for all XML documents.A valid document also respects the rules dictated by XML schema (http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0/view)</VALIDATION>
+      <VALIDATION_SHORT>XML validation</VALIDATION_SHORT>
+      <NAMESPACES>Check prefix and namespaces of the gml:featureCollection according to expected root elements (More information at http://www.eionet.europa.eu/aqportal/datamodel)</NAMESPACES>
+      <NAMESPACES_SHORT>Prefix/namespaces check</NAMESPACES_SHORT>
+  </XML>
+  <B>
+    <B0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </B0>
+    <B0_SHORT>Checks if this delivery is new or an update (on same reporting year)</B0_SHORT>
+    <B1>Compile &amp; feedback upon the total number of AQ zone feature types included in the delivery</B1>
+    <B1_SHORT>Number of zones reported</B1_SHORT>
+    <B2>Compile &amp; feedback upon the total number of new records for AQ zones included in the delivery against previous delivery</B2>
+    <B2_SHORT>Number of new zones compared to previous report</B2_SHORT>
+    <B3>Compile &amp; feedback upon the total number of existing records for AQ zones included in the delivery against previous delivery</B3>
+    <B3_SHORT>Number of existing zones compared to previous report</B3_SHORT>
+    <B4>Compile &amp; feedback upon all reported zones. Feedback report shall include the gml:id attribute, am:inspireId, am:name/gn:GeographicalName/gn:spelling/gn:text &amp; aqd:zoneCode elements as available.</B4>
+    <B4_SHORT>List reported zones</B4_SHORT>
+    <B5>Compile &amp; feedback upon the total number of modification to existing for AQ zone feature types included in the delivery, including ./aqd:predecessor information
+      Report if the object xlinked via aqd:predecessor  is not found within the current or previous deliveries (aqd:AQD_Zone)
+    </B5>
+    <B5_SHORT>Not implemented</B5_SHORT>
+    <B6a>The number of zones designated with coordinates via the ./am:geometry element</B6a>
+    <B6a_SHORT>Number of zones that provides coordinates inside the xml via geometry element</B6a_SHORT>
+    <B6b>The number of zones designated with coordinates via the ./aqd:LAU element and the ./aqd:shapefileLink element</B6b>
+    <B6b_SHORT>Number of zones that provides coordinates via Local Administrative Units (LAU) element and external shapefile link</B6b_SHORT>
+    <B7>List of unique combinations of aqd:aqdZoneType, aqd:pollutantCode and aqd:protectionTarget</B7>
+    <B7_SHORT>Number of unique combinations of zone types, pollutants and protection target</B7_SHORT>
+    <B8>Check and count expected combinations of Pollutant and ProtectionTarget
+      Sulphur dioxide (1) + health
+      Sulphur dioxide (1) + vegetation
+      Ozone (7) + health
+      Ozone (7) + vegetation
+      Nitrogen dioxide (8) + health
+      Nitrogen oxides (9) + vegetation
+      Particulate matter &lt; 10 µm (5) + health
+      Particulate matter &lt; 2.5 µm (6001) + health
+      Carbon monoxide (10) + health
+      Benzene (20) + health
+      Lead in PM10 (5012) + health
+      Arsenic in PM10 (5018) + health
+      Cadmium in PM10 (5014) + health
+      Nickel in PM10 (5015) + health
+      Benzo(a)pyrene in PM10 (5029) + health</B8>
+    <B8_SHORT>Check and count expected combinations of Pollutant and ProtectionTarget</B8_SHORT>
+    <B9>All gml:id attributes, am:inspireId and aqd:inspireId elements shall have unique content</B9>
+    <B9_SHORT>Internal XML and INSPIRE identifiers must be unique (gml:id, base:localId)</B9_SHORT>
+    <B10>./am:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</B10>
+    <B10_SHORT>List unique namespaces used and count number of elements</B10_SHORT>
+    <B10.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</B10.1>
+    <B10.1_SHORT>Check namespace is registered </B10.1_SHORT>
+    <B11>./am:name attribute xsi:nil="false"</B11>
+    <B11_SHORT>Not implemented</B11_SHORT>
+    <B12>./am:name/gn:GeographicalName attribute xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0"</B12>
+    <B12_SHORT>Not implemented</B12_SHORT>
+    <B13>/aqd:AQD_Zone/am:name/gn:GeographicalName/gn:language value shall be the language of the name, given as a three letters code, in accordance with either ISO 639-3 or ISO 639-5.</B13>
+    <B13_SHORT>The geographical language code must correspond to either the ISO 639-3 or ISO 639-5. </B13_SHORT>
+    <B18>./am:name/gn:GeographicalName/gn:spelling/gn:SpellingOfName/gn:text shall return a string</B18>
+    <B18_SHORT>The geographical language text must be a string</B18_SHORT>
+    <B19>./am:name/gn:GeographicalName/gn:spelling/gn:SpellingOfName/gn:script attribute xsi:nil="true" nilReason="unknown"</B19>
+    <B19_SHORT>Not implemented</B19_SHORT>
+    <B20>/am:geometry/gml:Polygon, ./am:geometry/gml:Point, ./am:geometry/gml:MultiPoint, ./am:geometry/gml:MultiSurface, ./am:geometry/gml:Grid, ./am:geometry/gml:RectifiedGrid the srsName attribute shall be a recognisable URN. The following 3 srsNames are expected urn:ogc:def:crs:EPSG::3035 or urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326</B20>
+    <B20_SHORT>The coordinate reference system for the zones must be defined with a correct uniform resource name</B20_SHORT>
+    <B21>/am:geometry/gml:Polygon, ./am:geometry/gml:Point, ./am:geometry/gml:MultiPoint, ./am:geometry/gml:MultiSurface, ./am:geometry/gml:Grid, ./am:geometry/gml:RectifiedGrid, ./am:geometry/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList the srsDimension attribute shall resolve to "2" to allow the x &amp; y-coordinate of the feature of interest</B21>
+    <B21_SHORT>The dimension attribute must be given the value "2" </B21_SHORT>
+    <B22>./am:geometry /gml:Polygon/gml:exterior/gml:LinearRing/gml:posList the count
+      attribute shall resolve to the sum of y &amp; x;coordinate doublets.  </B22>
+    <B22_SHORT>The count attribute must be equal to the Y and X coordinate doublets</B22_SHORT>
+    <B23>Check that the coordinates lists in ./am:geometry /gml:Polygon/gml:exterior/gml:LinearRing/gml:posList ar presented in lat / long
+      (y;axis / x;axis) notation.  </B23>
+    <B23_SHORT>The coordinates must be ordered as latitude (y-axis) ,longtitude (x-axis)</B23_SHORT>
+    <B24>./am:zoneType value shall resolve to http://inspire.ec.europa.eu/codelist/ZoneTypeCode/airQualityManagementZone (working URL) </B24>
+    <B24_SHORT>Zone type must conform to http://inspire.ec.europa.eu/codelist/ZoneTypeCode/airQualityManagementZone</B24_SHORT>
+    <B25>./am:designationPeriod/gml:TimePeriod/gml:beginPosition shall be less than
+      ./am:designationPeri/gml:TimePeriod/gml:endPosition. </B25>
+    <B25_SHORT>Start time must be less than end time</B25_SHORT>
+    <B26>./am:designationPeriod/gml:TimePeriod/gml:endPosition equal to
+      indeterminatePosition="unknown"/ shall indicate the zone is operational. </B26>
+    <B26_SHORT>If end time is 'unknown,' then the zone is active</B26_SHORT>
+    <B27>./am:designationPeri/gml:TimePeriod/gml:endPosition with valid content
+      (historical content) shall indicate that the zone is no longer operational. </B27>
+    <B27_SHORT>If end time is displayed, the zone is no longer active</B27_SHORT>
+    <B28>./am:beginLifespanVersion shall be a valid historical date for the start of the
+      version of the zone in extended ISO format. If an am:endLifespanVersion exists its
+      value shall be greater than the am:beginLifespanVersion </B28>
+    <B28_SHORT>End date must be greater than start date, if end date exists</B28_SHORT>
+    <B29>./am:beginLifespanVersion shall be LESS THAN OR EQUAL TO
+      ./am:designationPeriod/gml:TimePeriod/gml:endPosition ./am:beginLifespanVersion shall be GREATER THAN OR EQUAL TO
+      ./am:designationPeriod/gml:TimePeriod/gml:beginPosition </B29>
+    <B29_SHORT>Start date shall be less, or equal to </B29_SHORT>
+    <B30>./am:environmentalDomain shall be a citation via href xlink attribute of
+      http://inspire.ec.europa.eu/codelist/MediaValue/[code]
+      (currently resolves to 404 error) </B30>
+    <B30_SHORT>Enviromental Domain must conform to http://inspire.ec.europa.eu/codelist/MediaValue/[code]</B30_SHORT>
+    <B31>./am:legalBasis/base2:LegislationCitation/base2:name value shall be
+      “2011/850/EC” </B31>
+    <B31_SHORT>Legislation citation name must be “2011/850/EC” </B31_SHORT>
+    <B32>./am:legalBasis/base2:LegislationCitation/base2:date value shall be “2011;12;12” </B32>
+    <B32_SHORT>Legislation citation date must be “2011-12-12” </B32_SHORT>
+    <B33>./am:legalBasis/base2:LegislationCitation/base2:link value shall be
+      “http://rod.eionet.europa.eu/instruments/650” </B33>
+    <B33_SHORT>Legislation citation line must be “http://rod.eionet.europa.eu/instruments/650” </B33_SHORT>
+    <B34>./am:legalBasis/base2:LegislationCitation/base2:level shall be a citation via href xlink attribute of http://inspire.ec.europa.eu/codelist/LegislationLevelValue/[code]
+    </B34>
+    <B34_SHORT>Base level must conform to http://inspire.ec.europa.eu/codelist/LegislationLevelValue/[code]</B34_SHORT>
+    <B35>./aqd:zoneCode shall be a unique code for the zone within the
+      ./am:inspireId/base:Identifier/base:namespace. ./aqd:zoneCode . The value may
+      equal the value at ./am:inspireId/base:Identifier/base:localId </B35>
+    <B35_SHORT>Zone code must be unique. The value may e equal the LocalId</B35_SHORT>
+    <B36>./aqd:residentPopulation shall be an integer value GREATER THAN 0 (zero)</B36>
+    <B36_SHORT>Population must be a value higher than zero</B36_SHORT>
+    <B37>./aqd:residentPopulationYear/gml:TimeInstant/gml:timePosition shall cite the
+      year in which the resident population was estimated in yyyy format </B37>
+    <B37_SHORT>Year in which the resident population was estimated must have the format yyyy</B37_SHORT>
+    <B38>./aqd:area the value will be a decimal number GREATER THAN 0 (zero) </B38>
+    <B38_SHORT>The Area value must be a decimal number, greater than zero.</B38_SHORT>
+    <B39a>The allowed content combination within
+      ./aqd:pollutants/aqd:Pollutant/aqd:pollutantCode AND
+      ./aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
+      shall be constrained to
+
+      Sulphur dioxide (air) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1  http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Sulphur dioxide (air) + vegetation
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V
+      Ozone (air) + health
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Ozone (air) + vegetation
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V
+
+      Nitrogen dioxide Nitrogen dioxide (air) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Nitrogen oxides (air) + eco http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V
+
+      Particulate matter &lt; 10 µm (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5  http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Particulate matter &lt; 2.5 µm (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Carbon monoxide (air) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Benzene (air) + health
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+      Lead in PM10 (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+      Arsenic in PM10 (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+      Cadmium in PM10 (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014
+      http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H
+
+      Nickel in PM10 (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015
+    </B39a>
+    <B39a_SHORT>Check for correct Pollutant/ProtectionTarget combination</B39a_SHORT>
+    <B39b>Count number of occurrences across XML and list it as below (it can not be 0)
+
+      Sulphur dioxide (1) + health
+      Sulphur dioxide (1) + vegetation
+      Ozone (7) + health
+      Ozone (7) + vegetation
+      Nitrogen dioxide (8) + health
+      Nitrogen oxides (9) + vegetation
+      Particulate matter &lt; 10 µm (5) + health
+      Particulate matter &lt; 2.5 µm (6001) + health
+      Carbon monoxide (10) + health
+      Benzene (20) + health Lead in PM10 (5012) + health
+      Arsenic in PM10 (5018) + health
+      Cadmium in PM10 (5014) + health
+      Nickel in PM10 (5015) + health
+      Benzo(a)pyrene in PM10 (5029) + health
+      One exception:
+      Nitrogen oxides (9) + vegetation can be 0 for Gibraltar
+    </B39b>
+    <B39b_SHORT>Check if at least one of the expected Pollutant/ProtectionTarget combination(s) is provided in the delivery</B39b_SHORT>
+    <B39c>Check if any combination in B39a is repeated within individual AQD:Zone . An error is returned if repeated.</B39c>
+    <B39c_SHORT>Check and list if any individual zone with any duplicated Pollutant/ProtectionTarget combination </B39c_SHORT>
+    <B40>IF aqd:reportingPeriod included in the ReportingHeader is equal or greater than year 2015, ./aqd:timeExtensionExemption must resolve to http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/none
+
+      Only 1 entry is allowed.
+
+      Else
+      ./aqd:timeExtensionExemption attribute must resolve to one of  concept within
+      http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/…
+
+      Multiple entries are allowed.
+    </B40>
+    <B40_SHORT>ExtensionExemption accepted prior to 2015 deliveries</B40_SHORT>
+    <B41>Where ./aqd:timeExtensionExemption resolves to http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/NO2 1h OR http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/NO2 annual at least one combination within ./aqd:pollutants which includes ./aqd:pollutants/aqd:Pollutant/aqd:pollutantCode AND ./aqd:pollutants/aqd:Pollutant/aqd:protectionTarget shall be constrained to Nitro gen dioxide Nitrogen dioxide (air) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8 http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H</B41>
+    <B41_SHORT>Where AQTimeExemption is either NO2-1h, or NO2-annual, then NO2 and Protection Target Health must be present</B41_SHORT>
+    <B42>Where ./aqd:timeExtensionExemption resolves to http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/PM10-24h OR http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/PM10-annual at least one combination within ./aqd:pollutants which includes ./aqd:pollutants/aqd:Pollutant/aqd:pollutantCode AND ./aqd:pollutants/aqd:Pollutant/aqd:protectionTarget shall be constrained to Particulate matter &lt; 10 μm (aerosol) + health http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5 http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H</B42>
+    <B42_SHORT>Where AQTimeExemption is either PM10-24h, or PM10-annual, then PM10 and Protection Target Health must be present.</B42_SHORT>
+    <B43>Where ./aqd:timeExtensionExemption resolves to http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/C6H6-annual at least one combination within ./aqd:pollutants which includes ./aqd:pollutants/aqd:Pollutant/aqd:pollutantCode AND ./aqd:pollutants/aqd:Pollutant/aqd:protectionTarget shall be constrained to Benzene (air) + healt http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20 http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H</B43>
+    <B43_SHORT>Where AQTimeExemption is C6H6-annual, then C6H6 and Protection Target Health must be present.</B43_SHORT>
+    <B44>Where ./aqd:LAU has been used the list of the administrative these shall be checked to ensure they relate to the MS. This must be provided if /aqd:shapefileLink is not provided or am:geometry does not contain geometry.
+
+      The value shall be a valid code from the following codelist:
+      http://dd.eionet.europa.eu/vocabulary/common/nuts/
+      http://dd.eionet.europa.eu/vocabulary/lau1/
+      http://dd.eionet.europa.eu/vocabulary/lau2/
+
+      NUTS, LAU1 or LAU2 codes must belong to the country reporting data. Country ISO code at  cdr.eionet.europa.eu/ZZ/eu/aqd/b/…. shall be the same as the codelist:
+      http://dd.eionet.europa.eu/vocabulary/common/nuts/ZZ[concept]
+      http://dd.eionet.europa.eu/vocabulary/lau1/zz/[concept]
+      http://dd.eionet.europa.eu/vocabulary/lau2/zz/[concept]
+      (exception of gb which has lau and nut codeas as uk)
+    </B44>
+    <B44_SHORT>Skipped</B44_SHORT>
+    <B45>./am:geometry shall not be a href xlink. If geometry is provided via shapefile, please use element aqd:shapefileLink</B45>
+    <B45_SHORT>Geometry should not be a hyperlink. If provided via shapefile, element aqd:shapefileLink need to be used</B45_SHORT>
+    <B46>Where ./aqd:shapefileLink has been used this should return a link to a valid and
+      existing link in cdr (e.g. http://cdr.eionet.europa.eu/es/eu/aqd/b/envurng9g/ES_Zones_2014.shp) </B46>
+    <B46_SHORT>Where a link is provided, it should refer to an existing and valid shape file in the same folder in the CDR as the XML is uploaded</B46_SHORT>
+    <B47>./aqd:aqdZoneType attribute must resolve to one of  concept within
+      http://dd.eionet.europa.eu/vocabulary/aq/zonetype/[concept]
+
+      Currently, these are:
+      http://dd.eionet.europa.eu/vocabulary/aq/zonetype/noagg
+      or
+      http://dd.eionet.europa.eu/vocabulary/aq/zonetype/agg </B47>
+    <B47_SHORT>Zone type must be either Agglomeration or Non-agglomeration </B47_SHORT>
+  </B>
+  <C>
+    <C0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </C0>
+    <C0_SHORT>Checks if this delivery is new or an update (on same reporting year)</C0_SHORT>
+    <C1>Compile &amp; feedback upon the total number of AQ Assessment Regime feature types included in the delivery</C1>
+    <C1_SHORT>Number of Assessment Regimes reported</C1_SHORT>
+    <C2>Compile &amp; feedback upon the total number of new records for AQ Assessment Regime feature types included in the delivery. &lt;b>ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.&lt;/b></C2>
+    <C2_SHORT>Number of new Assessment Regimes compared to previous report. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries</C2_SHORT>
+    <C3>Compile &amp; feedback upon the total number of modifications to previously reported AQ Assessment Regime feature types included in the delivery &lt;b>ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).&lt;/b></C3>
+    <C3_SHORT>Number of existing Assessment Regimes compared to previous report. ERROR will be returned if XML is an update and ALL localId (100%) are NEW to previous delivery (for the same YEAR).</C3_SHORT>
+    <C4>All gml:id attributes shall have unique content within the document or namespace</C4>
+    <C4_SHORT>gml:id must be unique within the XML document</C4_SHORT>
+    <C5>./aqd:inspireId/base:Identifier/base:localId shall be an unique code for the assessment regime.</C5>
+    <C5_SHORT>Local Id shall be unique for the assessment regime.</C5_SHORT>
+    <C6>./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</C6>
+    <C6_SHORT>List unique namespaces used and count number of elements</C6_SHORT>
+    <C6.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</C6.1>
+    <C6.1_SHORT>Check namespace is registered </C6.1_SHORT>
+    <C7>Each of the number of /aqd:AQD_AssessmentRegime records shall contain 1 ./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmental Objective records per /aqd:AQD_AssessmentRegime element</C7>
+    <C7_SHORT>Each Assessment Regime shall have one Environmental Objective element</C7_SHORT>
+    <C8>./aqd:pollutant xlink:href attribute may resolve to one of   http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029
+    </C8>
+    <C8_SHORT>Assessment regimes must be reported all expected pollutants</C8_SHORT>
+    <C9>Count on unique pollutants when Assessment regime(s)'s aqd:objectiveType xlink:href attribute resolve to http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/MO</C9>
+    <C9_SHORT>Count number of Assessment Regimes for pollutants with Monitoring Objetive</C9_SHORT>
+    <C10>Check that EnvironmentalObjetive (ObjectiveType+ReportingMetric+ProtectionTarget) correspond to a valid combination in http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/view</C10>
+    <C10_SHORT>Check valid combination of pollutant/EnvironmentalObjective (Objective/ProtectionTarget/ReportingMetric). Error if unexpected combination</C10_SHORT>
+    <C11>inc C10</C11>
+    <C11_SHORT>Content check</C11_SHORT>
+    <C12>inc C10</C12>
+    <C12_SHORT>Content check</C12_SHORT>
+    <C13>inc C10</C13>
+    <C13_SHORT>Content check</C13_SHORT>
+    <C14>inc C10</C14>
+    <C14_SHORT>Content check</C14_SHORT>
+    <C15>inc C10</C15>
+    <C15_SHORT>Content check</C15_SHORT>
+    <C16>inc C10</C16>
+    <C16_SHORT>Content check</C16_SHORT>
+    <C17>inc C10</C17>
+    <C17_SHORT>Content check</C17_SHORT>
+    <C18>inc C10</C18>
+    <C18_SHORT>Content check</C18_SHORT>
+    <C19>inc C10</C19>
+    <C19_SHORT>Content check</C19_SHORT>
+    <C20>Provide any missing combination of Pollutant/EnvironmentalObjective according to vocabulary http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/ (Exceptions: when ObjectiveType = .../MO + .../LVMOT + .../LVmaxMOT &amp;those combinations when "Exceedance threshold" within the vocabulary is populated)</C20>
+    <C20_SHORT>Check and list any missing combination of pollutant/EnvironmentalObjective. Error if combination missing</C20_SHORT>
+    <C21>Assess correctness of /aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:exceedanceAttainment depending on combination aqd:pollutant + aqd:objectiveType + aqd:reportingMetric + aqd:protectionTarget against vocabulary http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/</C21>
+    <C21_SHORT>Check Assessment Threshold Classification according to the allowed combination</C21_SHORT>
+    <C22>./aqd:pollutant xlink:href attribute may resolve to one of codes in the vocabulary</C22>
+    <C22_SHORT>Pollutant must be a registered under vocabulary</C22_SHORT>
+    <C23a>./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:assessmentType xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/[concept]Current options in the codelist are:http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/model http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/indicative http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/objective</C23a>
+    <C23a_SHORT>The assessement type shall be either "Fixed Measurement," "modelling," "Indicative Measurement"or "Objective Estimation."</C23a_SHORT>
+    <C23b>./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:assessmentTypeDescription resolve to a text description of Assessment Type</C23b>
+    <C23b_SHORT>A textual description of assessment type is expected</C23b_SHORT>
+    <C24>The assessment methods referenced by ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata  xlink:href attribute shall resolve to a traversable link to an assessment method /aqd:AQD_Model reported under cdr.eionet.europa.eu/ZZ/eu/aqd/d/…
+
+      (The href is made using “namespace”/”localId”)
+    </C24>
+    <C24_SHORT>When providing a link to model or objective estimation(s), a valid link must be provided</C24_SHORT>
+    <C25>The assessment methods referenced by
+      ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute shall resolve to a traversable link to an assessment method /aqd:AQD_SamplingPoint reported under cdr.eionet.europa.eu/ZZ/eu/aqd/d/…
+
+      (The href is made using “namespace”/”localId”)
+
+    </C25>
+    <C25_SHORT>When providing a link to fix or indicative measurement(s), a valid link must be provided</C25_SHORT>
+    <C26>The assessment methods referenced by ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMeta data or ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute shall contain one element /aqd:AQD_Model/ef:observingCapability/ef:ObservingCapability/ef:observingTime/gml:TimePeriod/gml:endPosition or /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:observingTime/gml:TimePeriod/gml:endPosition that is operational within the aqd:reportingPeriod included in the ReportingHead</C26>
+    <C26_SHORT>Any assessment method used under Assessment must be operionational within the Reporting Period</C26_SHORT>
+    <C27>The number of unique zones cited by /aqd:AQD_AssessmentRegime  shall be EQUAL to the number of unique zones in ./aqd:AQD_Zone for the same ReportingYear</C27>
+    <C27_SHORT>The number of zones must be the same as cited in the AssessmentRegime (for the same Reporting Year)</C27_SHORT>
+    <C28>The lifecycle information of ./aqd:zone xlink:href shall be current,
+      /aqd:AQD_Zone/am:designationPeriod/gml:TimePeriod/gml:endPosition shall be greater than the begin position of the aqd:reportingPeriod included in the ReportingHeader
+
+      If endPosition is indeterminate (i.e.&lt;gml:endPosition indeterminatePosition="unknown"/>)
+      /aqd:AQD_Zone/am:designationPeriod/gml:TimePeriod/gml:beginPosition shall NOT be greater than the begin position of the aqd:reportingPeriod included in the ReportingHeader
+    </C28>
+    <C28_SHORT>The zone linked to each Assessment Regime must be operational within the Reporting Period</C28_SHORT>
+    <C29> aqd:zone xlink:href attribute shall resolve to a traversable link to an AQ zone in /aqd:AQD_Zone reported under cdr.eionet.europa.eu/ZZ/eu/aqd/b/... The ./aqd:pollutant and ./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget within the Assessment Regime shall equal one combination /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode and /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget within the linked zone aqd:AQD_Zone/aqd:pollutantsException : Where ./aqd:pollutant resolves to http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001 ./aqd:zone xlink:href attribute MAY resolve to &lt;aqd:zone nilReason='inapplicable'/></C29>
+    <C29_SHORT>Pollutant, Assessment Threshold and Environmental Objective shall equal one combination, except where
+      where Particulate Matter 2.5, which is not applicable.</C29_SHORT>
+    <C31>COUNT number zone-pollutant-target comibantion to match those in dataset B for the same reporting Year
+      ./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget + ./aqd:pollutant + /aqd:zone combinations shall reconcile to corresponding information within /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget ,  /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode + /aqd:AQD_Zone/am:inspireId/base:Identifier/base:localId
+
+
+
+      Sulphur dioxide (1) + health        B vs C
+      Sulphur dioxide (1) + vegetation       B vs C
+      Ozone (7) + health       B vs C
+      Ozone (7) + vegetation       B vs C
+      Nitrogen dioxide (8) + health       B vs C
+      Nitrogen oxides (9) + vegetation       B vs C
+      Particulate matter &lt; 10 µm (5) + health       B vs C
+      Particulate matter &lt; 2.5 µm (6001) + health       B vs C
+      Carbon monoxide (10) + health       B vs C
+      Benzene (20) + health       B vs C  Lead in PM10 (5012) + health       B vs C
+      Arsenic in PM10 (5018) + health       B vs C
+      Cadmium in PM10 (5014) + health       B vs C
+      Nickel in PM10 (5015) + health       B vs C
+      Benzo(a)pyrene in PM10 (5029) + health       B vs C
+    </C31>
+    <C31_SHORT>COUNT number zone-pollutant-target comibantion to match those in dataset B for the same reporting Year</C31_SHORT>
+    <C32>./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:assessmentType shall be compared with the /aqd:AQD_SamplingPoint/aqd:assessmentType for assessment method cited by ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute
+      and/or
+      /aqd:AQD_Model/aqd:assessmentType for assessment method cited by ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute
+
+      The following combinations are allowed:
+      Within AssessmentRegime Within SamplingPoint or Model Status
+      fixed fixed OK
+      indicative indicative/fixed OK
+      model model OK
+      objective  objective OK
+      fixed indicative/model/objective WRONG
+      indicative fixed/model/objective WRONG
+      model fixed/indicative/objective WRONG
+      objective fixed/indicative/model OK
+
+    </C32>
+    <C32_SHORT>Check Assessment Type of Asssessment Methods compared to assessmentType within Assessment Regime</C32_SHORT>
+    <C33>The lifecycle information of ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href shall be current, /AQD_SamplingPoint/ef:operationActivityPeriod/gml:endPosition shall be operational within the aqd:reportingPeriod included in the ReportingHeader </C33>
+    <C33_SHORT>If the Asseement Metadata lifecycle information is current, then the Operational Activity End Time shall be within ReportingPeriod</C33_SHORT>
+    <C35>/aqd:AQD_SamplingPoint/aqd:usedAQD or /aqd:AQD_Model/aqd:used shall EQUAL “true” for all ./aqd:assessmentMethods/aqd:AssessmentMethods/aqd:[samplingPoint or  model]AssessmentMetadata xlink:href citations</C35>
+    <C35_SHORT>If a sampling point or a model is used in any Assessment Regime, it has to be described as TRUE for AQ Directive use</C35_SHORT>
+    <C36>Where ./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget xlink:href attribute resolves to http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V the AQD_Station linked to shall resolve the following attribute /aqd:AQD_Station/aqd:areaClassification xlink:href to http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural
+
+      Please note that  /aqd:AQD_AssessmentRegime does not link directly to /aqd:AQD_Station (The link is done via aqd:AQD_SamplingPoint): aqd:AQD_AssessmentRegime /aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata attribute xlinks to aqd:AQD_SamplingPoint.
+      aqd:AQD_SamplingPoint links to aqd:AQD_SamplingPoint via aqd:AQD_SamplingPoint/ef:broader resulting in
+
+      aqd:AQD_AssessmentRegime /aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/ aqd:AQD_SamplingPoint/ef:broader/aqd:AQD_Station/aqd:areaClassification
+    </C36>
+    <C36_SHORT>Not implemented</C36_SHORT>
+    <C37>There shall be only 1 record per MS where ./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmental Objective/aqd:EnvironmentalObjective/aqd:reportingMetric xlink:href attribute resolves to http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/AEI</C37>
+    <C37_SHORT>Where the assessment threshold is  Average Exposure Indicator, there can be only 1 record.</C37_SHORT>
+    <C38>Where./aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric xlink:href attribute resolves to http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/AEI the /aqd:AQD_SamplingPoint/aqd:relevantEmissions/aqd:RelevantEmissions/aqd:stationClassification xlink:href attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/stationclassification/background for all aqd:AQD_SamplingPoint linked via aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods /aqd:samplingPointAssessmentMetadata citations</C38>
+    <C38_SHORT>The cited stations under the Assessment Regime for the Average Exposure Indicator should be classified as Background.</C38_SHORT>
+    <C39>Not implemented
+
+    </C39>
+    <C39_SHORT>Updated</C39_SHORT>
+    <C40>The total number of /aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata and /aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata citations within a MS (delivery) shall be GREATER THAN OR EQUAL to 1 where ./aqd:pollutant xlink:href attribute resolves to</C40>
+    <C40_SHORT>All Assessment Regimes should be linked to at least one Assessment Method (either SamplingPoint or Model/ObjectiveEstimation)</C40_SHORT>
+    <C41>gml:timePosition MUST be provided and must be  equal or greater than (aqd:reportingPeriod – 5 yeasr ) included in the ReportingHeader</C41>
+    <C41_SHORT>The year of the latest Classification report must be within the last 5 years according to AQ Directive</C41_SHORT>
+    <C42>Free text shall be provided including at least 1 valid URL</C42>
+    <C42_SHORT>A valid url should be provided linking to the latest Classification Report</C42_SHORT>
+  </C>
+  <D>
+    <D0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </D0>
+    <D0_SHORT>Checks if this delivery is new or an update (on same reporting year)</D0_SHORT>
+    <D1>Compile &amp; feedback upon the total number of each environmental monitoring feature types included in the delivery</D1>
+    <D1_SHORT>Total number of individual element reported within this XML Document for assessment methods. Error wil be returned if any of the expected elements are missing.</D1_SHORT>
+    <D2>Compile and feedback upon the total number of new records for each environmental monitoring feature types included in the delivery</D2>
+    <D2_SHORT>Total number of new records for each feature type included in the delivery. Error will be returned if all LocalIds are new.</D2_SHORT>
+    <D3>Compile and feedback upon the total number of updated environmental monitoring feature types included in the delivery</D3>
+    <D3_SHORT>Total number of updated records for each feature type included in the delivery. Error will be returned if all LocalIds are new.</D3_SHORT>
+    <D4>Compile &amp; feedback a list of the unique identifier information for each new record or modification to an environmental monitoring feature type. Feedback report shall include the gml:id attribute, ef:inspireId, aqd:inspireId, ef:name and/or ompr:name elements as available.</D4>
+    <D4_SHORT>Full list of reported Environmental Monitoring Features within this XML Document</D4_SHORT>
+    <D5>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</D5>
+    <D5_SHORT>Id elements must have unique content</D5_SHORT>
+    <D6>aqd:AQD_Network/ef:inspireId/base:Identifier/base:localId shall be an unique code for AQD_network and unique within the namespace.</D6>
+    <D6_SHORT>LocalId must be a unique code for the AQD_network.</D6_SHORT>
+    <D7>Count the number of unique AQD_Network (via localId) submitted within base:namespace.</D7>
+    <D7_SHORT>List unique namespaces used and count number of Networks used.</D7_SHORT>
+    <D7.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D7.1>
+    <D7.1_SHORT>Check namespace is registered </D7.1_SHORT>
+    <D8>The content of aqd:AQD_Network/ef:mediaMonitored shall resolve to any concept inhttp://inspire.ec.europa.eu/codelist/MediaValue/</D8>
+    <D8_SHORT>Must conform to a recognised media value. These are: Air, Biota, Landscape, Sediment, Soil/Ground, Waste and Water.</D8_SHORT>
+    <D9>The content of aqd:AQD_Network/ef:organisationLevel shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/organisationallevel/</D9>
+    <D9_SHORT>Must conform to a recognised Organisation Level. These are: International, Local, LocalAuthority, Municipality, National and Regional.</D9_SHORT>
+    <D10>The content of aqd:AQD_Network/aqd:networkType shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/networktype/</D10>
+    <D10_SHORT>If provide, must conform to a recognised network type in the vocabulary.</D10_SHORT>
+    <D11> aqd:AQD_Network/aqd:operationActivityPeriod/gml:TimePeriod/gml:beginPosition shall be less than gml:endPosition</D11>
+    <D11_SHORT>Start time must be before End time.</D11_SHORT>
+    <D12>./ef:name shall return a string</D12>
+    <D12_SHORT>Network name must be provided</D12_SHORT>
+    <D13>Information on responsible authority for the network management must be provided</D13>
+    <D13_SHORT>Information on responsible authority for the network management must be provided</D13_SHORT>
+    <D14>The content of /aqd:AQD_Network/aqd:aggregationTimeZone attribute shall resolve to a valid code in http://dd.eionet.europa.eu/vocabulary/aq/timezone/</D14>
+    <D14_SHORT>Must conform to a recognised Time Zone as vocabulary . These are UTC (+01 to +06) and (-01 to -06)</D14_SHORT>
+    <D15>aqd:AQD_Station/ef:inspireId/base:Identifier/base:localId shall be an unique code within namespace</D15>
+    <D15_SHORT>Station ID must be a unique code.</D15_SHORT>
+    <D16>Count the number of unique AQD_Station (via localId) submitted within base:namespace.</D16>
+    <D16_SHORT>List unique namespaces used and count number of Stations used.</D16_SHORT>
+    <D16.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D16.1>
+    <D16.1_SHORT>Check namespace is registered </D16.1_SHORT>
+    <D17>./ef:name shall return a string</D17>
+    <D17_SHORT>Station name must be provided</D17_SHORT>
+    <D18>./ef:belongsTo shall resolve to a traversable local of global URI to ../AQD_Network</D18>
+    <D18_SHORT>Station must belong to a network</D18_SHORT>
+    <D19>The content of /aqd:AQD_Station/ef:mediaMonitored shall resolve to any concept in http://inspire.ec.europa.eu/codelist/MediaValue/</D19>
+    <D19_SHORT>Must conform to a recognised media value. These are: Air, Biota, Landscape, Sediment, Soil/Ground, Waste and Water.</D19_SHORT>
+    <D20>The srsName attribute within ./ef:geometry/gml:Point shall be a recognisable URN.  The following 3 srsNames are expected urn:ogc:def:crs:EPSG::3035 or  urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326</D20>
+    <D20_SHORT>The coordinate reference system for the stations must be defined with a correct uniform resource name</D20_SHORT>
+    <D21>./ef:geometry/gml:Point/gml:pos srsDimension attribute shall resolve to “2” to allow the coordinate of the station.
+
+      ORDER of 2 coordinates MUST BE Latitude &amp; Longitud when providing the accepted srsNames
+    </D21>
+    <D21_SHORT>The Dimension attribute shall resolve to "2"  and  the order must be Latitude &amp; Longitude</D21_SHORT>
+    <D22>./ef:geometry/gml:Point shall resolve to within the geographic boundary or bounding box of the MS.</D22>
+    <D22_SHORT>Not implemented</D22_SHORT>
+    <D23>List the total number aqd:AQD_Station invalid operational activity periods
+      ./ef:operationActivityPeriod/ef:OperationActivityPeriod/ef:activityTime/gml:TimePeriod/gml:beginPosition shall be less than gml:endPosition.
+    </D23>
+    <D23_SHORT>Check if the operational period for the station is correct </D23_SHORT>
+    <D24>List the total number of aqd:AQD_Station which are operational
+      ./ef:operationActivityPeriod/ef:OperationActivityPeriod/ef:activityTime/gml:TimePeriod/gml:endPosition which are unclosed (null) or have an  indeterminatePosition="unknown" attribute
+    </D24>
+    <D24_SHORT>Total number of operational Stations</D24_SHORT>
+    <D25>./ef:operationActivityPeriod/ef:OperationActivityPeriod/ef:activityTime/gml:TimePeriod/gml:endPosition with valid content (historical content) shall indicate that the environmental monitoring feature type is no longer operational.</D25>
+    <D25_SHORT>Not implemented</D25_SHORT>
+    <D26>AQD_Station/aqd:EUStationCode shall be an unique code for the station starting with ISO2-country code </D26>
+    <D26_SHORT>Station code must be unique, starting with ISO2-country code</D26_SHORT>
+    <D27>The content of aqd:AQD_Station/aqd:meteoParams shall resolve to any concept in http://vocab.nerc.ac.uk/collection/P07/current/, http://vocab.nerc.ac.uk/collection/I01/current/, http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/</D27>
+    <D27_SHORT>Station Meterological Parameters must conform to the standard "Climate and Forecast Standard"  Subset of GRIB or the Meteo parameter list eionet data dictionary</D27_SHORT>
+    <D28>The content of aqd:AQD_Station/aqd:areaClassification shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/</D28>
+    <D28_SHORT>Must conform to a recognised Station Classification from the eionet data dictionary. These are: Rural, Rural-Nearcity, Rural-Regional, Rural-Remote, Suburban, Urban</D28_SHORT>
+    <D29>The content of aqd:AQD_Station/aqd:dispersionLocal shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/dispersionlocal/</D29>
+    <D29_SHORT>Must use a recognised Local description from the eionet data dictionary. These are: Canyon, Detached, Elevated and Open.</D29_SHORT>
+    <D30>The content of aqd:AQD_Station/aqd:dispersionRegional shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/dispersionregional/</D30>
+    <D30_SHORT>Must use a recognised Regional descriptor: Alpine, Base, Basin-Hilly, Coast-Mount,  Coast-Plane, Hilly, Mount, Mount-Slope, Plane, Valley-Hilly and Valley-Mount.</D30_SHORT>
+    <D31>AQD_SamplingPoint/ef:inspireId/base:Identifier/base:localId not unique codes:</D31>
+    <D31_SHORT>Sampling Point local Id must be unique</D31_SHORT>
+    <D32>Count the number of unique AQD_SamplingPoint (via localId) submitted within base:namespace.</D32>
+    <D32_SHORT>List unique namespaces used and count number of SamplingPoint used.</D32_SHORT>
+    <D32.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D32.1>
+    <D32.1_SHORT>Check namespace is registered </D32.1_SHORT>
+    <D33>The content of aqd:AQD_SamplingPoint/ef:mediaMonitored shall resolve to any concept inhttp://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/</D33>
+    <D33_SHORT>Must conform to the code 'air' in the Media codelist in the Inspire registry </D33_SHORT>
+    <D34>aqd:AQD_SamplingPoint/am:geometry/gml:Point the srsName attribute shall be a recognisable URN . The following 2 srsNames are expected urn:ogc:def:crs:EPSG::3035 or urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326</D34>
+    <D34_SHORT>The coordinate reference system for the zones must be defined with a correct uniform resource name</D34_SHORT>
+    <D35>The srsDimension attribute within ./ef:geometry/gml:Point/gml:pos shall resolve to “2” to allow the x.y-coordinate of the station
+
+      ORDER of 2 coordinates MUST BE Latitude &amp; Longitud when providing the accepted srsNames (see D34)
+    </D35>
+    <D35_SHORT>The Dimension attribute shall resolve to "2"  and  the order must be Latitude &amp; Longitude</D35_SHORT>
+    <D36>./ef:geometry/gml:Point/gml:pos shall resolve to within the approximate geographic location of the AQD_Station cited by .aqd:AQD_SamplingPoint ef:broader</D36>
+    <D36_SHORT>The sampling point location shall resolve within the approximate location of the AQD_Station</D36_SHORT>
+    <D37>.ef:observingCapability/ef:ObservingCapability/ef:observingTime/gml:TimePeriod/gml:beginPosition shall be equal to or less than ./ef:operationalActivityPeriod/ef:OperationalActivityPeriod/ef:activityTime/gml:TimePeriod /gml:endPosition
+
+      gml:TimePeriod within the multiple ef:observingCapability MUST NOT overlap which each other
+    </D37>
+    <D37_SHORT>Check if the operational period for the station is invalid or overlaps</D37_SHORT>
+    <D38>./ef:observingCapability/ef:ObservingCapability/ef:processType shall resolve to http://inspire.ec.europa.eu/codelist/ProcessTypeValue/process
+      (currently resolves to 404 error)
+    </D38>
+    <D38_SHORT>Not implemented</D38_SHORT>
+    <D39>./ef:observingCapability/ef:ObservingCapability/ef:resultNature element shall resolve to http://inspire.ec.europa.eu/codelist/ResultNatureValue/primary
+      (currently resolves to 404 error)
+    </D39>
+    <D39_SHORT>Not implemented</D39_SHORT>
+    <D40>The content of ../ef:observedProperty shall resolve to a valid code within http://dd.eionet.europa.eu/vocabulary/aq/pollutant/ and within a unique SamplingPoint, multiple ef:observedProperty may be found. These MUST always resolve to the same code</D40>
+    <D40_SHORT>Pollutant must be a registered under vocabulary and each SamplingPoint must be defined for a unique pollutant under all measurement configurations</D40_SHORT>
+    <D41>Cross-check with AQD_Sample (./ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest/@xlink shall resolve to a traversable local of global URI to an ../AQD_Sample)</D41>
+    <D41_SHORT>Links between SamplingPoint and Sample shall be traceable and valid</D41_SHORT>
+    <D42>Cross-check with AQD_SamplingPointProcess (./ef:observingCapability/ef:ObservingCapability/ef:procedure/@xlink shall resolve to a traversable local of global URI to ../AQD_SamplingPointProcess)</D42>
+    <D42_SHORT>Links between SamplingPoint and SamplingPointProcess shall be traceable and valid</D42_SHORT>
+    <D43>Cross-check with AQD_Station (../ef:broader/@xlink shall resolve to a traversable local of global URI to ../AQD_Station)</D43>
+    <D43_SHORT>Links between SamplingPoint and Station shall be traceable and valid</D43_SHORT>
+    <D44>Cross-check with AQD_Network (aqd:AQD_SamplingPoint/ef:belongsTo shall resolve to a traversable local of global URI to ../AQD_Network)</D44>
+    <D44_SHORT>Links between Station and Network shall be traceable and valid</D44_SHORT>
+    <D44b>Cross-check with AQD_Network (aqd:AQD_Station/ef:belongsTo shall resolve to a traversable local of global URI to ../AQD_Network)</D44b>
+    <D44b_SHORT>Links between SamplingPoint and Network shall be traceable and valid</D44b_SHORT>
+    <D45> Total number aqd:AQD_SamplingPoint/ef:operationActivityPeriod/ef:OperationActivityPeriod/ef:activityTime/gml:TimePeriod/ invalid operational activity periods</D45>
+    <D45_SHORT>Invalid or overlapping operational activity periods</D45_SHORT>
+    <D46>Total number of AQD_SamplingPoints which are operational</D46>
+    <D46_SHORT>Number of operational sampling points:</D46_SHORT>
+    <D47>./ef:operationActivityPeriod/ef:OperationActivityPeriod/ef:activityTime/gml:TimePeriod/gml:endPosition with valid content (historical content) shall indicate that the environmental monitoring feature type is no longer operational.</D47>
+    <D47_SHORT>Not implemented</D47_SHORT>
+    <D48>./aqd:assessmentType shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/ via xlink:href</D48>
+    <D48_SHORT>Check that Assessment Type conforms to: Fixed, Indicative, Model or Objective</D48_SHORT>
+    <D49>./aqd:mainEmissionSources shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/emissionsource/  via xlink:href</D49>
+    <D49_SHORT>Check that main emission source conforms to registered vocabulary</D49_SHORT>
+    <D50>Total number/aqd:stationClassification which resolve to http://dd.eionet.europa.eu/vocabulary/aq/stationclassification/ via xlink:href</D50>
+    <D50_SHORT>Check that Classifications conforms to: Background, Industrial or Traffic</D50_SHORT>
+    <D51> Number of invalid 3 elements aqd:AQD_SamplingPoint/aqd:environmentalObjective/aqd:EnvironmentalObjective/ combinations:</D51>
+    <D51_SHORT>Number of invalid 3 elements in Sampling Point and Environmental Objective combinations:</D51_SHORT>
+    <D53> Number of invalid aqd:AQD_SamplingPoint/aqd:zone xlinks:</D53>
+    <D53_SHORT>Check if there are any invalid link from SamplingPoint  to zone(s)</D53_SHORT>
+    <D54>aqd:AQD_SamplingPointProcess/ompr:inspireId/base:Identifier/base:localId not unique codes:</D54>
+    <D54_SHORT>Local Id for Sampling Point Process must be unique</D54_SHORT>
+    <D55>Count the number of unique AQD_SamplingPointProcess (via localId) submitted within base:namespace</D55>
+    <D55_SHORT>List unique namespaces used and count number of SamplingPointProcess(es) used.</D55_SHORT>
+    <D55.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D55.1>
+    <D55.1_SHORT>Check namespace is registered </D55.1_SHORT>
+    <D56>./aqd:measurementType shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/[concept]</D56>
+    <D56_SHORT>Must conform to a regognised Measurement Type from the eionet data dictionary. These are: Active, Automatic, Passive, Remote and Unknown.</D56_SHORT>
+    <D57>If ./aqd:measurementType resolves to ./measurementtype/automatic or ./measurementtype/remote, aqd:measurementMethod shall be included and resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/ AND /aqd:samplingMethod and ./aqd:analyticalTechnique SHALL NOT BE PROVIDED</D57>
+    <D57_SHORT>If Measurement Type is Automatic or Remote and conforms to any of the recognised measurement methods in the eionet data dictionary, then Sampling Method and Technique shall not be provided.</D57_SHORT>
+    <D58>If ./aqd:measurementType resolves to http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/active
+      or
+      http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/passive
+
+      ./aqd:samplingMethod &amp; ./aqd:analyticalTechnique shall be included
+      AND
+      ./aqd:measurementMethod SHALL NOT BE PROVIDED
+    </D58>
+    <D58_SHORT>If Measurement Type is Active or Passive then Sampling Method and Analytical Technique must be provided. Measurement method shall not be provided.</D58_SHORT>
+    <D59>The content of /aqd:AQD_SamplingPointProcess/aqd:analyticalTechnique shall resolve to any concept inhttp://dd.eionet.europa.eu/vocabulary/aq/analyticaltechnique/</D59>
+    <D59_SHORT>Analytcical Technique must use any of the analytcical technique recognised methods in the eionet data dictionary.</D59_SHORT>
+    <D60a>The content of ./aqd:AQD_SamplingPointProcess/aqd:measurementType shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/</D60a>
+    <D60a_SHORT>Sampling Process and Measurement Type must use any of the measurement equipment in the eionet data dictionary.</D60a_SHORT>
+    <D60b>The content of ./aqd:AQD_SamplingPointProcess/aqd:samplingEquipment/aqd:SamplingEquipment/aqd:equipment shall resolve to any concept in http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/</D60b>
+    <D60b_SHORT>Sampling Process and Equipment must use any of the sampling equipment in the eionet data dictionary.</D60b_SHORT>
+    <D61>If /aqd:AQD_SamplingPointProcess/aqd:measurementMethod/aqd:MeasurementMethod/aqd:otherMeasurementMethod, /aqd:AQD_SamplingPointProcess/aqd:measurementEquipment/aqd:MeasurementEquipment/aqd:otherEquipment, /aqd:AQD_SamplingPointProcess/aqd:samplingMethod/aqd:SamplingMethod/aqd:otherSamplingMethod, /aqd:AQD_SamplingPointProcess/aqd:SamplingEquipment/aqd:SamplingEquipment/aqd:otherEquipment or /aqd:AQD_SamplingPointProcess/aqd:analyticalTechnique/aqd:AnalyticalTechnique/aqd:otherAnalyticalTechnique populated must give a warning to contact helpdesk to add new vocabulary</D61>
+    <D61_SHORT>Please contact IPR helpdesk in order to add new vocabulary for either MeasurementMethods/MeasurementEquipment/SamplingMethod/SamplingEquipment/AnalyticalTecnique</D61_SHORT>
+    <D62>./ompr:processParameter/ompr:ProcessParameter/ompr:name must correspond to a valid code under http://dd.eionet.europa.eu/vocabulary/aq/processparameter/</D62>
+    <D62_SHORT>SamplingPointProcess parameters shall conform with registered vocabulary</D62_SHORT>
+    <D63>Where ./aqd:detectionLimit is resolved uom link resolving to any concept in http://dd.eionet.europa.eu/vocabulary/uom/concentration/ shall be provided</D63>
+    <D63_SHORT>If Detection Limit is specified, then a link to a concentration value from the eionet data dictionary must be provided.</D63_SHORT>
+    <D65>./aqd:unit shall resolve to   http://dd.eionet.europa.eu/vocabulary/uom/time/</D65>
+    <D65_SHORT>Time unit for process duration and cadence shall conform with registered vocabulary</D65_SHORT>
+    <D66>./aqd:numUnits shall contain an integer value</D66>
+    <D66_SHORT>Not implemented</D66_SHORT>
+    <D67a>Where ../AQD_SamplingPoint/aqd:usedAQD is “true”, ./aqd:equivalenceDemonstration/aqd:EquivalenceDemonstration/aqd:equivalenceDemonstrated must resolve to
+      http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/</D67a>
+    <D67a_SHORT>Sampling Process (used for compliance) was reported without or incorrect information on Equivalence demonstration.</D67a_SHORT>
+    <D67b>./aqd:equivalenceDemonstration/aqd:EquivalenceDemonstration/aqd:equivalenceDemonstrated should resolve to
+      http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/ for all SamplingPointProcess</D67b>
+    <D67b_SHORT>Sampling Process was reported without or incorrect information on Equivalence demonstration.</D67b_SHORT>
+    <D68>SamplingPointProcess(es) declared as an equivalent method” i.e. http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/yes but /aqd:demonstrationReport not provided.</D68>
+    <D68_SHORT>Sampling Process was declared as an equivalent method but the Demonstration Report was not provided.</D68_SHORT>
+    <D69>SamplingPointProcess(es) is missing mandatory document on Traceability and Uncertainty Estimation via aqd:AQD_SamplingPointProcess/aqd:dataQuality/aqd:DataQuality/aqd:documentation OR ./aqd:qaReport</D69>
+    <D69_SHORT>Sampling Process is missing mandatory document on Traceability and Uncertainty Estimation or QA report</D69_SHORT>
+    <D71>aqd:AQD_Sample/ompr:inspireId/base:Identifier/base:localId not unique codes:</D71>
+    <D71_SHORT>Local Id for Sample must be unique</D71_SHORT>
+    <D72>Count the number of unique AQD_Sample (via localId) submitted within base:namespace</D72>
+    <D72_SHORT>List unique namespaces used and count number of Sample(s) used.</D72_SHORT>
+    <D72.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D72.1>
+    <D72.1_SHORT>Check namespace is registered </D72.1_SHORT>
+    <D73>./sams:shape/gml:Point the srsName attribute shall be a recognisable URN . The following 3 srsNames are expected urn:ogc:def:crs:EPSG::3035  or urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326</D73>
+    <D73_SHORT>The coordinate reference system for the zones must be defined with a correct uniform resource name </D73_SHORT>
+    <D74>./sams:shape/gml:Point, the srsDimension attribute shall resolve to “2” to allow the coordinate of the feature of interest</D74>
+    <D74_SHORT>The srsDimension attribute must be '2'. </D74_SHORT>
+    <D75>./sams:shape/gml:Point/gml:pos shall resolve to within the approximate geographic location of the sampling point referencing the ../AQD_Sample record via ../aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest </D75>
+    <D75_SHORT>The Sample should be located near the SamplingPoint</D75_SHORT>
+    <D76>./aqd:builldingDistance shall contain a numerical value, WHERE ../aqd:AQD_SamplingPoint/aqd:relevantEmissions/aqd:RelevantEmissions/aqd:stationClassification = http://dd.eionet.europa.eu/vocabulary/aq/stationclassification/traffic
+      AND ../aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest is xlinked to this./aqd:AQD_Sample via /aqd:inspireId/base:Identifier/base:localId
+    </D76>
+    <D76_SHORT>Distance to building should be provided if SamplingPoint is classified as Traffic</D76_SHORT>
+    <D77>./aqd:kerbDistance shall contain a numerical value, WHERE ../aqd:AQD_SamplingPoint/aqd:relevantEmissions/aqd:RelevantEmissions/aqd:stationClassification is EQUAL to  http://dd.eionet.europa.eu/vocabulary/aq/stationclassification/traffic AND ../aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest is xlinked to this./aqd:AQD_Sample via /aqd:inspireId/base:Identifier/base:localId</D77>
+    <D77_SHORT>Distance to kerbside should be provided if SamplingPoint is classified as Traffic</D77_SHORT>
+    <D78>./aqd:inletHeight shall contain a numerical value, uom within it shall resolve to http://dd.eionet.europa.eu/vocabulary/uom/length/m</D78>
+    <D78_SHORT>Inlet Height must be in meters.</D78_SHORT>
+    <D79>sam:sampledFeature  shall resolve to a traversable local of global URI to an ../AQD_RepresentativeArea
+
+      or a nilReason must be provided like &lt;sam:sampledFeature nilReason="unknown"/>
+
+    </D79>
+    <D79_SHORT>Not implemented</D79_SHORT>
+    <D80>./aqd:inspireId/base:Identifier/base:localId shall be an unique code for AQD_RepresentativeArea and unique within namespace</D80>
+    <D80_SHORT>Not implemented</D80_SHORT>
+    <D81>./aqd:InspireId/base:Identifier/base:namespace shall be a unique namespace identifier for the data source (within an annual e-Reporting cycle). The namespace value will be owned by the data provider of the spatial object</D81>
+    <D81_SHORT>Not implemented</D81_SHORT>
+    <D81.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</D81.1>
+    <D81.1_SHORT>Not implemented</D81.1_SHORT>
+    <D82>./sam:sampledFeature shall resolve to http://sweet.jpl.nasa.gov/2.2/realm.owl#Atmosphere</D82>
+    <D82_SHORT>Not implemented</D82_SHORT>
+    <D83>The srsName attribute within ./sams:shape/gml:Point shall be a recognisable URN.  The following 3 srsNames are expected urn:ogc:def:crs:EPSG::3035 or urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326
+
+      Alternatives, like http://www.opengis.net/gml/srs/epsg.xml#4258 or EPSG:4258 should be flagged as error
+    </D83>
+    <D83_SHORT>Not implemented</D83_SHORT>
+    <D84>./sams:shape/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList shall resolve to within the approximate geographic location of the sampling point referencing the</D84>
+    <D84_SHORT>Not implemented</D84_SHORT>
+    <D85>./sams:shape/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList srsDimension attribute shall resolve to “2” to allow the x &amp;y-coordinate of the feature of interest.
+
+      ORDER of 2 coordinates MUST BE Latitude &amp; Longitud when providing the accepted srsNames (see D81)
+    </D85>
+    <D85_SHORT>Not implemented</D85_SHORT>
+    <D86>./sams:shape/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList count attribute shall resolve to the sum of x-y coordinate doublets.
+
+      ORDER of 2 coordinates doublets MUST BE Latitude &amp; Longitud when providing the accepted srsNames (see D81)
+    </D86>
+    <D86_SHORT>Not implemented</D86_SHORT>
+    <D87>./sams:shape/gml:Polygon/gml:exterior/gml:LinearRing/gml:posList shall resolve to the approximate geographic location of the sampling point referencing the</D87>
+    <D87_SHORT>Not implemented</D87_SHORT>
+    <D91>Each aqd:AQD_Sample reported within the XML shall be xlinked (at least once) via aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest@xlink</D91>
+    <D91_SHORT>All reported Sample(s) shall be used within at least one SamplingPoint</D91_SHORT>
+    <D92>Each aqd:AQD_SamplingPointProcess reported within the XML shall be xlinked (at least once) via /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:procedure@xlink</D92>
+    <D92_SHORT>All reported SamplingPointProcess(es) shall be used wihtin at least one SamplingPoint</D92_SHORT>
+    <D93>Each aqd:AQD_Station reported within the XML shall be xlinked (at least once) via aqd:AQD_SamplingPoint/ef:broader@xlink
+
+    </D93>
+    <D93_SHORT>All reported Station(s) shall be used within at least one SamplingPoint</D93_SHORT>
+    <D94>Each aqd:AQD_Netwok reported within the XML shall be xlinked (at least once) via /aqd:AQD_SamplingPoint/ef:belongsTo@xlink
+      or
+      /aqd:AQD_Station/ef:belongsTo@xlink
+    </D94>
+    <D94_SHORT>All reported Networks shall be used within at least one SamplingPoint or one Station</D94_SHORT>
+  </D>
+  <M>
+    <M0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </M0>
+    <M0_SHORT>Checks if this delivery is new or an update (on same reporting year)</M0_SHORT>
+    <M1>Compile &amp; feedback upon the total number of each environmental monitoring feature types included in the delivery</M1>
+    <M1_SHORT>Total number of individual element reported within this XML Document for assessment methods (models/objective estimation)</M1_SHORT>
+    <M2>Compile &amp; feedback upon the total number of new records for each environmental monitoring feature types included in the delivery</M2>
+    <M2_SHORT>Total number of new records for each feature type included in the delivery. Warning will be returned if all LocalIds are new.</M2_SHORT>
+    <M3>Compile &amp; feedback upon the total number of modification to existing for each environmental monitoring feature types included in the delivery</M3>
+    <M3_SHORT>Total number of updated records for each feature type included in the delivery. Warning will be returned if all LocalIds are new.</M3_SHORT>
+    <M4>Compile &amp; feedback a list of the unique identifier information for each new record or modification to an environmental monitoring feature type. Feedback report shall include the gml:id attribute, ef:inspireId, aqd:inspireId, ef:name and/or ompr:name elements as available.</M4>
+    <M4_SHORT>Full list of reported Environmental Monitoring Features within this XML Document</M4_SHORT>
+    <M5>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</M5>
+    <M5_SHORT>Id elements must have unique content</M5_SHORT>
+    <M6>./ef:inspireId/base:Identifier/base:localId shall be an unique code for AQD_Model and unique within the namespace.  It is recommended to start with “MOD” and may include ISO2-country code (e.g.: MOD-ES0001)</M6>
+    <M6_SHORT>./ef:inspireId/base:Identifier/base:localId shall be an unique code for AQD_Model and unique within the namespace.  It is recommended to start with “MOD” and may include ISO2-country code (e.g.: MOD-ES0001)</M6_SHORT>
+    <M7>Count the number of unique AQD_Model (via localId) submitted within base:namespace.</M7>
+    <M7_SHORT>List unique namespaces used and count number of Models used.</M7_SHORT>
+    <M7.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</M7.1>
+    <M7.1_SHORT>Check namespace is registered </M7.1_SHORT>
+    <M8>./ef:name shall return a string</M8>
+    <M8_SHORT>Model name must be provided</M8_SHORT>
+    <M9>The content of /ef:additionalDescription shall provide brief description for the model / objective estimation method</M9>
+    <M9_SHORT>The content of /ef:additionalDescription shall provide brief description for the model / objective estimation method</M9_SHORT>
+    <M10>The content of aqd:AQD_SamplingPoint/ef:mediaMonitored shall resolve to any concept inhttp://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/</M10>
+    <M10_SHORT>Must conform to the code 'air' in the Media codelist in the Inspire registry </M10_SHORT>
+    <M11>./ef:geometry shall contain a valid geometric property type, typically gml:Point, gml:MultiPoint, gml:Grid, gml:RectifiedGrid, gml:Polygon </M11>
+    <M11_SHORT>./ef:geometry shall contain a valid geometric property type, typically gml:Point, gml:MultiPoint, gml:Grid, gml:RectifiedGrid, gml:Polygon </M11_SHORT>
+    <M12>Removed</M12>
+    <M12_SHORT>updated in 4.0</M12_SHORT>
+    <M13>Removed</M13>
+    <M13_SHORT>updated in 4.0</M13_SHORT>
+    <M14>Removed</M14>
+    <M14_SHORT>updated in 4.0</M14_SHORT>
+    <M15>.ef:observingCapability/ef:ObservingCapability/ef:observingTime/gml:TimePeriod/gml:beginPosition shall be equal to or less than ./ef:operationalActivityPeriod/ef:OperationalActivityPeriod/ef:activityTime/gml:TimePeriod /gml:endPosition - gml:TimePeriod within the multiple ef:observingCapability MUST NOT overlap which each other</M15>
+    <M15_SHORT>Check if the operational period for the model is invalid or overlaps</M15_SHORT>
+    <M16>./ef:observingCapability/ef:ObservingCapability/ef:processType shall resolve to “INSPIRE_OM_Process” via an XLINK: http://inspire.ec.europa.eu/codelist/ProcessTypeValue/process (currently resolves to 404 error)</M16>
+    <M16_SHORT>ef:processType must conform to codelist in the Inspire registry</M16_SHORT>
+    <M17>./ef:observingCapability/ef:ObservingCapability/ef:resultNature element shall resolve to http://inspire.ec.europa.eu/codelist/ResultNatureValue/simulated (currently resolves to 404 error)</M17>
+    <M17_SHORT>ef:resultNature must conform to codelist in the Inspire registry</M17_SHORT>
+    <M18>./ef:observingCapability/ef:ObservingCapability/ef:observedProperty shall resolve to a valid code within http://dd.eionet.europa.eu/vocabulary/aq/pollutant/ Within a unique AQD_Model, multiple ef:observedProperty may be found. These MUST always resolve to the same code</M18>
+    <M18_SHORT>./ef:observingCapability/ef:ObservingCapability/ef:observedProperty shall resolve to a valid code within http://dd.eionet.europa.eu/vocabulary/aq/pollutant/ Within a unique AQD_Model, multiple ef:observedProperty may be found. These MUST always resolve to the same code</M18_SHORT>
+    <M19>./ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest shall resolve to a traversable link to a unique  AQD_ModelArea (“namespace/localId” of the object)</M19>
+    <M19_SHORT>Links between Model and ModelArea shall be traceable and valid</M19_SHORT>
+    <M20>./ef:observingCapability/ef:ObservingCapability/ef:procedure shall resolve to a traversable local of global URI to ../aqd:AQD_ModelProcess</M20>
+    <M20_SHORT>Links between Model and ModelProcess shall be traceable and valid</M20_SHORT>
+    <M21>./ef:organisationLevel attribute shall resolve to a valid code in http://dd.eionet.europa.eu/vocabulary/aq/reportinglevel/  (e.g. http://dd.eionet.europa.eu/vocabulary/aq/reportinglevel/national</M21>
+    <M21_SHORT>ef:organisationLevel </M21_SHORT>
+    <M22>Empty</M22>
+    <M23> Number of invalid 3 elements aqd:AQD_Model/aqd:environmentalObjective/aqd:EnvironmentalObjective/ combinations</M23>
+    <M23_SHORT>Number of invalid 3 elements in Model and Environmental Objective combinations:</M23_SHORT>
+    <M24>/aqd:assessmentType shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/ via xlink:href to either http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/model or http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/objective</M24>
+    <M24_SHORT>Check that Assessment Type conforms to either Model or Objective</M24_SHORT>
+    <M25>If ./aqd:usedAQD  equals “true”, the AQD_Model must be xlinked in at least at one  /aqd:AQD_AssessmentRegime /aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata (dataset C)</M25>
+    <M25_SHORT>Yes</M25_SHORT>
+    <M26>./aqd:zone shall resolve to a traversable local of global URI to AQD_Zones via xlink:href</M26>
+    <M26_SHORT>Check if there are any invalid link from Model  to zone(s)</M26_SHORT>
+    <M27>./ompr:inspireId/base:Identifier/base:localId shall be an unique code for SamplingPointProcess and within the namespace</M27>
+    <M27_SHORT>ModelProcess localId must be unique within the namespace</M27_SHORT>
+    <M28>./ompr:inspireld/base:Identifier/base:namespace shall be a unique namespace identifier for the data source (within an annual e-Reporting cycle). The namespace value will be owned by the data provider of the spatial object</M28>
+    <M28_SHORT>List unique namespaces used and count number of ModelProcess used.</M28_SHORT>
+    <M28.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</M28.1>
+    <M28.1_SHORT>Check namespace is registered </M28.1_SHORT>
+    <M29>./ompr:documentation/base2:DocumentationCitation/base2:link shall resolve to a traceable URL </M29>
+    <M29_SHORT>./ompr:documentation/base2:DocumentationCitation/base2:link shall resolve to a traceable URL </M29_SHORT>
+    <M30>./ompr:name shall resolve to provide a name for the model process configuration </M30>
+    <M30_SHORT>ModelProcess name should be provided</M30_SHORT>
+    <M31>./ompr:type shall resolve to a text description of the type of "process" or "configuration" </M31>
+    <M31_SHORT>./ompr:type shall resolve to a text description of the type of "process" or "configuration" </M31_SHORT>
+    <M32>ompr:processParameter/ompr:ProcessParameter/ompr:name  shall resolve to a valid code within  http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/ &amp; ompr:processParameter/ompr:ProcessParameter/ompr:description resolve to a text description of the model process  -- e.g.  &lt;ompr:name xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/emissions"/> &lt;ompr:description>NAEI2011 data, scaled forward to 2012 by linear interpolation between 2011 and projected (UEP45) 2012 data.&lt;/ompr:description></M32>
+    <M32_SHORT>Not implemented</M32_SHORT>
+    <M33>If the aqd:AQD_Model/aqd:assessmentType resolves to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/model (please note that the link between AQD_Model and AQD_ModelProcess is made via an xlink with aqd:AQD_Model/ef:observingCapability/ef:ObservingCapability/ef:procedure - AQD_ModelProcess shall include a description of the following modelparameters: http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/chemistry http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/emissions http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/meterology http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/topography </M33>
+    <M33_SHORT>Not implemented</M33_SHORT>
+    <M34>aqd:AQD_ModelProcess/aqd:description shall provide a free text description of the model - e.g. GIS-based dispersion kernel approach for 1x1km background concentrations from area source emissions, calibrated with monitoring. The contribution from point sources is estimated using a separate dispersion model and then included in the total. A bi-linear interpolation of corrected rural measurement data has been used to map regional background NOx concentrations throughout the UK.</M34>
+    <M34_SHORT>A textual description of model process</M34_SHORT>
+    <M35>/aqd:AQD_ModelProcess/aqd:temporalResolution/aqd:TimeReferences/aqd:unit shall resolve to   http://dd.eionet.europa.eu/vocabulary/uom/time/</M35>
+    <M35_SHORT>The unit of the temporal resolution should be provided and conform with vocabulary</M35_SHORT>
+    <M36>./aqd:numUnits shall contain an integer value</M36>
+    <M36_SHORT>./aqd:numUnits shall contain an integer value</M36_SHORT>
+    <M37>./aqd:spatialResolution shall provide a free text description of the spatial resolution of the model - e.g. 1x1km background concentrations</M37>
+    <M37_SHORT>./aqd:spatialResolution shall provide a free text description of the spatial resolution of the model - e.g. 1x1km background concentrations</M37_SHORT>
+    <M38>./dataQualityDescription shall provide a description of the quality of the model data / objective estimation in relation to the DQOs</M38>
+    <M38_SHORT>./dataQualityDescription shall provide a description of the quality of the model data / objective estimation in relation to the DQOs</M38_SHORT>
+    <M39>./dataQualityReport shall provide a traceable URL (Note to data provider, the url should lead to a report describing the data quality equaluation process)</M39>
+    <M39_SHORT>Check Data Quality Report is provided  via a traceable URL</M39_SHORT>
+    <M40>./aqd:inspireId/base:Identifier/base:localId shall be an unique code for AQD_Sample and unique within the namespace</M40>
+    <M40_SHORT>ModelArea localId must be unique within the namespace</M40_SHORT>
+    <M41>./aqd:inspireId/base:Identifier/base:namespace shall be a unique namespace identifier for the data source (within an annual e-Reporting cycle). The namespace value will be owned by the data provider of the spatial object and will be registered in the INSPIRE External Object Identifier Namespaces Register</M41>
+    <M41_SHORT>List unique namespaces used and count number of ModelArea used.</M41_SHORT>
+    <M41.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</M41.1>
+    <M41.1_SHORT>Check namespace is registered </M41.1_SHORT>
+    <M42>Check on ./sam:sampledFeature to be skipped. This element is not relevant and might contain xlink to  http://sweet.jpl.nasa.gov/2.2/realm.owl or &lt;sam:sampledFeature nilReason="inapplicable" xsi:nil="true"/></M42>
+    <M42_SHORT>No</M42_SHORT>
+    <M43>/sams:shape/gml:Polygon, ./sams:shape/gml:Point, ./sams:shape/gml:MultiPoint, ./sams:shape/gml:MultiSurface, ./sams:shape/gml:Grid, ./sams:shape/gml:RectifiedGrid the srsName attribute shall be a recognisable URN. The following 3 srsNames are expected urn:ogc:def:crs:EPSG::3035 or urn:ogc:def:crs:EPSG::4258 or urn:ogc:def:crs:EPSG::4326</M43>
+    <M43_SHORT>The coordinate reference system for the ModelArea must be defined with a correct uniform resource name</M43_SHORT>
+    <M44>./sams:shape shall contain a valid geometric property type, typically gml:Point, gml:MultiPoint, gml:MultiSurface, gml:Grid, gml:RectifiedGrid, gml:Polygon</M44>
+    <M44_SHORT>./sams:shape shall contain a valid geometric property type, typically gml:Point, gml:MultiPoint, gml:MultiSurface, gml:Grid, gml:RectifiedGrid, gml:Polygon</M44_SHORT>
+    <M45>.../gml:posList the count attribute shall resolve to the sum of y &amp; x;coordinate doublets.  </M45>
+    <M45_SHORT>The count attribute must be equal to the Y and X coordinate doublets</M45_SHORT>
+    <M46>Check that the coordinates lists in .../gml:posList ar presented in lat / long (y;axis / x;axis) notation.  </M46>
+    <M46_SHORT>The coordinates must be ordered as latitude (y-axis) ,longtitude (x-axis)</M46_SHORT>
+  </M>
+  <E>
+    <E0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </E0>
+    <E0_SHORT>Checks if this delivery is new or an update (on same reporting year)</E0_SHORT>
+    <E01>Compile &amp; feedback upon the total number of observations included in the delivery</E01>
+    <E01_SHORT>Total number Observations within this XML Document</E01_SHORT>
+    <E1>/om:OM_Observation gml:id attribute shall be unique code for the group of observations enclosed by /OM_Observation within the delivery.
+      Please note that the om:OM_Observation do not have INSPIRE ID like all other elments with namespace &amp; localId
+    </E1>
+    <E1_SHORT>GML identifier for om:OM_Observation attribute shall be unique code
+    </E1_SHORT>
+    <E2>./om:phenomenonTime/gml:TimePeriod/gml:beginPosition shall be LESS THAN ./om:phenomenonTime/gml:TimePeriod/gml:endPosition.</E2>
+    <E2_SHORT>Start time must be less than end time (phenomenonTime)</E2_SHORT>
+    <E3>./om:resultTime/gml:TimeInstant/gml:timePosition shall be GREATER THAN ./om:phenomenonTime/gml:TimePeriod/gml:endPosition</E3>
+    <E3_SHORT>The resultTime must be after the phenomenonTime</E3_SHORT>
+    <E4>All om:OM_Observation/ must provide a valid /om:procedure xlink (can not be empty)
+      &amp;
+      ./om:procedure xlink:href attribute shall resolve to a traversable link process configuration in Data flow D: /aqd:AQD_SamplingPointProcess/ompr:inspireld/base:Identifier/base:localId
+    </E4>
+    <E4_SHORT>Observation must link to a valid AQD_SamplingPointProcess in dataflow D (via om:procedure)</E4_SHORT>
+    <E5>A valid delivery MUST provide an om:parameter with om:name xlink:href to
+      http://dd.eionet.europa.eu/vocabulary/aq/processparameter/SamplingPoint
+    </E5>
+    <E5_SHORT>Observation must provide a link to SamplingPoint</E5_SHORT>
+    <E6>If ./om:parameter/om:NamedValue/om:name xlink:href  resolves to http://dd.eionet.europa.eu/vocabulary/aq/processparameter/SamplingPoint
+      /om:parameter/om:NamedValue/om:value xlink:href attribute shall resolve to a traversable link to a unique AQD_SamplingPoint (“namespace/localId” of the object)
+    </E6>
+    <E6_SHORT>Observation must link to a valid AQD_SamplingPoint in dataflow D (via om:parameter/...)</E6_SHORT>
+    <E7>A valid delivery should provide  an om:parameter with om:name xlink:href to
+      http://dd.eionet.europa.eu/vocabulary/aq/processparameter/AssessmentType</E7>
+    <E7_SHORT>Observation should provide link to Assessment Type</E7_SHORT>
+    <E8>If ./om:parameter/om:NamedValue/om:name links to http://dd.eionet.europa.eu/vocabulary/aq/processparameter/AssessmentType /om:parameter/om:NamedValue/om:value xlink:href attribute shall resolve to  valid code for http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/</E8>
+    <E8_SHORT>Observation must provide a correct link to AssessmentType vocabulary</E8_SHORT>
+    <E9>OM observations shall contain several om:parameters to further define the observations.
+      ./om:parameter/om:NamedValue/om:name xlink:href attribute shall resolve to a traversable link to http://dd.eionet.europa.eu/vocabulary/aq/processparameter/</E9>
+    <E9_SHORT>All observation paramater should link to be registered under vocabulary</E9_SHORT>
+    <E10>./om:parameter/om:NamedValue/om:name xlink:href attribute shall resolve to a traversable link to http://dd.eionet.europa.eu/vocabulary/aq/processparameter/ </E10>
+    <E10_SHORT>Pollutant must be a registered under vocabulary </E10_SHORT>
+    <E11>The pollutant xlinked via /om:observedProperty must match the pollutant code declared via /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:observedProperty  (See E6 on linkages between the Observations &amp; the SamplingPoint)</E11>
+    <E11_SHORT>The pollutant for the observation must match the pollutant of the SamplingPoint</E11_SHORT>
+    <E12>All om:OM_Observation/ must provide a valid /om:featureOfInterest xlink (can not be empty)&amp;  /om:featureOfInterest xlink:href attribute shall resolve to a traversable link to /aqd:AQD_Sample/ompr:inspireld/base:Identifier/base:localId</E12>
+    <E12_SHORT>Observation must link to a valid AQD_Sample in dataflow D (via om:featureOfInterest)</E12_SHORT>
+    <E13>The temporal envelopes of ./om:phenomenonTime/gml:TimePeriod/gml:beginPosition shall reconcile with /aqd:AQD_SamplingPoint/ef:operationalActivityPeriod/ef:OperationalActivityPeriod associated with the citations via /om:parameter/om:value xlink:href attribute AND /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:observingTime/gml:TimePeriod/ associated with /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:procedure the citations via /om:procedure xlink:href attribute</E13>
+    <E13_SHORT>Yes</E13_SHORT>
+    <E14>./om:result/swe:DataArray/swe:elementCount/swe:Count/swe:value shall resolve to the count of observations in /om:result/swe:DataArray/swe:values</E14>
+    <E14_SHORT>Not implemented</E14_SHORT>
+    <E15>IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="startTime" attribute THEN swe:Time definition=http://www.opengis.net/def/property/OGC/0/SamplingTime swe:uom xlink:href=http://www.opengis.net/def/uom/ISO-8601/0/Gregorian</E15>
+    <E15_SHORT>Check valid definition for startTime</E15_SHORT>
+    <E16>IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="endTime" attribute THEN swe:Time definition=http://www.opengis.net/def/property/OGC/0/SamplingTime swe:uom xlink:href=http://www.opengis.net/def/uom/ISO-8601/0/Gregorian</E16>
+    <E16_SHORT>Check valid definition for endTime</E16_SHORT>
+    <E17>IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="validity" attribute THEN swe:Category definition is defined by http://dd.eionet.europa.eu/vocabulary/aq/observationvalidity</E17>
+    <E17_SHORT>Check valid definition for observation validity</E17_SHORT>
+    <E18>IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="verification" attribute THEN swe:Category definition is defined by http://dd.eionet.europa.eu/vocabulary/aq/observationverification</E18>
+    <E18_SHORT>Check valid definition for observation verification</E18_SHORT>
+    <E19>IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="Value" attribute THEN swe:Quantity definition is defined by http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/[code] &amp; the swe:uom resolves to an xlink to http://dd.eionet.europa.eu/vocabulary/uom/concentration/[code]</E19>
+    <E19_SHORT>Check valid definition for the observation values (primaryObservation code &amp; concentration)</E19_SHORT>
+    <E19b>Check if the unit of measure reporting via (swe:uom) corresponds to the recommended unit of measure in vocabulary http://dd.eionet.europa.eu/vocabulary/uom/concentration/[code] depending on pollutant reported via /om:observedProperty</E19b>
+    <E19b_SHORT>Check if data is provided using the recommended unit according to vocabulary </E19b_SHORT>
+    <E20>A fifth element might be included. IF ./om:result/swe:DataArray/swe:elementType/swe:DataRecord/swe:field name="DataCapture" attribute THEN swe:Category definition is defined by http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/dc &amp; the swe:uom resolves to an xlink to http://dd.eionet.europa.eu/vocabulary/uom/statistics/percentage</E20>
+    <E20_SHORT>Check valid definition for the data coverage element (if provided)</E20_SHORT>
+    <E21>/om:result/swe:DataArray/swe:encoding/swe:TextEncoding shall resolve to decimalSeparator="." tokenSeparator="," blockSeparator="@@"</E21>
+    <E21_SHORT>Check valid TextEncoding (decimalSeparator="." tokenSeparator="," blockSeparator="@@")</E21_SHORT>
+    <E22>The order of the fields within individual data blocks (swe:values) must correspond to the order described within the swe:DataRecord/swe:field(multiple).</E22>
+    <E22_SHORT>The order of the fields within individual data blocks must correspond to the order described.</E22_SHORT>
+    <E23>The count of elements under &lt;swe:elementCount>&lt;swe:Count>&lt;swe:value> should match the count of data blocks under &lt;swe:values>.</E23>
+    <E23_SHORT>The count of values provided for observation should match the count declared.</E23_SHORT>
+    <E24>Difference between endTime &amp; startTime must correspond to the definition under &lt;swe:field name="Value">&lt;swe:Quantity definition=> .Difference between endTime &amp; startTime must correspond to the definition:
+      http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/hour must be 1 h
+      http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/day must be 24 hours
+      http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/year must be 8760 hours or 8784
+      http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/var can be anything</E24>
+    <E24_SHORT>Difference between endTime &amp; startTime must correspond to the definition under &lt;swe:field name="Value">&lt;swe:Quantity definition=>.</E24_SHORT>
+    <E25>The temporal envelopes of the swe:values (reported via starTime and EndTime) shall reconcile with ./om:phenomenonTime/gml:TimePeriod/gml:beginPosition</E25>
+    <E25_SHORT>The temporal envelopes of the swe:values (reported via starTime and EndTime) shall reconcile with ./om:phenomenonTime/gml:TimePeriod/gml:beginPosition</E25_SHORT>
+    <E26>Check valid “constellation”:
+      The combination of SamplingPoint, SamplingPointProcess, Sample and Pollutant must be valid compared to latest Assessment Methods (D) reported
+
+      /om:parameter/om:NamedValue/om:value xlink:href attribute
+      when
+      /om:parameter/om:NamedValue/om:name xlink:href  resolves to http://dd.eionet.europa.eu/vocabulary/aq/processparameter/SamplingPoint
+      +
+      /om:procedure xlink:href attribute
+      +
+      /om:featureOfInterest xlink:href attribute
+      +
+      om:observedProperty xlink:href attribute
+
+      must be found in latest metadata (D) as
+      /aqd:AQD_SamplingPoint/ef:inspireId/base:localId (note xlink above include “namespace”)
+      +
+      /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:procedure
+      +
+      /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:featureOfInterest
+      +
+      /aqd:AQD_SamplingPoint/ef:observingCapability/ef:ObservingCapability/ef:observedProperty
+    </E26>
+    <E26_SHORT>The combination of SamplingPoint, SamplingPointProcess, Sample and Pollutant must be valid compared to latest Assessment Methods (D) reported</E26_SHORT>
+    <E27>Check that all values (between @@) include as many fields as declared under swe:DataRecord</E27>
+    <E27_SHORT>Check that all values (between @@) include as many fields as declared under swe:DataRecord</E27_SHORT>
+    <E28>The data array should not end with "@@". Please note that @@ is a block separator.</E28>
+    <E28_SHORT>The data array should not end with "@@". Please note that @@ is a block separator.</E28_SHORT>
+    <E29>Check for unexpected spaces around all values (between comma separator) under swe:values</E29>
+    <E29_SHORT>Check for unexpected spaces around all values (between comma separator) under swe:values</E29_SHORT>
+    <E30>Check for possible outliers reported. List of valid values found outside the range according to http://dd.eionet.europa.eu/vocabulary/aq/primaryObservationRange/</E30>
+    <E30_SHORT>Check for possible outliers reported. List of valid values found outside the range according to http://dd.eionet.europa.eu/vocabulary/aq/primaryObservationRange/</E30_SHORT>
+    <E31>Check for date overlaps between consecutive data blocks within swe:values</E31>
+    <E31_SHORT>Check for date overlaps between consecutive data blocks within swe:values</E31_SHORT>
+    <E32>Check that all data submitted via CDR has been fully verified. The verification flag must be 1 for all data.</E32>
+    <E32_SHORT>Check that all data submitted via CDR has been fully verified (flag 1)</E32_SHORT>
+  </E>
+  <G>
+    <G0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </G0>
+    <G0_SHORT>Checks if this delivery is new or an update (on same reporting year)</G0_SHORT>
+    <G1>Compile &amp; feedback upon the total number of attainment records included in the delivery</G1>
+    <G1_SHORT>Number of Attainments reported</G1_SHORT>
+    <G2>Compile &amp; feedback upon the total number of new attainment records included in the delivery. &lt;b>ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.&lt;/b></G2>
+    <G2_SHORT>Number of new Attainments compared to previous report. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries</G2_SHORT>
+    <G3>Compile &amp; feedback upon the total number of updated attainment records included in the delivery. &lt;b>ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).&lt;/b></G3>
+    <G3_SHORT>Number of existing Attainment compared to previous report. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</G3_SHORT>
+    <G4>Compile &amp; feedback a list of the unique identifier information for all attainment records included in the delivery. Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget, ./aqd:zone, /aqd:assessment elements as available.</G4>
+    <G4_SHORT>List of unique identifier information for all attainment records. Error, if no attainments</G4_SHORT>
+    <G5>Compile &amp; feedback a list of the exceedances situations when aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance is TRUE</G5>
+    <G5_SHORT>List number of final exceedances (TRUE)</G5_SHORT>
+    <G6>Compile &amp; feedback a list of attainment records that have been assessed against the objectiveType for zones with time extensions ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType/@xlink:href – “LVmaxMOT” link via ./aqd:zone to /aqd:AQD_Zone record &amp; present the /aqd:AQD_Zone/aqd:timeExtensionExemption info. Feedback report shall include ./aqd:inspireId, ./aqd:pollutant, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric, ./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget, ./aqd:zone, ./aqd:pollutant, /aqd:AQD_Zone/aqd:timeExtensionExemption</G6>
+    <G6_SHORT>Check and provide a list of those attainment records with a time extension</G6_SHORT>
+    <G7>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</G7>
+    <G7_SHORT>All gml ID attributes shall have unique code</G7_SHORT>
+    <G8>./aqd:inspireId/base:Identifier/base:localId must be unique code for the attainment records </G8>
+    <G8_SHORT>Local Id must be unique for the attainment records</G8_SHORT>
+    <G9> ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</G9>
+    <G9_SHORT>List unique namespaces used and count number of elements</G9_SHORT>
+    <G9.1>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</G9.1>
+    <G9.1_SHORT>Check namespace is registered </G9.1_SHORT>
+    <G10>The content of ./aqd:pollutant xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014 http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029
+    </G10>
+    <G10_SHORT>The Attainment Pollutant  must be one of the following: SO2, O3, NO2, NOX, PM10, PM2.5, CO, Pb in PM10,
+      Cd in PM10, Ni in PM10, As in PM10, BaP in PM10</G10_SHORT>
+    <G11>Element ./aqd:exceedanceDescriptionBase may only be used
+      WHERE
+      ./aqd:pollutant xlink:href attribute EQUALs
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10
+    </G11>
+    <G11_SHORT>Exceedance Description Base is only expected for the following pollutants: SO2, PM10, PM2.5, CO</G11_SHORT>
+    <G12>Element ./aqd:exceedanceDescriptionAdjustment can only be used
+      WHERE
+      ./aqd:pollutant xlink:href attribute EQUALs
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5  http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001
+      http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10
+    </G12>
+    <G12_SHORT>Exceedance Description Adjustment is only expected for the following pollutants: SO2, PM10, PM2.5, CO</G12_SHORT>
+    <G13>./aqd:assessment xlink:href attribute shall resolve to a valid assessment regime within /aqd:AQD_AssessmentRegime
+      AND
+      /aqd:AQD_AssessmentRegime/aqd:pollutant, aqd:AQD_AssessmentRegime/aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType
+      EQUAL to
+      aqd:AQD_Attainment/aqd:pollutant
+      aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType
+    </G13>
+    <G13_SHORT>Attainment should link to a valid assessment regime with matching Pollutant and Objetive Type</G13_SHORT>
+    <G13b>./aqd:assessment xlink:href attribute shall resolve to a valid assessment regime within /aqd:AQD_AssessmentRegime
+      AND
+      /aqd:AQD_AssessmentRegime/aqd:pollutant, aqd:AQD_AssessmentRegime/aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget
+      EQUAL to
+      aqd:AQD_Attainment/aqd:pollutant
+      aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget
+    </G13b>
+    <G13b_SHORT>Attainment must link to a valid assessment regime with matching Pollutant and Protection Target</G13b_SHORT>
+    <G13c>aqd:AQD_Attainment/aqd:pollutant
+      aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType
+      aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric
+      aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget
+
+      should correspond with
+      aqd:AQD_AssessmentRegime/aqd:pollutant
+      aqd:AQD_AssessmentRegime/aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType
+      aqd:AQD_AssessmentRegime/aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric
+      aqd:AQD_AssessmentRegime/aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget
+    </G13c>
+    <G13c_SHORT>Attainment should link to a valid assessment regime with matching Pollutant/Objective Type/ReportingMetric/ProtectionTarget/</G13c_SHORT>
+    <G14>COUNT number zone-pollutant-target combination to match those in dataset B and dataset C for the same reporting Year &amp; compare it with Attainment.
+
+      aqd:AQD_Attainment/aqd:pollutant xlink + aqd:AQD_Attainment/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget + aqd:AQD_Attainment/aqd:zone
+      .aqd:assessmentThreshold/aqd:AssessmentThreshold/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget
+      + ./aqd:pollutant
+      + /aqd:zone
+      combinations shall reconcile to corresponding information within /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget ,  /aqd:AQD_Zone/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode + /aqd:AQD_Zone/am:inspireId/base:Identifier/base:localId
+    </G14>
+    <G14_SHORT>COUNT number zone-pollutant-target combination to match those in dataset B and dataset C for the same reporting Year</G14_SHORT>
+    <G14b>For the same reporting year, all the /aqd:AQD_AssessmentRegime reported under dataflow C, must be xlinked once at /aqd:AQD_Attainment /aqd:assessment xlink:href attribute</G14b>
+    <G14b_SHORT>All the /aqd:AQD_AssessmentRegime reported under latest dataflow C must be xlinked once at one Attainment (with exception of /MO)</G14b_SHORT>
+    <G15>The subject of ./aqd:zone xlink:href attribute shall resolve to a valid AQ zone with /aqd:AQD_Zone</G15>
+    <G15_SHORT>Must be a valid AQ Zone.</G15_SHORT>
+    <G16>The subject of the ./aqd:zone xlink:href attribute shall contain /aqd:AQD_Zone/am:designationPeriod/gml:TimePeriod/gml:endPosition that is unclosed </G16>
+    <G16_SHORT>Yes</G16_SHORT>
+    <G17>The subject of the ./aqd: zone xlink:href attribute shall contain a /aqd:AQD_Zone/aqd:pollutant EQUAL to ./aqd:pollutan</G17>
+    <G17_SHORT>Linked zones must contain same pollutant as the Attainment</G17_SHORT>
+    <G18>The subject of the ./aqd: zone xlink:href attribute shall contain a /aqd:AQD_Zone/aqd:timeExtensionExemption shall NOT EQUAL http://dd.eionet.europa.eu/vocabulary/aq/timeextensiontypes/none WHERE ./aqd:exceedanceDescription_Final/aqd:ExceedanceDescription/aqd:environmentalObj ective/aqd:EnvironmentalObjective/aqd:objectiveType xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/LVmaxMOT</G18>
+    <G18_SHORT>Any attainment for LVmaxMOT should link to a zone with a time extension</G18_SHORT>
+    <G19>./aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType xlink:href attribute shall resolve to one of
+      http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/LV http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/TV
+      http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/LVMOT
+      http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/LVmaxMOT http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/CL http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/LTO http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/ECO
+      http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/INT
+      http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/ALT
+    </G19>
+    <G19_SHORT>Objective Type must use one of the following:
+      TV
+      LV
+      CL
+      LVMOT
+      LVmaxMOT
+      INT
+      ALT
+      LTO
+      ECO</G19_SHORT>
+    <G20>The content of ./aqd:EnvironmentalObjective/aqd:reportingMetric shall resolve to a valid concept in http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/ that must be one of
+
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/3hAbove
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/aMean
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/wMean
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/hrsAbove
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/daysAbove
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/daysAbove-3yr
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/maxd8hrMean
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/AOT40c
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/AOT40c-5yr
+      http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/AEI</G20>
+    <G20_SHORT>The Exceedence description must use an approved reporting metric, These are:
+      Three consecutive hours in exceedance
+      Annual mean / average
+      Winter Mean
+      Hours in exceedance in a calendar year
+      Days in exceedance in a calendar year
+      Days in exceedance averaged over 3 calendar years
+      Accumulated Ozone Exposure
+      Accumulated Ozone Exposure averaged over 5 years
+      Average Exposure Indicator</G20_SHORT>
+    <G21>If ./aqd:protectionTarget shall resolve to a register vocabulary under http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/[Code]</G21>
+    <G21_SHORT>The protection target must use the approved vocabulary</G21_SHORT>
+    <G22>Check that EnvironmentalObjetive (ObjectiveType+ReportingMetric+ProtectionTarget) correspond to a valid combination in http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/view</G22>
+    <G22_SHORT>Check and list any invalid combination of pollutant &amp; environmental objective</G22_SHORT>
+    <G23>inc G22</G23>
+    <G23_SHORT>Content check</G23_SHORT>
+    <G24>inc G22</G24>
+    <G24_SHORT>Content check</G24_SHORT>
+    <G25>inc G22</G25>
+    <G25_SHORT>Content check</G25_SHORT>
+    <G26>inc G22</G26>
+    <G26_SHORT>Content check</G26_SHORT>
+    <G27>inc G22</G27>
+    <G27_SHORT>Content check</G27_SHORT>
+    <G28>inc G22</G28>
+    <G28_SHORT>Content check</G28_SHORT>
+    <G29>inc G22</G29>
+    <G29_SHORT>Content check</G29_SHORT>
+    <G30>inc G22</G30>
+    <G30_SHORT>Content check</G30_SHORT>
+    <G31>inc G22</G31>
+    <G31_SHORT>Content check</G31_SHORT>
+    <G32>inc G22</G32>
+    <G32_SHORT>Content check</G32_SHORT>
+    <G33>inc G22</G33>
+    <G33_SHORT>Content check</G33_SHORT>
+    <G34>All occurrences of the srsDimension attribute in
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall EQUAL “2”
+    </G34>
+    <G34_SHORT>Not implemented</G34_SHORT>
+    <G35>All occurrences of the srsName attribute in
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall resolve to a valid spatial reference system URN or URI
+    </G35>
+    <G35_SHORT>Not implemented</G35_SHORT>
+    <G36>/aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea uom attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/uom/area/km2 </G36>
+    <G36_SHORT>Not implemented</G36_SHORT>
+    <G37>/aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km </G37>
+    <G37_SHORT>Not implemented</G37_SHORT>
+    <G38>The content of /aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification xlink:xref shall resolve to a areaClassification in http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-nearcity
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-regional
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-remote
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban</G38>
+    <G38_SHORT>Classification type must be one of the following:
+      rural
+      rural-nearcity
+      rural-regional
+      rural-remote
+      urban
+      suburban</G38_SHORT>
+    <G39>./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall resolve to a model description in /aqd:AQD_Model</G39>
+    <G39_SHORT>The exceeding AQ_Model shall resolve to a traversable local of global URL.</G39_SHORT>
+    <G40>The subject of ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G40>
+    <G40_SHORT>The exceeding AQ_Model must be included in the corresponding AssessmentRegime</G40_SHORT>
+    <G41>./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed xlink:href attribute shall resolve to a sampling point description in /aqd:AQD_SamplingPoint</G41>
+    <G41_SHORT>The exceeding SamplingPoint shall resolve to a traversable local of global URL.</G41_SHORT>
+    <G42>The subject of ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G42>
+    <G42_SHORT>The exceeding SamplingPoint must be included in the corresponding AssessmentRegime</G42_SHORT>
+    <G43>./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition shall specify a year in yyyy format.</G43>
+    <G43_SHORT>Not implemented</G43_SHORT>
+    <G44>./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true” or “false”</G44>
+    <G44_SHORT>Baseline exceedance must be TRUE or FALSE (if provided)</G44_SHORT>
+    <G45>If ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedance is TRUE EITHER
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:numericalExceedance
+      OR
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:numberExceedances
+      must be provided AS an integer number</G45>
+    <G45_SHORT>If baseline exceedance is TRUE numericalExceedance or numberExceedances must be provided</G45_SHORT>
+    <G46>If ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:exceedance is FALSE EITHER
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:numericalExceedance
+      OR
+      ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:numberExceedances
+      must be provided AS an integer number
+    </G46>
+    <G46_SHORT>If baseline exceedance is FALSE the provision of numericalExceedance or numberExceedances is useful</G46_SHORT>
+    <G47> ./aqd:exceedanceDescriptionBase/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType xlink:href attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplied</G47>
+    <G47_SHORT>Deduction is not allowed when providing Baseline Exceedance</G47_SHORT>
+    <G48>All occurrences of the srsDimension attribute in
+      ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall EQUAL “2”
+    </G48>
+    <G48_SHORT>Not implemented</G48_SHORT>
+    <G49>All occurrences of the srsName attribute in
+      ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall resolve to a valid spatial reference system URN or URI
+    </G49>
+    <G49_SHORT>Not implemented</G49_SHORT>
+    <G50>/aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea uom attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/uom/area/km2 </G50>
+    <G50_SHORT>Not implemented</G50_SHORT>
+    <G51>/aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km </G51>
+    <G51_SHORT>Not implemented</G51_SHORT>
+    <G52>The content of /aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:areaClassification xlink:xref shall resolve to a areaClassification in http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-nearcity
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-regional
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-remote
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban</G52>
+    <G52_SHORT>If provided unde Adjustment Exceedance, area classification must be one of the following:
+      rural
+      rural-nearcity
+      rural-regional
+      rural-remote
+      urban
+      suburban</G52_SHORT>
+    <G53>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall resolve to a model description in aqd:AQD_Model</G53>
+    <G53_SHORT>The exceeding AQ_Model shall resolve to a traversable local of global URL.</G53_SHORT>
+    <G54>The subject of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G54>
+    <G54_SHORT>The exceeding AQ_Model must be included in the corresponding AssessmentRegime</G54_SHORT>
+    <G55> ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed xlink:href attribute shall resolve to a sampling point description in /aqd:AQD_SamplingPoint</G55>
+    <G55_SHORT>The exceeding SamplingPoint shall resolve to a traversable local of global URL.</G55_SHORT>
+    <G56>The subject of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G56>
+    <G56_SHORT>The exceeding SamplingPoint must be included in the corresponding AssessmentRegime</G56_SHORT>
+    <G57>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition shall specify a year in yyyy format.</G57>
+    <G57_SHORT>Not implemented</G57_SHORT>
+    <G58>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true” or “false”</G58>
+    <G58_SHORT>Adjusment exceedance must be TRUE or FALSE</G58_SHORT>
+    <G59>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:numericalExceedance shall be an integer number</G59>
+    <G59_SHORT>If adjustment exceedance is TRUE numericalExceedance or numberExceedances must be provided</G59_SHORT>
+    <G60>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:numberExceedances shall be an integer number</G60>
+    <G60_SHORT>If adjustment exceedance is FALSE the provision of numericalExceedance or numberExceedances is useful</G60_SHORT>
+    <G61>The content of /aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType xlink:xref shall resolve to a adjustmentType in http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/nsCorrection
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/wssCorrection</G61>
+    <G61_SHORT>The Adjustment Method type shall be 'Natural source correction' or 'Winter-sanding or -salting correction'</G61_SHORT>
+    <G62>The content of /aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmenSource xlink:xref shall resolve to a adjustmenSource in http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/A1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/A2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/B
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/B1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/B2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/C1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/C2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/D1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/D2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/E1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/E2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/F1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/F2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/G1
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/G2
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/H</G62>
+    <G62_SHORT>The Adjustment Source Type must be one of the registered vocabulary.</G62_SHORT>
+    <G63> The content of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed
+      http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/model
+      http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/indicative
+      http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/objective</G63>
+    <G63_SHORT>Assessment Type must be one of the following: fixed, model, indicative or objective estimation</G63_SHORT>
+    <G64>When adusting for NS/WSS correction, aqd:exceedanceDescriptionAdjustment must contain, at least, a link to the adjustment method used (via /aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/[aqd:modelAssessmentMetadata or samplingPointAssessmentMetadata] xlink:href</G64>
+    <G64_SHORT>If adjusting for NS/WSS correction, a correct link must be provided to the adjusment method (either Model or SamplingPoint)</G64_SHORT>
+    <G65>The subject of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/[aqd:modelAssessmentMetadata or aqd:samplingPointAssessmentMetadata] xlink:href attribute shall be reported in dataflow D</G65>
+    <G65_SHORT>If model(s) or samplingPoint(s) are used for adjusting for NS/WSS correction, a correct link must be provided</G65_SHORT>
+    <G66>The subject of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G66>
+    <G66_SHORT>If the adjustment method(s) are Model(s), these must be found with the corresponding Assessment Regime (link to the Attainment)</G66_SHORT>
+    <G67>The subject of ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd: samplingPointAssessmentMetadata xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G67>
+    <G67_SHORT>If the adjustment method(s) are SamplingPoint(s), these must be found with the corresponding Assessment Regime (link to the Attainment)</G67_SHORT>
+    <G68>All occurrences of the srsDimension attribute in
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall EQUAL “2”
+    </G68>
+    <G68_SHORT>Not implemented</G68_SHORT>
+    <G69>All occurrences of the srsName attribute in
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatialExtent
+      shall resolve to a valid spatial reference system URN or URI
+    </G69>
+    <G69_SHORT>Not implemented</G69_SHORT>
+    <G70>/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea uom attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/uom/area/km2</G70>
+    <G70_SHORT>Exceedence area uom attribute must be in Square kilometers.</G70_SHORT>
+    <G71> /aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km</G71>
+    <G71_SHORT>Road Length attribute must be in kilometers.</G71_SHORT>
+    <G72>The content of /aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification xlink:xref shall resolve to a areaClassification in http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/ that must be one of
+      Hide items
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-nearcity
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-regional
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/rural-remote
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban
+      http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban</G72>
+    <G72_SHORT>Area Classification must be one of the following:
+      rural
+      rural-nearcity
+      rural-regional
+      rural-remote
+      urban
+      suburban</G72_SHORT>
+    <G73>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall resolve to a model description in /aqd:AQD_Model</G73>
+    <G73_SHORT>The exceeding AQ_Model shall resolve to a traversable local of global URL.</G73_SHORT>
+    <G74>The subject of ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:modelAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G74>
+    <G74_SHORT>The exceeding AQ_Model must be included in the corresponding AssessmentRegime</G74_SHORT>
+    <G75>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed xlink:href attribute shall resolve to a sampling point description in /aqd:AQD_SamplingPoint</G75>
+    <G75_SHORT>The exceeding SamplingPoint shall resolve to a traversable local of global URL.</G75_SHORT>
+    <G76>The subject of ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed xlink:href attribute shall be found in /aqd:AQD_AssessmentRegime/aqd:assessmentMethods/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata xlink:href attribute for the AQD_AssessmentRegime record cited by ./aqd:assessment  </G76>
+    <G76_SHORT>The exceeding SamplingPoint must be included in the corresponding AssessmentRegime</G76_SHORT>
+    <G77>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition shall specify a year in yyyy format.</G77>
+    <G77_SHORT>Not implemented</G77_SHORT>
+    <G78>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true” or “false”</G78>
+    <G78_SHORT>Final Exceedance must be TRUE or FALSE</G78_SHORT>
+    <G79>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:numericalExceedance shall be an integer number</G79>
+    <G79_SHORT>If Final exceedance is TRUE numericalExceedance or numberExceedances must be provided</G79_SHORT>
+    <G80>./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:numberExceedances shall be an integer number</G80>
+    <G80_SHORT>If Final exceedance is FALSE the provision of numericalExceedance or numberExceedances is useful</G80_SHORT>
+    <G81>./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType xlink:href attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/fullyCorrected</G81>
+    <G81_SHORT>Exceedance Description Adjustment Method must be 'Fully corrected.'</G81_SHORT>
+    <G82>WHERE ./aqd:exceedanceDescriptionAdjustment class DOES NOT exists in the AQD_Attainment record
+      ./aqd:exceedanceDescriptionAdjustment/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType xlink:href attribute shall resolve to
+      http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplied http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplicable http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/fullyCorrected
+    </G82>
+    <G82_SHORT>Yes</G82_SHORT>
+    <G83>WHERE
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatalExtent OR
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:administrativeUnit
+      shall be populated
+
+    </G83>
+    <G83_SHORT>Not implemented</G83_SHORT>
+    <G84>WHERE
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea OR
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+      shall be populated
+
+    </G84>
+    <G84_SHORT>If exceedance is TRUE, information on surface are or road lenght shall be provided</G84_SHORT>
+    <G85>WHERE
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed OR
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed shall be populated
+
+    </G85>
+    <G85_SHORT>If exceedance is TRUE, a link to the exceeding SamplingPoint(s) and/or Model(s) must be provided [at least one]</G85_SHORT>
+    <G86>If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid elements
+
+      stationUsed must link To SamplingPoint via namespace/localid
+      modelUsed must link to AQD_Model via namespace/ localid
+
+    </G86>
+    <G86_SHORT>If SamplingPoint(s) and/or Model(s) are provided, these must be valid</G86_SHORT>
+    <G87>WHERE
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      /aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed shall be populated
+
+    </G87>
+    <G87_SHORT>If exceedance is TRUE, information on population exposed must be provided</G87_SHORT>
+    <G88>WHERE
+      ./aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      /aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed shall be populated
+    </G88>
+    <G88_SHORT>If exceedance is TRUE, information on area exposed must be provided</G88_SHORT>
+  </G>
+  <H>
+    <H0>Check if delivery if this is a new delivery or updated delivery (via reporting year)</H0>
+    <H0_SHORT>Checks if this delivery is new or an update (on same reporting year)</H0_SHORT>
+    <H01>Compile &amp; feedback upon the total number of plans records included in the delivery</H01>
+    <H01_SHORT>Number of AQ Plans reported</H01_SHORT>
+    <H02>Compile &amp; feedback upon the total number of new plans records included in the delivery (compared to any delivery for the same reporting year)</H02>
+    <H02_SHORT>Number of new Plans compared to previous report(s).</H02_SHORT>
+    <H03>Compile &amp; feedback upon the total number of updated plans records included in the delivery. Blocker will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</H03>
+    <H03_SHORT>Number of existing Plans compared to previous report (same reporting year). Blocker will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</H03_SHORT>
+    <H04>Compile &amp; feedback a list of the unique identifier information for all Plans records included in the delivery. Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:protectionTarget, /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:firstExceedanceYear,</H04>
+    <H04_SHORT>List of unique identifier information for all Plan records. Error, if no Plans</H04_SHORT>
+    <H07>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</H07>
+    <H07_SHORT>All gml ID attributes shall have unique code</H07_SHORT>
+    <H08>./aqd:inspireId/base:Identifier/base:localId must be unique code for the Plans records</H08>
+    <H08_SHORT>Local Id must be unique for the Plans records</H08_SHORT>
+    <H09> ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</H09>
+    <H09_SHORT>List unique namespaces used and count number of elements</H09_SHORT>
+    <H10>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</H10>
+    <H10_SHORT>Check namespace is registered</H10_SHORT>
+    <H11>If aqd:AQD_ReportingHeader/aqd:reportingPeriod => 2013 aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href attribute shall resolve to at least one  exceedance situation in dataset G via namespace/localId.</H11>
+    <H11_SHORT>If reporting period equal or greater than 2013, AQ must link to a valid exceedande situation (G)</H11_SHORT>
+    <H12>If aqd:reportingPeriod &lt; 2013 and aqd:AQD_Plan/aqd:exceedanceSituation is empty aqd:comment must be populated</H12>
+    <H12_SHORT>If reporting period before than 2013 and a valid exceedande situation is not provided, aqd:comment should be provided instead</H12_SHORT>
+    <H14>aqd:AQD_Plan/aqd:code should begin with with the 2-digit country code according to ISO 3166-1.</H14>
+    <H14_SHORT>We recommend you start you codes with the 2-digit country code according to ISO 3166-1.</H14_SHORT>
+    <H16>aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString shall not be NULL or voided</H16>
+    <H16_SHORT>You must provide the name of the organisation responsible for the plan</H16_SHORT>
+    <H17>aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString  shall not be NULL or voided</H17>
+    <H17_SHORT>You must provide a contact point within the organisation responsible for the plan, this may be a generic contact point.</H17_SHORT>
+    <H18>aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress  shall not be NULL or voided</H18>
+    <H18_SHORT>You must provide an email address for the contact point within the organisation responsible for the plan, this may be a generic telephone number.</H18_SHORT>
+    <H19>aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition shall not be voided, NULL or an empty tag &amp; shall contain content in yyyy format</H19>
+    <H19_SHORT>Your reference year must be in yyyy format</H19_SHORT>
+    <H20>aqd:AQD_Plan/aqd:status  xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/</H20>
+    <H20_SHORT>Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/</H20_SHORT>
+    <H21>aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/pollutant/</H21>
+    <H21_SHORT>Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/pollutant/</H21_SHORT>
+    <H22>aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/</H22>
+    <H22_SHORT>Your protection target should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/</H22_SHORT>
+    <H23>Check and count expected combinations of Pollutant and ProtectionTarget at /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+        Sulphur dioxide (1) + health
+        Sulphur dioxide (1) + vegetation
+        Ozone (7) + health
+        Ozone (7) + vegetation
+        Nitrogen dioxide (8) + health
+        Nitrogen oxides (9) + vegetation
+        Particulate matter &lt; 10 µm (5) + health
+        Particulate matter &lt; 2.5 µm (6001) + health
+        Carbon monoxide (10) + health
+        Benzene (20) + health
+        Lead in PM10 (5012) + health
+        Arsenic in PM10 (5018) + health
+        Cadmium in PM10 (5014) + health
+        Nickel in PM10 (5015) + health
+        Benzo(a)pyrene in PM10 (5029) + health
+    </H23>
+    <H23_SHORT>Check and count expected combinations of Pollutant and ProtectionTarget</H23_SHORT>
+    <H24>aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple) shall be the same as those in the referenced data flow G xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href attribute (maybe multiple)</H24>
+    <H24_SHORT>AQ plan pollutant's should match those in the exceedance situation (G)</H24_SHORT>
+    <H25>aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition MUST be populated and its content in yyyy-mm-dd format if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href attribute not equal http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation, http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision</H25>
+    <H25_SHORT>Your reference year must be in yyyy-mm-dd format - rephrase it</H25_SHORT>
+    <H26>if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href attribute equal http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation, http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition should not be populated</H26>
+    <H26_SHORT></H26_SHORT>
+    <H27>aqd:AQD_Plan/aqd:timeTable shal contain a text string</H27>
+    <H27_SHORT>Must contain a short textual description of timetable for the implementation of the air quality plan</H27_SHORT>
+    <H28>aqd:AQD_Plan/aqd:referenceImplementation shall contain a URL to document  or web resource describing the latest version of full air quality plan. This MUST be valid.</H28>
+    <H28_SHORT>Must contain a URL to document  or web resource describing the last version of full air quality plan</H28_SHORT>
+    <H29>aqd:AQD_Plan/aqd:referenceImplementation must contain a URL to a document or web resource where information about the implementation of the air quality plan can be found.</H29>
+    <H29_SHORT>Must contain a URL to a document or web resource where information about the implementation of the air quality plan can be found.</H29_SHORT>
+    <H30>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description must contain a text string describing the publication</H30>
+    <H30_SHORT>Brief textual description of the published AQ Plan should be provided. If availabel, include the ISBN number.</H30_SHORT>
+    <H31>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:title must contain the title of the publication</H31>
+    <H31_SHORT>Title as written in the published AQ Plan.</H31_SHORT>
+    <H32>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:author must contain the author(s) of the publication</H32>
+    <H32_SHORT>Author(s) should be provided as text (If there are multiple authors, please provide in one field separated by commas)</H32_SHORT>
+    <H33>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition must contaong the date of publication in yyyy-mm-dd format</H33>
+    <H33_SHORT>The publication date of the AQ Plan should be provided in yyyy or yyyy-mm-dd format</H33_SHORT>
+    <H34>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publisher must container a text string describing the publisher</H34>
+    <H34_SHORT>Publisher should be provided as a text (Publishing institution, academic jourmal, etc.)</H34_SHORT>
+    <H35>aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:webLink must contain a URL to document  or web resource describing the last version of full air quality plan</H35>
+    <H35_SHORT>Provided url to the published AQ Plan should be valid</H35_SHORT>
+  </H>
+  <I>
+    <I0>Check if delivery if this is a new delivery or updated delivery (via reporting year)</I0>
+    <I0_SHORT>Checks if this delivery is new or an update (on same reporting year)</I0_SHORT>
+    <I1>Compile &amp; feedback upon the total number of Source Apportionments included in the delivery</I1>
+    <I1_SHORT>Number of  Source Apportionments reported</I1_SHORT>
+    <I2>Compile &amp; feedback upon the total number of new  Source Apportionments records included in the delivery. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.</I2>
+    <I2_SHORT>Number of new  Source Apportionments compared to previous report. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries</I2_SHORT>
+    <I3>Compile &amp; feedback upon the total number of updated Source Apportionments included in the delivery. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</I3>
+    <I3_SHORT>Number of existing Plans compared to previous report. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</I3_SHORT>
+    <I4>Compile &amp; feedback a list of the unique identifier information for all Source Apportionments records included in the delivery. Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_Plan (via ./usedInPlan), aqd:AQD_Attainment (via aqd:parentExceedanceSituation), aqd:pollutant (via Attainment link under aqd:parentExceedanceSituation)</I4>
+    <I4_SHORT>List of unique identifier information for all Source Apportionments records. Error, if no SA(s)</I4_SHORT>
+    <I7>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</I7>
+    <I7_SHORT>All gml ID attributes shall have unique code</I7_SHORT>
+    <I8>./aqd:inspireId/base:Identifier/base:localId must be unique code for the Plans records </I8>
+    <I8_SHORT>Local Id must be unique for the Plans records</I8_SHORT>
+    <I9> ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</I9>
+    <I9_SHORT>List unique namespaces used and count number of elements</I9_SHORT>
+    <I10>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</I10>
+    <I10_SHORT>Check namespace is registered </I10_SHORT>
+    <I11>aqd:AQD_SourceApportionment/aqd:usedInPlan shall reference an existing H document for the same reporting year same year via namespace/localId</I11>
+    <I11_SHORT>You must provide a reference to a plan document from data flow H via its namespace &amp; localId. The plan document must have the same reporting year as the source apportionment document.</I11_SHORT>
+    <I11b>aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference an existing exceedance situation delivered within a data flow G  and the reporting year of G &amp; I shall be the same year via namespace/localId. </I11b>
+    <I11b_SHORT>You must provide a reference to an exceedance situation from data flow G. The exceedance situation must have the same reporting year as the source apportionment and refer to the same pollutant.</I11b_SHORT>
+    <I12>aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition shall be a calendar year in yyyy format</I12>
+    <I12_SHORT>Reference year must be a calendar year in yyyy format</I12_SHORT>
+    <I15>Across all the delivery, check that the element aqd:QuantityCommented/aqd:quantity is an integer or floating point numeric >= 0 if attribute xsi:nil="false" (example: &lt;aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false"&gt;4.03038 &lt;/aqd:quantity&gt;)</I15>
+    <I15_SHORT>Source apportionments should be provided as an integer</I15_SHORT>
+    <I16>Across all the delivery, check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute xsi:nil="unpopulated" or "unknown" or "withheld" (example: &lt;aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/&gt;)</I16>
+    <I16_SHORT>If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty</I16_SHORT>
+    <I17>Across all the delivery, If aqd:QuantityCommented/aqd:quantity attribute xsi:nil="true" aqd:QuantityCommented/aqd:comment must be populated</I17>
+    <I17_SHORT>If the quantification is voided an explanation is required in aqd:comment</I17_SHORT>
+    <I18>Across all the delivery,  check that the unit attribute (.../aqd:QuantityCommented/aqd:quantity@uom) corresponds to the recommended unit (via vocabulary) of the pollutant found at aqd:AQD_Attainment/aqd:pollutant  xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation </I18>
+    <I18_SHORT>The unit of measurement of the Source Apportioment must match recommended unit for the pollutant</I18_SHORT>
+    <I19>aqd:AQD_SourceApportionment/aqd:regionalBackground/aqd:RegionalBackground/aqd:total/aqd:QuantityCommented/aqd:quantity must equal to the sum of  aqd:regionalBackground/aqd:RegionalBackground/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity + aqd:regionalBackground/aqd:RegionalBackground/aqd:transboundary/aqd:QuantityCommented/aqd:quantity   +    aqd:regionalBackground/aqd:RegionalBackground/aqd:natural /aqd:QuantityCommented/aqd:quantity + aqd:regionalBackground/aqd:RegionalBackground/aqd:other/aqd:QuantityCommented/aqd:quantity </I19>
+    <I19_SHORT>The total regional background source contribution must be equal to the sum of its components.</I19_SHORT>
+    <I20>aqd:AQD_SourceApportionment/aqd:urbanBackground/aqd:UrbanBackground/aqd:total/aqd:QuantityCommented/aqd:quantity must equal the sum of  aqd:urbanBackground/aqd:UrbanBackground/aqd:traffic/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:agriculture/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:shipping/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:natural/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:transboundary/aqd:QuantityCommented/aqd:quantity + aqd:urbanBackground/aqd:UrbanBackground/aqd:other/aqd:QuantityCommented/aqd:quantity</I20>
+    <I20_SHORT>The total urban background source contribution must be equal to the sum of its components.</I20_SHORT>
+    <I21>aqd:AQD_SourceApportionment/aqd:localIncrement/aqd:LocalIncrement/aqd:total/aqd:QuantityCommented/aqd:quantity must equal to the sum of aqd:localIncrement/aqd:LocalIncrement/aqd:traffic/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:agriculture/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:shipping/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:natural/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:transboundary/aqd:QuantityCommented/aqd:quantity + aqd:localIncrement/aqd:LocalIncrement/aqd:other/aqd:QuantityCommented/aqd:quantity</I21>
+    <I21_SHORT>The total local increment source contribution must be equal to the sum of its components.</I21_SHORT>
+    <I22>aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation must be presented and must not be an empty tag</I22>
+    <I22_SHORT>The macro exceedance situation relevant to the source apportionment must be populated</I22_SHORT>
+    <I23>Either aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:numericalExceedance
+      OR
+      aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:numberExceedances
+      must be provided (just one or the other) AS an integer or floating point numeric > 0, no more that 2 decimal places expected  </I23>
+    <I23_SHORT>numericalExceedance or numberExceedances must be provided</I23_SHORT>
+    <I24>The content of /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification xlink:xref must be provided and must resolve to a areaClassification in http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/</I24>
+    <I24_SHORT>Area Classification is mandatory and must conform to vocabulary</I24_SHORT>
+    <I25>aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification xlink:href attribute shall match those /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation </I25>
+    <I25_SHORT>Area classification should match classification declared in the corresponding Attainment</I25_SHORT>
+    <I26>/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea uom attribute shall resolve to http://dd.eionet.europa.eu/vocabulary/uom/area/km2</I26>
+    <I26_SHORT>Exceedence area uom attribute must be in Square kilometers.</I26_SHORT>
+    <I27> /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km</I27>
+    <I27_SHORT>Road Length attribute must be in kilometers.</I27_SHORT>
+    <I29>./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed OR
+      ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed must be populated</I29>
+    <I29_SHORT>A link to the exceeding SamplingPoint(s) and/or Model(s) must be provided [at least one]</I29_SHORT>
+    <I30>If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid elements
+      stationUsed must link To SamplingPoint via namespace/localid
+      modelUsed must link to AQD_Model via namespace/ localid</I30>
+    <I30_SHORT>If SamplingPoint(s) and/or Model(s) are provided, these must be valid</I30_SHORT>
+    <I31>The subject of ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute shall be found in /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation </I31>
+    <I31_SHORT>The exceeding AQ_Model must be included in the corresponding Attainment</I31_SHORT>
+    <I32>The subject of ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed xlink:href attribute shall be found in /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation </I32>
+    <I32_SHORT>The exceeding SamplingPoint must be included in the corresponding Attainment</I32_SHORT>
+    <I33>./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatalExtent OR
+      ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:administrativeUnit
+      shall be populated</I33>
+    <I33_SHORT>Spatial extent or administrative unit may be provided</I33_SHORT>
+    <I34>./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea OR
+      ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+      shall be populated</I34>
+    <I34_SHORT>Information on surface are or road lenght shall be provided</I34_SHORT>
+    <I35>WHERE
+      ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance shall EQUAL “true”
+      /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed shall be populated</I35>
+    <I35_SHORT>If exceedance is TRUE, information on population exposed must be provided</I35_SHORT>
+    <I36>/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed shall be populated</I36>
+    <I36_SHORT>If exceedance is TRUE, information on area exposed must be provided</I36_SHORT>
+    <I37>aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition shall be a calendar year in yyyy format</I37>
+    <I37_SHORT>Reference year for the population/exposure data in yyyy format</I37_SHORT>
+    <I38>aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason shall conform to vocabulary http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/</I38>
+    <I38_SHORT>Exceedance reason must match vocabulary</I38_SHORT>
+    <I39>/aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod may be populated if  ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation)</I39>
+    <I39_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO deduction assessment methods may be populated</I39_SHORT>
+    <I40>WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType must conform to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype.</I40>
+    <I40_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO a link to assessment type is expected</I40_SHORT>
+    <I41>WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription must be populated.</I41>
+    <I41_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO a Description of the assessment type is expected</I41_SHORT>
+    <I42>WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), at least one of /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+      or
+      /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href must be populated and correctly link to D/D1b.
+
+      Cross check the links provided against D, all assessment methods must exist in D</I42>
+    <I42_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO a link to the assessment method in D or D1b is required via xlink:href attribute</I42_SHORT>
+    <I43>WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), the following elments must be empty or not provided: /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType</I43>
+    <I43_SHORT>If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not expected: assessmentType, link to adjusting sampling point/model;assessmentTypeDescription;assessmentType</I43_SHORT>
+    <I44>If aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected" if another pollutant it must be "noneApplicable"</I44>
+    <I44_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod populated, adjustmentType must be "fullyCorrected", else "noneApplicable"</I44_SHORT>
+    <I45>WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via …/aqd:parentExceedanceSituation), /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource must be populated &amp; the content of the xlink:href shall conform to http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype, else  this element must not be populated</I45>
+    <I45_SHORT>If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod populated, adjustmentSource must conform with vocabulary, else "noneApplicable"</I45_SHORT>
+  </I>
+  <J>
+    <J0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </J0>
+    <J0_SHORT>Checks if this delivery is new or an update (on same reporting year)</J0_SHORT>
+    <J1>Compile &amp; feedback upon the total number of plans records included in the delivery</J1>
+    <J1_SHORT>Number of AQ Plans reported</J1_SHORT>
+    <J2>Compile &amp; feedback upon the total number of new EvaluationScenarios records included in the delivery. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.</J2>
+    <J2_SHORT>Number of new EvaluationScenarios compared to previous report. </J2_SHORT>
+    <J3>Compile &amp; feedback upon the total number of updated EvaluationScenarios records included in the delivery. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</J3>
+    <J3_SHORT>Number of existing EvaluationScenarios compared to previous report. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</J3_SHORT>
+    <J4>Compile &amp; feedback a list of the unique identifier information for all EvaluationScenarios records included in the delivery. Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:protectionTarget, </J4>
+    <J4_SHORT>List of unique identifier information for all EvaluationScenarios records. Blocker if no EvaluationScenarios</J4_SHORT>
+    <J7>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</J7>
+    <J7_SHORT>All gml ID attributes shall have unique code</J7_SHORT>
+    <J8>./aqd:inspireId/base:Identifier/base:localId must be unique code for the Plans records </J8>
+    <J8_SHORT>Local Id must be unique for the EvaluationScenarios records</J8_SHORT>
+    <J9> ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</J9>
+    <J9_SHORT>List unique namespaces used and count number of elements</J9_SHORT>
+    <J10>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</J10>
+    <J10_SHORT>Check namespace is registered </J10_SHORT>
+    <J11>aqd:AQD_EvaluationScenario/aqd:usedInPlan shall reference an existing AQD_Plan (H) document for the same reporting year same year via namespace/localId</J11>
+    <J11_SHORT>You must provide a reference to a plan document from data flow H via its namespace &amp; localId. The plan document must have the same reporting year as the source apportionment document.</J11_SHORT>
+    <J12>aqd:AQD_EvaluationScenario/aqd:sourceApportionment MUST reference an existing AQD_SourceApportionment (I) document via namespace/localId record for the same reporting year . </J12>
+    <J12_SHORT>You must provide a link to a Source Apportionment (I) document from data flow I via its namespace &amp; localId (for the same reporting year)</J12_SHORT>
+    <J13>aqd:AQD_EvaluationScenario/aqd:codeOfScenario should begin with with the 2-digit country code according to ISO 3166-1.</J13>
+    <J13_SHORT>A code of the scenario should be provided as nn alpha-numeric code starting with the country ISO code</J13_SHORT>
+    <J14>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:description shall be a text string </J14>
+    <J14_SHORT>Short textul description of the publication should be provided. If availabel, include the ISBN number.</J14_SHORT>
+    <J15>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:title shall be a text string</J15>
+    <J15_SHORT>Title as written in the publication.</J15_SHORT>
+    <J16>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:author shall be a text string (if provided)</J16>
+    <J16_SHORT>Author(s) should be provided as text (If there are multiple authors, please provide in one field separated by commas)</J16_SHORT>
+    <J17>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition may be a data in yyyy or yyyy-mm-dd format</J17>
+    <J17_SHORT>The publication date should be provided in yyyy or yyyy-mm-dd format</J17_SHORT>
+    <J18>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publisher shall be a text string</J18>
+    <J18_SHORT>Publisher should be provided as a text (Publishing institution, academic jourmal, etc.)</J18_SHORT>
+    <J19>aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:webLink as a valid url (if provided)</J19>
+    <J19_SHORT>Url to the published AQ Plan should be valid (if provided)</J19_SHORT>
+    <J20>aqd:AQD_EvaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition must be provided and must conform to yyyy format</J20>
+    <J20_SHORT>The year for which the projections are developed must be provided and the yyyy format used</J20_SHORT>
+    <J21>aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition must be provided and must conform to yyyy format</J21>
+    <J21_SHORT>Reference year from which the projections started and for which the source apportionment is available must be provided. Format used yyyy.</J21_SHORT>
+    <J22>Check aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition must be equal to  aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition referenced via the xlink of (aqd:AQD_EvaluationScenario/aqd:sourceApportionment)</J22>
+    <J22_SHORT>Check if start year of the evaluation scenario is the same as the source apportionment reference year</J22_SHORT>
+    <J23>aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:description shall be a text string</J23>
+    <J23_SHORT>A description of the emission scenario used for the baseline analysis should be provided as text</J23_SHORT>
+    <J24>Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1</J24>
+    <J24_SHORT>The baseline total emissions should be provided as integer with correct unit.</J24_SHORT>
+    <J25>Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration  is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/concentration/</J25>
+    <J25_SHORT>The expected concentration (under baseline scenario) should be provided as an integer and its unit should conform to vocabulary</J25_SHORT>
+    <J26>Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/statistics</J26>
+    <J26_SHORT>The number of exceecedance expected (under baseline scenario) should be provided as an integer and its unit should conform to vocabulary</J26_SHORT>
+    <J27>aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:measuresApplied shall reference an existing AQD_Measures delivered within a data flow K  and the reporting year of K &amp; J shall be the same year via namespace/localId. </J27>
+    <J27_SHORT>Measures identified in the AQ-plan that are included in this baseline scenario should be provided (link to dataflow K)</J27_SHORT>
+    <J28>aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description shall be a text string</J28>
+    <J28_SHORT>A description of the emission scenario used for the projection analysis should be provided as text</J28_SHORT>
+    <J29>Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1</J29>
+    <J29_SHORT>The projection total emissions should be provided as integer with correct unit.</J29_SHORT>
+    <J30>Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration  is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/concentration/</J30>
+    <J30_SHORT>The expected concentration (under projection scenario) should be provided as an integer and its unit should conform to vocabulary </J30_SHORT>
+    <J31>Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/statistics</J31>
+    <J31_SHORT>The number of exceecedance expected (under projection scenario) should be provided as an integer and its unit should conform to vocabulary</J31_SHORT>
+    <J32>aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:measuresApplied shall reference an existing AQD_Measures delivered within a data flow K  and the reporting year of K &amp; J shall be the same year via namespace/localId. </J32>
+    <J32_SHORT>Measures identified in the AQ-plan that are included in this projection should be provided (link to dataflow K)</J32_SHORT>
+  </J>
+  <K>
+    <K0>Check if delivery if this is a new delivery or updated delivery (via reporting year) </K0>
+    <K0_SHORT>Checks if this delivery is new or an update (on same reporting year)</K0_SHORT>
+    <K01>Compile &amp; feedback upon the total number of Measures included in the delivery</K01>
+    <K01_SHORT>Number of Measures reported</K01_SHORT>
+    <K02>Compile &amp; feedback upon the total number of new Measures records included in the delivery. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.</K02>
+    <K02_SHORT>Number of new Measures compared to previous report. ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries</K02_SHORT>
+    <K03>Compile &amp; feedback upon the total number of updated Measures included in the delivery. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</K03>
+    <K03_SHORT>Number of existing Measures compared to previous report. ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR).</K03_SHORT>
+    <K04>Compile &amp; feedback a list of the unique identifier information for all Measures records included in the delivery. Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_SourceApportionment (via ./exceedanceAffected), aqd:AQD_Scenario (via aqd:usedForScenario)</K04>
+    <K04_SHORT>List of unique identifier information for all Measures records. Error, if no Measures</K04_SHORT>
+    <K07>All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content</K07>
+    <K07_SHORT>All gml ID attributes shall have unique code</K07_SHORT>
+    <K08>./aqd:inspireId/base:Identifier/base:localId must be unique code for the Measure records </K08>
+    <K08_SHORT>Local Id must be unique for the Measure records</K08_SHORT>
+    <K09> ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.</K09>
+    <K09_SHORT>List unique namespaces used and count number of elements</K09_SHORT>
+    <K10>Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)</K10>
+    <K10_SHORT>Check namespace is registered </K10_SHORT>
+    <K11>aqd:AQD_Measures/aqd:exceedanceAffected MUST reference an existing Source Apportionment (I) document via namespace/localId</K11>
+    <K11_SHORT>You must provide a link to a source apportionment document from data flow I via its namespace &amp; localId. </K11_SHORT>
+    <K12>aqd:AQD_Measures/aqd:usedForScenario shall reference an existing Scenario delivered within a data flow J  via namespace/localId. </K12>
+    <K12_SHORT>A link may be provided to Evaluation Scenario (J). This must be valid via namespace &amp; localId</K12_SHORT>
+    <K13>aqd:AQD_Measures/aqd:code must be unique and should match base:localId</K13>
+    <K13_SHORT>Unique code of the measure. This may be a unique local code for the measure or may be identical to the unique code used in K2.1.</K13_SHORT>
+    <K14>aqd:AQD_Measures/aqd:name must be populated with a text string</K14>
+    <K14_SHORT>A short name for the measure</K14_SHORT>
+    <K15>aqd:AQD_Measures/aqd:description must be provided as a text string</K15>
+    <K15_SHORT>Short description of the measure</K15_SHORT>
+    <K16>aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/</K16>
+    <K16_SHORT>Measure classification should conform to vocabulary</K16_SHORT>
+    <K17>aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/</K17>
+    <K17_SHORT>Measure type should conform to vocabulary</K17_SHORT>
+    <K18>aqd:AQD_Measures/aqd:administrativeLevel shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/</K18>
+    <K18_SHORT>Administrative level should conform to vocabulary</K18_SHORT>
+    <K19>aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/</K19>
+    <K19_SHORT>The measure's timescale should conform to vocabulary</K19_SHORT>
+    <K20>aqd:AQD_Measures/aqd:costs/ should be provided</K20>
+    <K20_SHORT>Information on the cost of the measure should be provided</K20_SHORT>
+    <K21>If aqd:costs provided aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be an integer number. If voided /aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:comment must be populated with an explanation of why no costs are available.</K21>
+    <K21_SHORT>The estimated total costs should be provided. If not, an explanation on the reasons for not providing it should be included. </K21_SHORT>
+    <K22>If populated, /aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:finalImplementationCosts should be an integer number</K22>
+    <K22_SHORT>If the final total costs of the measure is provided, this nneeds to be a number</K22_SHORT>
+    <K23>If aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts is populated aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency must be populated and shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/common/currencies/</K23>
+    <K23_SHORT>If estimated costs are provided, the currency must be provided conforming to vocabulary</K23_SHORT>
+    <K24>aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/</K24>
+    <K24_SHORT>Source sector should conform to vocabulary</K24_SHORT>
+    <K25>aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/</K25>
+    <K25_SHORT>Spatial scale should conform to vocabulary</K25_SHORT>
+    <K26>aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/</K26>
+    <K26_SHORT>Measure Implementation Status should conform to vocabulary</K26_SHORT>
+    <K27>aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition must be a date in full ISO date format</K27>
+    <K27_SHORT>The planned start date for the measure should be provided</K27_SHORT>
+    <K28>If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition must be a date in full ISO format and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition. If voided it should be indeterminatePosition="unknown" </K28>
+    <K28_SHORT>The planned end  date for the measure should be provided in the right format, if unknown voided using indeterminatePosition="unknown" </K28_SHORT>
+    <K29>aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition must be a date in full ISO date format</K29>
+    <K29_SHORT>The planned start date for the measure should be provided</K29_SHORT>
+    <K30>If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition must be a date in full ISO format and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition. If voided it should be indeterminatePosition="unknown" </K30>
+    <K30_SHORT>The planned end  date for the measure should be provided in the right format, if unknown voided using indeterminatePosition="unknown" </K30_SHORT>
+    <K31>aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition to be provided in the following format yyyy or yyyy-mm-dd</K31>
+    <K31_SHORT>The full effect date of the measure must be provided and the format to be yyyy or yyyy-mm-dd</K31_SHORT>
+    <K32>/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates</K32>
+    <K32_SHORT>Reserved</K32_SHORT>
+    <K33>A text string may be provided under aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators ; If voided an explanation of why this information unavailable shall be provided in /aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment</K33>
+    <K33_SHORT>If monitoring progress indicators are not provided as text, an explanation is expected under aqd:comment</K33_SHORT>
+    <K34>Check that the element aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity is an integer or floating point numeric >= 0 if attribute xsi:nil="false" (example: &lt;aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false"&gt;273&lt;/aqd:quantity&gt;)</K34>
+    <K34_SHORT>Reduction of emissions shall be provided as an integer and unit should conform to vocabulary</K34_SHORT>
+    <K35>Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute xsi:nil="unpopulated" or "unknown" or "withheld" (example: &lt;aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/&gt;)</K35>
+    <K35_SHORT>If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty</K35_SHORT>
+    <K36>If aqd:QuantityCommented/aqd:quantity attribute xsi:nil="true" aqd:QuantityCommented/aqd:comment must be populated</K36>
+    <K36_SHORT>If the quantification is voided an explanation is required in aqd:comment</K36_SHORT>
+    <K37>The unit attribute (aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity/@UoM) shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission</K37>
+    <K37_SHORT>The quantification of reductionOfEmissions should conform to vocabulary</K37_SHORT>
+    <K38>Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/concentration/</K38>
+    <K38_SHORT>The level of concentration expected should be provided as an integer and its unit should conform to vocabulary</K38_SHORT>
+    <K39>Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/uom/statistics</K39>
+    <K39_SHORT>The number of exceecedance expected should be provided as an integer and its unit should conform to vocabulary</K39_SHORT>
+    <K40></K40>
+    <K40_SHORT></K40_SHORT>
+  </K>
+</labels>

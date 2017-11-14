@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="air-quality  " default="Start Main">
+  <target name="namespaces">
+    <delete file="dist/temp.xquery"/>
+    <delete file="dist/namespaces.xquery"/>
+    <concat destfile="dist/temp.xquery" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <fileset dir="${user.dir}">
+        <patternset id="main">
+          <include name="aqd-*.xquery"/>
+          <include name="aqd-*.xq"/>
+          <exclude name="aqd-multiple.xq"/>
+          <exclude name="aqd-local.xquery"/>
+          <exclude name="aqd-main.xquery"/>
+          <exclude name="aqd-xref.xquery"/>
+          <exclude name="aqd-envelope-main.xquery"/>
+          <exclude name="dist/*.xquery"/>
+          <exclude name="deprecated/*.xquery"/>
+          <exclude name="old/*.xquery"/>
+        </patternset>
+      </fileset>
+      <filterchain>
+        <linecontainsregexp><regexp pattern="^module namespace"/></linecontainsregexp>
+        <replaceregex pattern="^module namespace" replace="declare namespace"/>
+      </filterchain>
+    </concat>
+    <concat destfile="dist/temp.xquery" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <fileset dir="${user.dir}">
+        <include name="aqd-*.xquery"/>
+        <include name="aqd-*.xq"/>
+        <exclude name="aqd-multiple.xq"/>
+        <exclude name="aqd-local.xquery"/>
+        <exclude name="aqd-main.xquery"/>
+        <exclude name="aqd-envelope-main.xquery"/>
+        <exclude name="aqd-xref.xquery"/>
+        <exclude name="dist/*.xquery"/>
+        <exclude name="deprecated/*.xquery"/>
+        <exclude name="old/*.xquery"/>
+      </fileset>
+      <filterchain>
+        <linecontainsregexp><regexp pattern="^declare namespace"/></linecontainsregexp>
+      </filterchain>
+    </concat>
+    <copy file="dist/temp.xquery" tofile="dist/namespaces.xquery">
+      <filterchain>
+        <!--<tokenfilter delimoutput="\n">
+          <containsregex pattern="(^declare namespace.+)" flags="g"/>
+          <stringtokenizer/>
+        </tokenfilter>-->
+        <sortfilter />
+        <uniqfilter/>
+      </filterchain>
+    </copy>
+    <delete file="dist/temp.xquery"/>
+  </target>
+
+  <target name="Clean">
+    <delete><fileset dir="dist" includes="**/*" excludes="**/namespaces.xquery"/></delete>
+  </target>
+
+  <target name="Build">
+<concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+xquery version "3.0" encoding "UTF-8";${line.separator}
+</concat>
+<!--    <concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <file file="${initFile}"/>
+      <filterchain>
+        <linecontains><contains value="declare namespace"/></linecontains>
+      </filterchain>
+    </concat>-->
+    <!--<concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+declare variable $xmlconv:TEST_ENV := false();${line.separator}
+</concat>-->
+
+    <concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <file file="dist/namespaces.xquery"/>
+    </concat>
+
+    <concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <fileset dir="${user.dir}">
+        <include name="aqd-*.xquery"/>
+        <include name="aqd-*.xq"/>
+        <exclude name="dist/*.xquery"/>
+        <exclude name="namespaces.xquery"/>
+        <exclude name="aqd-local.xquery"/>
+        <exclude name="aqd-main.xquery"/>
+        <exclude name="aqd-envelope-main.xquery"/>
+        <exclude name="aqd-multiple.xq"/>
+        <exclude name="aqd-xref.xquery"/>
+      </fileset>
+      <filterchain>
+        <tokenfilter>
+          <containsregex pattern="declare variable [^;]+;$"/>
+        </tokenfilter>
+      </filterchain>
+    </concat>
+
+    <concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <fileset dir="${user.dir}">
+        <include name="aqd-*.xquery"/>
+        <include name="aqd-*.xq"/>
+        <exclude name="dist/*.xquery"/>
+        <exclude name="namespaces.xquery"/>
+        <exclude name="aqd-local.xquery"/>
+        <exclude name="aqd-main.xquery"/>
+        <exclude name="aqd-envelope-main.xquery"/>
+        <exclude name="aqd-multiple.xq"/>
+        <exclude name="aqd-xref.xquery"/>
+      </fileset>
+      <filterchain>
+        <tokenfilter>
+          <replaceregex pattern="declare variable [^;]+;$" replace=""/>
+        </tokenfilter>
+        <linecontains negate="true"><contains value="xquery version"/></linecontains>
+        <linecontains negate="true"><contains value="module namespace"/></linecontains>
+        <linecontains negate="true"><contains value="import module"/></linecontains>
+        <linecontains negate="true"><contains value="declare namespace"/></linecontains>
+      </filterchain>
+    </concat>
+
+    <concat destfile="${output}" encoding="UTF-8" outputencoding="UTF-8" append="true">
+      <file file="${initFile}"/>
+      <filterchain>
+        <!--<tokenfilter>
+            <replaceregex pattern="declare variable [^;]+;$" replace=""/>
+        </tokenfilter>-->
+        <!--<linecontainsregexp negate="true"><regexp pattern="declare variable [^;]+;$"/></linecontainsregexp>-->
+        <linecontains negate="true"><contains value="xquery version"/></linecontains>
+        <linecontains negate="true"><contains value="import module"/></linecontains>
+        <linecontains negate="true"><contains value="declare namespace"/></linecontains>
+        <!--<linecontains negate="true"><contains value="declare option"/></linecontains>-->
+      </filterchain>
+    </concat>
+  </target>
+
+  <target name="Start Main">
+    <antcall target="Clean"/>
+    <antcall target="namespaces"/>
+    <antcall target="Build">
+      <param name="output" value="dist/aqd-obligations-checks.xquery"/>
+      <param name="initFile" value="aqd-main.xquery"/>
+    </antcall>
+  </target>
+
+  <target name="Start Envelope">
+    <!--<antcall target="Clean"/>-->
+    <antcall target="namespaces"/>
+    <antcall target="Build">
+      <param name="output" value="dist/aqd-envelope-checks.xquery"/>
+      <param name="initFile" value="aqd-envelope-main.xquery"/>
+    </antcall>
+  </target>
+
+</project>
