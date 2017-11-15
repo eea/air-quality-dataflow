@@ -69,7 +69,7 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $namespaces := distinct-values($docRoot//base:namespace)
-let $allMeasures := query:getAllMeasureIds($namespaces)
+let $allMeasures := query:getAllMeasuresIds($namespaces)
 
 (: File prefix/namespace check :)
 let $NSinvalid :=
@@ -139,9 +139,9 @@ let $K0table :=
 let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
 let $knownMeasures :=
     if ($isNewDelivery) then
-        distinct-values(data(sparqlx:run(query:getAttainme($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+        distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
     else
-        distinct-values(data(sparqlx:run(query:getAttainment($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
+        distinct-values(data(sparqlx:run(query:getMeasures($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
 
 (: K01 Number of Measures reported :)
 let $countMeasures := count($docRoot//aqd:AQD_Measures)

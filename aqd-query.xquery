@@ -158,14 +158,14 @@ declare function query:getAttainment($url as xs:string) as xs:string {
 };
 
 (: K :)
-declare function query:getAttainment($url as xs:string) as xs:string {
+declare function query:getMeasures($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
    SELECT ?inspireLabel
    WHERE {
-      ?attainment a aqd:AQD_Attainment;
+      ?attainment a aqd:AQD_Measures;
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?attainment), '" || $url || "'))
@@ -367,7 +367,7 @@ declare function query:getAllRegimeIds($namespaces as xs:string*) as xs:string* 
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
-declare function query:getAllMeasureIds($namespaces as xs:string*) as xs:string* {
+declare function query:getAllMeasuresIds($namespaces as xs:string*) as xs:string* {
   let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -375,7 +375,7 @@ declare function query:getAllMeasureIds($namespaces as xs:string*) as xs:string*
 
    SELECT *
    WHERE {
-        ?attainment a aqd:AQD_Measures ;
+        ?attainment a aqd:AQD_Measures;
         aqd:inspireId ?inspireId .
         ?inspireId rdfs:label ?inspireLabel .
         ?inspireId aqd:namespace ?namespace
