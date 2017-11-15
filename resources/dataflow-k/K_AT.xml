@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <gml:FeatureCollection xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:om="http://www.opengis.net/om/2.0"
                        xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0"
                        xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -16,26 +15,23 @@
                        xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Measure"
                        xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
     <gml:featureMember>
-        <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_Draft_2016_12_22_11_43_835">
+        <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_MEA_AT_60_NO2_M11">
             <aqd:change>true</aqd:change>
-            <aqd:changeDescription>Le Plan régional Air Climat Energie (PACE) a été adopté le 2 juin 2016. Le PACE
-                préconise de mettre en place des mesures principalement dans le secteur du transport routier
-                résidentiels et tertiaires.
-            </aqd:changeDescription>
+            <aqd:changeDescription>none</aqd:changeDescription>
             <aqd:inspireId>
                 <base:Identifier>
-                    <base:localId>HDR_Draft_2016-12-22.11.43.835</base:localId>
-                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
-                    <base:versionId>2017-03-16.12.40.333</base:versionId>
+                    <base:localId>HDR_MEA.AT_60_NO2_M11</base:localId>
+                    <base:namespace>AT.0008.20.AQ</base:namespace>
+                    <base:versionId>2017-02-23.11.43.81</base:versionId>
                 </base:Identifier>
             </aqd:inspireId>
             <aqd:reportingAuthority>
                 <base2:RelatedParty>
                     <base2:individualName>
-                        <gco:CharacterString>Anne Cheymol</gco:CharacterString>
+                        <gco:CharacterString>Wolfgang Spangl</gco:CharacterString>
                     </base2:individualName>
                     <base2:organisationName>
-                        <gco:CharacterString>Bruxelles Environnement</gco:CharacterString>
+                        <gco:CharacterString>Umweltbundesamt</gco:CharacterString>
                     </base2:organisationName>
                     <base2:contact>
                         <base2:Contact>
@@ -50,69 +46,56 @@
                                             <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
                                             <gn:spelling>
                                                 <gn:SpellingOfName>
-                                                    <gn:text></gn:text>
+                                                    <gn:text/>
                                                     <gn:script nilReason="unpopulated" xsi:nil="true"/>
                                                 </gn:SpellingOfName>
                                             </gn:spelling>
                                         </gn:GeographicalName>
                                     </ad:adminUnit>
-                                    <ad:locatorDesignator>86c avenue du port 1000 Bruxelles</ad:locatorDesignator>
+                                    <ad:locatorDesignator>Spittelauer Lände 5, 1090 Wien, Austria</ad:locatorDesignator>
                                 </ad:AddressRepresentation>
                             </base2:address>
-                            <base2:electronicMailAddress>acheymol@environnement.irisnet.be</base2:electronicMailAddress>
-                            <base2:telephoneVoice>003225634128</base2:telephoneVoice>
-                            <base2:website>acheymol@environnement.irisnet.be</base2:website>
+                            <base2:electronicMailAddress>wolfgang.spangl@umweltbundesamt.at
+                            </base2:electronicMailAddress>
+                            <base2:telephoneVoice>+431313045861</base2:telephoneVoice>
+                            <base2:website>www.umweltbundesamt.at</base2:website>
                         </base2:Contact>
                     </base2:contact>
                 </base2:RelatedParty>
             </aqd:reportingAuthority>
             <aqd:reportingPeriod>
-                <gml:TimePeriod gml:id="REPORTING_START_DATE_f34480bdb7a7f9b7450bc4d8d27941d7">
+                <gml:TimePeriod gml:id="REPORTING_START_DATE_debf26c7a5171cad95c3cbc34094a52d">
                     <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
                     <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
                 </gml:TimePeriod>
             </aqd:reportingPeriod>
-            <aqd:content xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.11.43.835"/>
+            <aqd:content xlink:href="AT.0008.20.AQ/MEA.AT_60_NO2_M11"/>
         </aqd:AQD_ReportingHeader>
     </gml:featureMember>
     <gml:featureMember>
-        <aqd:AQD_Measures gml:id="ATTR_Draft_2016_12_22_11_43_835">
+        <aqd:AQD_Measures gml:id="ATTR_MEA_AT_60_NO2_M11">
             <aqd:inspireId>
                 <base:Identifier>
-                    <base:localId>Draft_2016-12-22.11.43.835</base:localId>
-                    <base:namespace>BE.CELINE-IRCEL.AQ</base:namespace>
-                    <base:versionId>2017-03-16.12.40.333</base:versionId>
+                    <base:localId>MEA.AT_60_NO2_M11</base:localId>
+                    <base:namespace>AT.0008.20.AQ</base:namespace>
+                    <base:versionId>2017-02-23.11.43.81</base:versionId>
                 </base:Identifier>
             </aqd:inspireId>
-            <aqd:code>ISO 3166-2:BE</aqd:code>
-            <aqd:name>Voir plan régional air climat énergie</aqd:name>
-            <aqd:description>Voir plan régional air climat énergie</aqd:description>
-            <aqd:classification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/LEF-shift"/>
+            <aqd:code>AT60_NO2_01_M11_2014</aqd:code>
+            <aqd:name>80/100 auf Überlandstraßen</aqd:name>
+            <aqd:description>
+                Die dauerhafte Reduktion der Maximalgeschwindigkeit auf Autobahnen von 130 auf 100 km/h und
+                auf Bundes‐ und Landesstraßen von 100 auf 80 km/h in Sanierungsgebieten trägt zu einer
+                maßgeblichen Reduktion des Treibstoffverbrauchs und der Luftschadstoffemissionen bei. Dieses
+                Reduktionspotential liegt auch der in den vergangenen Luftreinhalteprogrammen umgesetzten Maßnahme der
+                Verkehrsbeeinflussungsanlagen (VBA) auf bestimmten Autobahnkorridoren zugrunde.
+            </aqd:description>
             <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/measure-taxes"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/pproc-cleaner"/>
-            <aqd:classification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/pproc-new"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/public-internet"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/public-radio"/>
-            <aqd:classification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/public-tv"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/traffic-landuse"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/traffic-LEZ"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/traffic-managepark"/>
-            <aqd:classification
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/traffic-public"/>
+                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/traffic-speed"/>
             <aqd:measureType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measuretype/integrated"/>
             <aqd:administrativeLevel
                     xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/regional"/>
             <aqd:timeScale xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/timescale/long"/>
-            <aqd:sourceSectors
-                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/commercial-residential"/>
-            <aqd:sourceSectors xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/industry"/>
             <aqd:sourceSectors xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/transport"/>
             <aqd:spatialScale xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/zone_agg"/>
             <aqd:plannedImplementation>
@@ -120,35 +103,39 @@
                     <aqd:status
                             xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/implementation"/>
                     <aqd:implementationPlannedTimePeriod>
-                        <gml:TimePeriod gml:id="PLANNED_IMPLEMENTATION_TIME_PERIOD_f34480bdb7a7f9b7450bc4d8d27941d7">
-                            <gml:beginPosition>9999-01-01T00:00:00Z</gml:beginPosition>
-                            <gml:endPosition>9999-12-31T00:00:00Z</gml:endPosition>
+                        <gml:TimePeriod gml:id="PLANNED_IMPLEMENTATION_TIME_PERIOD_debf26c7a5171cad95c3cbc34094a52d">
+                            <gml:beginPosition>2016-01-01T00:00:00Z</gml:beginPosition>
+                            <gml:endPosition>T00:00:00Z</gml:endPosition>
                         </gml:TimePeriod>
                     </aqd:implementationPlannedTimePeriod>
+                    <aqd:implementationActualTimePeriod>
+                        <gml:TimePeriod gml:id="ACTUAL_IMPLEMENTATION_TIME_PERIOD_debf26c7a5171cad95c3cbc34094a52d">
+                            <gml:beginPosition>2016-01-01T00:00:00Z</gml:beginPosition>
+                            <gml:endPosition>T00:00:00Z</gml:endPosition>
+                        </gml:TimePeriod>
+                    </aqd:implementationActualTimePeriod>
                     <aqd:plannedFullEffectDate>
-                        <gml:TimeInstant gml:id="PLANNED_FULL_EFFECT_DATE_f34480bdb7a7f9b7450bc4d8d27941d7">
-                            <gml:timePosition>2022-12-31</gml:timePosition>
+                        <gml:TimeInstant gml:id="PLANNED_FULL_EFFECT_DATE_debf26c7a5171cad95c3cbc34094a52d">
+                            <gml:timePosition>2016-01-01</gml:timePosition>
                         </gml:TimeInstant>
                     </aqd:plannedFullEffectDate>
-                    <aqd:monitoringProgressIndicators xsi:nil="false">en cours d'évaluation
-                    </aqd:monitoringProgressIndicators>
-                    <aqd:comment>La mise en place d'indicateurs de suivi du plan air climat énéregie est en cours.
-                    </aqd:comment>
+                    <aqd:monitoringProgressIndicators xsi:nil="false">NO2 measurement</aqd:monitoringProgressIndicators>
                 </aqd:PlannedImplementation>
             </aqd:plannedImplementation>
             <aqd:reductionOfEmissions>
                 <aqd:QuantityCommented>
-                    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1" xsi:nil="false">
-                        0.8
+                    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false">
+                        267
                     </aqd:quantity>
-                    <aqd:comment>L'impact rapporté est celui de la mise en place de la zone de basses émissions sur
-                        toute la Région de Bruxelles Capitale pour 2020 à lhorizons 2020. En 2025, cet impact est estimé
-                        à 5kt de NOX en moins.
-                    </aqd:comment>
                 </aqd:QuantityCommented>
             </aqd:reductionOfEmissions>
-            <aqd:exceedanceAffected xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-21.09.40.182"/>
-            <aqd:usedForScenario xlink:href="BE.CELINE-IRCEL.AQ/Draft_2016-12-22.11.15.601"/>
+            <aqd:expectedImpact>
+                <aqd:ExpectedImpact>
+                    <aqd:specificationOfHours xlink:href="http://dd.eionet.europa.eu/vocabulary/uom/time/day"/>
+                </aqd:ExpectedImpact>
+            </aqd:expectedImpact>
+            <aqd:exceedanceAffected xlink:href="AT.0008.20.AQ/SAP.AT_60_NO2_2014"/>
+            <aqd:usedForScenario xlink:href="AT.0008.20.AQ/EVS.AT_60_NO2_2014"/>
         </aqd:AQD_Measures>
     </gml:featureMember>
 </gml:FeatureCollection>

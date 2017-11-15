@@ -1,0 +1,137 @@
+<gml:FeatureCollection xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:om="http://www.opengis.net/om/2.0"
+                       xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0"
+                       xmlns:xlink="http://www.w3.org/1999/xlink"
+                       xmlns:aqd="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0"
+                       xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:swe="http://www.opengis.net/swe/2.0"
+                       xmlns:ad="urn:x-inspire:specification:gmlas:Addresses:3.0"
+                       xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/1.0"
+                       xmlns:sam="http://www.opengis.net/sampling/2.0"
+                       xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/3.0"
+                       xmlns:gmd="http://www.isotc211.org/2005/gmd"
+                       xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0"
+                       xmlns:am="http://inspire.ec.europa.eu/schemas/am/3.0"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3"
+                       xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Measure"
+                       xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
+    <gml:featureMember>
+        <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_MEA_AT_60_NO2_ZM02">
+            <aqd:change>true</aqd:change>
+            <aqd:changeDescription>none</aqd:changeDescription>
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>HDR_MEA.AT_60_NO2_ZM02</base:localId>
+                    <base:namespace>AT.0008.20.AQ</base:namespace>
+                    <base:versionId>2017-02-23.12.43.560</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:reportingAuthority>
+                <base2:RelatedParty>
+                    <base2:individualName>
+                        <gco:CharacterString>Wolfgang Spangl</gco:CharacterString>
+                    </base2:individualName>
+                    <base2:organisationName>
+                        <gco:CharacterString>Umweltbundesamt</gco:CharacterString>
+                    </base2:organisationName>
+                    <base2:contact>
+                        <base2:Contact>
+                            <base2:address>
+                                <ad:AddressRepresentation>
+                                    <ad:adminUnit>
+                                        <gn:GeographicalName>
+                                            <gn:language nilReason="unpopulated" xsi:nil="true"/>
+                                            <gn:nativeness nilReason="unpopulated" xsi:nil="true"/>
+                                            <gn:nameStatus nilReason="unpopulated" xsi:nil="true"/>
+                                            <gn:sourceOfName nilReason="unpopulated" xsi:nil="true"/>
+                                            <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
+                                            <gn:spelling>
+                                                <gn:SpellingOfName>
+                                                    <gn:text/>
+                                                    <gn:script nilReason="unpopulated" xsi:nil="true"/>
+                                                </gn:SpellingOfName>
+                                            </gn:spelling>
+                                        </gn:GeographicalName>
+                                    </ad:adminUnit>
+                                    <ad:locatorDesignator>Spittelauer Lände 5, 1090 Wien, Austria</ad:locatorDesignator>
+                                </ad:AddressRepresentation>
+                            </base2:address>
+                            <base2:electronicMailAddress>wolfgang.spangl@umweltbundesamt.at
+                            </base2:electronicMailAddress>
+                            <base2:telephoneVoice>+431313045861</base2:telephoneVoice>
+                            <base2:website>www.umweltbundesamt.at</base2:website>
+                        </base2:Contact>
+                    </base2:contact>
+                </base2:RelatedParty>
+            </aqd:reportingAuthority>
+            <aqd:reportingPeriod>
+                <gml:TimePeriod gml:id="REPORTING_START_DATE_4fbc919b250866e78be28e1994f43f04">
+                    <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
+                    <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
+                </gml:TimePeriod>
+            </aqd:reportingPeriod>
+            <aqd:content xlink:href="AT.0008.20.AQ/MEA.AT_60_NO2_ZM02"/>
+        </aqd:AQD_ReportingHeader>
+    </gml:featureMember>
+    <gml:featureMember>
+        <aqd:AQD_Measures gml:id="ATTR_MEA_AT_60_NO2_ZM02">
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>MEA.AT_60_NO2_ZM02</base:localId>
+                    <base:namespace>AT.0008.20.AQ</base:namespace>
+                    <base:versionId>2017-02-23.12.43.560</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
+            <aqd:code>AT60_NO2_01_ZM02</aqd:code>
+            <aqd:name>Exchange of trucks (EURO 0, EURO I, EURO II)</aqd:name>
+            <aqd:description>
+                Old commercial vehicles of emissions class Euro 0-II will be replaced by the commercial vehicle of
+                emission class EEV. The incentive can be given for example by funding for new purchase by scrapping old
+                vehicles at the same time. This is a completion of measure FM02.
+            </aqd:description>
+            <aqd:classification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/other"/>
+            <aqd:measureType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measuretype/integrated"/>
+            <aqd:administrativeLevel
+                    xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/regional"/>
+            <aqd:timeScale xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/timescale/medium"/>
+            <aqd:sourceSectors xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/transport"/>
+            <aqd:spatialScale xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/zone_agg"/>
+            <aqd:plannedImplementation>
+                <aqd:PlannedImplementation>
+                    <aqd:status
+                            xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/implementation"/>
+                    <aqd:implementationPlannedTimePeriod>
+                        <gml:TimePeriod gml:id="PLANNED_IMPLEMENTATION_TIME_PERIOD_4fbc919b250866e78be28e1994f43f04">
+                            <gml:beginPosition>2012-01-01T00:00:00Z</gml:beginPosition>
+                            <gml:endPosition>T00:00:00Z</gml:endPosition>
+                        </gml:TimePeriod>
+                    </aqd:implementationPlannedTimePeriod>
+                    <aqd:implementationActualTimePeriod>
+                        <gml:TimePeriod gml:id="ACTUAL_IMPLEMENTATION_TIME_PERIOD_4fbc919b250866e78be28e1994f43f04">
+                            <gml:beginPosition>2012-01-01T00:00:00Z</gml:beginPosition>
+                            <gml:endPosition>T00:00:00Z</gml:endPosition>
+                        </gml:TimePeriod>
+                    </aqd:implementationActualTimePeriod>
+                    <aqd:plannedFullEffectDate>
+                        <gml:TimeInstant gml:id="PLANNED_FULL_EFFECT_DATE_4fbc919b250866e78be28e1994f43f04">
+                            <gml:timePosition>2015-01-01</gml:timePosition>
+                        </gml:TimeInstant>
+                    </aqd:plannedFullEffectDate>
+                    <aqd:monitoringProgressIndicators xsi:nil="false">NO2 measurement</aqd:monitoringProgressIndicators>
+                </aqd:PlannedImplementation>
+            </aqd:plannedImplementation>
+            <aqd:reductionOfEmissions>
+                <aqd:QuantityCommented>
+                    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false">30
+                    </aqd:quantity>
+                </aqd:QuantityCommented>
+            </aqd:reductionOfEmissions>
+            <aqd:expectedImpact>
+                <aqd:ExpectedImpact>
+                    <aqd:specificationOfHours xlink:href="http://dd.eionet.europa.eu/vocabulary/uom/time/day"/>
+                </aqd:ExpectedImpact>
+            </aqd:expectedImpact>
+            <aqd:exceedanceAffected xlink:href="AT.0008.20.AQ/SAP.AT_60_NO2_2014"/>
+            <aqd:usedForScenario xlink:href="AT.0008.20.AQ/EVS.AT_60_NO2_2014"/>
+        </aqd:AQD_Measures>
+    </gml:featureMember>
+</gml:FeatureCollection>

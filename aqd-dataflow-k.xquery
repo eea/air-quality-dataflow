@@ -139,7 +139,7 @@ let $K0table :=
 let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
 let $knownMeasures :=
     if ($isNewDelivery) then
-        distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+        distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "k/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
     else
         distinct-values(data(sparqlx:run(query:getMeasures($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
 
@@ -171,12 +171,13 @@ let $K02table :=
             <tr>
                 <td title="gml:id">{data($x/@gml:id)}</td>
                 <td title="aqd:inspireId">{$inspireId}</td>
-                <td title="aqd:pollutant">{common:checkLink(distinct-values(data($x/aqd:pollutant/@xlink:href)))}</td>
-                <td title="aqd:objectiveType">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:objectiveType/@xlink:href)))}</td>
-                <td title="aqd:reportingMetric">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:reportingMetric/@xlink:href)))}</td>
-                <td title="aqd:protectionTarget">{common:checkLink(distinct-values(data($x/aqd:environmentalObjective/aqd:EnvironmentalObjective/aqd:protectionTarget/@xlink:href)))}</td>
-                <td title="aqd:zone">{common:checkLink(distinct-values(data($x/aqd:zone/@xlink:href)))}</td>
-                <td title="aqd:assessment">{common:checkLink(distinct-values(data($x/aqd:assessment/@xlink:href)))}</td>
+                <td title="aqd:classification">{common:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+                <td title="aqd:measureType">{common:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+                <td title="aqd:administrativeLevel">{common:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+                <td title="aqd:timeScale">{common:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+                <td title="aqd:sourceSectors">{common:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+                <td title="aqd:exceedanceAffected">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:usedForScenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
             </tr>
     } catch * {
         <tr class="{$errors:FAILED}">
@@ -194,12 +195,75 @@ let $K02errorLevel :=
         else
             $errors:INFO
 
+(: K03 - :)
+let $K03table :=
+    try {
+        for $x in $docRoot//aqd:AQD_Measures
+        let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
+        where ($inspireId = $knownMeasures)
+        return
+            <tr>
+                <td title="gml:id">{data($x/@gml:id)}</td>
+                <td title="aqd:inspireId">{$inspireId}</td>
+                <td title="aqd:classification">{common:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+                <td title="aqd:measureType">{common:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+                <td title="aqd:administrativeLevel">{common:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+                <td title="aqd:timeScale">{common:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+                <td title="aqd:sourceSectors">{common:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+                <td title="aqd:exceedanceAffected">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:usedForScenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+            </tr>
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code">{$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
+let $K03errorLevel :=
+    if (not($isNewDelivery) and count($K03table) = 0)  then
+        $errors:K03
+    else
+        $errors:INFO
+
+(: K04 - :)
+let $K04table :=
+    try {
+        let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
+        let $inspireIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(aqd:inspireId))
+        for $x in $docRoot//aqd:AQD_Measures
+            let $id := $x/@gml:id
+            let $inspireId := $x/aqd:inspireId
+            let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        where count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+                    and count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        return
+            <tr>
+                <td title="gml:id">{data($x/@gml:id)}</td>
+                <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
+                <td title="aqd:classification">{common:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+                <td title="aqd:measureType">{common:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+                <td title="aqd:administrativeLevel">{common:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+                <td title="aqd:timeScale">{common:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+                <td title="aqd:sourceSectors">{common:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+                <td title="aqd:exceedanceAffected">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:usedForScenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+            </tr>
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code">{$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
+
+
 return
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("K0", $labels:K0, $labels:K0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
         {html:build1("K01", $labels:K01, $labels:K01_SHORT, $tblAllMeasures, "", string($countMeasures), "", "", $errors:K01)}
         {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
+        {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
+        {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
     </table>
 };
 

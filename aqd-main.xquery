@@ -13,4 +13,5 @@ declare option output:method "html";
 declare option db:inlinelimit '0';
 
 (:obligations:proceed($source_url):)
-obligations:proceed('resources/dataflow-k/K_BE.xml')
+obligations:proceed('resources/dataflow-k/K_AT2.xml')
+
