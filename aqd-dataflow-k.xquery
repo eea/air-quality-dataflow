@@ -54,6 +54,42 @@ declare variable $dataflowK:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
 
 declare variable $dataflowK:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "683");
 
+(: These attributes should be unique :)
+declare variable $dataflowK:UNIQUE_IDS as xs:string* := (
+  "gml:id",
+  "ef:inspireId",
+  "aqd:inspireId"
+);
+
+declare function dataflowK:findDuplicateAttributes(
+  $elRoot as node(),
+  $attrNames as xs:string*
+) as xs:string* {
+
+  for $attrName in $attrNames
+    let $igna := trace($attrName, "attr name: ")
+    let $c :=
+      for $v in distinct-values($elRoot//descendant::*[name()=$attrName])
+         let $ign := trace($v, 'value: ')
+         let $x := trace(
+           count($elRoot//descendant::*[$attrName=$v])
+           , "count of: "
+         )
+         return $x
+
+    return
+      if (
+        some $i in $c
+        satisfies ($i > 1)
+      )
+      then
+        $attrName
+      else
+        ()
+};
+
+
+
 (: Rule implementations :)
 declare function dataflowK:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
 
@@ -115,6 +151,7 @@ let $NSinvalid :=
             <td title="Error description">{$err:description}</td>
         </tr>
     }:)
+
 (: K0 Checks if this delivery is new or an update (on same reporting year) :)
 let $K0table :=
     try {
@@ -295,6 +332,8 @@ let $K09table :=
     }
 
 (: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
+
+(: TODO: should be "and" or "or" in where clause?? :)
 let $K10invalid :=
     try {
         let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
@@ -313,11 +352,95 @@ let $K10invalid :=
         </tr>
     }
 
+(: TODO: requirement not clear :)
 (: K11 aqd:AQD_Measures/aqd:exceedanceAffected MUST reference an existing Source Apportionment (I) document via namespace/localId :)
 
-(: K14 aqd:AQD_Measures/aqd:name must be populated with a text string :)
+(: K13 aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+
+Unique code of the measure. This may be a unique local code for the measure or
+may be identical to the unique code used in K2.1.
 
 
+TODO: we implemented just first line of the requirement, the second line
+contradicts it
+:)
+
+let $K13invalid :=
+  try {
+    for $node in $docRoot//aqd:AQD_Measures
+      let $code := $node/aqd:code
+      let $localId := $node/aqd:inspireId/base:Identifier/base:localId
+    return
+      if ($code ne $localId)
+      then
+        <tr>
+            <td title="aqd:code">{$code}</td>
+            <td title="base:localId">{$localId}</td>
+        </tr>
+      else
+        ()
+  }  catch * {
+      <tr class="{$errors:FAILED}">
+          <td title="Error code">{$err:code}</td>
+          <td title="Error description">{$err:description}</td>
+      </tr>
+  }
+
+
+(: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure
+:)
+
+let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
+
+let $K14invalid := common:needsValidString($docRoot//aqd:AQD_Measures/aqd:name)
+
+
+(: K07 -
+All attributes
+  - gml:id
+  - ef:inspireId
+  - aqd:inspireId
+elements shall have unique content
+:)
+
+(:~ Given a seq of attribute names, returns a seq of names for the attributes
+where the values are not unique.
+
+Usage: find attributes that are not unique but need to be unique (for ex: ids)
+:)
+
+
+(:
+let $K07base := (
+  count(dataflowK:findDuplicateAttributes($docRoot,
+                                          $dataflowK:UNIQUE_IDS)) > 0
+)
+:)
+
+let $K07base := dataflowK:findDuplicateAttributes(
+  $docRoot, $dataflowK:UNIQUE_IDS
+)
+
+let $K07table := (
+<tr>
+  <td>
+  hello
+  {
+  for $k in $K07base
+    return
+      <div>Duplicate: {$k}</div>
+  }
+  world
+  </td>
+</tr>
+)
+
+
+let $K07invalid := ()
+let $K07errorLevel := $errors:INFO
+
+(: {html:buildSimple("K07", $labels:K07, $labels:K07_SHORT, $K07table, "", "", $K07errorLevel)} :)
 
 return
     <table class="maintable hover">
@@ -330,6 +453,11 @@ return
         {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
         {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
         {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " invalid namespaces", $errors:K10)}
+
+        {html:build2("K13", $labels:K13, $labels:K13_SHORT, $K13invalid, "All values are valid", " code not equal", $errors:K13)}
+        {html:build2("K14", $labels:K14, $labels:K14_SHORT, $K14invalid, "All values are valid", "needs valid input", $errors:K14)}
+
+        {$K07table}
     </table>
 };
 

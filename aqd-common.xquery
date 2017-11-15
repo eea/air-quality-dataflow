@@ -4,6 +4,7 @@ module namespace common = "aqd-common";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
+import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 
 declare namespace base = "http://inspire.ec.europa.eu/schemas/base/3.3";
 declare namespace skos = "http://www.w3.org/2004/02/skos/core#";
@@ -196,4 +197,23 @@ declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPo
             else false()
         else
             false()
+};
+
+(: Returns structure with error if node is empty :)
+declare function common:needsValidString($el as node()) as element(tr)* {
+  let $name := node-name($el)
+  return try {
+    if (string-length(normalize-space($el)) = 0)
+    then
+      <tr>
+        <td title="{$name}">{$name} needs a valid input</td>
+      </tr>
+    else
+      ()
+  }  catch * {
+      <tr class="{$errors:FAILED}">
+          <td title="Error code">{$err:code}</td>
+          <td title="Error description">{$err:description}</td>
+      </tr>
+  }
 };
