@@ -139,7 +139,7 @@ let $K0table :=
 let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
 let $knownMeasures :=
     if ($isNewDelivery) then
-        distinct-values(data(sparqlx:run(query:getAttainment($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+        distinct-values(data(sparqlx:run(query:getAttainme($cdrUrl || "g/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
     else
         distinct-values(data(sparqlx:run(query:getAttainment($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
 
