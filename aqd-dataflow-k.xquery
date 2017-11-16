@@ -435,7 +435,7 @@ let $K19 := c:isInVocabulary(
 (: K20 aqd:AQD_Measures/aqd:costs/ should be provided
 Information on the cost of the measure should be provided
 :)
-let $K20 := c:isNodeNotInParentError($docRoot//aqd:AQD_Measures, 'aqd:costs')
+let $K20 := c:isNodeNotInParentReport($docRoot//aqd:AQD_Measures, 'aqd:costs')
 
 
 (: K21
@@ -484,21 +484,40 @@ try {
     html:createErrorRow($err:code, $err:description)
 }
 
-(:
-if exists(aqd:costs):
-    if not isinteger( aqd:estimatedImplementationCosts ):
-    let
-        eroare + tabel
-    else
-        pass
-else:
-    if not exists( :comment ):
-        eroare + tabel
-    else:
-        pass
+(: K22
+If populated,
+/aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:finalImplementationCosts should be an
+integer number
+If the final total costs of the measure is provided, this nneeds to be a number
+
+let $K22 := c:maybeNodeValueIsIntegerReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts'
+)
 :)
 
+let $K22 := c:validatePossibleNodeValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts',
+    c:is-a-number#1
+)
 
+(: K23
+If aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts is
+populated aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency must be populated
+and shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/common/currencies/
+
+If estimated costs are provided, the currency must be provided conforming to
+vocabulary
+
+let $K23 := c:validateMaybeNodeWithValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:estimatedImplementationCosts',
+    false()
+)
+
+:)
 
 (: K07 -
 All attributes
@@ -568,6 +587,8 @@ return
         {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
         {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
         {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
+        {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
+
         <tr>
         <td colspan="4">
         <div>
