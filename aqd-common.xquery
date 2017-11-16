@@ -219,16 +219,40 @@ declare function common:needsValidString($el as node()) as element(tr)* {
   }
 };
 
-declare function common:conformToVocabulary($el as node(), $vocabulary as xs:string) as element(tr)* {
-    let $name := node-name($el)
-    let $value := data($el/@xlink:href)
-    let $valid := dd:getValidConcepts($vocabulary || "rdf")
+(: Check if the given node links to a term that is defined in the vocabulary :)
+declare function common:isInVocabulary(
+  $el as node(),
+  $vocabularyName as xs:string
+) as element(tr)* {
+    let $uri := data($el/@xlink:href)
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
     return try {
-        if (not($value = $valid))
+        if (not($uri = $validUris))
         then
             <tr>
-                <td title="{$name}"> not conform to vocabulary</td>
-                <td title="{$value}"></td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+                <td title="{$uri}"></td>
+            </tr>
+        else
+            ()
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code"> {$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
+};
+
+(: tests if a specific node exists in a parent :)
+declare function common:isNodeInParent(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    try {
+        if (empty($parent/*[name() = $nodeName]))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
             </tr>
         else
             ()

@@ -13,7 +13,7 @@ xquery version "3.0" encoding "UTF-8";
 
 module namespace dataflowK = "http://converters.eionet.europa.eu/dataflowK";
 
-import module namespace common = "aqd-common" at "aqd-common.xquery";
+import module namespace c = "aqd-common" at "aqd-common.xquery";
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace sparqlx = "aqd-sparql" at "aqd-sparql.xquery";
 import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
@@ -93,11 +93,11 @@ declare function dataflowK:findDuplicateAttributes(
 (: Rule implementations :)
 declare function dataflowK:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
 
-let $envelopeUrl := common:getEnvelopeXML($source_url)
+let $envelopeUrl := c:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
-let $cdrUrl := common:getCdrUrl($countryCode)
+let $cdrUrl := c:getCdrUrl($countryCode)
 let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
-let $reportingYear := common:getReportingYear($docRoot)
+let $reportingYear := c:getReportingYear($docRoot)
 let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
@@ -210,13 +210,13 @@ let $K02table :=
             <tr>
                 <td title="gml:id">{data($x/@gml:id)}</td>
                 <td title="aqd:inspireId">{$inspireId}</td>
-                <td title="aqd:classification">{common:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
-                <td title="aqd:measureType">{common:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
-                <td title="aqd:administrativeLevel">{common:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
-                <td title="aqd:timeScale">{common:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
-                <td title="aqd:sourceSectors">{common:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
-                <td title="aqd:exceedanceAffected">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:usedForScenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+                <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+                <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+                <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+                <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+                <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+                <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
             </tr>
     } catch * {
         <tr class="{$errors:FAILED}">
@@ -245,13 +245,13 @@ let $K03table :=
             <tr>
                 <td title="gml:id">{data($x/@gml:id)}</td>
                 <td title="aqd:inspireId">{$inspireId}</td>
-                <td title="aqd:classification">{common:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
-                <td title="aqd:measureType">{common:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
-                <td title="aqd:administrativeLevel">{common:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
-                <td title="aqd:timeScale">{common:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
-                <td title="aqd:sourceSectors">{common:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
-                <td title="aqd:exceedanceAffected">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:usedForScenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+                <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+                <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+                <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+                <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+                <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+                <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
             </tr>
     } catch * {
         <tr class="{$errors:FAILED}">
@@ -281,8 +281,8 @@ let $K04table :=
             <tr>
                 <td title="gml:id">{data($x/@gml:id)}</td>
                 <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
             </tr>
     } catch * {
         <tr class="{$errors:FAILED}">
@@ -303,8 +303,8 @@ let $K08invalid:=
             <tr>
                 <td title="gml:id">{data($x/@gml:id)}</td>
                 <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
+                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
             </tr>
     } catch * {
         <tr class="{$errors:FAILED}">
@@ -390,21 +390,56 @@ let $K13invalid :=
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
 let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
-let $K14invalid := common:needsValidString($docRoot//aqd:AQD_Measures/aqd:name)
+let $K14invalid := c:needsValidString($docRoot//aqd:AQD_Measures/aqd:name)
 
 (: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
-let $K15invalid := common:needsValidString($docRoot//aqd:AQD_Measures/aqd:description)
+let $K15invalid := c:needsValidString($docRoot//aqd:AQD_Measures/aqd:description)
+
+let $errorLevel := 'error'
 
 (: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
 Measure classification should conform to vocabulary :)
-let $K16 := common:conformToVocabulary($docRoot//aqd:AQD_Measures/aqd:classification,
-        $vocabulary:MEASURECLASSIFICATION_VOCABULARY)
+let $K16 := c:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:classification,
+        $vocabulary:MEASURECLASSIFICATION_VOCABULARY
+        )
 
 (: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
 Measure type should conform to vocabulary :)
-let $K17 := common:conformToVocabulary($docRoot//aqd:AQD_Measures/aqd:measureType,
-        $vocabulary:MEASURETYPE_VOCABULARY)
+let $K17 := c:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:measureType,
+        $vocabulary:MEASURETYPE_VOCABULARY
+        )
+
+
+(: K18 aqd:AQD_Measures/aqd:administrativeLevel shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/
+Administrative level should conform to vocabulary
+:)
+let $K18 := c:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
+        $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
+        )
+
+(: K19
+aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/
+The measure's timescale should conform to vocabulary
+:)
+let $K19 := c:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:timeScale,
+        $vocabulary:TIMESCALE_VOCABULARY
+        )
+
+
+(: K20 aqd:AQD_Measures/aqd:costs/ should be provided
+Information on the cost of the measure should be provided
+:)
+let $K20 := c:isNodeInParent($docRoot//aqd:AQD_Measures, 'aqd:costs')
+
+
+
+
 
 (: K07 -
 All attributes
@@ -453,6 +488,7 @@ let $K07errorLevel := $errors:INFO
 (: {html:buildSimple("K07", $labels:K07, $labels:K07_SHORT, $K07table, "", "", $K07errorLevel)} :)
 
 return
+(
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("K0", $labels:K0, $labels:K0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
@@ -469,9 +505,22 @@ return
         {html:build2("K15", $labels:K15, $labels:K15_SHORT, $K15invalid, "All values are valid", "needs valid input", $errors:K15)}
         {html:build2("K16", $labels:K16, $labels:K16_SHORT, $K16, "All values are valid", "not conform to vocabulary",$errors:K16)}
         {html:build2("K17", $labels:K17, $labels:K17_SHORT, $K17, "All values are valid", "not conform to vocabulary",$errors:K17)}
+        {html:build2("K18", $labels:K18, $labels:K18_SHORT, $K18, "All values are valid", "not conform to vocabulary",$errors:K18)}
+        {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
+        {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
+        <tr>
+        <td colspan="4">
+        <div>
+        {
+            $docRoot//aqd:AQD_Measures/aqd:costs
+        }
+        </div>
+        </td>
+        </tr>
 
-        {$K07table}
     </table>
+)
+
 };
 
 declare function dataflowK:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
