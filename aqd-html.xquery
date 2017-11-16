@@ -1,7 +1,7 @@
 xquery version "3.0";
 
 (:~
-: 
+:
 : User: George Sofianos
 : Date: 5/31/2016
 : Time: 11:48 AM
@@ -12,7 +12,7 @@ import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 
-declare function html:getHead() as element()* {  
+declare function html:getHead() as element()* {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>
 };
 
@@ -306,6 +306,7 @@ declare function html:build0($ruleCode as xs:string, $longText, $text, $records 
 
         return html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
+
 declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $unit as xs:string, $errorLevel as xs:string) {
     let $data := html:parseData($records, "data")
 
@@ -326,7 +327,18 @@ declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $rec
         else
             html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
-declare function html:build1($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build1(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -347,7 +359,15 @@ declare function html:build1($ruleCode as xs:string, $longText, $text, $records 
     return html:buildGeneric($ruleCode, $longText, $text, $data, $validMsg, $bulletType)
 };
 
-declare function html:build2($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $validMsg as xs:string, $unit as xs:string, $errorLevel as xs:string) as element(tr)* {
+declare function html:build2(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $metadata := html:parseData($records, "metadata")
     let $thead := html:parseData($records, "thead")
@@ -363,6 +383,7 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $errors:INFO
         else
             $errorLevel
+
     let $message :=
         if ($skipped) then
             $labels:SKIPPED
@@ -370,9 +391,25 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $validMsg
         else
             $countRecords || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
-    return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
+
+    return html:buildGeneric(
+        $ruleCode,
+        $longText,
+        $text,
+        $data,
+        $message,
+        $bulletType
+    )
 };
-declare function html:build3($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build3(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
     let $data := html:parseData($records, "data")
     let $bulletType := $errorLevel
     return
@@ -443,7 +480,15 @@ declare %private function html:parseData($records as element(tr)*, $type as xs:s
 };
 
 (: Builds HTML table rows for rules. :)
-declare %private function html:buildGeneric($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $bulletType as xs:string) as element(tr)* {
+declare %private function html:buildGeneric(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $bulletType as xs:string
+) as element(tr)* {
+
     let $countRecords := count($records)
     let $hasFailed := errors:hasFailed(($records, $records//td))
     let $bulletType := if ($hasFailed) then $errors:FAILED else $bulletType
@@ -684,5 +729,15 @@ declare function html:buildResultDiv($meta as map(*), $result as element(table)?
 declare function html:createMetadataTR($rowsCount as xs:integer) {
     <tr metadata="true">
         <count>{$rowsCount}</count>
+    </tr>
+};
+
+declare function html:createErrorRow(
+    $errCode as xs:string,
+    $errDesc as xs:string
+) {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$errCode}</td>
+        <td title="Error description">{$errDesc}</td>
     </tr>
 };
