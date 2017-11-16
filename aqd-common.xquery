@@ -1,6 +1,8 @@
 xquery version "3.0" encoding "UTF-8";
 
 module namespace common = "aqd-common";
+
+import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
@@ -201,22 +203,23 @@ declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPo
 };
 
 (: Returns structure with error if node is empty :)
-declare function common:needsValidString($el as node()) as element(tr)* {
-  let $name := node-name($el)
-  return try {
-    if (string-length(normalize-space($el)) = 0)
-    then
-      <tr>
-        <td title="{$name}">{$name} needs a valid input</td>
-      </tr>
-    else
-      ()
-  }  catch * {
-      <tr class="{$errors:FAILED}">
-          <td title="Error code">{$err:code}</td>
-          <td title="Error description">{$err:description}</td>
-      </tr>
-  }
+(: TODO: test if node doesn't exist :)
+declare function common:needsValidString(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (string-length(normalize-space($el/text())) = 0)
+        then
+            <tr>
+                <td title="{$nodeName}">{$nodeName} needs a valid input</td>
+            </tr>
+        else
+            ()
+    }  catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 };
 
 (: Check if the given node links to a term that is defined in the vocabulary :)
@@ -236,20 +239,26 @@ declare function common:isInVocabulary(
         else
             ()
     } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code"> {$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        html:createErrorRow($err:code, $err:description)
     }
 };
 
-(: tests if a specific node exists in a parent :)
+
+(: returns if a specific node exists in a parent :)
 declare function common:isNodeInParent(
+    $parent as node(),
+    $nodeName as xs:string
+) as xs:boolean {
+    exists($parent/*[name() = $nodeName])
+};
+
+(: prints error if a specific node does not exist in a parent :)
+declare function common:isNodeNotInParentError(
     $parent as node(),
     $nodeName as xs:string
 ) as element(tr)* {
     try {
-        if (empty($parent/*[name() = $nodeName]))
+        if (not(common:isNodeInParent($parent, $nodeName)))
         then
             <tr>
                 <td title="{$nodeName}"> needs valid input</td>
@@ -257,9 +266,6 @@ declare function common:isNodeInParent(
         else
             ()
     } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code"> {$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        html:createErrorRow($err:code, $err:description)
     }
 };

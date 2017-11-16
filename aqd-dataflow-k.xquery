@@ -390,11 +390,11 @@ let $K13invalid :=
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
 let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
-let $K14invalid := c:needsValidString($docRoot//aqd:AQD_Measures/aqd:name)
+let $K14invalid := c:needsValidString($docRoot//aqd:AQD_Measures, 'aqd:name')
 
 (: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
-let $K15invalid := c:needsValidString($docRoot//aqd:AQD_Measures/aqd:description)
+let $K15invalid := c:needsValidString($docRoot//aqd:AQD_Measures, 'aqd:description')
 
 let $errorLevel := 'error'
 
@@ -435,9 +435,68 @@ let $K19 := c:isInVocabulary(
 (: K20 aqd:AQD_Measures/aqd:costs/ should be provided
 Information on the cost of the measure should be provided
 :)
-let $K20 := c:isNodeInParent($docRoot//aqd:AQD_Measures, 'aqd:costs')
+let $K20 := c:isNodeNotInParentError($docRoot//aqd:AQD_Measures, 'aqd:costs')
 
 
+(: K21
+If aqd:costs provided
+aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be
+an integer number. If voided /aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:comment
+must be populated with an explanation of why no costs are available.
+
+The estimated total costs should be provided. If not, an explanation on the
+reasons for not providing it should be included.
+:)
+
+let $K21 :=
+try {
+    let $root := $docRoot//aqd:AQD_Measures
+    let $implCosts := $root/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts
+    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment/text()
+    let $costsRoot := $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+
+    let $isValidCost := c:is-a-number(data($implCosts))
+    let $hasCost := c:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+
+    return
+        if (c:isNodeInParent($root, 'aqd:costs'))
+        then (
+            if (not($isValidCost))
+            then
+                if (empty($comment))
+                then
+                    if ($hasCost)
+                    then
+                        (
+                         <tr> <td title="aqd:estimatedImplementationCosts">{$errors:K21}</td> </tr>
+                        )
+                    else
+                        ( <tr><td title="aqd:comment">{$errors:K21}</td></tr>)
+                else
+                    ()  (: ok, we have a comment :)
+            else
+                ()      (: ok, cost is a number :)
+        )
+        else
+            <tr><td title="acq:costs">{$errors:K21}</td></tr>
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(:
+if exists(aqd:costs):
+    if not isinteger( aqd:estimatedImplementationCosts ):
+    let
+        eroare + tabel
+    else
+        pass
+else:
+    if not exists( :comment ):
+        eroare + tabel
+    else:
+        pass
+:)
 
 
 
@@ -508,6 +567,7 @@ return
         {html:build2("K18", $labels:K18, $labels:K18_SHORT, $K18, "All values are valid", "not conform to vocabulary",$errors:K18)}
         {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
         {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
+        {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
         <tr>
         <td colspan="4">
         <div>
