@@ -13,6 +13,7 @@ declare namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#";
 declare namespace adms = "http://www.w3.org/ns/adms#";
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
+declare namespace xlink = "http://www.w3.org/1999/xlink";
 
 declare variable $common:SOURCE_URL_PARAM := "source_url=";
 
@@ -216,4 +217,25 @@ declare function common:needsValidString($el as node()) as element(tr)* {
           <td title="Error description">{$err:description}</td>
       </tr>
   }
+};
+
+declare function common:conformToVocabulary($el as node(), $vocabulary as xs:string) as element(tr)* {
+    let $name := node-name($el)
+    let $value := data($el/@xlink:href)
+    let $valid := dd:getValidConcepts($vocabulary || "rdf")
+    return try {
+        if (not($value = $valid))
+        then
+            <tr>
+                <td title="{$name}"> not conform to vocabulary</td>
+                <td title="{$value}"></td>
+            </tr>
+        else
+            ()
+    } catch * {
+        <tr class="{$errors:FAILED}">
+            <td title="Error code"> {$err:code}</td>
+            <td title="Error description">{$err:description}</td>
+        </tr>
+    }
 };

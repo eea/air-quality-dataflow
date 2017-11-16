@@ -388,13 +388,23 @@ let $K13invalid :=
 
 
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
-A short name for the measure
-:)
-
+A short name for the measure :)
 let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
-
 let $K14invalid := common:needsValidString($docRoot//aqd:AQD_Measures/aqd:name)
 
+(: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure :)
+let $K15invalid := common:needsValidString($docRoot//aqd:AQD_Measures/aqd:description)
+
+(: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
+Measure classification should conform to vocabulary :)
+let $K16 := common:conformToVocabulary($docRoot//aqd:AQD_Measures/aqd:classification,
+        $vocabulary:MEASURECLASSIFICATION_VOCABULARY)
+
+(: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
+Measure type should conform to vocabulary :)
+let $K17 := common:conformToVocabulary($docRoot//aqd:AQD_Measures/aqd:measureType,
+        $vocabulary:MEASURETYPE_VOCABULARY)
 
 (: K07 -
 All attributes
@@ -456,6 +466,9 @@ return
 
         {html:build2("K13", $labels:K13, $labels:K13_SHORT, $K13invalid, "All values are valid", " code not equal", $errors:K13)}
         {html:build2("K14", $labels:K14, $labels:K14_SHORT, $K14invalid, "All values are valid", "needs valid input", $errors:K14)}
+        {html:build2("K15", $labels:K15, $labels:K15_SHORT, $K15invalid, "All values are valid", "needs valid input", $errors:K15)}
+        {html:build2("K16", $labels:K16, $labels:K16_SHORT, $K16, "All values are valid", "not conform to vocabulary",$errors:K16)}
+        {html:build2("K17", $labels:K17, $labels:K17_SHORT, $K17, "All values are valid", "not conform to vocabulary",$errors:K17)}
 
         {$K07table}
     </table>
