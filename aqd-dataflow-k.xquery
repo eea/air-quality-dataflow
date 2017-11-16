@@ -400,14 +400,14 @@ let $errorLevel := 'error'
 
 (: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
 Measure classification should conform to vocabulary :)
-let $K16 := c:isInVocabulary(
+let $K16 := c:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:classification,
         $vocabulary:MEASURECLASSIFICATION_VOCABULARY
         )
 
 (: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
 Measure type should conform to vocabulary :)
-let $K17 := c:isInVocabulary(
+let $K17 := c:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:measureType,
         $vocabulary:MEASURETYPE_VOCABULARY
         )
@@ -417,7 +417,7 @@ let $K17 := c:isInVocabulary(
 http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/
 Administrative level should conform to vocabulary
 :)
-let $K18 := c:isInVocabulary(
+let $K18 := c:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
         $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
         )
@@ -426,7 +426,7 @@ let $K18 := c:isInVocabulary(
 aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/
 The measure's timescale should conform to vocabulary
 :)
-let $K19 := c:isInVocabulary(
+let $K19 := c:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:timeScale,
         $vocabulary:TIMESCALE_VOCABULARY
         )
@@ -511,13 +511,19 @@ http://dd.eionet.europa.eu/vocabulary/common/currencies/
 If estimated costs are provided, the currency must be provided conforming to
 vocabulary
 
+:)
+
 let $K23 := c:validateMaybeNodeWithValueReport(
     $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
     'aqd:estimatedImplementationCosts',
-    false()
+    c:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency,
+        $vocabulary:CURRENCIES
+    )
 )
 
-:)
+(: validateNodeReport(node, validator) :)
+
 
 (: K07 -
 All attributes
@@ -588,6 +594,7 @@ return
         {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
         {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
         {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
+        {html:build2("K23", $labels:K23, $labels:K23_SHORT, $K23, "All values are valid", " needs valid input", $errors:K23)}
 
         <tr>
         <td colspan="4">

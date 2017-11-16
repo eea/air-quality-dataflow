@@ -224,17 +224,23 @@ declare function c:needsValidString(
 
 (: Check if the given node links to a term that is defined in the vocabulary :)
 declare function c:isInVocabulary(
+  $el as node()?,
+  $vocabularyName as xs:string
+) as xs:boolean {
+    let $uri := data($el/@xlink:href)
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris
+};
+
+declare function c:isInVocabularyReport(
   $el as node(),
   $vocabularyName as xs:string
 ) as element(tr)* {
-    let $uri := data($el/@xlink:href)
-    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
-    return try {
-        if (not($uri = $validUris))
+    try {
+        if (not(c:isInVocabulary($el, $vocabularyName)))
         then
             <tr>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
-                <td title="{$uri}"></td>
             </tr>
         else
             ()
@@ -337,5 +343,25 @@ declare function c:validatePossibleNodeValueReport(
 
 
 (: Given a node, if it exists, print error based on provided value :)
-declare function c:validateMaybeNodeWithValueReport() as xs:boolean {
+declare function c:validateMaybeNodeWithValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $val as xs:boolean
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (exists($el))
+        then
+            if (not($val))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 };
