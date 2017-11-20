@@ -14,6 +14,7 @@
                        xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3"
                        xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Measure"
                        xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
+
     <gml:featureMember>
         <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_MEA_AT_60_NO2_ZM02">
             <aqd:change>true</aqd:change>
@@ -74,6 +75,22 @@
     </gml:featureMember>
     <gml:featureMember>
         <aqd:AQD_Measures gml:id="ATTR_MEA_AT_60_NO2_ZM02">
+
+           <gml:TimePeriod gml:id="REPORTING_START_DATE_4fbc919b250866e78be28e1994f43f04">
+             <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
+             <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
+           </gml:TimePeriod>
+
+           <aqd:costs>
+             <aqd:Costs>
+               <aqd:comment>abada</aqd:comment>
+               <aqd:estimatedImplementationCosts></aqd:estimatedImplementationCosts>
+               <aqd:finalImplementationCosts>12s</aqd:finalImplementationCosts>
+               <aqd:currency xlink:href="http://dd.eionet.europa.eu/vocabulary/common/currencies/CZK"></aqd:currency>
+             </aqd:Costs>
+           </aqd:costs>
+
+
             <aqd:inspireId>
                 <base:Identifier>
                     <base:localId>MEA.AT_60_NO2_ZM02</base:localId>
@@ -81,8 +98,8 @@
                     <base:versionId>2017-02-23.12.43.560</base:versionId>
                 </base:Identifier>
             </aqd:inspireId>
-            <aqd:code>AT60_NO2_01_ZM02</aqd:code>
-            <aqd:name>Exchange of trucks (EURO 0, EURO I, EURO II)</aqd:name>
+            <aqd:code>MEA.AT_60_NO2_ZM02</aqd:code>
+            <aqd:name></aqd:name>
             <aqd:description>
                 Old commercial vehicles of emissions class Euro 0-II will be replaced by the commercial vehicle of
                 emission class EEV. The incentive can be given for example by funding for new purchase by scrapping old
@@ -102,7 +119,7 @@
                     <aqd:implementationPlannedTimePeriod>
                         <gml:TimePeriod gml:id="PLANNED_IMPLEMENTATION_TIME_PERIOD_4fbc919b250866e78be28e1994f43f04">
                             <gml:beginPosition>2012-01-01T00:00:00Z</gml:beginPosition>
-                            <gml:endPosition>2012-01-01T00:05:00Z</gml:endPosition>
+                            <gml:endPosition indeterminatePosition="unknown">dsadas</gml:endPosition>
                         </gml:TimePeriod>
                     </aqd:implementationPlannedTimePeriod>
                     <aqd:implementationActualTimePeriod>

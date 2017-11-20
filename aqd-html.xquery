@@ -732,8 +732,9 @@ declare function html:createMetadataTR($rowsCount as xs:integer) {
     </tr>
 };
 
+(: TODO: correct name for this function would be html:errorRow :)
 declare function html:createErrorRow(
-    $errCode as xs:string,
+    $errCode as xs:anyAtomicType,
     $errDesc as xs:string
 ) {
     <tr class="{$errors:FAILED}">

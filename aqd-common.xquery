@@ -249,6 +249,27 @@ declare function c:isInVocabularyReport(
     }
 };
 
+        (: (xs:string, xs:anyAtomicType)* :)
+
+declare function c:conditionalReportRow (
+    $ok as xs:boolean,
+    $vals as array(item()*)
+) as element(tr)? {
+    if (not($ok))
+    then
+        <tr>
+        {
+            array:for-each($vals, function($k) {
+                <td title="{$k[1]}">
+                    {data($k[2])}
+                </td>
+            })
+        }
+        </tr>
+    else
+        ()
+};
+
 
 (: returns if a specific node exists in a parent :)
 declare function c:isNodeInParent(
@@ -415,3 +436,23 @@ declare function c:isEndDateAfterBeginDate(
     else
         false()
 };
+
+(:
+pseudocode, for brainstorming
+
+validators =[
+    isDate(x),
+    isDate(y),
+    isXBiggerThenY(x, y)
+]
+
+validate([
+    isDate(x),
+    isDate(y),
+    ])
+
+
+    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
+
+isXBiggerThanY(x:orice, y:orice)
+:)

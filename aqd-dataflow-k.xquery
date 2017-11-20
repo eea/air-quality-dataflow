@@ -451,8 +451,9 @@ reasons for not providing it should be included.
 let $K21 :=
 try {
     let $root := $docRoot//aqd:AQD_Measures
-    let $implCosts := $root/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts
-    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment/text()
+    let $costs := $root/aqd:costs
+    let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
+    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment
     let $costsRoot := $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
 
     let $isValidCost := c:is-a-number(data($implCosts))
@@ -463,22 +464,22 @@ try {
         then (
             if (not($isValidCost))
             then
-                if (empty($comment))
+                if (empty($comment/text()))
                 then
                     if ($hasCost)
                     then
                         (
-                         <tr> <td title="aqd:estimatedImplementationCosts">{$errors:K21}</td> </tr>
+                         <tr> <td title="{node-name($implCosts)}">{$errors:K21}</td> </tr>
                         )
                     else
-                        ( <tr><td title="aqd:comment">{$errors:K21}</td></tr>)
+                        ( <tr><td title="{node-name($comment)}">{$errors:K21}</td></tr>)
                 else
                     ()  (: ok, we have a comment :)
             else
                 ()      (: ok, cost is a number :)
         )
         else
-            <tr><td title="acq:costs">{$errors:K21}</td></tr>
+            <tr><td title="{node-name($costs)}">{$errors:K21}</td></tr>
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -524,7 +525,8 @@ let $K23 := c:validateMaybeNodeWithValueReport(
 
 
 (: K24
-aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
+aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
 
 Source sector should conform to vocabulary
 :)
@@ -535,7 +537,8 @@ let $K24 := c:isInVocabularyReport(
     )
 
 (: K25
-aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
+aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
 
 Spatial scale should conform to vocabulary
 :)
@@ -574,7 +577,7 @@ must be a date in full ISO format
 and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition.
 If voided it should be indeterminatePosition="unknown"
 
-The planned end  date for the measure should be provided in the right format,
+The planned end date for the measure should be provided in the right format,
 if unknown voided using indeterminatePosition="unknown"
 :)
 
@@ -583,57 +586,67 @@ try {
     let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
     let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
 
-    return
-    if (c:isEndDateAfterBeginDate(
-        $begin,
-        $end)
+    let $ok := (
+        (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+        or
+        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
     )
-    then
-        ()
-    else
-        <tr>
-            <td title="indeterminatePosition">unknown</td>
-            <td title="gml:beginPosition">{data($begin)}</td>
-            <td title="gml:endPosition">{data($end)}</td>
-        </tr>
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ("gml:beginPosition", data($begin)),
+            ("gml:endPosition", data($end))
+        ]
+    )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
 
 (: K29
-aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition must be a date in full ISO date format
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
 
 The planned start date for the measure should be provided
 :)
 let $K29 := c:isDateFullISOReport(
-        $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
 )
+
+(:
+let $K29 := c:errorReport(
+    (isDate() and isDate() and isBigger()) or ()
+{
+}
+)
+:)
 
 (: K30
 If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition must be a date in full ISO format
 and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition.
 
-If voided it should be indeterminatePosition="unknown" 	The planned end  date for the measure should be provided in the right format,
-if unknown voided using indeterminatePosition="unknown"
+If voided it should be indeterminatePosition="unknown"
+The planned end date for the measure should be provided in the right format,
+if unknown, voided using indeterminatePosition="unknown"
 :)
 let $K30 :=
 try {
     let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
     let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
 
-    return
-    if (c:isEndDateAfterBeginDate(
-        $begin,
-        $end)
+    let $ok := (
+        (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+        or
+        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
     )
-    then
-        ()
-    else
-        <tr>
-            <td title="indeterminatePosition">unknown</td>
-            <td title="gml:beginPosition">{data($begin)}</td>
-            <td title="gml:endPosition">{data($end)}</td>
-        </tr>
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ("gml:beginPosition", data($begin)),
+            ("gml:endPosition", data($end))
+        ]
+    )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -645,9 +658,95 @@ to be provided in the following format yyyy or yyyy-mm-dd
 The full effect date of the measure must be provided and the format to be yyyy or yyyy-mm-dd
 :)
 
-let $K31 := ()
+let $K31 := try {
+    let $node := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
 
-(: validateNodeReport(node, validator) :)
+    let $ok := (
+        $node castable as xs:date
+        or
+        $node castable as xs:gYear
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            (node-name($node), data($node))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K33
+
+A text string may be provided under
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
+; If voided an explanation of why this information unavailable shall be
+provided in
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+
+:)
+
+let $K33 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
+    let $comment := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+
+    let $ok := (
+        not(
+            empty($main/text())
+            or
+            empty($comment/text())
+        )
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            (node-name($main), data($main)),
+            (node-name($comment), data($comment))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(:
+K34
+Check that the element
+aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity is
+an integer or floating point numeric >= 0 if attribute xsi:nil="false"
+(example:
+    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false">273</aqd:quantity>
+    )
+:)
+
+let K34 := try {
+    let $node := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    (: TODO: should write a function for this? there's already is-a-number :)
+    let $isNum := (
+        ($node castable as xs:integer)
+        or
+        ($node castable as xs:float)
+    )
+
+    let $ok := (
+        ($node/@xsi:nil != 'false')
+        or
+        ($isNum and ($node cast as xs:float >= 0))
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            (node-name($node), data($node)),
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
 
 (: K07 -
 All attributes
@@ -726,6 +825,8 @@ return
         {html:build2("K28", $labels:K28, $labels:K28_SHORT, $K28, "All values are valid", "not valid", $errors:K28)}
         {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
         {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
+        {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
+        {html:build2("K32", $labels:K32, $labels:K32_SHORT, $K32, "All values are valid", "not valid", $errors:K32)}
 
         <tr>
         <td colspan="4">
