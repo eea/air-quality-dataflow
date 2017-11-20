@@ -65,6 +65,7 @@
             </aqd:reportingAuthority>
             <aqd:reportingPeriod>
                 <gml:TimePeriod gml:id="REPORTING_START_DATE_debf26c7a5171cad95c3cbc34094a52d">
+                    <gml:beginPosition indeterminatePosition="unknown"></gml:beginPosition>
                     <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
                     <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
                 </gml:TimePeriod>
