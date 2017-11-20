@@ -522,8 +522,132 @@ let $K23 := c:validateMaybeNodeWithValueReport(
     )
 )
 
-(: validateNodeReport(node, validator) :)
 
+(: K24
+aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
+
+Source sector should conform to vocabulary
+:)
+
+let $K24 := c:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:sourceSectors,
+    $vocabulary:SOURCESECTORS_VOCABULARY
+    )
+
+(: K25
+aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
+
+Spatial scale should conform to vocabulary
+:)
+
+let $K25 := c:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:spatialScale,
+    $vocabulary:SPACIALSCALE_VOCABULARY
+    )
+
+(: K26
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/
+
+Measure Implementation Status should conform to vocabulary
+:)
+
+let $K26 := c:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status,
+    $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY
+    )
+
+(: K27
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+
+let $K27 := c:isDateFullISOReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+(: K28
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+must be a date in full ISO format
+and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition.
+If voided it should be indeterminatePosition="unknown"
+
+The planned end  date for the measure should be provided in the right format,
+if unknown voided using indeterminatePosition="unknown"
+:)
+
+let $K28 :=
+try {
+    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+
+    return
+    if (c:isEndDateAfterBeginDate(
+        $begin,
+        $end)
+    )
+    then
+        ()
+    else
+        <tr>
+            <td title="indeterminatePosition">unknown</td>
+            <td title="gml:beginPosition">{data($begin)}</td>
+            <td title="gml:endPosition">{data($end)}</td>
+        </tr>
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K29
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+let $K29 := c:isDateFullISOReport(
+        $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+(: K30
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition must be a date in full ISO format
+and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition.
+
+If voided it should be indeterminatePosition="unknown" 	The planned end  date for the measure should be provided in the right format,
+if unknown voided using indeterminatePosition="unknown"
+:)
+let $K30 :=
+try {
+    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+
+    return
+    if (c:isEndDateAfterBeginDate(
+        $begin,
+        $end)
+    )
+    then
+        ()
+    else
+        <tr>
+            <td title="indeterminatePosition">unknown</td>
+            <td title="gml:beginPosition">{data($begin)}</td>
+            <td title="gml:endPosition">{data($end)}</td>
+        </tr>
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K31
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+to be provided in the following format yyyy or yyyy-mm-dd
+
+The full effect date of the measure must be provided and the format to be yyyy or yyyy-mm-dd
+:)
+
+let $K31 := ()
+
+(: validateNodeReport(node, validator) :)
 
 (: K07 -
 All attributes
@@ -547,7 +671,7 @@ let $K07base := (
 )
 :)
 
-let $K07base := dataflowK:findDuplicateAttributes(
+(:let $K07base := dataflowK:findDuplicateAttributes(
   $docRoot, $dataflowK:UNIQUE_IDS
 )
 
@@ -567,7 +691,7 @@ let $K07table := (
 
 
 let $K07invalid := ()
-let $K07errorLevel := $errors:INFO
+let $K07errorLevel := $errors:INFO:)
 
 (: {html:buildSimple("K07", $labels:K07, $labels:K07_SHORT, $K07table, "", "", $K07errorLevel)} :)
 
@@ -595,6 +719,13 @@ return
         {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
         {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
         {html:build2("K23", $labels:K23, $labels:K23_SHORT, $K23, "All values are valid", " needs valid input", $errors:K23)}
+        {html:build2("K24", $labels:K24, $labels:K24_SHORT, $K24, "All values are valid", "not conform to vocabulary", $errors:K24)}
+        {html:build2("K25", $labels:K25, $labels:K25_SHORT, $K25, "All values are valid", "not conform to vocabulary", $errors:K25)}
+        {html:build2("K26", $labels:K26, $labels:K26_SHORT, $K26, "All values are valid", "not conform to vocabulary", $errors:K26)}
+        {html:build2("K27", $labels:K27, $labels:K27_SHORT, $K27, "All values are valid", "not full ISO format", $errors:K27)}
+        {html:build2("K28", $labels:K28, $labels:K28_SHORT, $K28, "All values are valid", "not valid", $errors:K28)}
+        {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
+        {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
 
         <tr>
         <td colspan="4">

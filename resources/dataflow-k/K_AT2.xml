@@ -102,13 +102,13 @@
                     <aqd:implementationPlannedTimePeriod>
                         <gml:TimePeriod gml:id="PLANNED_IMPLEMENTATION_TIME_PERIOD_4fbc919b250866e78be28e1994f43f04">
                             <gml:beginPosition>2012-01-01T00:00:00Z</gml:beginPosition>
-                            <gml:endPosition>T00:00:00Z</gml:endPosition>
+                            <gml:endPosition>2012-01-01T00:05:00Z</gml:endPosition>
                         </gml:TimePeriod>
                     </aqd:implementationPlannedTimePeriod>
                     <aqd:implementationActualTimePeriod>
                         <gml:TimePeriod gml:id="ACTUAL_IMPLEMENTATION_TIME_PERIOD_4fbc919b250866e78be28e1994f43f04">
                             <gml:beginPosition>2012-01-01T00:00:00Z</gml:beginPosition>
-                            <gml:endPosition>T00:00:00Z</gml:endPosition>
+                            <gml:endPosition>2012-01-01T00:05:00Z</gml:endPosition>
                         </gml:TimePeriod>
                     </aqd:implementationActualTimePeriod>
                     <aqd:plannedFullEffectDate>

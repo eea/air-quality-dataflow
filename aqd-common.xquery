@@ -365,3 +365,53 @@ declare function c:validateMaybeNodeWithValueReport(
         html:createErrorRow($err:code, $err:description)
     }
 };
+
+(: Check if a given string is a full ISO date type:)
+declare function c:isDateFullISO(
+    $date as xs:string
+) as xs:boolean {
+    if ($date castable as xs:dateTime)
+    then
+        true()
+    else
+        false()
+    (:try {
+        let $asd := xs:dateTime($date)
+        return true()
+    } catch *{
+        false()
+    }:)
+
+};
+(: Create report :)
+declare function c:isDateFullISOReport(
+    $el as node()
+) as element(tr)*
+{
+    let $date := data($el)
+    return
+    try {
+        if (not(c:isDateFullISO($date)))
+        then
+            <tr>
+                <td title="{node-name($el)}">{$date} not in full ISO format</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if end date is after begin date and if both are in full ISO format:)
+declare function c:isEndDateAfterBeginDate(
+    $begin as node()?,
+    $end as node()?
+) as xs:boolean
+{
+    if(c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+    then
+        true()
+    else
+        false()
+};
