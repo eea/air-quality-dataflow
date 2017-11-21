@@ -224,10 +224,9 @@ declare function c:needsValidString(
 
 (: Check if the given node links to a term that is defined in the vocabulary :)
 declare function c:isInVocabulary(
-  $el as node()?,
+  $uri as xs:string?,
   $vocabularyName as xs:string
 ) as xs:boolean {
-    let $uri := data($el/@xlink:href)
     let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
     return $uri and $uri = $validUris
 };
@@ -237,7 +236,9 @@ declare function c:isInVocabularyReport(
   $vocabularyName as xs:string
 ) as element(tr)* {
     try {
-        if (not(c:isInVocabulary($el, $vocabularyName)))
+        let $uri := $el/@xlink:href
+        return
+        if (not(c:isInVocabulary($uri, $vocabularyName)))
         then
             <tr>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>

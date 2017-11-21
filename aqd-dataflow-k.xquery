@@ -62,30 +62,29 @@ declare variable $dataflowK:UNIQUE_IDS as xs:string* := (
 );
 
 declare function dataflowK:findDuplicateAttributes(
-  $elRoot as node(),
-  $attrNames as xs:string*
+        $elRoot as node(),
+        $attrNames as xs:string*
 ) as xs:string* {
-
-  for $attrName in $attrNames
+    for $attrName in $attrNames
     let $igna := trace($attrName, "attr name: ")
     let $c :=
-      for $v in distinct-values($elRoot//descendant::*[name()=$attrName])
-         let $ign := trace($v, 'value: ')
-         let $x := trace(
-           count($elRoot//descendant::*[$attrName=$v])
-           , "count of: "
-         )
-         return $x
+        for $v in distinct-values($elRoot//descendant::*[name() = $attrName])
+        let $ign := trace($v, 'value: ')
+        let $x := trace(
+                count($elRoot//descendant::*[$attrName = $v])
+                , "count of: "
+        )
+        return $x
 
     return
-      if (
-        some $i in $c
-        satisfies ($i > 1)
-      )
-      then
-        $attrName
-      else
-        ()
+        if (
+            some $i in $c
+            satisfies ($i > 1)
+        )
+        then
+            $attrName
+        else
+            ()
 };
 
 
@@ -108,293 +107,327 @@ let $namespaces := distinct-values($docRoot//base:namespace)
 let $allMeasures := query:getAllMeasuresIds($namespaces)
 
 (: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
-
-(: K0 :)
-(:let $K0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
         return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }:)
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 
 (: K0 Checks if this delivery is new or an update (on same reporting year) :)
-let $K0table :=
-    try {
-        if ($reportingYear = "") then
-            <tr class="{$errors:ERROR}">
-                <td title="Status">Reporting Year is missing.</td>
-            </tr>
-        else if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear)) then
-            <tr class="{$errors:WARNING}">
-                <td title="Status">Updating delivery for {$reportingYear}</td>
-            </tr>
-        else
-            <tr class="{$errors:INFO}">
-                <td title="Status">New delivery for {$reportingYear}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K0table := try {
+    if ($reportingYear = "")
+    then
+        <tr class="{$errors:ERROR}">
+            <td title="Status">Reporting Year is missing.</td>
         </tr>
-    }
+    else if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear))
+        then
+        <tr class="{$errors:WARNING}">
+            <td title="Status">Updating delivery for {$reportingYear}</td>
+        </tr>
+    else
+        <tr class="{$errors:INFO}">
+            <td title="Status">New delivery for {$reportingYear}</td>
+        </tr>
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
 let $knownMeasures :=
-    if ($isNewDelivery) then
+    if ($isNewDelivery)
+    then
         distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "k/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
     else
         distinct-values(data(sparqlx:run(query:getMeasures($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
 
 (: K01 Number of Measures reported :)
 let $countMeasures := count($docRoot//aqd:AQD_Measures)
-let $tblAllMeasures :=
-    try {
-        for $rec in $docRoot//aqd:AQD_Measures
-        return
-            <tr>
-                <td title="gml:id">{data($rec/@gml:id)}</td>
-                <td title="base:localId">{data($rec/aqd:inspireId/base:Identifier/base:localId)}</td>
-                <td title="base:namespace">{data($rec/aqd:inspireId/base:Identifier/base:namespace)}</td>
-                <td title="base:versionId">{data($rec/aqd:inspireId/base:Identifier/base:versionId)}</td>
-            </tr>
-    }  catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $tblAllMeasures := try {
+    for $rec in $docRoot//aqd:AQD_Measures
+    return
+        <tr>
+            <td title="gml:id">{data($rec/@gml:id)}</td>
+            <td title="base:localId">{data($rec/aqd:inspireId/base:Identifier/base:localId)}</td>
+            <td title="base:namespace">{data($rec/aqd:inspireId/base:Identifier/base:namespace)}</td>
+            <td title="base:versionId">{data($rec/aqd:inspireId/base:Identifier/base:versionId)}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 
 (: K02 Compile & feedback upon the total number of new Measures records included in the delivery.
 ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries. :)
-let $K02table :=
-    try {
-        for $x in $docRoot//aqd:AQD_Measures
-        let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
-        where (not($inspireId = $knownMeasures))
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{$inspireId}</td>
-                <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
-                <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
-                <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
-                <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
-                <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
-                <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K02table := try {
+    for $x in $docRoot//aqd:AQD_Measures
+    let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
+    where (not($inspireId = $knownMeasures))
+    return
+        <tr>
+            <td title="gml:id">{data($x/@gml:id)}</td>
+            <td title="aqd:inspireId">{$inspireId}</td>
+            <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+            <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+            <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+            <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+            <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+            <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+            <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 let $K02errorLevel :=
-    if ($isNewDelivery and count(
-        for $x in $docRoot//aqd:AQD_Measures
+    if (
+        $isNewDelivery
+        and
+        count(
+            for $x in $docRoot//aqd:AQD_Measures
             let $id := $x/aqd:inspireId/base:Identifier/base:namespace || "/" || $x/aqd:inspireId/base:Identifier/base:localId
-        where ($allMeasures = $id)
-        return 1) > 0) then
-            $errors:K02
-        else
-            $errors:INFO
+            where ($allMeasures = $id)
+            return 1) > 0
+        )
+    then
+        $errors:K02
+    else
+        $errors:INFO
 
 (: K03 Compile & feedback upon the total number of updated Measures included in the delivery.
 ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
-let $K03table :=
-    try {
-        for $x in $docRoot//aqd:AQD_Measures
-        let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
-        where ($inspireId = $knownMeasures)
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{$inspireId}</td>
-                <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
-                <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
-                <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
-                <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
-                <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
-                <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K03table := try {
+    for $x in $docRoot//aqd:AQD_Measures
+    let $inspireId := concat(data($x/aqd:inspireId/base:Identifier/base:namespace), "/", data($x/aqd:inspireId/base:Identifier/base:localId))
+    where ($inspireId = $knownMeasures)
+    return
+        <tr>
+            <td title="gml:id">{data($x/@gml:id)}</td>
+            <td title="aqd:inspireId">{$inspireId}</td>
+            <td title="aqd:classification">{c:checkLink(distinct-values(data($x/aqd:classification/@xlink:href)))}</td>
+            <td title="aqd:measureType">{c:checkLink(distinct-values(data($x/aqd:measureType/@xlink:href)))}</td>
+            <td title="aqd:administrativeLevel">{c:checkLink(distinct-values(data($x/aqd:administrativeLevel/@xlink:href)))}</td>
+            <td title="aqd:timeScale">{c:checkLink(distinct-values(data($x/aqd:timeScale/@xlink:href)))}</td>
+            <td title="aqd:sourceSectors">{c:checkLink(distinct-values(data($x/aqd:sourceSectors/@xlink:href)))}</td>
+            <td title="aqd:exceedanceAffected">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+            <td title="aqd:usedForScenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 let $K03errorLevel :=
-    if (not($isNewDelivery) and count($K03table) = 0)  then
+    if (not($isNewDelivery) and count($K03table) = 0)
+    then
         $errors:K03
     else
         $errors:INFO
 
 (: K04 Compile & feedback a list of the unique identifier information for all Measures records included in the delivery.
 Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_SourceApportionment (via ./exceedanceAffected), aqd:AQD_Scenario (via aqd:usedForScenario) :)
-let $K04table :=
-    try {
-        let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
-        let $inspireIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(aqd:inspireId))
-        for $x in $docRoot//aqd:AQD_Measures
-            let $id := $x/@gml:id
-            let $inspireId := $x/aqd:inspireId
-            let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-        where count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
-                    and count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K04table := try {
+    let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_Measures
+    let $id := $x/@gml:id
+    let $inspireId := $x/aqd:inspireId
+    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+    where count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+    return
+        <tr>
+            <td title="gml:id">{data($x/@gml:id)}</td>
+            <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
+            <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+            <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
+
+(: K07
+All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
+
+All gml ID attributes shall have unique code
+:)
+
+let $K07 := try {
+    let $main := $docRoot//aqd:AQD_Measures
+    let $gmlIds := $main/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $main/lower-case(normalize-space(aqd:inspireId))
+    let $efInspireIds := $main/lower-case(normalize-space(ef:inspireId))
+    for $el in $main
+        let $id := $el/@gml:id
+        let $inspireId := $el/aqd:inspireId
+        let $efInspireId := $el/ef:inspireId
+        let $ok := (
+            count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            or count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+            or (count(index-of($efInspireIds, lower-case(normalize-space($efInspireId)))) = 1 and not(empty($efInspireId)))
+        )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ((name($id), data($id))),
+                ((node-name($inspireId), data($inspireId))),
+                ((node-name($efInspireId), data($efInspireId)))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: K08 ./aqd:inspireId/base:Identifier/base:localId must be unique code for the Measure records :)
-let $K08invalid:=
-    try {
-        let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
-        for $x in $docRoot//aqd:AQD_Measures
-            let $localID := $x/aqd:inspireId/base:Identifier/base:localId
-            let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-        where (count(index-of($localIds, lower-case(normalize-space($localID)))) > 1 and not(empty($localID)))
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K08invalid:= try {
+    let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_Measures
+    let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+    where (count(index-of($localIds, lower-case(normalize-space($localID)))) > 1 and not(empty($localID)))
+    return
+        <tr>
+            <td title="gml:id">{data($x/@gml:id)}</td>
+            <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
+            <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
+            <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 
 (: K09 ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.  :)
-let $K09table :=
-    try {
-        for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
-            let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+let $K09table := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
+    let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
 
-        return
-            <tr>
-                <td title="base:namespace">{$namespace}</td>
-                <td title="base:localId">{count($localIds)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+    return
+        <tr>
+            <td title="base:namespace">{$namespace}</td>
+            <td title="base:localId">{count($localIds)}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 
 (: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
 
 (: TODO: should be "and" or "or" in where clause?? :)
-let $K10invalid :=
-    try {
-        let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
-        let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
-        let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
-        for $x in distinct-values($docRoot//base:namespace)
-        where (not($x = $prefLabel) and not($x = $altLabel))
-        return
-            <tr>
-                <td title="base:namespace">{$x}</td>
-            </tr>
-    }  catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
+let $K10invalid := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+    where (not($x = $prefLabel) and not($x = $altLabel))
+    return
+        <tr>
+            <td title="base:namespace">{$x}</td>
         </tr>
-    }
+} catch * {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$err:code}</td>
+        <td title="Error description">{$err:description}</td>
+    </tr>
+}
 
 (: TODO: requirement not clear :)
-(: K11 aqd:AQD_Measures/aqd:exceedanceAffected MUST reference an existing Source Apportionment (I) document via namespace/localId :)
+(: K11
+aqd:AQD_Measures/aqd:exceedanceAffected MUST reference an existing
+Source Apportionment (I) document via namespace/localId
+:)
 
-(: K13 aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+let $K11 := ()
+
+(: K12
+aqd:AQD_Measures/aqd:usedForScenario shall reference an existing Scenario
+delivered within a data flow J  via namespace/localId.
+
+A link may be provided to Evaluation Scenario (J). This must be valid via namespace & localId
+:)
+
+let $K12 := ()
+
+(: K13
+aqd:AQD_Measures/aqd:code must be unique and should match base:localId
 
 Unique code of the measure. This may be a unique local code for the measure or
 may be identical to the unique code used in K2.1.
-
 
 TODO: we implemented just first line of the requirement, the second line
 contradicts it
 :)
 
-let $K13invalid :=
-  try {
+let $K13invalid := try {
     for $node in $docRoot//aqd:AQD_Measures
-      let $code := $node/aqd:code
-      let $localId := $node/aqd:inspireId/base:Identifier/base:localId
+        let $code := $node/aqd:code
+        let $localId := $node/aqd:inspireId/base:Identifier/base:localId
     return
-      if ($code ne $localId)
-      then
-        <tr>
-            <td title="aqd:code">{$code}</td>
-            <td title="base:localId">{$localId}</td>
-        </tr>
-      else
-        ()
-  }  catch * {
-      <tr class="{$errors:FAILED}">
-          <td title="Error code">{$err:code}</td>
-          <td title="Error description">{$err:description}</td>
-      </tr>
-  }
+        if ($code ne $localId)
+        then
+            <tr>
+                <td title="aqd:code">{$code}</td>
+                <td title="base:localId">{$localId}</td>
+            </tr>
+        else
+            ()
+}  catch * {
+  <tr class="{$errors:FAILED}">
+      <td title="Error code">{$err:code}</td>
+      <td title="Error description">{$err:description}</td>
+  </tr>
+}
 
 
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
 let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
-let $K14invalid := c:needsValidString($docRoot//aqd:AQD_Measures, 'aqd:name')
+let $K14invalid := c:needsValidString(
+        $docRoot//aqd:AQD_Measures, 'aqd:name'
+        )
 
 (: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
-let $K15invalid := c:needsValidString($docRoot//aqd:AQD_Measures, 'aqd:description')
+let $K15invalid := c:needsValidString(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:description'
+        )
 
 let $errorLevel := 'error'
 
@@ -435,7 +468,10 @@ let $K19 := c:isInVocabularyReport(
 (: K20 aqd:AQD_Measures/aqd:costs/ should be provided
 Information on the cost of the measure should be provided
 :)
-let $K20 := c:isNodeNotInParentReport($docRoot//aqd:AQD_Measures, 'aqd:costs')
+let $K20 := c:isNodeNotInParentReport(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:costs'
+        )
 
 
 (: K21
@@ -448,8 +484,7 @@ The estimated total costs should be provided. If not, an explanation on the
 reasons for not providing it should be included.
 :)
 
-let $K21 :=
-try {
+let $K21 := try {
     let $root := $docRoot//aqd:AQD_Measures
     let $costs := $root/aqd:costs
     let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
@@ -518,7 +553,7 @@ let $K23 := c:validateMaybeNodeWithValueReport(
     $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
     'aqd:estimatedImplementationCosts',
     c:isInVocabulary(
-        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency,
+        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency/@xlink:href,
         $vocabulary:CURRENCIES
     )
 )
@@ -581,8 +616,7 @@ The planned end date for the measure should be provided in the right format,
 if unknown voided using indeterminatePosition="unknown"
 :)
 
-let $K28 :=
-try {
+let $K28 := try {
     let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
     let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
 
@@ -629,8 +663,7 @@ If voided it should be indeterminatePosition="unknown"
 The planned end date for the measure should be provided in the right format,
 if unknown, voided using indeterminatePosition="unknown"
 :)
-let $K30 :=
-try {
+let $K30 := try {
     let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
     let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
 
@@ -677,15 +710,11 @@ let $K31 := try {
     html:createErrorRow($err:code, $err:description)
 }
 
-
 (: K33
-
 A text string may be provided under
 aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
-; If voided an explanation of why this information unavailable shall be
-provided in
+If voided an explanation of why this information unavailable shall be provided in
 /aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
-
 :)
 
 let $K33 := try {
@@ -721,7 +750,7 @@ an integer or floating point numeric >= 0 if attribute xsi:nil="false"
     )
 :)
 
-let K34 := try {
+let $K34 := try {
     let $node := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
     (: TODO: should write a function for this? there's already is-a-number :)
     let $isNum := (
@@ -739,7 +768,45 @@ let K34 := try {
     return c:conditionalReportRow(
         $ok,
         [
-            (node-name($node), data($node)),
+            (node-name($node), data($node))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K35
+Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+(example: <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>)
+
+If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty
+:)
+let $K35 := try {
+    let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
+
+    let $ok := (
+        (not(empty($node/text())))
+        or
+        (
+            lower-case($node/@xsi:nil) = "true"
+            and
+            (
+                (lower-case($node/@nilReason) = "unknown")
+                or
+                (lower-case($node/@nilReason) = "unpopulated")
+                or
+                (lower-case($node/@nilReason) = "withheld")
+            )
+        )
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            (
+                (node-name($node), data($node)),
+                (name($node/@nilReason), data($node/@nilReason))
+            )
         ]
     )
 } catch * {
@@ -747,52 +814,131 @@ let K34 := try {
 }
 
 
+(: K36
+If aqd:QuantityCommented/aqd:quantity attribute xsi:nil="true"
+aqd:QuantityCommented/aqd:comment must be populated
 
-(: K07 -
-All attributes
-  - gml:id
-  - ef:inspireId
-  - aqd:inspireId
-elements shall have unique content
+If the quantification is voided an explanation is required in aqd:comment
+:)
+let $K36 := try {
+    let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
+    let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+
+    let $ok := (
+        (not(empty($quantity/text())))
+        or
+        (not(empty($comment/text())))
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ((node-name($quantity), data($quantity))),
+            ((node-name($comment), data($comment)))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K37
+The unit attribute (aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity/@UoM)
+shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission
+
+the quantification of reductionOfEmissions should conform to vocabulary
+:)
+let $K37 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    let $uri := data($el/@uom)
+    let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
+    let $ok := ($uri and $uri = $validUris)
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ((node-name($el), data($el))),
+            ((name($el/@uom), data($uri)))
+        ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K38
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/concentration/
+
+The level of concentration expected should be provided as an integer and its unit should conform to vocabulary
 :)
 
-(:~ Given a seq of attribute names, returns a seq of names for the attributes
-where the values are not unique.
+let $K38 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+    let $uri := data($el/@uom)
+    let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
 
-Usage: find attributes that are not unique but need to be unique (for ex: ids)
+    let $isNum := (
+        ($el castable as xs:integer)
+        or
+        ($el castable as xs:float)
+    )
+
+    let $ok := (
+        $validVocabulary
+        and
+        ($isNum and ($el cast as xs:float >= 0))
+    )
+
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ((node-name($el), data($el))),
+            ((name($el/@uom), data($uri)))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K39
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/statistics
+
+The number of exceecedance expected should be provided as an integer and its unit should conform to vocabulary
 :)
 
+let $K39 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+    let $uri := data($el/@uom)
+    let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
 
-(:
-let $K07base := (
-  count(dataflowK:findDuplicateAttributes($docRoot,
-                                          $dataflowK:UNIQUE_IDS)) > 0
-)
-:)
+    let $isNum := (
+        ($el castable as xs:integer)
+        or
+        ($el castable as xs:float)
+    )
 
-(:let $K07base := dataflowK:findDuplicateAttributes(
-  $docRoot, $dataflowK:UNIQUE_IDS
-)
+    let $ok := (
+        $validVocabulary
+        and
+        ($isNum and ($el cast as xs:float >= 0))
+    )
 
-let $K07table := (
-<tr>
-  <td>
-  hello
-  {
-  for $k in $K07base
-    return
-      <div>Duplicate: {$k}</div>
-  }
-  world
-  </td>
-</tr>
-)
+    return c:conditionalReportRow(
+        $ok,
+        [
+            ((node-name($el), data($el))),
+            ((name($el/@uom), data($uri)))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
-
-let $K07invalid := ()
-let $K07errorLevel := $errors:INFO:)
-
-(: {html:buildSimple("K07", $labels:K07, $labels:K07_SHORT, $K07table, "", "", $K07errorLevel)} :)
 
 return
 (
@@ -803,6 +949,7 @@ return
         {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
         {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
         {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
+        {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
         {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
         {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
         {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " invalid namespaces", $errors:K10)}
@@ -826,17 +973,13 @@ return
         {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
         {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
         {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
-        {html:build2("K32", $labels:K32, $labels:K32_SHORT, $K32, "All values are valid", "not valid", $errors:K32)}
-
-        <tr>
-        <td colspan="4">
-        <div>
-        {
-            $docRoot//aqd:AQD_Measures/aqd:costs
-        }
-        </div>
-        </td>
-        </tr>
+        {html:build2("K33", $labels:K33, $labels:K33_SHORT, $K33, "All values are valid", "not valid", $errors:K33)}
+        {html:build2("K34", $labels:K34, $labels:K34_SHORT, $K34, "All values are valid", "not valid", $errors:K34)}
+        {html:build2("K35", $labels:K35, $labels:K35_SHORT, $K35, "All values are valid", "not valid", $errors:K35)}
+        {html:build2("K36", $labels:K36, $labels:K36_SHORT, $K36, "All values are valid", "not valid", $errors:K36)}
+        {html:build2("K37", $labels:K37, $labels:K37_SHORT, $K37, "All values are valid", "not valid", $errors:K37)}
+        {html:build2("K38", $labels:K38, $labels:K38_SHORT, $K38, "All values are valid", "not valid", $errors:K38)}
+        {html:build2("K39", $labels:K39, $labels:K39_SHORT, $K39, "All values are valid", "not valid", $errors:K39)}
 
     </table>
 )
