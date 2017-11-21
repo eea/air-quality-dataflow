@@ -255,21 +255,31 @@ declare function c:isInVocabularyReport(
 declare function c:conditionalReportRow (
     $ok as xs:boolean,
     $vals as array(item()*)
-) as element(tr)? {
+) as element(tr)* {
     if (not($ok))
     then
-        <tr>
-        {
-            array:for-each($vals, function($k) {
-                <td title="{$k[1]}">
-                    {data($k[2])}
-                </td>
-            })
-        }
-        </tr>
+        for $i in 1 to array:size($vals)
+        let $row := array:get($vals, $i)
+        let $tr :=
+            <tr>
+            {
+                if ($row instance of array(*))
+                then
+                    <td title="{$row(1)}">
+                        {data($row(2))}
+                    </td>
+                else
+                    <td title="{$row[1]}">
+                        {data($row[2])}
+                    </td>
+            }
+            </tr>
+        let $x := trace($tr, 'x:')
+        return $tr
     else
         ()
 };
+
 
 
 (: returns if a specific node exists in a parent :)
@@ -424,6 +434,17 @@ declare function c:isDateFullISOReport(
         html:createErrorRow($err:code, $err:description)
     }
 };
+
+declare function c:has-one-node(
+    $seq as item()*,
+    $item as item()?
+) as xs:boolean {
+    let $norm-seq :=
+        for $x in $seq
+        return $x => normalize-space() => lower-case()
+    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+};
+
 
 (: Check if end date is after begin date and if both are in full ISO format:)
 declare function c:isEndDateAfterBeginDate(

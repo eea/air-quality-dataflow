@@ -279,30 +279,76 @@ let $K04table := try {
 All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
 
 All gml ID attributes shall have unique code
+
+    count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+    or count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+    or (
+        count(index-of($efInspireIds, lower-case(normalize-space($efInspireId)))) = 1
+        and not(empty($efInspireId))
+    )
+
 :)
 
 let $K07 := try {
     let $main := $docRoot//aqd:AQD_Measures
-    let $gmlIds := $main/lower-case(normalize-space(@gml:id))
-    let $inspireIds := $main/lower-case(normalize-space(aqd:inspireId))
-    let $efInspireIds := $main/lower-case(normalize-space(ef:inspireId))
+
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+        (: TODO: would be nice to have something like this, but we have no
+           value for error row
+            return
+                if has-duplicate-children-values($main, $name)
+                then
+                    [$name, $name]
+                else
+                    ()
+        :)
+            let $name := lower-case(normalize-space($name))
+            let $values := $main//(*[lower-case(normalize-space(name())) = $name] |
+                                   @*[lower-case(normalize-space(name())) = $name])
+            return
+                for $v in distinct-values($values)
+                    return
+                        if (c:has-one-node($values, $v))
+                        then
+                            ()
+                        else
+                            [$name, data($v)]
+    }
+
+    return c:conditionalReportRow(
+        array:size($errors) = 0,
+        $errors
+    )
+
+    (:
+    let $gmlIds := $main//lower-case(normalize-space(@gml:id))
+    let $inspireIds := $main//lower-case(normalize-space(aqd:inspireId))
+    let $efInspireIds := $main//lower-case(normalize-space(ef:inspireId))
     for $el in $main
         let $id := $el/@gml:id
         let $inspireId := $el/aqd:inspireId
         let $efInspireId := $el/ef:inspireId
+
         let $ok := (
-            count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
-            or count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
-            or (count(index-of($efInspireIds, lower-case(normalize-space($efInspireId)))) = 1 and not(empty($efInspireId)))
+            c:has-one($gmlIds, $id)
+            and
+            c:has-one($inspireIds, $inspireId)
+            and
+            c:has-one($efInspireIds, $efInspireId)
         )
         return c:conditionalReportRow(
             $ok,
             [
-                ((name($id), data($id))),
-                ((node-name($inspireId), data($inspireId))),
-                ((node-name($efInspireId), data($efInspireId)))
+                (name($id), data($id)),
+                (node-name($inspireId), data($inspireId)),
+                (node-name($efInspireId), data($efInspireId))
             ]
         )
+    :)
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -803,10 +849,8 @@ let $K35 := try {
     return c:conditionalReportRow(
         $ok,
         [
-            (
-                (node-name($node), data($node)),
-                (name($node/@nilReason), data($node/@nilReason))
-            )
+            (node-name($node), data($node)),
+            (name($node/@nilReason), data($node/@nilReason))
         ]
     )
 } catch * {

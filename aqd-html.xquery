@@ -419,7 +419,21 @@ declare function html:build3(
             <td><span class="largeText">{$message}</span></td>
         </tr>
 };
-declare function html:build9($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+
+(:  Invalid msg: "10 records found"
+:)
+declare function html:build9(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -435,13 +449,30 @@ declare function html:build9($ruleCode as xs:string, $longText, $text, $records 
         if ($countRecords = 0) then
             $skippedMsg
         else if ($countInvalid > 0) then
-            $countInvalid || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
+            $countInvalid ||
+            " " ||
+            $unit ||
+            substring("s ", number(not($countRecords > 1)) * 2) ||
+            " found"
         else
             $validMsg
     return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
 };
-(: TODO: maybe remove :)
-declare function html:build7($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+(:  Invalid msg: "X is not unique"
+
+TODO: maybe remove :)
+declare function html:build7(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)

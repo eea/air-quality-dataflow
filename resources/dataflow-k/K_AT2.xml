@@ -81,7 +81,10 @@
              <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
            </gml:TimePeriod>
 
-           <aqd:costs>
+           <gml:id>X</gml:id>
+           <gml:id>X</gml:id>
+
+           <aqd:costs gml:id="ATTR_MEA_AT_60_NO2_ZM02">
              <aqd:Costs>
                <aqd:comment>abada</aqd:comment>
                <aqd:estimatedImplementationCosts></aqd:estimatedImplementationCosts>
@@ -90,6 +93,13 @@
              </aqd:Costs>
            </aqd:costs>
 
+            <aqd:inspireId>
+                <base:Identifier>
+                    <base:localId>MEA.AT_60_NO2_ZM02</base:localId>
+                    <base:namespace>AT.0008.20.AQ</base:namespace>
+                    <base:versionId>2017-02-23.12.43.560</base:versionId>
+                </base:Identifier>
+            </aqd:inspireId>
 
             <aqd:inspireId>
                 <base:Identifier>
