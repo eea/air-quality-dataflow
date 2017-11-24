@@ -202,6 +202,16 @@ declare function c:isDateTimeIncluded($reportingYear as xs:string, $beginPositio
             false()
 };
 
+(: Returns error report for ?0 check :)
+declare function c:checkDeliveryReport (
+    $errorClass as xs:string,
+    $statusMessage as xs:string
+) as element(tr) {
+    <tr class="{$errorClass}">
+        <td title="Status">{$statusMessage}</td>
+    </tr>
+};
+
 (: Returns structure with error if node is empty :)
 (: TODO: test if node doesn't exist :)
 declare function c:needsValidString(
