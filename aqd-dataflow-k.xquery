@@ -253,15 +253,19 @@ let $K04table := try {
         let $id := $x/@gml:id
         let $inspireId := $x/aqd:inspireId
         let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-        where count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
-            and count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        )
+        return c:conditionalReportRow(
+            not($ok),
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href))))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -351,14 +355,20 @@ let $K08invalid:= try {
     for $x in $docRoot//aqd:AQD_Measures
         let $localID := $x/aqd:inspireId/base:Identifier/base:localId
         let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-        where (count(index-of($localIds, lower-case(normalize-space($localID)))) > 1 and not(empty($localID)))
-        return
-            <tr>
-                <td title="gml:id">{data($x/@gml:id)}</td>
-                <td title="aqd:inspireId">{distinct-values($aqdinspireId)}</td>
-                <td title="aqd:AQD_SourceApportionment">{c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))}</td>
-                <td title="aqd:AQD_Scenario">{c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href)))}</td>
-            </tr>
+        let $ok := (
+            count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+            and
+            functx:if-empty($localID/text(), "") != ""
+        )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", distinct-values(data($x/aqd:usedForScenario/@xlink:href)))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -368,11 +378,14 @@ let $K08invalid:= try {
 let $K09table := try {
     for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
         let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
-        return
-            <tr>
-                <td title="base:namespace">{$namespace}</td>
-                <td title="base:localId">{count($localIds)}</td>
-            </tr>
+        let $ok := false()
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $namespace),
+                ("base:localId", count($localIds))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -387,11 +400,14 @@ let $K10invalid := try {
     let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
             and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
     for $x in distinct-values($docRoot//base:namespace)
-    where (not($x = $prefLabel) and not($x = $altLabel))
-    return
-        <tr>
-            <td title="base:namespace">{$x}</td>
-        </tr>
+        let $ok := ($x = $prefLabel and $x = $altLabel)
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $x)
+            ]
+        )
+
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -454,15 +470,14 @@ let $K13invalid := try {
     for $node in $docRoot//aqd:AQD_Measures
         let $code := $node/aqd:code
         let $localId := $node/aqd:inspireId/base:Identifier/base:localId
-    return
-        if ($code ne $localId)
-        then
-            <tr>
-                <td title="aqd:code">{$code}</td>
-                <td title="base:localId">{$localId}</td>
-            </tr>
-        else
-            ()
+        let $ok := $code = $localId
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($code), data($code)),
+                (node-name($localId), data($localId))
+            ]
+        )
 }  catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -838,8 +853,7 @@ If quantification is either "unpopulated" or "unknown" or "withheld", the elemen
 :)
 let $K35 := try {
     let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
-    let $asd := trace(functx:if-empty($node/text(), 0), "K35: ")
-
+    (:let $asd := trace(functx:if-empty($node/text(), 0), "K35: "):)
     let $ok := (
         (functx:if-empty($node/text(), "") != "")
         or
