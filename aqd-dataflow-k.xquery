@@ -8,7 +8,7 @@ xquery version "3.0" encoding "UTF-8";
  :
  : XQuery script implements dataflow K checks.
  :
- : @author Claudia Ifrim
+ : @author Laszlo Cseh
  :)
 
 module namespace dataflowK = "http://converters.eionet.europa.eu/dataflowK";
@@ -20,38 +20,34 @@ import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 import module namespace query = "aqd-query" at "aqd-query.xquery";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
-import module namespace filter = "aqd-filter" at "aqd-filter.xquery";
+(:import module namespace filter = "aqd-filter" at "aqd-filter.xquery";:)
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
-import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";
-import module namespace geox = "aqd-geo" at "aqd-geo.xquery";
+(:import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";:)
+(:import module namespace geox = "aqd-geo" at "aqd-geo.xquery";:)
 import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
 
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
 declare namespace am = "http://inspire.ec.europa.eu/schemas/am/3.0";
-declare namespace ef = "http://inspire.ec.europa.eu/schemas/ef/3.0";
+(:declare namespace ef = "http://inspire.ec.europa.eu/schemas/ef/3.0";:)
 declare namespace base = "http://inspire.ec.europa.eu/schemas/base/3.3";
-declare namespace ad = "urn:x-inspire:specification:gmlas:Addresses:3.0";
-declare namespace gn = "urn:x-inspire:specification:gmlas:GeographicalNames:3.0";
-declare namespace base2 = "http://inspire.ec.europa.eu/schemas/base2/1.0";
+(:declare namespace ad = "urn:x-inspire:specification:gmlas:Addresses:3.0";:)
+(:declare namespace gn = "urn:x-inspire:specification:gmlas:GeographicalNames:3.0";:)
+(:declare namespace base2 = "http://inspire.ec.europa.eu/schemas/base2/1.0";:)
 declare namespace xlink = "http://www.w3.org/1999/xlink";
-declare namespace om = "http://www.opengis.net/om/2.0";
-declare namespace swe = "http://www.opengis.net/swe/2.0";
-declare namespace ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0";
-declare namespace sams="http://www.opengis.net/samplingSpatial/2.0";
-declare namespace sam = "http://www.opengis.net/sampling/2.0";
-declare namespace gmd = "http://www.isotc211.org/2005/gmd";
-declare namespace gco = "http://www.isotc211.org/2005/gco";
+(:declare namespace om = "http://www.opengis.net/om/2.0";:)
+(:declare namespace swe = "http://www.opengis.net/swe/2.0";:)
+(:declare namespace ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0";:)
+(:declare namespace sams="http://www.opengis.net/samplingSpatial/2.0";:)
+(:declare namespace sam = "http://www.opengis.net/sampling/2.0";:)
+(:declare namespace gmd = "http://www.isotc211.org/2005/gmd";:)
+(:declare namespace gco = "http://www.isotc211.org/2005/gco";:)
 
 declare namespace sparql = "http://www.w3.org/2005/sparql-results#";
 declare namespace skos = "http://www.w3.org/2004/02/skos/core#";
 declare namespace adms = "http://www.w3.org/ns/adms#";
-declare namespace prop = "http://dd.eionet.europa.eu/property/";
+(:declare namespace prop = "http://dd.eionet.europa.eu/property/";:)
 declare namespace rdf = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-
-declare variable $dataflowK:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG","CH","CY","CZ","DE","DK","DZ","EE","EG","ES","FI",
-    "FR","GB","GR","HR","HU","IE","IL","IS","IT","JO","LB","LI","LT","LU","LV","MA","ME","MK","MT","NL","NO","PL","PS","PT",
-     "RO","RS","SE","SI","SK","TN","TR","XK","UK");
 
 declare variable $dataflowK:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "683");
 
@@ -61,40 +57,6 @@ declare variable $dataflowK:UNIQUE_IDS as xs:string* := (
   "ef:inspireId",
   "aqd:inspireId"
 );
-
-declare function dataflowK:findDuplicateAttributes(
-        $elRoot as node(),
-        $attrNames as xs:string*
-) as xs:string* {
-    for $attrName in $attrNames
-    let $igna := trace($attrName, "attr name: ")
-    let $c :=
-        for $v in distinct-values($elRoot//descendant::*[name() = $attrName])
-        let $ign := trace($v, 'value: ')
-        let $x := trace(
-                count($elRoot//descendant::*[$attrName = $v])
-                , "count of: "
-        )
-        return $x
-
-    return
-        if (
-            some $i in $c
-            satisfies ($i > 1)
-        )
-        then
-            $attrName
-        else
-            ()
-};
-declare function dataflowK:K0report (
-    $errorClass as xs:string,
-    $statusMessage as xs:string
-) as element(tr) {
-    <tr class="{$errorClass}">
-        <td title="Status">{$statusMessage}</td>
-    </tr>
-};
 
 
 (: Rule implementations :)
@@ -143,13 +105,13 @@ let $NSinvalid := try {
 let $K0table := try {
     if ($reportingYear = "")
     then
-        dataflowK:K0report($errors:ERROR, "Reporting Year is missing.")
+        c:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
     else
-        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear))
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
             then
-                dataflowK:K0report($errors:WARNING, "Updating delivery for " || $reportingYear)
+                c:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
             else
-                dataflowK:K0report($errors:WARNING, "New delivery for " || $reportingYear)
+                c:checkDeliveryReport($errors:WARNING, "New delivery for " || $reportingYear)
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -188,16 +150,16 @@ ERROR will be returned if XML is a new delivery and localId are not new compared
 let $K02table := try {
     let $main := $docRoot//aqd:AQD_Measures
     for $x in $main/aqd:inspireId/base:Identifier
-    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not($inspireId = $knownMeasures)
-    return
-        c:conditionalReportRow(
-        $ok,
-        [
-            ("gml:id", data($main/@gml:id)),
-            ("aqd:inspireId", $inspireId)
-        ]
-        )
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not($inspireId = $knownMeasures)
+        return
+            c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+            ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -269,6 +231,16 @@ let $K04table := try {
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
+
+(: K05
+RESERVE
+:)
+let $K05 := ()
+
+(: K06
+RESERVE
+:)
+let $K06 := ()
 
 (: K07
 All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
@@ -779,6 +751,13 @@ let $K31 := try {
     html:createErrorRow($err:code, $err:description)
 }
 
+(: K32
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates
+RESERVE
+:)
+
+let $K32 := <tr><td title="aqd:otherDates">{data($docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates)}</td></tr>
+
 (: K33
 A text string may be provided under
 aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
@@ -1007,6 +986,11 @@ let $K39 := try {
     html:createErrorRow($err:code, $err:description)
 }
 
+(: K40
+Reserve for specificationOfHours
+:)
+
+let $K40 := ()
 
 return
 (
@@ -1017,6 +1001,8 @@ return
         {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
         {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
         {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
+        {html:build1("K05", $labels:K05, $labels:K05_SHORT, $K05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K05)}
+        {html:build1("K06", $labels:K06, $labels:K06_SHORT, $K06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K06)}
         {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
         {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
         {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)}
@@ -1042,6 +1028,7 @@ return
         {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
         {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
         {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
+        {html:build1("K32", $labels:K32, $labels:K32_SHORT, $K32, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K32)}
         {html:build2("K33", $labels:K33, $labels:K33_SHORT, $K33, "All values are valid", "not valid", $errors:K33)}
         {html:build2("K34", $labels:K34, $labels:K34_SHORT, $K34, "All values are valid", "not valid", $errors:K34)}
         {html:build2("K35", $labels:K35, $labels:K35_SHORT, $K35, "All values are valid", "not valid", $errors:K35)}
@@ -1049,6 +1036,7 @@ return
         {html:build2("K37", $labels:K37, $labels:K37_SHORT, $K37, "All values are valid", "not valid", $errors:K37)}
         {html:build2("K38", $labels:K38, $labels:K38_SHORT, $K38, "All values are valid", "not valid", $errors:K38)}
         {html:build2("K39", $labels:K39, $labels:K39_SHORT, $K39, "All values are valid", "not valid", $errors:K39)}
+        {html:build1("K40", $labels:K40, $labels:K40_SHORT, $K40, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K40)}
 
     </table>
 )
