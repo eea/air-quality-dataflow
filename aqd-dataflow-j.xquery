@@ -143,6 +143,14 @@ ERROR will be returned if XML is a new delivery and localId are not new compared
 Number of new EvaluationScenarios compared to previous report.
 :)
 
+let $j02 := try {
+    let $el := $docRoot//aqd:AQD_EvaluationScenario
+
+    return ()
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
 (
