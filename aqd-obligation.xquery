@@ -57,7 +57,7 @@ declare function obligations:proceed($source_url as xs:string) {
             $dataflowM:OBLIGATIONS, $dataflowEa:OBLIGATIONS, $dataflowEb:OBLIGATIONS))
 
     let $result := ()
-  (:  let $resultB :=
+    let $resultB :=
         if (common:containsAny($obligations, $dataflowB:OBLIGATIONS)) then
             dataflowB:proceed($source_url, $countryCode)
         else
@@ -91,13 +91,13 @@ declare function obligations:proceed($source_url as xs:string) {
         if (common:containsAny($obligations, $dataflowJ:OBLIGATIONS)) then
             dataflowJ:proceed($source_url, $countryCode)
         else
-            ():)
+            ()
     let $resultK :=
         if (common:containsAny($obligations, $dataflowK:OBLIGATIONS)) then
             dataflowK:proceed($source_url, $countryCode)
         else
             ()
-(:    let $resultM :=
+    let $resultM :=
         if (common:containsAny($obligations, $dataflowM:OBLIGATIONS)) then
             dataflowM:proceed($source_url, $countryCode)
         else
@@ -111,10 +111,9 @@ declare function obligations:proceed($source_url as xs:string) {
         if (common:containsAny($obligations, $dataflowEb:OBLIGATIONS)) then
             dataflowEb:proceed($source_url, $countryCode)
         else
-            ():)
+            ()
 
-    (:let $messages := ($resultB, $resultC, $resultD, $resultE, $resultEb, $resultG, $resultH, $resultI, $resultJ, $resultK, $resultM):)
-    let $messages := ($resultK)
+    let $messages := ($resultB, $resultC, $resultD, $resultE, $resultEb, $resultG, $resultH, $resultI, $resultJ, $resultK, $resultM)
     let $failedString := string-join($messages//p[tokenize(@class, "\s+") = $errors:FAILED], ' || ')
     let $blockerString := normalize-space(string-join($messages//p[tokenize(@class, "\s+") = $errors:BLOCKER], ' || '))
     let $errorString := normalize-space(string-join($messages//p[tokenize(@class, "\s+") = $errors:ERROR], ' || '))

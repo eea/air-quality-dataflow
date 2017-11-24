@@ -142,6 +142,33 @@ declare function query:getModel($url as xs:string) as xs:string {
       }"
 };
 
+(: Checks if X references an existing Y via namespace/localid :)
+declare function query:existsViaNameLocalId(
+        $label as xs:string,
+        $name as xs:string
+) as xs:boolean {
+    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+       SELECT count(?label) as ?cnt
+       WHERE {
+?scenariosXMLURI a aq:" || $name ||";
+aq:inspireId ?inspireId.
+?inspireId rdfs:label ?label.
+?inspireId aq:namespace ?name.
+?inspireId aq:localId ?localId
+FILTER (concat(?name,'/',?localId) = '" || $label || "')
+   }"
+
+    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
+    (:let $asd := trace($count, "count: "):)
+    return
+        if ($count > 0)
+            then
+                true()
+            else
+                false()
+};
+
 (: G :)
 declare function query:getAttainment($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -165,11 +192,28 @@ declare function query:getMeasures($url as xs:string) as xs:string {
 
    SELECT ?inspireLabel
    WHERE {
-      ?attainment a aqd:AQD_Measures;
+      ?measure a aqd:AQD_Measures;
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
-      FILTER (CONTAINS(str(?attainment), '" || $url || "'))
+      FILTER (CONTAINS(str(?measure), '" || $url || "'))
    }"
+};
+
+declare function query:getAllMeasuresIds($namespaces as xs:string*) as xs:string* {
+  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+   PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+   SELECT *
+   WHERE {
+        ?measure a aqd:AQD_Measures;
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?inspireLabel .
+        ?inspireId aqd:namespace ?namespace
+        FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
+  }"
+  return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
 (: Feature Types queries - These queries return all ids of the specified feature type :)
@@ -367,22 +411,7 @@ declare function query:getAllRegimeIds($namespaces as xs:string*) as xs:string* 
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
-declare function query:getAllMeasuresIds($namespaces as xs:string*) as xs:string* {
-  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-   PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
 
-   SELECT *
-   WHERE {
-        ?attainment a aqd:AQD_Measures;
-        aqd:inspireId ?inspireId .
-        ?inspireId rdfs:label ?inspireLabel .
-        ?inspireId aqd:namespace ?namespace
-        FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
-  }"
-  return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
-};
 
 declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:string* {
   let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

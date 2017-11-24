@@ -258,23 +258,24 @@ declare function c:conditionalReportRow (
 ) as element(tr)* {
     if (not($ok))
     then
-        for $i in 1 to array:size($vals)
-        let $row := array:get($vals, $i)
         let $tr :=
             <tr>
             {
-                if ($row instance of array(*))
-                then
-                    <td title="{$row(1)}">
-                        {data($row(2))}
-                    </td>
-                else
-                    <td title="{$row[1]}">
-                        {data($row[2])}
-                    </td>
+                for $i in 1 to array:size($vals)
+                let $row := array:get($vals, $i)
+                return
+                    if ($row instance of array(*))
+                    then
+                        <td title="{$row(1)}">
+                            {data($row(2))}
+                        </td>
+                    else
+                        <td title="{$row[1]}">
+                            {data($row[2])}
+                        </td>
             }
             </tr>
-        let $x := trace($tr, 'x:')
+        (:let $x := trace($tr, 'x:'):)
         return $tr
     else
         ()
@@ -400,7 +401,7 @@ declare function c:validateMaybeNodeWithValueReport(
 
 (: Check if a given string is a full ISO date type:)
 declare function c:isDateFullISO(
-    $date as xs:string
+    $date as xs:string?
 ) as xs:boolean {
     if ($date castable as xs:dateTime)
     then
@@ -417,7 +418,7 @@ declare function c:isDateFullISO(
 };
 (: Create report :)
 declare function c:isDateFullISOReport(
-    $el as node()
+    $el as node()*
 ) as element(tr)*
 {
     let $date := data($el)
@@ -478,3 +479,4 @@ validate([
 
 isXBiggerThanY(x:orice, y:orice)
 :)
+
