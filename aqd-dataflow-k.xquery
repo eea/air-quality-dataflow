@@ -77,7 +77,6 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $namespaces := distinct-values($docRoot//base:namespace)
-let $allMeasures := query:getAllMeasuresIds($namespaces)
 
 (: File prefix/namespace check :)
 
@@ -435,19 +434,22 @@ let $K12 := try {
 }
 
 (: K13
-aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+aqd:AQD_Measures/aqd:code should be a unique local identifier for each measure record.
+For convenience the same code as localId may be used
 
-Unique code of the measure. This may be a unique local code for the measure or
-may be identical to the unique code used in K2.1.
-
-TODO: we implemented just first line of the requirement, the second line contradicts it
+So, the aqd:code should be unique within XML
 :)
 
 let $K13invalid := try {
+    let $codes := $docRoot//aqd:AQD_Measures/aqd:code
     for $node in $docRoot//aqd:AQD_Measures
         let $code := $node/aqd:code
         let $localId := $node/aqd:inspireId/base:Identifier/base:localId
-        let $ok := $code = $localId
+        let $ok := (
+            $code = $localId
+            and
+            count(fn:index-of($codes,$code)) = 1
+        )
         return c:conditionalReportRow(
             $ok,
             [
