@@ -13,7 +13,8 @@ import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 
 declare function html:getHead() as element()* {
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>,
+    <meta charset="utf-8"/>
 };
 
 declare function html:getCSS() as element(style) {

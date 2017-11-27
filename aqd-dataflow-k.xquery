@@ -23,8 +23,9 @@ import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 (:import module namespace filter = "aqd-filter" at "aqd-filter.xquery";:)
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 (:import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";:)
-(:import module namespace geox = "aqd-geo" at "aqd-geo.xquery";:)
-import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
+(:import module namespace geox = "aqd-geo" at "aqd-geo.xquery";
+import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";:)
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
