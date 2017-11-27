@@ -64,8 +64,10 @@ declare function dataflowK:checkReport($source_url as xs:string, $countryCode as
 
 let $envelopeUrl := c:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
+(: cdr.eionet.europa.eu/be/eu/aqd/ :)
 let $cdrUrl := c:getCdrUrl($countryCode)
 let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
+(: 2004  :)
 let $reportingYear := c:getReportingYear($docRoot)
 let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
 let $nameSpaces := distinct-values($docRoot//base:namespace)
@@ -111,7 +113,7 @@ let $K0table := try {
             then
                 c:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
             else
-                c:checkDeliveryReport($errors:WARNING, "New delivery for " || $reportingYear)
+                c:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -131,7 +133,7 @@ let $K01 := try {
     let $el := $rec/aqd:inspireId/base:Identifier
     return
         c:conditionalReportRow(
-        true(),
+        false(),
         [
             ("gml:id", data($rec/@gml:id)),
             ("base:localId", data($el/base:localId)),
@@ -169,9 +171,11 @@ let $K02errorLevel :=
         and
         count(
             for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
-            let $id := $x/base:namespace || "/" || $x/base:localId
-            where ($allMeasures = $id)
-            return 1) > 0
+                let $id := $x/base:namespace || "/" || $x/base:localId
+                (:where ($allMeasures = $id):)
+                where query:existsViaNameLocalId($id, 'AQD_Measures')
+                return 1
+        ) > 0
         )
     then
         $errors:K02
