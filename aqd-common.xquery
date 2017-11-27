@@ -5,7 +5,7 @@ module namespace c = "aqd-common";
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
-import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 
 declare namespace base = "http://inspire.ec.europa.eu/schemas/base/3.3";
