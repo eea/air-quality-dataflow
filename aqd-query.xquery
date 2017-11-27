@@ -184,6 +184,21 @@ declare function query:getAttainment($url as xs:string) as xs:string {
    }"
 };
 
+(: J :)
+declare function query:getEvaluationScenarios($url as xs:string) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?EvaluationScenario a aqd:AQD_EvaluationScenario;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?EvaluationScenario), '" || $url || "'))
+   }"
+};
+
 (: K :)
 declare function query:getMeasures($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

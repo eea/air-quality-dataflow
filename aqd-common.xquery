@@ -73,6 +73,11 @@ declare function c:getCdrUrl($countryCode as xs:string) as xs:string {
     return "cdr.eionet.europa.eu/" || lower-case($countryCode) || "/" || $eu || "/aqd/"
 };
 
+(: returns year from aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod
+gml:beginPosition
+or
+gml:timePosition
+:)
 declare function c:getReportingYear($xml as document-node()) as xs:string {
     let $year1 := year-from-dateTime($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod/gml:beginPosition)
     let $year2 := string($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimeInstant/gml:timePosition)
@@ -242,19 +247,20 @@ declare function c:isInVocabulary(
 };
 
 declare function c:isInVocabularyReport(
-  $el as node(),
+  $main as node()+,
   $vocabularyName as xs:string
 ) as element(tr)* {
     try {
-        let $uri := $el/@xlink:href
-        return
-        if (not(c:isInVocabulary($uri, $vocabularyName)))
-        then
-            <tr>
-                <td title="{node-name($el)}"> not conform to vocabulary</td>
-            </tr>
-        else
-            ()
+        for $el in $main
+            let $uri := $el/@xlink:href
+            return
+            if (not(c:isInVocabulary($uri, $vocabularyName)))
+            then
+                <tr>
+                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                </tr>
+            else
+                ()
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
