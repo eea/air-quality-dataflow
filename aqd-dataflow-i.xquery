@@ -75,10 +75,6 @@ declare function dataflowI:checkReport(
     let $sources := $docRoot//aqd:AQD_SourceApportionment
     let $allSources := q:sparql-objects-ids($namespaces, $node-name)
 
-    (: TODO: what does this do?
-    let $bdir := if (contains($source_url, "i_preliminary")) then "i_preliminary/" else "i/"
-    :)
-
     (: NS Check
     Check prefix and namespaces of the gml:featureCollection according to
     expected root elements (More information at
@@ -159,9 +155,10 @@ declare function dataflowI:checkReport(
 
     (: I1
 
-    Compile & feedback upon the total number of Source Apportionments included in
-    the delivery
-    Number of  Source Apportionments reported
+    Compile & feedback upon the total number of Source Apportionments included
+    in the delivery
+
+    Number of Source Apportionments reported
     :)
     let $countSources := count($sources)
     let $tblAllSources :=
@@ -930,10 +927,57 @@ declare function dataflowI:checkReport(
     :)
 
     let $I25 := ()
+
+    (: I26
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+    uom attribute shall resolve to
+    http://dd.eionet.europa.eu/vocabulary/uom/area/km2
+
+    Exceedence area uom attribute must be in Square kilometers.
+
+    ERROR
+    :)
+
     let $I26 := ()
+    (: I27
+
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+    uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km
+
+    Exceedence area uom attribute must be in Square kilometers.
+
+    ERROR
+    :)
     let $I27 := ()
+
     let $I28 := ()
+
+    (: I29
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    must be populated
+
+    A link to the exceeding SamplingPoint(s) and/or Model(s) must be provided
+    [at least one]
+
+    ERROR
+
+    :)
     let $I29 := ()
+
+    (: I30
+
+    If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid
+    elements:
+    stationUsed must link To SamplingPoint via namespace/localid
+    modelUsed must link to AQD_Model via namespace/ localid
+
+    If SamplingPoint(s) and/or Model(s) are provided, these must be valid
+
+    ERROR
+    :)
     let $I30 := ()
     let $I31 := ()
     let $I32 := ()
@@ -986,7 +1030,9 @@ declare function dataflowI:checkReport(
         {html:build2("I25", $labels:I25, $labels:I25_SHORT, $I25, "All values are valid", "needs valid input", $errors:I25)}
         {html:build2("I26", $labels:I26, $labels:I26_SHORT, $I26, "All values are valid", "needs valid input", $errors:I26)}
         {html:build2("I27", $labels:I27, $labels:I27_SHORT, $I27, "All values are valid", "needs valid input", $errors:I27)}
+        (: 28 is missing in XLS
         {html:build2("I28", $labels:I28, $labels:I28_SHORT, $I28, "All values are valid", "needs valid input", $errors:I28)}
+        :)
         {html:build2("I29", $labels:I29, $labels:I29_SHORT, $I29, "All values are valid", "needs valid input", $errors:I29)}
         {html:build2("I30", $labels:I30, $labels:I30_SHORT, $I30, "All values are valid", "needs valid input", $errors:I30)}
         {html:build2("I31", $labels:I31, $labels:I31_SHORT, $I31, "All values are valid", "needs valid input", $errors:I31)}
