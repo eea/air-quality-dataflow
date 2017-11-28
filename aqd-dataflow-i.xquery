@@ -13,7 +13,7 @@ xquery version "3.0" encoding "UTF-8";
 
 module namespace dataflowI = "http://converters.eionet.europa.eu/dataflowI";
 
-import module namespace c = "aqd-common" at "aqd-common.xquery";
+import module namespace common = "aqd-common" at "aqd-common.xquery";
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace sparqlx = "aqd-sparql" at "aqd-sparql.xquery";
 import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
@@ -62,11 +62,11 @@ declare function dataflowI:checkReport(
     $countryCode as xs:string
 ) as element(table) {
 
-    let $envelopeUrl := c:getEnvelopeXML($source_url)
+    let $envelopeUrl := common:getEnvelopeXML($source_url)
     let $docRoot := doc($source_url)
-    let $cdrUrl := c:getCdrUrl($countryCode)
+    let $cdrUrl := common:getCdrUrl($countryCode)
 
-    let $reportingYear := c:getReportingYear($docRoot)
+    let $reportingYear := common:getReportingYear($docRoot)
     let $namespaces := distinct-values($docRoot//base:namespace)
 
     let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
@@ -296,10 +296,10 @@ declare function dataflowI:checkReport(
                         {distinct-values($aqdinspireId)}
                     </td>
                     <td title="aqd:usedInPlan">
-                        {c:checkLink(distinct-values(data($x/aqd:usedInPlan/@xlink:href)))}
+                        {common:checkLink(distinct-values(data($x/aqd:usedInPlan/@xlink:href)))}
                     </td>
                     <td title="aqd:parentExceedanceSituation">
-                        {c:checkLink(distinct-values(data($att-url)))}
+                        {common:checkLink(distinct-values(data($att-url)))}
                     </td>
                     <td title="aqd:pollutant">{$pollutant}</td>
                 </tr>
@@ -335,13 +335,13 @@ declare function dataflowI:checkReport(
                 return
                     for $v in distinct-values($values)
                         return
-                            if (c:has-one-node($values, $v))
+                            if (common:has-one-node($values, $v))
                             then
                                 ()
                             else
                                 [$name, data($v)]
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -368,7 +368,7 @@ declare function dataflowI:checkReport(
                 and
                 functx:if-empty($localID/text(), "") != ""
             )
-            return c:conditionalReportRow(
+            return common:conditionalReportRow(
                 $ok,
                 [
                     ("gml:id", data($x/@gml:id)),
@@ -396,7 +396,7 @@ declare function dataflowI:checkReport(
         for $namespace in distinct-values($sources/aqd:inspireId/base:Identifier/base:namespace)
             let $localIds := $sources/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
             let $ok := false()
-            return c:conditionalReportRow(
+            return common:conditionalReportRow(
                 $ok,
                 [
                     ("base:namespace", $namespace),
@@ -430,7 +430,7 @@ declare function dataflowI:checkReport(
 
         for $x in distinct-values($docRoot//base:namespace)
             let $ok := ($x = $prefLabel and $x = $altLabel)
-            return c:conditionalReportRow(
+            return common:conditionalReportRow(
                 $ok,
                 [
                     ("base:namespace", $x)
@@ -461,7 +461,7 @@ declare function dataflowI:checkReport(
                 $reportingYear
             )
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             $ok,
             [
                 (node-name($el), $el/@xlink:href)
@@ -496,7 +496,7 @@ declare function dataflowI:checkReport(
 
             (: TODO: check that the reporting year is for same year :)
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             $ok,
             [
                 (node-name($el), $el/@xlink:href)
@@ -520,7 +520,7 @@ declare function dataflowI:checkReport(
         for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
             let $ok := $el castable as xs:gYear
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             $ok,
             [
                 (node-name($el), data($el))
@@ -552,14 +552,14 @@ declare function dataflowI:checkReport(
         let $errors := array {
             for $node in $nodes
             return
-                if (not(c:is-a-number(data($node))))
+                if (not(common:is-a-number(data($node))))
                 then
                     [node-name($node), data($node)]
                 else
                     ()
         }
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -595,7 +595,7 @@ declare function dataflowI:checkReport(
                 else
                     true()
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             $ok,
             [
                 (node-name($node), data($node)),
@@ -624,7 +624,7 @@ declare function dataflowI:checkReport(
 
             let $ok := ($isnil and $hascomment) or true()
 
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             $ok,
             [
                 (node-name($el), "needs comment")
@@ -647,40 +647,32 @@ declare function dataflowI:checkReport(
     The unit of measurement of the Source Apportioment must match recommended
     unit for the pollutant
 
-                let $polutant := data($node/aqd:usedInPlan/@xlink:href)
-                let $uom-term := dd:get-uri-for-term($uom)
-
-    TODO: check code, implement checks
+    TODO: doublecheck with test
 
     BLOCKER
     :)
 
     let $I18 := try {
 
-        let $errors := array {
-            for $x in $sources
-                let $quants := $x//aqd:QuantityCommented/aqd:quantity
-                let $uom := $quants/@uom
-                let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
-                let $pollutant-code := query:get-pollutant-for-attainment($att-url)
-                let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
-                let $rec-uom := dd:getRecommendedUnit($pollutant-code)
+        for $x in $sources
+            let $quants := $x//aqd:QuantityCommented/aqd:quantity
+            let $uom := data($quants/@uom)
+            let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
+            let $pollutant-code := query:get-pollutant-for-attainment($att-url)
+            let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
+            let $rec-uom := dd:getRecommendedUnit($pollutant-code)
 
-                return
-                    if ($uom != $rec-uom)
-                    then
-                        [node-name($x), $uom]
-                    else
-                        ()
-        }
+            let $ok := $uom = $rec-uom
 
-        return c:conditionalReportRow(
-            array:size($errors) = 0,
-            $errors
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($x), $uom]
         )
+
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
+
 
     (: I19
 
@@ -696,6 +688,8 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
+    TODO: improve reporting for this row
+
     :)
 
     let $I19 := try {
@@ -703,7 +697,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
                 let $total := data($rb/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
                     $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
                     $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity,
@@ -715,11 +709,11 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -773,7 +767,7 @@ declare function dataflowI:checkReport(
                 else
                     ()
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -826,7 +820,7 @@ declare function dataflowI:checkReport(
                 else
                     ()
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -860,7 +854,7 @@ declare function dataflowI:checkReport(
                 else
                     ()
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -891,7 +885,7 @@ declare function dataflowI:checkReport(
                 let $a := data($x/aqd:macroExceedanceSituation/aqd:numericalExceedance)
                 let $b := data($x/aqd:macroExceedanceSituation/aqd:numberExceedances)
 
-                let $ok := c:is-a-number($a) or c:is-a-number($b)
+                let $ok := common:is-a-number($a) or common:is-a-number($b)
 
             return
                 if (not($ok))
@@ -900,7 +894,7 @@ declare function dataflowI:checkReport(
                 else
                     ()
         }
-        return c:conditionalReportRow(
+        return common:conditionalReportRow(
             array:size($errors) = 0,
             $errors
         )
@@ -920,7 +914,7 @@ declare function dataflowI:checkReport(
     BLOCKER
 
     :)
-    let $I24 := c:isInVocabularyReport(
+    let $I24 := common:isInVocabularyReport(
         $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification,
         $vocabulary:AREA_CLASSIFICATION_VOCABULARY
     )

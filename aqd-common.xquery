@@ -1,6 +1,6 @@
 xquery version "3.0" encoding "UTF-8";
 
-module namespace c = "aqd-common";
+module namespace common = "aqd-common";
 
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
@@ -17,10 +17,10 @@ declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
 declare namespace xlink = "http://www.w3.org/1999/xlink";
 
-declare variable $c:SOURCE_URL_PARAM := "source_url=";
+declare variable $common:SOURCE_URL_PARAM := "source_url=";
 
 (: Lower case equals string :)
-declare function c:equalsLC($value as xs:string, $target as xs:string) {
+declare function common:equalsLC($value as xs:string, $target as xs:string) {
     lower-case($value) = lower-case($target)
 };
 
@@ -29,23 +29,23 @@ declare function c:equalsLC($value as xs:string, $target as xs:string) {
  : @param $url URL of the source XML file
  : @return String
  :)
-declare function c:getCleanUrl($url) as xs:string {
-    if (contains($url, $c:SOURCE_URL_PARAM)) then
-        fn:substring-after($url, $c:SOURCE_URL_PARAM)
+declare function common:getCleanUrl($url) as xs:string {
+    if (contains($url, $common:SOURCE_URL_PARAM)) then
+        fn:substring-after($url, $common:SOURCE_URL_PARAM)
     else
         $url
 };
 
 (: XMLCONV QA sends the file URL to XQuery engine as source_file paramter value in URL which is able to retreive restricted content from CDR.
    This method replaces the source file url value in source_url parameter with another URL. source_file url must be the last parameter :)
-declare function c:replaceSourceUrl($url as xs:string, $url2 as xs:string) as xs:string {
-    if (contains($url, $c:SOURCE_URL_PARAM)) then
-        fn:concat(fn:substring-before($url, $c:SOURCE_URL_PARAM), $c:SOURCE_URL_PARAM, $url2)
+declare function common:replaceSourceUrl($url as xs:string, $url2 as xs:string) as xs:string {
+    if (contains($url, $common:SOURCE_URL_PARAM)) then
+        fn:concat(fn:substring-before($url, $common:SOURCE_URL_PARAM), $common:SOURCE_URL_PARAM, $url2)
     else
         $url2
 };
 
-declare function c:getEnvelopeXML($url as xs:string) as xs:string{
+declare function common:getEnvelopeXML($url as xs:string) as xs:string{
     let $col := fn:tokenize($url,'/')
     let $col := fn:remove($col, fn:count($col))
     let $ret := fn:string-join($col,'/')
@@ -57,7 +57,7 @@ declare function c:getEnvelopeXML($url as xs:string) as xs:string{
             ""
 };
 
-declare function c:getCdrUrl($countryCode as xs:string) as xs:string {
+declare function common:getCdrUrl($countryCode as xs:string) as xs:string {
     let $countryCode :=
         if ($countryCode = "uk") then
             "gb"
@@ -78,7 +78,7 @@ gml:beginPosition
 or
 gml:timePosition
 :)
-declare function c:getReportingYear($xml as document-node()) as xs:string {
+declare function common:getReportingYear($xml as document-node()) as xs:string {
     let $year1 := year-from-dateTime($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod/gml:beginPosition)
     let $year2 := string($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimeInstant/gml:timePosition)
     return
@@ -87,7 +87,7 @@ declare function c:getReportingYear($xml as document-node()) as xs:string {
         else ""
 };
 
-declare function c:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
+declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
     not(empty(
             for $str in $seq2
             where not(empty(index-of($seq1, $str)))
@@ -96,7 +96,7 @@ declare function c:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:b
     ))
 };
 
-declare function c:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
+declare function common:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
 as xs:string* {
 
     distinct-values(
@@ -107,7 +107,7 @@ as xs:string* {
     )
 };
 
-declare function c:checkLink($text as xs:string*) as element(span)*{
+declare function common:checkLink($text as xs:string*) as element(span)*{
     for $c at $pos in $text
     return
         <span>{
@@ -123,15 +123,15 @@ declare function c:checkLink($text as xs:string*) as element(span)*{
         }</span>
 };
 
-declare function c:is-a-number( $value as xs:anyAtomicType? ) as xs:boolean {
+declare function common:is-a-number( $value as xs:anyAtomicType? ) as xs:boolean {
     string(number($value)) != 'NaN'
 };
 
-declare function c:includesURL($x as xs:string) {
+declare function common:includesURL($x as xs:string) {
     contains($x, "http://") or contains($x, "https://")
 };
 
-declare function c:isInvalidYear($value as xs:string?) {
+declare function common:isInvalidYear($value as xs:string?) {
     let $year := if (empty($value)) then ()
     else
         if ($value castable as xs:integer) then xs:integer($value) else ()
@@ -140,7 +140,7 @@ declare function c:isInvalidYear($value as xs:string?) {
         if ((empty($year) and empty($value)) or (not(empty($year)) and $year > 1800 and $year < 9999)) then fn:false() else fn:true()
 
 };
-declare function c:if-empty($first as item()?, $second as item()?) as item()* {
+declare function common:if-empty($first as item()?, $second as item()?) as item()* {
     if (not(data($first) = '')) then
         data($first)
     else
@@ -148,7 +148,7 @@ declare function c:if-empty($first as item()?, $second as item()?) as item()* {
 };
 
 (: This is to be used only for dates with <= 1 year difference :)
-declare function c:isDateDifferenceOverYear($startDate as xs:date, $endDate as xs:date) as xs:boolean {
+declare function common:isDateDifferenceOverYear($startDate as xs:date, $endDate as xs:date) as xs:boolean {
     let $year1 := year-from-date($startDate)
     let $year2 := year-from-date($endDate)
     let $difference :=
@@ -164,7 +164,7 @@ declare function c:isDateDifferenceOverYear($startDate as xs:date, $endDate as x
             false()
 };
 
-declare function c:containsAnyNumber($values as xs:string*) as xs:boolean {
+declare function common:containsAnyNumber($values as xs:string*) as xs:boolean {
     let $result :=
         for $i in $values
         where $i castable as xs:double
@@ -173,7 +173,7 @@ declare function c:containsAnyNumber($values as xs:string*) as xs:boolean {
 };
 
 (: This is to be used only for dateTimes with <= 1 year difference :)
-declare function c:isDateTimeDifferenceOneYear($startDateTime as xs:dateTime, $endDateTime as xs:dateTime) as xs:boolean {
+declare function common:isDateTimeDifferenceOneYear($startDateTime as xs:dateTime, $endDateTime as xs:dateTime) as xs:boolean {
     let $year1 := year-from-dateTime($startDateTime)
     let $year2 := year-from-dateTime($endDateTime)
     (: TODO check again corner cases :)
@@ -190,7 +190,7 @@ declare function c:isDateTimeDifferenceOneYear($startDateTime as xs:dateTime, $e
             false()
 };
 
-declare function c:isDateTimeIncluded($reportingYear as xs:string, $beginPosition as xs:dateTime?, $endPosition as xs:dateTime?) {
+declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPosition as xs:dateTime?, $endPosition as xs:dateTime?) {
     let $reportingYearDateTimeStart := xs:dateTime($reportingYear || "-01-01T00:00:00Z")
     let $reportingYearDateTimeEnd := xs:dateTime($reportingYear || "-01-01T00:00:00Z")
     return
@@ -208,7 +208,7 @@ declare function c:isDateTimeIncluded($reportingYear as xs:string, $beginPositio
 };
 
 (: Returns error report for ?0 check :)
-declare function c:checkDeliveryReport (
+declare function common:checkDeliveryReport (
     $errorClass as xs:string,
     $statusMessage as xs:string
 ) as element(tr) {
@@ -219,7 +219,7 @@ declare function c:checkDeliveryReport (
 
 (: Returns structure with error if node is empty :)
 (: TODO: test if node doesn't exist :)
-declare function c:needsValidString(
+declare function common:needsValidString(
     $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
@@ -239,7 +239,7 @@ declare function c:needsValidString(
 };
 
 (: Check if the given node links to a term that is defined in the vocabulary :)
-declare function c:isInVocabulary(
+declare function common:isInVocabulary(
   $uri as xs:string?,
   $vocabularyName as xs:string
 ) as xs:boolean {
@@ -247,7 +247,7 @@ declare function c:isInVocabulary(
     return $uri and $uri = $validUris
 };
 
-declare function c:isInVocabularyReport(
+declare function common:isInVocabularyReport(
   $main as node()+,
   $vocabularyName as xs:string
 ) as element(tr)* {
@@ -255,7 +255,7 @@ declare function c:isInVocabularyReport(
         for $el in $main
             let $uri := $el/@xlink:href
             return
-            if (not(c:isInVocabulary($uri, $vocabularyName)))
+            if (not(common:isInVocabulary($uri, $vocabularyName)))
             then
                 <tr>
                     <td title="{node-name($el)}"> not conform to vocabulary</td>
@@ -269,7 +269,7 @@ declare function c:isInVocabularyReport(
 
         (: (xs:string, xs:anyAtomicType)* :)
 
-declare function c:conditionalReportRow (
+declare function common:conditionalReportRow (
     $ok as xs:boolean,
     $vals as array(item()*)
 ) as element(tr)* {
@@ -301,7 +301,7 @@ declare function c:conditionalReportRow (
 
 
 (: returns if a specific node exists in a parent :)
-declare function c:isNodeInParent(
+declare function common:isNodeInParent(
     $parent as node(),
     $nodeName as xs:string
 ) as xs:boolean {
@@ -309,14 +309,14 @@ declare function c:isNodeInParent(
 };
 
 (: prints error if a specific node does not exist in a parent :)
-declare function c:isNodeNotInParentReport(
+declare function common:isNodeNotInParentReport(
     $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
     try {
         for $el in $parent
             return
-            if (not(c:isNodeInParent($el, $nodeName)))
+            if (not(common:isNodeInParent($el, $nodeName)))
             then
                 <tr>
                     <td title="{$nodeName}"> needs valid input</td>
@@ -329,25 +329,25 @@ declare function c:isNodeNotInParentReport(
 };
 
 (: if node has value, then that value should be an integer :)
-declare function c:maybeNodeValueIsInteger($el) as xs:boolean {
+declare function common:maybeNodeValueIsInteger($el) as xs:boolean {
     (: TODO: is possible to use or :)
     let $v := data($el)
     return
         if (exists($v))
         then
-            c:is-a-number($v)
+            common:is-a-number($v)
         else
             true()
 };
 
 (: prints error if a specific node has value and is not an integer :)
-declare function c:maybeNodeValueIsIntegerReport(
+declare function common:maybeNodeValueIsIntegerReport(
     $parent as node()?,
     $nodeName as xs:string
 ) as element(tr)* {
     let $el := $parent/*[name() = $nodeName]
     return try {
-        if (not(c:maybeNodeValueIsInteger($el)))
+        if (not(common:maybeNodeValueIsInteger($el)))
         then
             <tr>
                 <td title="{$nodeName}"> needs valid input</td>
@@ -360,7 +360,7 @@ declare function c:maybeNodeValueIsIntegerReport(
 };
 
 (: If node exists, validate it :)
-declare function c:validatePossibleNodeValue(
+declare function common:validatePossibleNodeValue(
     $el,
     $validator as function(item()) as xs:boolean
 ) {
@@ -374,7 +374,7 @@ declare function c:validatePossibleNodeValue(
 };
 
 (: Prints an error if validation for a possible existing node fails :)
-declare function c:validatePossibleNodeValueReport(
+declare function common:validatePossibleNodeValueReport(
     $parent as node()*,
     $nodeName as xs:string,
     $validator as function(item()) as xs:boolean
@@ -382,7 +382,7 @@ declare function c:validatePossibleNodeValueReport(
     let $main := $parent/*[name() = $nodeName]
     for $el in $main
     return try {
-        if (not(c:validatePossibleNodeValue($el, $validator)))
+        if (not(common:validatePossibleNodeValue($el, $validator)))
         then
             <tr>
                 <td title="{$nodeName}"> needs valid input</td>
@@ -396,7 +396,7 @@ declare function c:validatePossibleNodeValueReport(
 
 
 (: Given a node, if it exists, print error based on provided value :)
-declare function c:validateMaybeNodeWithValueReport(
+declare function common:validateMaybeNodeWithValueReport(
     $parent as node()?,
     $nodeName as xs:string,
     $val as xs:boolean
@@ -420,7 +420,7 @@ declare function c:validateMaybeNodeWithValueReport(
 };
 
 (: Check if a given string is a full ISO date type:)
-declare function c:isDateFullISO(
+declare function common:isDateFullISO(
     $date as xs:string?
 ) as xs:boolean {
     if ($date castable as xs:dateTime)
@@ -437,7 +437,7 @@ declare function c:isDateFullISO(
 
 };
 (: Create report :)
-declare function c:isDateFullISOReport(
+declare function common:isDateFullISOReport(
     $main as node()*
 ) as element(tr)*
 {
@@ -445,7 +445,7 @@ declare function c:isDateFullISOReport(
         let $date := data($el)
         return
         try {
-            if (not(c:isDateFullISO($date)))
+            if (not(common:isDateFullISO($date)))
             then
                 <tr>
                     <td title="{node-name($el)}">{$date} not in full ISO format</td>
@@ -457,7 +457,7 @@ declare function c:isDateFullISOReport(
         }
 };
 
-declare function c:has-one-node(
+declare function common:has-one-node(
     $seq as item()*,
     $item as item()?
 ) as xs:boolean {
@@ -468,36 +468,31 @@ return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
 };
 
 (: Check if end date is after begin date and if both are in full ISO format:)
-declare function c:isEndDateAfterBeginDate(
+declare function common:isEndDateAfterBeginDate(
         $begin as node()?,
         $end as node()?
 ) as xs:boolean
 {
-    if(c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+    if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
     then
         true()
     else
         false()
 };
 
-
-(:
-pseudocode, for brainstorming
-
-validators =[
-    isDate(x),
-    isDate(y),
-    isXBiggerThenY(x, y)
-]
-
-validate([
-    isDate(x),
-    isDate(y),
-    ])
-
-
-    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
-
-isXBiggerThanY(x:orice, y:orice)
-:)
-
+(:~ Returns a sum of numbers contained in nodes :)
+declare function common:sum-of-nodes(
+    $nodes as item()*
+) {
+    let $numbers :=
+        for $n in $nodes
+            let $d := data($n)
+            let $i :=
+                if ($d castable as xs:double)
+                then
+                    xs:double($d)
+                else
+                    0
+        return $i
+    return sum($numbers)
+};
