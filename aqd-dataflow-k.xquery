@@ -130,17 +130,17 @@ let $knownMeasures :=
 let $countMeasures := count($docRoot//aqd:AQD_Measures)
 let $K01 := try {
     for $rec in $docRoot//aqd:AQD_Measures
-    let $el := $rec/aqd:inspireId/base:Identifier
-    return
-        c:conditionalReportRow(
-        false(),
-        [
-            ("gml:id", data($rec/@gml:id)),
-            ("base:localId", data($el/base:localId)),
-            ("base:namespace", data($el/base:namespace)),
-            ("base:versionId", data($el/base:versionId))
-        ]
-        )
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            c:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -188,17 +188,17 @@ ERROR will be returned if XML is an update and ALL localId (100%) are different 
 let $K03table := try {
     let $main := $docRoot//aqd:AQD_Measures
     for $x in $main/aqd:inspireId/base:Identifier
-    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
-    return
-        c:conditionalReportRow(
-        $ok,
-        [
-            ("gml:id", data($main/@gml:id)),
-            ("aqd:inspireId", $inspireId),
-            ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
-        ]
-        )
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
+        return
+            c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -394,16 +394,17 @@ You must provide a link to a source apportionment document from data flow I via 
 :)
 
 let $K11 := try{
-    let $el := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
-    let $label := data($el/@xlink:href)
-    let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
+    let $main := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), $el/@xlink:href)
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -417,16 +418,17 @@ A link may be provided to Evaluation Scenario (J). This must be valid via namesp
 :)
 
 let $K12 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
-    let $label := data($el/@xlink:href)
-    let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
+    let $main := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), $el/@xlink:href)
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -531,35 +533,36 @@ reasons for not providing it should be included.
 
 let $K21 := try {
     let $root := $docRoot//aqd:AQD_Measures
-    let $costs := $root/aqd:costs
-    let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
-    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment
-    let $costsRoot := $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+    for $el in $root
+        let $costs := $el/aqd:costs
+        let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
+        let $comment := $costs/aqd:Costs/aqd:comment
+        let $costsRoot := $costs/aqd:Costs
 
-    let $isValidCost := c:is-a-number(data($implCosts))
-    let $hasCost := c:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+        let $isValidCost := c:is-a-number(data($implCosts))
+        let $hasCost := c:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
 
-    return
-        if (c:isNodeInParent($root, 'aqd:costs'))
-        then (
-            if (not($isValidCost))
-            then
-                if (empty($comment/text()))
+        return
+            if (c:isNodeInParent($el, 'aqd:costs'))
+            then (
+                if (not($isValidCost))
                 then
-                    if ($hasCost)
+                    if (empty($comment/text()))
                     then
-                        (
-                         <tr> <td title="{node-name($implCosts)}">{$errors:K21}</td> </tr>
-                        )
+                        if ($hasCost)
+                        then
+                            (
+                             <tr> <td title="{node-name($implCosts)}">{$errors:K21}</td> </tr>
+                            )
+                        else
+                            ( <tr><td title="{node-name($comment)}">{$errors:K21}</td></tr>)
                     else
-                        ( <tr><td title="{node-name($comment)}">{$errors:K21}</td></tr>)
+                        ()  (: ok, we have a comment :)
                 else
-                    ()  (: ok, we have a comment :)
+                    ()      (: ok, cost is a number :)
+            )
             else
-                ()      (: ok, cost is a number :)
-        )
-        else
-            <tr><td title="{node-name($costs)}">{$errors:K21}</td></tr>
+                <tr><td title="{node-name($costs)}">{$errors:K21}</td></tr>
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -594,12 +597,15 @@ vocabulary
 
 :)
 
-let $K23 := c:validateMaybeNodeWithValueReport(
-    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
-    'aqd:estimatedImplementationCosts',
-    c:isInVocabulary(
-        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency/@xlink:href,
-        $vocabulary:CURRENCIES
+let $K23 := (
+    for $el in $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+    return c:validateMaybeNodeWithValueReport(
+        $el,
+        'aqd:estimatedImplementationCosts',
+        c:isInVocabulary(
+            $el/@xlink:href,
+            $vocabulary:CURRENCIES
+        )
     )
 )
 
@@ -662,22 +668,23 @@ if unknown voided using indeterminatePosition="unknown"
 :)
 
 let $K28 := try {
-    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
-    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
 
-    let $ok := (
-        (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
-        or
-        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
-    )
+        let $ok := (
+            (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+            or
+            ($end/@indeterminatePosition = "unknown" and empty($end/text()))
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            ("gml:beginPosition", data($begin)),
-            ("gml:endPosition", data($end))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -710,22 +717,23 @@ The planned end date for the measure should be provided in the right format,
 if unknown, voided using indeterminatePosition="unknown"
 :)
 let $K30 := try {
-    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
-    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
 
-    let $ok := (
-        (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
-        or
-        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
-    )
+        let $ok := (
+            (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+            or
+            ($end/@indeterminatePosition = "unknown" and empty($end/text()))
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            ("gml:beginPosition", data($begin)),
-            ("gml:endPosition", data($end))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -738,7 +746,7 @@ The full effect date of the measure must be provided and the format to be yyyy o
 :)
 
 let $K31 := try {
-    let $node := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+    for $node in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
 
     let $ok := (
         $node castable as xs:date
@@ -771,24 +779,25 @@ If voided an explanation of why this information unavailable shall be provided i
 :)
 
 let $K33 := try {
-    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
-    let $comment := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation
+        let $main := $el/aqd:monitoringProgressIndicators
+        let $comment := $el/aqd:comment
 
-    let $ok := (
-        not(
-            empty($main/text())
-            or
-            empty($comment/text())
+        let $ok := (
+            not(
+                empty($main/text())
+                or
+                empty($comment/text())
+            )
         )
-    )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($main), data($main)),
-            (node-name($comment), data($comment))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($main), data($main)),
+                (node-name($comment), data($comment))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -804,26 +813,27 @@ an integer or floating point numeric >= 0 if attribute xsi:nil="false"
 :)
 
 let $K34 := try {
-    let $node := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
-    (: TODO: should write a function for this? there's already is-a-number :)
-    let $isNum := (
-        ($node castable as xs:integer)
-        or
-        ($node castable as xs:float)
-    )
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        (: TODO: should write a function for this? there's already is-a-number :)
+        let $isNum := (
+            ($node castable as xs:integer)
+            or
+            ($node castable as xs:float)
+        )
 
-    let $ok := (
-        ($node/@xsi:nil != 'false')
-        or
-        ($isNum and ($node cast as xs:float >= 0))
-    )
+        let $ok := (
+            ($node/@xsi:nil != 'false')
+            or
+            ($isNum and ($node cast as xs:float >= 0))
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($node), data($node))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($node), data($node))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -836,31 +846,31 @@ Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute 
 If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty
 :)
 let $K35 := try {
-    let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
-    (:let $asd := trace(functx:if-empty($node/text(), 0), "K35: "):)
-    let $ok := (
-        (functx:if-empty($node/text(), "") != "")
-        or
-        (
-            lower-case($node/@xsi:nil) = "true"
-            and
+    let $main := $docRoot//aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        let $ok := (
+            (functx:if-empty($node/text(), "") != "")
+            or
             (
-                (lower-case($node/@nilReason) = "unknown")
-                or
-                (lower-case($node/@nilReason) = "unpopulated")
-                or
-                (lower-case($node/@nilReason) = "withheld")
+                lower-case($node/@xsi:nil) = "true"
+                and
+                (
+                    (lower-case($node/@nilReason) = "unknown")
+                    or
+                    (lower-case($node/@nilReason) = "unpopulated")
+                    or
+                    (lower-case($node/@nilReason) = "withheld")
+                )
             )
         )
-    )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($node), data($node)),
-            (name($node/@nilReason), data($node/@nilReason))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($node), data($node)),
+                (name($node/@nilReason), data($node/@nilReason))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -873,22 +883,23 @@ aqd:QuantityCommented/aqd:comment must be populated
 If the quantification is voided an explanation is required in aqd:comment
 :)
 let $K36 := try {
-    let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
-    let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+    for $main in $docRoot//aqd:QuantityCommented
+        let $quantity := $main/aqd:quantity
+        let $comment := $main/aqd:comment
 
-    let $ok := (
-        (functx:if-empty($quantity/text(), "") = "")
-        or
-        (functx:if-empty($comment/text(), "") = "")
-    )
+        let $ok := (
+            (functx:if-empty($quantity/text(), "") = "")
+            or
+            (functx:if-empty($comment/text(), "") = "")
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($quantity), data($quantity)),
-            (node-name($comment), data($comment))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($quantity), data($quantity)),
+                (node-name($comment), data($comment))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -900,18 +911,19 @@ shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission
 the quantification of reductionOfEmissions should conform to vocabulary
 :)
 let $K37 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
-    let $uri := data($el/@uom)
-    let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
-    let $ok := ($uri and $uri = $validUris)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
+        let $ok := ($uri and $uri = $validUris)
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($el), data($el)),
+                (name($el/@uom), data($uri))
+            ]
+        )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -927,29 +939,30 @@ The level of concentration expected should be provided as an integer and its uni
 :)
 
 let $K38 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
-    let $uri := data($el/@uom)
-    let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
 
-    let $isNum := (
-        ($el castable as xs:integer)
-        or
-        ($el castable as xs:float)
-    )
+        let $isNum := (
+            ($el castable as xs:integer)
+            or
+            ($el castable as xs:float)
+        )
 
-    let $ok := (
-        $validVocabulary
-        and
-        ($isNum and ($el cast as xs:float >= 0))
-    )
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($el), data($el)),
+                (name($el/@uom), data($uri))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -964,29 +977,30 @@ The number of exceecedance expected should be provided as an integer and its uni
 :)
 
 let $K39 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
-    let $uri := data($el/@uom)
-    let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
 
-    let $isNum := (
-        ($el castable as xs:integer)
-        or
-        ($el castable as xs:float)
-    )
+        let $isNum := (
+            ($el castable as xs:integer)
+            or
+            ($el castable as xs:float)
+        )
 
-    let $ok := (
-        $validVocabulary
-        and
-        ($isNum and ($el cast as xs:float >= 0))
-    )
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
 
-    return c:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (node-name($el), data($el)),
+                (name($el/@uom), data($uri))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
