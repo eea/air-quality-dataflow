@@ -1,0 +1,1412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gml:FeatureCollection xmlns:sams="http://www.opengis.net/samplingSpatial/2.0" xmlns:om="http://www.opengis.net/om/2.0" xmlns:ompr="http://inspire.ec.europa.eu/schemas/ompr/2.0" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:aqd="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:swe="http://www.opengis.net/swe/2.0" xmlns:ad="urn:x-inspire:specification:gmlas:Addresses:3.0" xmlns:base2="http://inspire.ec.europa.eu/schemas/base2/1.0" xmlns:sam="http://www.opengis.net/sampling/2.0" xmlns:ef="http://inspire.ec.europa.eu/schemas/ef/3.0" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gn="urn:x-inspire:specification:gmlas:GeographicalNames:3.0" xmlns:am="http://inspire.ec.europa.eu/schemas/am/3.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:base="http://inspire.ec.europa.eu/schemas/base/3.3" xmlns:gml="http://www.opengis.net/gml/3.2" gml:id="Source_Apportionment" xsi:schemaLocation="http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0 http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd">
+  <gml:featureMember>
+    <aqd:AQD_ReportingHeader gml:id="ATTR_HDR_Wed_Dec_28_12_30_50_CET_2016">
+      <aqd:change>true</aqd:change>
+      <aqd:changeDescription>Seguimiento 2014</aqd:changeDescription>
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>HDR_Wed Dec 28 12:30:50 CET 2016</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>Wed Dec 28 12:30:50 CET 2016</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:reportingAuthority>
+        <base2:RelatedParty>
+          <base2:individualName>
+            <gco:CharacterString>Maj-Britt Larka Abellán</gco:CharacterString>
+          </base2:individualName>
+          <base2:organisationName>
+            <gco:CharacterString>Ministerio de Agricultura y Pesca, Alimentación y Medio Ambiente</gco:CharacterString>
+          </base2:organisationName>
+          <base2:contact>
+            <base2:Contact>
+              <base2:address>
+                <ad:AddressRepresentation>
+                  <ad:adminUnit>
+                    <gn:GeographicalName>
+                      <gn:language nilReason="unpopulated" xsi:nil="true"/>
+                      <gn:nativeness nilReason="unpopulated" xsi:nil="true"/>
+                      <gn:nameStatus nilReason="unpopulated" xsi:nil="true"/>
+                      <gn:sourceOfName nilReason="unpopulated" xsi:nil="true"/>
+                      <gn:pronunciation nilReason="unpopulated" xsi:nil="true"/>
+                      <gn:spelling>
+                        <gn:SpellingOfName>
+                          <gn:text></gn:text>
+                          <gn:script nilReason="unpopulated" xsi:nil="true"/>
+                        </gn:SpellingOfName>
+                      </gn:spelling>
+                    </gn:GeographicalName>
+                  </ad:adminUnit>
+                  <ad:locatorDesignator>PLAZA SAN JUAN DE LA CRUZ, S/N   28071  MADRID, MADRID</ad:locatorDesignator>
+                </ad:AddressRepresentation>
+              </base2:address>
+              <base2:electronicMailAddress>mblarka@magrama.es</base2:electronicMailAddress>
+              <base2:telephoneVoice>915975428</base2:telephoneVoice>
+              <base2:website>http://www.mapama.gob.es/es/</base2:website>
+            </base2:Contact>
+          </base2:contact>
+        </base2:RelatedParty>
+      </aqd:reportingAuthority>
+      <aqd:reportingPeriod>
+        <gml:TimePeriod gml:id="REPORTING_START_DATE_40251c5cc9ec4c0d97c8afcb3a02de31">
+          <gml:beginPosition>2014-01-01T00:00:00Z</gml:beginPosition>
+          <gml:endPosition>2014-12-31T00:00:00Z</gml:endPosition>
+        </gml:TimePeriod>
+      </aqd:reportingPeriod>
+      <aqd:content xlink:href="ES.BDCA.AQD/Wed Dec 28 12:30:50 CET 2016"/>
+    </aqd:AQD_ReportingHeader>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES0901_NO2_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES0901_NO2_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-11-29.13.24.476</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_e7365ecdab8c203e30f745466c662345">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2.0</aqd:quantity>
+              <aqd:comment>Para cuantificar el fondo regional se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1438A, contemplado en el estudio de la empresa Barcelona Regional "Análisis de la contribución de óxidos de nitrógeno por sectores y por ejes viarios en 9 emplazamientos de la zona de protección especial", de octubre de 2014.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">24.4</aqd:quantity>
+              <aqd:comment>Para cuantificar el fondo urbano se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1438A, contemplado en el estudio de la empresa Barcelona Regional "Análisis de la contribución de óxidos de nitrógeno por sectores y por ejes viarios en 9 emplazamientos de la zona de protección especial", de octubre de 2014.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">17.7</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2.4</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0.3</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">25.6</aqd:quantity>
+              <aqd:comment>Para cuantificar el incremento local se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1438A, contemplado en el estudio de la empresa Barcelona Regional "Análisis de la contribución de óxidos de nitrógeno por sectores y por ejes viarios en 9 emplazamientos de la zona de protección especial", de octubre de 2014.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">19.2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.3</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">3.2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.9</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>52</aqd:numericalExceedance>
+          <aqd:numberExceedances>0</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Método normalizado de medida de la concentración de dióxido de nitrógeno por quimioluminiscencia</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure/>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S1"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment></aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES0901_8_LV_H_aMean_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES0901_ES0902_NO2_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES0902_NO2_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES0902_NO2_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-11-29.13.24.765</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_23897d6650e5165a85bc15b43c6b43ed">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2.2</aqd:quantity>
+              <aqd:comment>Para cuantificar el fondo regional, se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1018A, contemplado en el cuestionario de prórroga de NOx, enviado al MAGRAMA en septiembre de 2011.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">12.4</aqd:quantity>
+              <aqd:comment>Para cuantificar el fondo urbano se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1018A, contemplado en el cuestionario de prórroga de NOx, enviado al MAGRAMA en septiembre de 2011.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">7.0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.6</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0.01</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.8</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0.01</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2.0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">29.4</aqd:quantity>
+              <aqd:comment>Para cuantificar el incremento local, se ha considerado la distribución de porcentajes del origen de contribución de óxidos de nitrógeno,de la estación ES1018A, contemplado en el cuestionario de prórroga de NOx, enviado al MAGRAMA en septiembre de 2011.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">26.6</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.1</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.7</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>44</aqd:numericalExceedance>
+          <aqd:numberExceedances>1</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Método normalizado de medida de la concentración de dióxido de nitrógeno por quimioluminiscencia</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure/>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S1"/>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S2"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment></aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES0902_8_LV_H_aMean_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES0901_ES0902_NO2_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES0915_PM10_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES0915_PM10_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-12-07.12.41.719</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_286a82c5d31e72836758f2abfb53a44c">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">9</aqd:quantity>
+              <aqd:comment>Media anual de PM10, del año 2014, de la estación rural de fondo de La Sènia (ES1754A).</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">3</aqd:quantity>
+              <aqd:comment>Diferencia entre la media anual de PM10, del año 2014, de la estación de la Ametlla de Mar (ES1909A) y la media anual de PM10, del año, 2014, de la estación rural de fondo de La Sènia (ES1754A).</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">25</aqd:quantity>
+              <aqd:comment>Diferencia entre la media anual de PM10, del año 2014, de la estación de Alcanar (Depuradora) (ES2009A) y la media anual de PM10, del año 2014, de la Ametlla de Mar (ES1909A).</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>37</aqd:numericalExceedance>
+          <aqd:numberExceedances>66</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Método normalizado de medida de la concentración de partículas en suspensión de diámetro inferior a 10 micras por gravimetría. Medidas aleatorias.</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/nsCorrection"/>
+              <aqd:adjustmentSource xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/G2"/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure/>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S3"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment>Industria cementera</aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment>En relación al apartado A.2.3., aunque el número de superaciones del valor límite diario de PM10 es 66 lo que se ha superado es el percentil 90.4 que es de  67.</aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES0915_5_LV_H_daysAbove_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES0915_PM10_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES1301_NO2_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES1301_NO2_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-12-19.12.46.462</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_f3b5f7c58335ff763f81f03c1091909f">
+          <gml:timePosition>2007</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">5</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">5</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+              <aqd:comment>Se ha estimado el total en 5 microgramos / m3 pero no se dispone de más información de desagregación por fuentes de emisión.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">5</aqd:quantity>
+              <aqd:comment>Se ha estimado el total de contribución, no se dispone de información desagregada por fuentes de emisión</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">43</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">35</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">6</aqd:quantity>
+              <aqd:comment>Otros transportes + tratamiento de residuos</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>53</aqd:numericalExceedance>
+          <aqd:numberExceedances>45</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Las superaciones se produjeron en: Valor límite anual máximo en la estación de Fernández Ladreda y el número máximo de superaciones del valor límite horario se produjo en la estación de Barrio del Pilar</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplicable"/>
+              <aqd:adjustmentSource xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/G2"/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure>
+              <aqd:referenceYear>
+                <gml:TimeInstant gml:id="EXCEEDANCE_EXPOSURE_REFERENCE_YEAR_261c791da1a816e674d3710c0f89aeed">
+                  <gml:timePosition>2013</gml:timePosition>
+                </gml:TimeInstant>
+              </aqd:referenceYear>
+            </aqd:ExceedanceExposure>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S1"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment></aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES1301_8_LV_H_hrsAbove_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES1301_NO2_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES1016_NO2_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES1016_NO2_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-12-02.12.35.730</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_da8dbbacc9a6f41cdf756b8bcd7a9fdd">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">3</aqd:quantity>
+              <aqd:comment>Se ha utilizado la estación ZARRA-EMEP</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">3</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">23</aqd:quantity>
+              <aqd:comment>Diferencia entre la concentración de  Zarra-EMEP y Valencia-Vivers (urbana de fondo)</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">23</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">20</aqd:quantity>
+              <aqd:comment>Se ha utilizado la diferencia entre la estación Valencia-Vivers y la estación de Valencia-Pista de Silla</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">20</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Withheld" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="Unknown" nilReason="Unknown" xsi:nil="true"/>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>46</aqd:numericalExceedance>
+          <aqd:numberExceedances>0</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:adjustmentType/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/urban"/>
+              <aqd:stationUsed xlink:href="ES.BDCA.AQD/ES1239A"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure>
+              <aqd:populationExposed>787266</aqd:populationExposed>
+              <aqd:ecosystemAreaExposed uom="http://dd.eionet.europa.eu/vocabulary/uom/area/km2">134.6</aqd:ecosystemAreaExposed>
+              <aqd:referenceYear>
+                <gml:TimeInstant gml:id="EXCEEDANCE_EXPOSURE_REFERENCE_YEAR_aed4a281e24f4d38a1876460071c73ec">
+                  <gml:timePosition>2014</gml:timePosition>
+                </gml:TimeInstant>
+              </aqd:referenceYear>
+            </aqd:ExceedanceExposure>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S1"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment></aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES1016_8_LV_H_aMean_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES1016_NO2_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES0302_PM10_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES0302_PM10_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-11-25.11.18.762</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_940544085350e0b96bdc53655adaa076">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">17</aqd:quantity>
+              <aqd:comment>Estación de Niembro (ES0008R)</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">15</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">13</aqd:quantity>
+              <aqd:comment>Incremento de la estación de Llaranes (ES0879A) con respecto a Niembro (ES0008R)</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">5.2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.8</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">1.7</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0.9</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0.4</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">18</aqd:quantity>
+              <aqd:comment>Incremento de la estación de Matadero (ES1320A) con respecto a Llaranes (ES0879A)</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">2.25</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">6.75</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">9</aqd:quantity>
+              <aqd:comment>Se incluye fundamentalmente las emisiones de los acopios de graneles sólidos en el puerto</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>48</aqd:numericalExceedance>
+          <aqd:numberExceedances>119</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Método equivalente al de referencia en estaciones fijas.</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/nsCorrection"/>
+              <aqd:adjustmentSource xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/G2"/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban"/>
+              <aqd:surfaceArea uom="http://dd.eionet.europa.eu/vocabulary/uom/area/km2">18.5</aqd:surfaceArea>
+              <aqd:stationUsed xlink:href="ES.BDCA.AQD/ES1320A"/>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure>
+              <aqd:populationExposed>9000</aqd:populationExposed>
+              <aqd:ecosystemAreaExposed uom="http://dd.eionet.europa.eu/vocabulary/uom/area/km2">18.5</aqd:ecosystemAreaExposed>
+              <aqd:sensitivePopulation>1800</aqd:sensitivePopulation>
+              <aqd:referenceYear>
+                <gml:TimeInstant gml:id="EXCEEDANCE_EXPOSURE_REFERENCE_YEAR_41201ada991c43f238636743659a8fab">
+                  <gml:timePosition>2014</gml:timePosition>
+                </gml:TimeInstant>
+              </aqd:referenceYear>
+            </aqd:ExceedanceExposure>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/other"/>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S2"/>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S3"/>
+          <aqd:reasonOther>Manipulación y almacenamiento de graneles sólidos en instalaciones portuarias</aqd:reasonOther>
+          <aqd:comment>Algunos almacenamientos están a menos de 200 m de la estación de medida</aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES0302_5_LV_H_aMean_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES0302_PM10_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+  <gml:featureMember>
+    <aqd:AQD_SourceApportionment gml:id="ATTR_SA_ES1407_NO2_2014">
+      <aqd:inspireId>
+        <base:Identifier>
+          <base:localId>SA_ES1407_NO2_2014</base:localId>
+          <base:namespace>ES.BDCA.AQD</base:namespace>
+          <base:versionId>2016-12-23.11.53.729</base:versionId>
+        </base:Identifier>
+      </aqd:inspireId>
+      <aqd:referenceYear>
+        <gml:TimeInstant gml:id="REFERENCE_YEAR_c1be1e42338f26b37f2bbe2e7c81219e">
+          <gml:timePosition>2014</gml:timePosition>
+        </gml:TimeInstant>
+      </aqd:referenceYear>
+      <aqd:regionalBackground>
+        <aqd:RegionalBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.2</aqd:quantity>
+              <aqd:comment>La medida de fondo regional se ha estimado de la media recogida por la estación de fondo regional Víznar ES0007R para el NO2 durante el año 2014.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:fromWithinMS>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.2</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:fromWithinMS>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:RegionalBackground>
+      </aqd:regionalBackground>
+      <aqd:urbanBackground>
+        <aqd:UrbanBackground>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">31</aqd:quantity>
+              <aqd:comment>Se estima como estación de fondo urbano para NO2 para la Región de Murcia la estación ES1921A (Mompeán) para el año 2014.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">31</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:UrbanBackground>
+      </aqd:urbanBackground>
+      <aqd:localIncrement>
+        <aqd:LocalIncrement>
+          <aqd:total>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">7.8</aqd:quantity>
+              <aqd:comment>Contribución local estimada  de NO2 de la estación ES1633A (San Basilio) durante el año 2014 tras evaluar la contribución de fondo Regional y de Fondo urbano.</aqd:comment>
+            </aqd:QuantityCommented>
+          </aqd:total>
+          <aqd:traffic>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">7.8</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:traffic>
+          <aqd:heatAndPowerProduction>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:heatAndPowerProduction>
+          <aqd:agriculture>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:agriculture>
+          <aqd:commercialAndResidential>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:commercialAndResidential>
+          <aqd:shipping>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:shipping>
+          <aqd:offRoadMobileMachinery>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:offRoadMobileMachinery>
+          <aqd:natural>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:natural>
+          <aqd:transboundary>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:transboundary>
+          <aqd:other>
+            <aqd:QuantityCommented>
+              <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">0</aqd:quantity>
+            </aqd:QuantityCommented>
+          </aqd:other>
+        </aqd:LocalIncrement>
+      </aqd:localIncrement>
+      <aqd:macroExceedanceSituation>
+        <aqd:ExceedanceDescription>
+          <aqd:exceedance>true</aqd:exceedance>
+          <aqd:numericalExceedance>43</aqd:numericalExceedance>
+          <aqd:numberExceedances>0</aqd:numberExceedances>
+          <aqd:deductionAssessmentMethod>
+            <aqd:AdjustmentMethod>
+              <aqd:assessmentMethod>
+                <aqd:AssessmentMethods>
+                  <aqd:assessmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/fixed"/>
+                  <aqd:assessmentTypeDescription>Método normalizado de medida de la concentración de dióxido dióxido de nitrógeno por quimioluminiscencia</aqd:assessmentTypeDescription>
+                </aqd:AssessmentMethods>
+              </aqd:assessmentMethod>
+              <aqd:adjustmentType xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplicable"/>
+            </aqd:AdjustmentMethod>
+          </aqd:deductionAssessmentMethod>
+          <aqd:exceedanceArea>
+            <aqd:ExceedanceArea>
+              <aqd:areaClassification xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/suburban"/>
+              <aqd:surfaceArea uom="http://dd.eionet.europa.eu/vocabulary/uom/area/km2">276</aqd:surfaceArea>
+            </aqd:ExceedanceArea>
+          </aqd:exceedanceArea>
+          <aqd:exceedanceExposure>
+            <aqd:ExceedanceExposure>
+              <aqd:populationExposed>529599</aqd:populationExposed>
+              <aqd:referenceYear>
+                <gml:TimeInstant gml:id="EXCEEDANCE_EXPOSURE_REFERENCE_YEAR_4ac46b77a6bd6bba81d40d2dc85c0ec1">
+                  <gml:timePosition>2014</gml:timePosition>
+                </gml:TimeInstant>
+              </aqd:referenceYear>
+            </aqd:ExceedanceExposure>
+          </aqd:exceedanceExposure>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S1"/>
+          <aqd:reason xlink:href="http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/S3"/>
+          <aqd:reasonOther></aqd:reasonOther>
+          <aqd:comment></aqd:comment>
+        </aqd:ExceedanceDescription>
+      </aqd:macroExceedanceSituation>
+      <aqd:comment></aqd:comment>
+      <aqd:parentExceedanceSituation xlink:href="ES.BDCA.AQD/ATT_ES1407_8_LV_H_aMean_2014"/>
+      <aqd:usedInPlan xlink:href="ES.BDCA.AQD/PPs_ES1407_ES1401_ES1402_NO2_O3_2014"/>
+    </aqd:AQD_SourceApportionment>
+  </gml:featureMember>
+</gml:FeatureCollection>
