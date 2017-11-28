@@ -24,7 +24,7 @@ import module namespace filter = "aqd-filter" at "aqd-filter.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";
 import module namespace geox = "aqd-geo" at "aqd-geo.xquery";
-import module namespace fx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
@@ -366,7 +366,7 @@ declare function dataflowI:checkReport(
             let $ok := (
                 count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
                 and
-                fx:if-empty($localID/text(), "") != ""
+                functx:if-empty($localID/text(), "") != ""
             )
             return c:conditionalReportRow(
                 $ok,
@@ -417,8 +417,6 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    (: TODO: should be "and" or "or" in where clause?? :)
-
     let $I10invalid := try {
 
         let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
@@ -454,11 +452,14 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
     let $I11 := try{
-        let $el := $sources/aqd:usedInPlan
-        let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_Plan')
+        for $el in $sources/aqd:usedInPlan
 
-        (: TODO: check that the Plan is for same year :)
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
+            )
 
         return c:conditionalReportRow(
             $ok,
@@ -470,6 +471,7 @@ declare function dataflowI:checkReport(
         html:createErrorRow($err:code, $err:description)
     }
 
+
     (: I11b
 
     aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference
@@ -480,17 +482,19 @@ declare function dataflowI:checkReport(
     The exceedance situation must have the same reporting year as the source
     apportionment and refer to the same pollutant.
 
+    TODO: this needs to be implemented properly
+
     BLOCKER
     :)
     let $I11b := try{
-        let $el := $sources/aqd:parentExceedanceSituation
-        let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
-        (:
-        aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
-        :)
+        for $el in $sources/aqd:parentExceedanceSituation
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
+            (:
+            aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
+            :)
 
-        (: TODO: check that the reporting year is for same year :)
+            (: TODO: check that the reporting year is for same year :)
 
         return c:conditionalReportRow(
             $ok,
@@ -513,8 +517,8 @@ declare function dataflowI:checkReport(
     :)
 
     let $I12 := try {
-        let $el := $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-        let $ok := $el castable as xs:gYear
+        for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := $el castable as xs:gYear
 
         return c:conditionalReportRow(
             $ok,
@@ -531,10 +535,13 @@ declare function dataflowI:checkReport(
     (: I15
 
     Across all the delivery, check that the element
-    aqd:QuantityCommented/aqd:quantity is an integer or floating point numeric
-    >= 0 if attribute xsi:nil="false" (example: <aqd:quantity
-    uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3"
-    xsi:nil="false">4.03038</aqd:quantity>)
+    aqd:QuantityCommented/aqd:quantity is
+    * an integer or
+    * floating point numeric >= 0
+    if attribute xsi:nil="false"
+    (example:
+        <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.03038</aqd:quantity>
+    )
 
     Source apportionments should be provided as an integer
 
@@ -563,9 +570,11 @@ declare function dataflowI:checkReport(
     (: I16
 
     Across all the delivery, check that the element
-    aqd:QuantityCommented/aqd:quantity is empty if attribute
-    xsi:nil="unpopulated" or "unknown" or "withheld" (example: <aqd:quantity
-    uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>)
+    aqd:QuantityCommented/aqd:quantity is empty
+    if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+    (example:
+    <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+    )
 
     If quantification is either "unpopulated" or "unknown" or "withheld", the
     element should be empty
@@ -574,22 +583,18 @@ declare function dataflowI:checkReport(
     :)
 
     let $I16 := try {
-        let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
-        let $ok := (
-            (fx:if-empty($node/text(), "") != "")
-            or
-            (
-                lower-case($node/@xsi:nil) = "true"
-                and
+        for $node in $docRoot//aqd:QuantityCommented/aqd:quantity
+            let $reason := $node/@nilReason
+            let $ok := (
+                (functx:if-empty($node/text(), "") != "")
+                or
                 (
-                    (lower-case($node/@nilReason) = "unknown")
-                    or
-                    (lower-case($node/@nilReason) = "unpopulated")
-                    or
-                    (lower-case($node/@nilReason) = "withheld")
+                    lower-case($node/@xsi:nil) = "true"
+                    and
+                    (lower-case($reason) =
+                        ("unknown", "unpopulated", "withheld"))
                 )
             )
-        )
 
         return c:conditionalReportRow(
             $ok,
@@ -609,24 +614,26 @@ declare function dataflowI:checkReport(
 
     If the quantification is voided an explanation is required in aqd:comment
 
+    TODO: fix this
     ERROR
     :)
 
     let $I17 := try {
-        let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
-        let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+        for $el in $docRoot//aqd:QuantityCommented
+            let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
+            let $comment := $el/aqd:comment/text()
 
-        let $ok := (
-            (fx:if-empty($quantity/text(), "") = "")
-            or
-            (fx:if-empty($comment/text(), "") = "")
-        )
+            let $ok :=
+                if ($isnil)
+                then
+                    $isnil and $comment
+                else
+                    true()
 
         return c:conditionalReportRow(
             $ok,
             [
-                (node-name($quantity), data($quantity)),
-                (node-name($comment), data($comment))
+                (node-name($el), $isnil)
             ]
         )
     } catch * {
