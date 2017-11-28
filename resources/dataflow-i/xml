@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><envelope released="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://cdr.eionet.europa.eu/schemas/envelope-metadata.xsd"><title>2016_BRU</title><description></description><date>2017-03-16T12:45:48Z</date><coverage>http://rod.eionet.europa.eu/spatial/5</coverage><countrycode>BE</countrycode><obligation>http://rod.eionet.europa.eu/obligations/681</obligation><link>http://cdr.eionet.europa.eu/be/eu/aqd/i/envwmp4ta</link><year>2014</year><endyear></endyear><partofyear></partofyear><file name="Source_I_BE_BRU_2014.xml" type="text/xml" schema="http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd" title="" restricted="no" link="http://cdr.eionet.europa.eu/be/eu/aqd/i/envwmp4ta/Source_I_BE_BRU_2014.xml" uploaded="2017-03-16T11:36:30Z"/></envelope>
+<?xml version="1.0" encoding="utf-8"?>
+<envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" released="true" xsi:noNamespaceSchemaLocation="http://cdr.eionet.europa.eu/schemas/envelope-metadata.xsd">
+  <title>2016_BRU</title>
+  <description/>
+  <date>2017-03-16T12:45:48Z</date>
+  <coverage>http://rod.eionet.europa.eu/spatial/5</coverage>
+  <countrycode>ES</countrycode>
+  <obligation>http://rod.eionet.europa.eu/obligations/681</obligation>
+  <link>http://cdr.eionet.europa.eu/be/eu/aqd/i/envwmp4ta</link>
+  <year>2014</year>
+  <endyear/>
+  <partofyear/>
+  <file name="Source_I_BE_BRU_2014.xml" type="text/xml" schema="http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd" title="" restricted="no" link="http://cdr.eionet.europa.eu/be/eu/aqd/i/envwmp4ta/Source_I_BE_BRU_2014.xml" uploaded="2017-03-16T11:36:30Z"/>
+</envelope>

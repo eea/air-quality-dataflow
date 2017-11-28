@@ -267,9 +267,8 @@ declare function dataflowI:checkReport(
     List of unique identifier information for all Source Apportionments
     records. Error, if no SA(s)
 
-    TODO: implement pollutant lookup
+    BLOCKER
 
-    Blocker
     :)
     let $I04table :=
         try {
@@ -322,6 +321,7 @@ declare function dataflowI:checkReport(
     All gml ID attributes shall have unique code
 
     BLOCKER
+
     :)
     let $I07 := try {
         let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
@@ -390,8 +390,6 @@ declare function dataflowI:checkReport(
     List unique namespaces used and count number of elements
 
     BLOCKER
-
-    TODO: check this, $ok is hardcoded
     :)
 
     let $I09table := try {
@@ -402,7 +400,7 @@ declare function dataflowI:checkReport(
                 $ok,
                 [
                     ("base:namespace", $namespace),
-                    ("base:localId", count($localIds))
+                    ("base:localId count", count($localIds))
                 ]
             )
     } catch * {
@@ -420,12 +418,18 @@ declare function dataflowI:checkReport(
     :)
 
     (: TODO: should be "and" or "or" in where clause?? :)
+
     let $I10invalid := try {
+
         let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
-        let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
-                and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
-        let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
-                and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+        let $concept := $vocDoc//skos:Concept[
+            adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and
+            @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)
+        ]
+        let $prefLabel := $concept/skos:prefLabel[1]
+        let $altLabel := $concept/skos:altLabel[1]
+
         for $x in distinct-values($docRoot//base:namespace)
             let $ok := ($x = $prefLabel and $x = $altLabel)
             return c:conditionalReportRow(
