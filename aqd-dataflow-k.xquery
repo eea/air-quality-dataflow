@@ -520,7 +520,6 @@ let $K20 := c:isNodeNotInParentReport(
         'aqd:costs'
         )
 
-
 (: K21
 If aqd:costs provided
 aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be

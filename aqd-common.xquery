@@ -220,10 +220,11 @@ declare function c:checkDeliveryReport (
 (: Returns structure with error if node is empty :)
 (: TODO: test if node doesn't exist :)
 declare function c:needsValidString(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (string-length(normalize-space($el/text())) = 0)
         then
@@ -309,17 +310,19 @@ declare function c:isNodeInParent(
 
 (: prints error if a specific node does not exist in a parent :)
 declare function c:isNodeNotInParentReport(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
     try {
-        if (not(c:isNodeInParent($parent, $nodeName)))
-        then
-            <tr>
-                <td title="{$nodeName}"> needs valid input</td>
-            </tr>
-        else
-            ()
+        for $el in $parent
+            return
+            if (not(c:isNodeInParent($el, $nodeName)))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -372,11 +375,12 @@ declare function c:validatePossibleNodeValue(
 
 (: Prints an error if validation for a possible existing node fails :)
 declare function c:validatePossibleNodeValueReport(
-    $parent as node()?,
+    $parent as node()*,
     $nodeName as xs:string,
     $validator as function(item()) as xs:boolean
 ) {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (not(c:validatePossibleNodeValue($el, $validator)))
         then
@@ -434,22 +438,23 @@ declare function c:isDateFullISO(
 };
 (: Create report :)
 declare function c:isDateFullISOReport(
-    $el as node()*
+    $main as node()*
 ) as element(tr)*
 {
-    let $date := data($el)
-    return
-    try {
-        if (not(c:isDateFullISO($date)))
-        then
-            <tr>
-                <td title="{node-name($el)}">{$date} not in full ISO format</td>
-            </tr>
-        else
-            ()
-    } catch * {
-        html:createErrorRow($err:code, $err:description)
-    }
+    for $el in $main
+        let $date := data($el)
+        return
+        try {
+            if (not(c:isDateFullISO($date)))
+            then
+                <tr>
+                    <td title="{node-name($el)}">{$date} not in full ISO format</td>
+                </tr>
+            else
+                ()
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
 };
 
 declare function c:has-one-node(
@@ -459,14 +464,13 @@ declare function c:has-one-node(
     let $norm-seq :=
         for $x in $seq
         return $x => normalize-space() => lower-case()
-    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
 };
-
 
 (: Check if end date is after begin date and if both are in full ISO format:)
 declare function c:isEndDateAfterBeginDate(
-    $begin as node()?,
-    $end as node()?
+        $begin as node()?,
+        $end as node()?
 ) as xs:boolean
 {
     if(c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
@@ -475,6 +479,7 @@ declare function c:isEndDateAfterBeginDate(
     else
         false()
 };
+
 
 (:
 pseudocode, for brainstorming
