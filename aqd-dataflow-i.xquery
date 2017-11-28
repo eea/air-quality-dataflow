@@ -576,8 +576,8 @@ declare function dataflowI:checkReport(
     <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
     )
 
-    If quantification is either "unpopulated" or "unknown" or "withheld", the
-    element should be empty
+    If quantification is either "unpopulated" or "unknown" or "withheld",
+    the element should be empty
 
     BLOCKER
     :)
@@ -585,16 +585,15 @@ declare function dataflowI:checkReport(
     let $I16 := try {
         for $node in $docRoot//aqd:QuantityCommented/aqd:quantity
             let $reason := $node/@nilReason
-            let $ok := (
-                (functx:if-empty($node/text(), "") != "")
-                or
-                (
-                    lower-case($node/@xsi:nil) = "true"
-                    and
-                    (lower-case($reason) =
-                        ("unknown", "unpopulated", "withheld"))
-                )
-            )
+            let $isnil := lower-case($node/@xsi:nil) = "true"
+            let $unpop := lower-case($reason) = ("unknown", "unpopulated", "withheld")
+
+            let $ok :=
+                if ($isnil)
+                then
+                    functx:all-whitespace($node) and $unpop
+                else
+                    true()
 
         return c:conditionalReportRow(
             $ok,
@@ -621,19 +620,14 @@ declare function dataflowI:checkReport(
     let $I17 := try {
         for $el in $docRoot//aqd:QuantityCommented
             let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
-            let $comment := $el/aqd:comment/text()
+            let $hascomment := not(functx:all-whitespace($el/aqd:comment))
 
-            let $ok :=
-                if ($isnil)
-                then
-                    $isnil and $comment
-                else
-                    true()
+            let $ok := ($isnil and $hascomment) or true()
 
         return c:conditionalReportRow(
             $ok,
             [
-                (node-name($el), $isnil)
+                (node-name($el), "needs comment")
             ]
         )
     } catch * {
