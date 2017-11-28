@@ -1,9 +1,12 @@
 xquery version "3.0" encoding "UTF-8";
 
 module namespace common = "aqd-common";
+
+import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
-import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
+import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 
 declare namespace base = "http://inspire.ec.europa.eu/schemas/base/3.3";
 declare namespace skos = "http://www.w3.org/2004/02/skos/core#";
@@ -12,6 +15,7 @@ declare namespace rdfs = "http://www.w3.org/2000/01/rdf-schema#";
 declare namespace adms = "http://www.w3.org/ns/adms#";
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
+declare namespace xlink = "http://www.w3.org/1999/xlink";
 
 declare variable $common:SOURCE_URL_PARAM := "source_url=";
 
@@ -69,6 +73,11 @@ declare function common:getCdrUrl($countryCode as xs:string) as xs:string {
     return "cdr.eionet.europa.eu/" || lower-case($countryCode) || "/" || $eu || "/aqd/"
 };
 
+(: returns year from aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod
+gml:beginPosition
+or
+gml:timePosition
+:)
 declare function common:getReportingYear($xml as document-node()) as xs:string {
     let $year1 := year-from-dateTime($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod/gml:beginPosition)
     let $year2 := string($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimeInstant/gml:timePosition)
@@ -197,3 +206,293 @@ declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPo
         else
             false()
 };
+
+(: Returns error report for ?0 check :)
+declare function common:checkDeliveryReport (
+    $errorClass as xs:string,
+    $statusMessage as xs:string
+) as element(tr) {
+    <tr class="{$errorClass}">
+        <td title="Status">{$statusMessage}</td>
+    </tr>
+};
+
+(: Returns structure with error if node is empty :)
+(: TODO: test if node doesn't exist :)
+declare function common:needsValidString(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (string-length(normalize-space($el/text())) = 0)
+        then
+            <tr>
+                <td title="{$nodeName}">{$nodeName} needs a valid input</td>
+            </tr>
+        else
+            ()
+    }  catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if the given node links to a term that is defined in the vocabulary :)
+declare function common:isInVocabulary(
+  $uri as xs:string?,
+  $vocabularyName as xs:string
+) as xs:boolean {
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris
+};
+
+declare function common:isInVocabularyReport(
+  $main as node()+,
+  $vocabularyName as xs:string
+) as element(tr)* {
+    try {
+        for $el in $main
+            let $uri := $el/@xlink:href
+            return
+            if (not(common:isInVocabulary($uri, $vocabularyName)))
+            then
+                <tr>
+                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                </tr>
+            else
+                ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+        (: (xs:string, xs:anyAtomicType)* :)
+
+declare function common:conditionalReportRow (
+    $ok as xs:boolean,
+    $vals as array(item()*)
+) as element(tr)* {
+    if (not($ok))
+    then
+        let $tr :=
+            <tr>
+            {
+                for $i in 1 to array:size($vals)
+                let $row := array:get($vals, $i)
+                return
+                    if ($row instance of array(*))
+                    then
+                        <td title="{$row(1)}">
+                            {data($row(2))}
+                        </td>
+                    else
+                        <td title="{$row[1]}">
+                            {data($row[2])}
+                        </td>
+            }
+            </tr>
+        (:let $x := trace($tr, 'x:'):)
+        return $tr
+    else
+        ()
+};
+
+
+
+(: returns if a specific node exists in a parent :)
+declare function common:isNodeInParent(
+    $parent as node(),
+    $nodeName as xs:string
+) as xs:boolean {
+    exists($parent/*[name() = $nodeName])
+};
+
+(: prints error if a specific node does not exist in a parent :)
+declare function common:isNodeNotInParentReport(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    try {
+        if (not(common:isNodeInParent($parent, $nodeName)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: if node has value, then that value should be an integer :)
+declare function common:maybeNodeValueIsInteger($el) as xs:boolean {
+    (: TODO: is possible to use or :)
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            common:is-a-number($v)
+        else
+            true()
+};
+
+(: prints error if a specific node has value and is not an integer :)
+declare function common:maybeNodeValueIsIntegerReport(
+    $parent as node()?,
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (not(common:maybeNodeValueIsInteger($el)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: If node exists, validate it :)
+declare function common:validatePossibleNodeValue(
+    $el,
+    $validator as function(item()) as xs:boolean
+) {
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            $validator($v)
+        else
+            true()
+};
+
+(: Prints an error if validation for a possible existing node fails :)
+declare function common:validatePossibleNodeValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $validator as function(item()) as xs:boolean
+) {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (not(common:validatePossibleNodeValue($el, $validator)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+
+(: Given a node, if it exists, print error based on provided value :)
+declare function common:validateMaybeNodeWithValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $val as xs:boolean
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (exists($el))
+        then
+            if (not($val))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if a given string is a full ISO date type:)
+declare function common:isDateFullISO(
+    $date as xs:string?
+) as xs:boolean {
+    if ($date castable as xs:dateTime)
+    then
+        true()
+    else
+        false()
+    (:try {
+        let $asd := xs:dateTime($date)
+        return true()
+    } catch *{
+        false()
+    }:)
+
+};
+(: Create report :)
+declare function common:isDateFullISOReport(
+    $el as node()*
+) as element(tr)*
+{
+    let $date := data($el)
+    return
+    try {
+        if (not(common:isDateFullISO($date)))
+        then
+            <tr>
+                <td title="{node-name($el)}">{$date} not in full ISO format</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+declare function common:has-one-node(
+    $seq as item()*,
+    $item as item()?
+) as xs:boolean {
+    let $norm-seq :=
+        for $x in $seq
+        return $x => normalize-space() => lower-case()
+    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+};
+
+
+(: Check if end date is after begin date and if both are in full ISO format:)
+declare function common:isEndDateAfterBeginDate(
+    $begin as node()?,
+    $end as node()?
+) as xs:boolean
+{
+    if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+    then
+        true()
+    else
+        false()
+};
+
+(:
+pseudocode, for brainstorming
+
+validators =[
+    isDate(x),
+    isDate(y),
+    isXBiggerThenY(x, y)
+]
+
+validate([
+    isDate(x),
+    isDate(y),
+    ])
+
+
+    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
+
+isXBiggerThanY(x:orice, y:orice)
+:)
+

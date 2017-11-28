@@ -60,55 +60,50 @@ declare function dataflowH:checkReport($source_url as xs:string, $countryCode as
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "h_preliminary")) then "h_preliminary/" else "h/"
 let $reportingYear := common:getReportingYear($docRoot)
+let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
+
 let $nameSpaces := distinct-values($docRoot//base:namespace)
-let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
 (: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
+        return
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H0 :)
-let $H0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
-        return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+
+let $H0table := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowH:OBLIGATIONS, $countryCode, "h/", $reportingYear))
+        then
+            common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+        else
+            common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
     <table class="maintable hover">
@@ -125,7 +120,7 @@ let $meta := map:merge((
     map:entry("count", $countZones),
     map:entry("header", "Check air quality zones"),
     map:entry("dataflow", "Dataflow H"),
-    map:entry("zeroCount", <p>No aqd:AQD_Zone elements found in this XML.</p>),
+    map:entry("zeroCount", <p>No aqd:AQD_Plan elements found in this XML.</p>),
     map:entry("report", <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow H as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>)
 ))
 return
