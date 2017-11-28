@@ -1007,7 +1007,26 @@ declare function dataflowI:checkReport(
     let $I42 := ()
     let $I43 := ()
     let $I44 := ()
-    let $I45 := ()
+
+    (:  I45
+    "WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001] (via …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+    must be populated & the content of the xlink:href shall conform to
+    http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype,
+    else  this element must not be populated"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod populated,
+    adjustmentSource must conform with vocabulary, else "noneApplicable"
+
+    Error
+
+    :)
+    let $I45 := try {
+
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     return
         <table class="maintable hover">
