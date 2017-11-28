@@ -268,8 +268,7 @@ let $K07 := try {
     let $errors := array {
 
         for $name in $checks
-        (: TODO: would be nice to have something like this, but we have no
-           value for error row
+        (: TODO: would be nice to have something like this, but we have no value for error row
             return
                 if has-duplicate-children-values($main, $name)
                 then
@@ -368,7 +367,6 @@ let $K09table := try {
 
 (: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
 
-(: TODO: should be "and" or "or" in where clause?? :)
 let $K10invalid := try {
     let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
     let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
