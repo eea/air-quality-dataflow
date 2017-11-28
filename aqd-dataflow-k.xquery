@@ -77,7 +77,6 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $namespaces := distinct-values($docRoot//base:namespace)
-let $allMeasures := query:getAllMeasuresIds($namespaces)
 
 (: File prefix/namespace check :)
 
@@ -190,7 +189,7 @@ let $K03table := try {
     let $main := $docRoot//aqd:AQD_Measures
     for $x in $main/aqd:inspireId/base:Identifier
     let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := $inspireId = $knownMeasures
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
     return
         c:conditionalReportRow(
         $ok,
@@ -435,19 +434,22 @@ let $K12 := try {
 }
 
 (: K13
-aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+aqd:AQD_Measures/aqd:code should be a unique local identifier for each measure record.
+For convenience the same code as localId may be used
 
-Unique code of the measure. This may be a unique local code for the measure or
-may be identical to the unique code used in K2.1.
-
-TODO: we implemented just first line of the requirement, the second line contradicts it
+So, the aqd:code should be unique within XML
 :)
 
 let $K13invalid := try {
+    let $codes := $docRoot//aqd:AQD_Measures/aqd:code
     for $node in $docRoot//aqd:AQD_Measures
         let $code := $node/aqd:code
         let $localId := $node/aqd:inspireId/base:Identifier/base:localId
-        let $ok := $code = $localId
+        let $ok := (
+            $code = $localId
+            and
+            count(fn:index-of($codes,$code)) = 1
+        )
         return c:conditionalReportRow(
             $ok,
             [
@@ -1010,7 +1012,8 @@ return
         {html:build1("K06", $labels:K06, $labels:K06_SHORT, $K06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K06)}
         {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
         {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
-        {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)}
+        <!-- {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)} !-->
+        {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
         {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " not conform to vocabulary", $errors:K10)}
         {html:build2("K11", $labels:K11, $labels:K11_SHORT, $K11, "All values are valid", "needs valid input", $errors:K11)}
         {html:build2("K12", $labels:K12, $labels:K12_SHORT, $K12, "All values are valid", "needs valid input", $errors:K12)}
