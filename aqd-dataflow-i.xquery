@@ -936,6 +936,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I25 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -951,6 +957,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I26 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -965,6 +977,12 @@ declare function dataflowI:checkReport(
     ERROR
     :)
     let $I27 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -986,6 +1004,12 @@ declare function dataflowI:checkReport(
 
     :)
     let $I29 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1002,6 +1026,12 @@ declare function dataflowI:checkReport(
     ERROR
     :)
     let $I30 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1024,6 +1054,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I31 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1047,6 +1083,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I32 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1065,6 +1107,12 @@ declare function dataflowI:checkReport(
 
     :)
     let $I33 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1082,6 +1130,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I34 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1100,6 +1154,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I35 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1116,6 +1176,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I36 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1132,6 +1198,12 @@ declare function dataflowI:checkReport(
 
     :)
     let $I37 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1148,6 +1220,12 @@ declare function dataflowI:checkReport(
 
     :)
     let $I38 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1166,6 +1244,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I39 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1186,6 +1270,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I40 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1205,6 +1295,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I41 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1229,6 +1325,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I42 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1253,6 +1355,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I43 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1273,6 +1381,12 @@ declare function dataflowI:checkReport(
     :)
 
     let $I44 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1292,7 +1406,12 @@ declare function dataflowI:checkReport(
 
     :)
     let $I45 := try {
-
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok
+            [node-name($node), data($node)]
+        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
