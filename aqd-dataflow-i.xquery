@@ -746,7 +746,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
                 let $total := data($ub/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
                     $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                     $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
@@ -801,7 +801,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $li := $x/aqd:localIncrement/aqd:LocalIncrement
                 let $total := data($li/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $li/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                     $li/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
                     $li/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
