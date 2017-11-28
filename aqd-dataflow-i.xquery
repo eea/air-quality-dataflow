@@ -18,7 +18,7 @@ import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace sparqlx = "aqd-sparql" at "aqd-sparql.xquery";
 import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
-import module namespace q = "aqd-query" at "aqd-query.xquery";
+import module namespace query = "aqd-query" at "aqd-query.xquery";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 import module namespace filter = "aqd-filter" at "aqd-filter.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
@@ -69,11 +69,11 @@ declare function dataflowI:checkReport(
     let $reportingYear := c:getReportingYear($docRoot)
     let $namespaces := distinct-values($docRoot//base:namespace)
 
-    let $latestEnvelopeByYearI := q:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
+    let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
 
     let $node-name := 'aqd:AQD_SourceApportionment'
     let $sources := $docRoot//aqd:AQD_SourceApportionment
-    let $allSources := q:sparql-objects-ids($namespaces, $node-name)
+    let $allSources := query:sparql-objects-ids($namespaces, $node-name)
 
     (: NS Check
     Check prefix and namespaces of the gml:featureCollection according to
@@ -122,7 +122,7 @@ declare function dataflowI:checkReport(
                 <tr class="{$errors:ERROR}">
                     <td title="Status">Reporting Year is missing.</td>
                 </tr>
-            else if (q:deliveryExists($dataflowI:OBLIGATIONS, $countryCode, "i/", $reportingYear)) then
+            else if (query:deliveryExists($dataflowI:OBLIGATIONS, $countryCode, "i/", $reportingYear)) then
                 <tr class="{$errors:WARNING}">
                     <td title="Status">Updating delivery for {$reportingYear}</td>
                 </tr>
@@ -137,11 +137,11 @@ declare function dataflowI:checkReport(
     let $isNewDelivery := errors:getMaxError($I0table) = $errors:INFO
 
     let $deliveries := sparqlx:run(
-        q:sparql-objects-in-subject($cdrUrl || "g/", $node-name)
+        query:sparql-objects-in-subject($cdrUrl || "g/", $node-name)
     )//sparql:binding[@name='inspireLabel']/sparql:literal
 
     let $latest-delivery := sparqlx:run(
-        q:sparql-objects-in-subject(
+        query:sparql-objects-in-subject(
             $latestEnvelopeByYearI,
             $node-name
         )
@@ -186,8 +186,6 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
-    TODO: check this
-
     :)
     let $I02table :=
         try {
@@ -230,6 +228,8 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
+    TODO: please check
+
     - :)
     let $I03table :=
         try {
@@ -256,9 +256,13 @@ declare function dataflowI:checkReport(
 
     Compile & feedback a list of the unique identifier information for all
     Source Apportionments records included in the delivery. Feedback report
-    shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_Plan (via
-    ./usedInPlan), aqd:AQD_Attainment (via aqd:parentExceedanceSituation),
-    aqd:pollutant (via Attainment link under aqd:parentExceedanceSituation)
+    shall include the:
+
+    * gml:id attribute,
+    * ./aqd:inspireId,
+    * aqd:AQD_Plan (via ./usedInPlan),
+    * aqd:AQD_Attainment (via aqd:parentExceedanceSituation),
+    * aqd:pollutant (via Attainment link under aqd:parentExceedanceSituation)
 
     List of unique identifier information for all Source Apportionments
     records. Error, if no SA(s)
@@ -271,12 +275,19 @@ declare function dataflowI:checkReport(
         try {
             let $gmlIds := $sources/lower-case(normalize-space(@gml:id))
             let $inspireIds := $sources/lower-case(normalize-space(aqd:inspireId))
+
             for $x in $sources
                 let $id := $x/@gml:id
                 let $inspireId := $x/aqd:inspireId
                 let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-            where count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
-                        and count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+                let $one-gmlid := count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+                let $one-inspireid := count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+
+                let $att-url := $x/aqd:parentExceedanceSituation/@xlink:href
+                let $pollutant-code := query:get-pollutant-for-attainment($att-url)
+                let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
+
+            where $one-gmlid and $one-inspireid
             return
                 <tr>
                     <td title="gml:id">
@@ -289,11 +300,9 @@ declare function dataflowI:checkReport(
                         {c:checkLink(distinct-values(data($x/aqd:usedInPlan/@xlink:href)))}
                     </td>
                     <td title="aqd:parentExceedanceSituation">
-                        {c:checkLink(distinct-values(data($x/aqd:parentExceedanceSituation/@xlink:href)))}
+                        {c:checkLink(distinct-values(data($att-url)))}
                     </td>
-                    <td title="aqd:pollutant">
-                        {c:checkLink(distinct-values(data($x/aqd:pollutant/@xlink:href)))}
-                    </td>
+                    <td title="aqd:pollutant">{$pollutant}</td>
                 </tr>
         } catch * {
             html:createErrorRow($err:code, $err:description)
@@ -443,7 +452,7 @@ declare function dataflowI:checkReport(
     let $I11 := try{
         let $el := $sources/aqd:usedInPlan
         let $label := data($el/@xlink:href)
-        let $ok := q:existsViaNameLocalId($label, 'AQD_Plan')
+        let $ok := query:existsViaNameLocalId($label, 'AQD_Plan')
 
         (: TODO: check that the Plan is for same year :)
 
@@ -472,7 +481,7 @@ declare function dataflowI:checkReport(
     let $I11b := try{
         let $el := $sources/aqd:parentExceedanceSituation
         let $label := data($el/@xlink:href)
-        let $ok := q:existsViaNameLocalId($label, 'AQD_Attainment')
+        let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
         (:
         aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
         :)
@@ -648,7 +657,7 @@ declare function dataflowI:checkReport(
                 let $quants := $x//aqd:QuantityCommented/aqd:quantity
                 let $uom := $quants/@uom
                 let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
-                let $pollutant-code := q:get-pollutant-for-attainment($att-url)
+                let $pollutant-code := query:get-pollutant-for-attainment($att-url)
                 let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
                 let $rec-uom := dd:getRecommendedUnit($pollutant-code)
 
@@ -1001,7 +1010,7 @@ declare function dataflowI:checkReport(
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("I0", $labels:I0, $labels:I0_SHORT, $I0table, string($I0table/td), errors:getMaxError($I0table))}
         {html:build1("I01", $labels:I01, $labels:I01_SHORT, $tblAllSources, "", string($countSources), "", "", $errors:I01)}
-        {html:buildSimple("I02", $labels:I02, $labels:I02_SHORT, $I02table, "", "", $I02errorLevel)}
+        {html:buildSimple("I02", $labels:I02, $labels:I02_SHORT, $I02table, "", "report", $I02errorLevel)}
         {html:buildSimple("I03", $labels:I03, $labels:I03_SHORT, $I03table, "", "", $I03errorLevel)}
         {html:build1("I04", $labels:I04, $labels:I04_SHORT, $I04table, "", string(count($I04table)), " ", "", $errors:I04)}
         {html:build1("I05", $labels:I05, $labels:I05_SHORT, $I05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I05)}
