@@ -25,7 +25,7 @@ declare function query:getZone($url as xs:string?) as xs:string {
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
   FILTER (CONTAINS(str(?zone), '" || $url || "'))
-  }"   
+  }"
 };
 
 (: C :)
@@ -182,6 +182,57 @@ declare function query:getAttainment($url as xs:string) as xs:string {
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?attainment), '" || $url || "'))
    }"
+};
+
+(:~ Creates a SPARQL query string to query all objects of given type in a URL
+
+The result is a list of inspireLabels
+
+Used for dataflow I, can be used for any other
+
+TODO: reuse in other workflows
+:)
+declare function query:sparql-objects-in-subject(
+    $url as xs:string,
+    $type as xs:string
+) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?s a " || $type || ";
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?s), '" || $url || "'))
+   }"
+};
+
+(:~ Creates a SPARQL query to return all inspireIds for given aqd:namespace
+
+Used for dataflow I, can be used for any other
+
+TODO: reuse in other workflows
+:)
+declare function query:sparql-objects-ids(
+    $namespaces as xs:string*,
+    $type as xs:string
+) as xs:string* {
+  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+   PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+   SELECT *
+   WHERE {
+        ?attainment a " || $type || ";
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?inspireLabel .
+        ?inspireId aqd:namespace ?namespace
+        FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
+  }"
+  return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
 (: J :)
@@ -426,8 +477,6 @@ declare function query:getAllRegimeIds($namespaces as xs:string*) as xs:string* 
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
-
-
 declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:string* {
   let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
@@ -443,6 +492,61 @@ declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:str
         FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
   }"
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
+};
+
+(: Returns the pollutants for an attainment
+
+
+
+declare function query:sparql-objects-in-subject(
+    $url as xs:string,
+    $type as xs:string
+) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?s a " || $type || ";
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?s), '" || $url || "'))
+   }"
+};
+
+
+
+
+
+
+
+:)
+declare function query:get-pollutant-for-attainment(
+    $subj-url as xs:string
+) as xs:string {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT distinct
+
+  ?pollutant
+
+WHERE {
+ ?s ?p ?o .
+
+ optional { ?s aqd:declarationFor ?uf}
+ optional { ?s aqd:pollutant ?pollutant}
+
+ filter(?p = <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>).
+ filter(?o = aqd:AQD_Attainment) .
+ filter(contains(str(?uf), '" || $subj-url || "'))
+
+} LIMIT 50
+"
+  return data(sparqlx:run($query)//sparql:binding[@name='pollutant']/sparql:literal)
 };
 
 declare function query:getPollutantCodeAndProtectionTarge($cdrUrl as xs:string, $bDir as xs:string) as xs:string {
