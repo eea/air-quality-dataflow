@@ -379,11 +379,16 @@ declare variable $errors:I30 := errors:getError("I30");
 declare variable $errors:I31 := errors:getError("I31");
 declare variable $errors:I32 := errors:getError("I32");
 declare variable $errors:I33 := errors:getError("I33");
+declare variable $errors:I34 := errors:getError("I34");
+declare variable $errors:I35 := errors:getError("I35");
+declare variable $errors:I36 := errors:getError("I36");
+declare variable $errors:I37 := errors:getError("I37");
 declare variable $errors:I38 := errors:getError("I38");
 declare variable $errors:I39 := errors:getError("I39");
 declare variable $errors:I40 := errors:getError("I40");
 declare variable $errors:I41 := errors:getError("I41");
 declare variable $errors:I42 := errors:getError("I42");
+declare variable $errors:I43 := errors:getError("I43");
 declare variable $errors:I44 := errors:getError("I44");
 declare variable $errors:I45 := errors:getError("I45");
 

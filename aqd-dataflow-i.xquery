@@ -911,7 +911,7 @@ declare function dataflowI:checkReport(
     :)
     let $I24 := c:isInVocabularyReport(
         $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification,
-        $vocabulary:AREACLASSIFICATION_VOCABULARY
+        $vocabulary:AREA_CLASSIFICATION_VOCABULARY
     )
 
     (: I25
