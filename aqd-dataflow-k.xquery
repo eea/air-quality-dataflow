@@ -77,7 +77,6 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $namespaces := distinct-values($docRoot//base:namespace)
-let $allMeasures := query:getAllMeasuresIds($namespaces)
 
 (: File prefix/namespace check :)
 
@@ -173,7 +172,6 @@ let $K02errorLevel :=
         count(
             for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
                 let $id := $x/base:namespace || "/" || $x/base:localId
-                (:where ($allMeasures = $id):)
                 where query:existsViaNameLocalId($id, 'AQD_Measures')
                 return 1
         ) > 0

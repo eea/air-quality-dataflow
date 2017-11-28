@@ -24,6 +24,7 @@ import module namespace filter = "aqd-filter" at "aqd-filter.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";
 import module namespace geox = "aqd-geo" at "aqd-geo.xquery";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";
 declare namespace gml = "http://www.opengis.net/gml/3.2";
@@ -88,10 +89,9 @@ let $NSinvalid := try {
     html:createErrorRow($err:code, $err:description)
 }
 
-(: H0 :)
-(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+(: H0 Checks if this delivery is new or an update (on same reporting year) :)
 
-let $H0table := try {
+let $H0 := try {
     if ($reportingYear = "")
     then
         common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
@@ -105,10 +105,176 @@ let $H0table := try {
     html:createErrorRow($err:code, $err:description)
 }
 
+let $isNewDelivery := errors:getMaxError($H0) = $errors:INFO
+
+(: H01 Number of AQ Plans reported :)
+
+let $countPlans := count($docRoot//aqd:AQD_Plan)
+let $H01 := try {
+    for $rec in $docRoot//aqd:AQD_Plan
+    let $el := $rec/aqd:inspireId/base:Identifier
+    return
+        common:conditionalReportRow(
+                false(),
+                [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+                ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H03 Number of existing Plans compared to previous report (same reporting year). Blocker will be returned if
+XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
+
+let $H03 := try {
+    let $main := $docRoot//aqd:AQD_Plan
+    for $x in $main/aqd:inspireId/base:Identifier
+    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan'))
+    return
+        common:conditionalReportRow(
+                $ok,
+                [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+                ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $H03errorLevel :=
+    if (not($isNewDelivery) and count($H03) = 0)
+    then
+        $errors:K03
+    else
+        $errors:INFO
+
+(: H4
+
+Compile & feedback a list of the unique identifier information for all Plans records included in the delivery.
+Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:protectionTarget,
+/gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:firstExceedanceYear,
+
+
+List of unique identifier information for all Plan records. Blocker if no Plans.
+:)
+
+let $H04 := try {
+    let $gmlIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_Plan
+    let $id := $x/@gml:id
+    let $inspireId := $x/aqd:inspireId
+    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+    let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+    )
+    return common:conditionalReportRow(
+            not($ok),
+            [
+            ("gml:id", data($x/@gml:id)),
+            ("aqd:inspireId", distinct-values($aqdinspireId)),
+            ("aqd:pollutant", data($x/aqd:pollutant)),
+            ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
+            ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H05 RESERVE :)
+
+let $H05 := ()
+
+(: H06 RESERVE :)
+
+let $H06 := ()
+
+(: H07
+
+    All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have
+    unique content
+
+    All gml ID attributes shall have unique code
+
+    BLOCKER
+:)
+
+let $H07 := try {
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+        let $name := lower-case(normalize-space($name))
+        let $values := $docRoot//aqd:AQD_Plan//(*[lower-case(normalize-space(name())) = $name] |
+                @*[lower-case(normalize-space(name())) = $name])
+        return
+            for $v in distinct-values($values)
+            return
+                if (common:has-one-node($values, $v))
+                then
+                    ()
+                else
+                    [$name, data($v)]
+    }
+    return common:conditionalReportRow(
+            array:size($errors) = 0,
+            $errors
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H08
+
+    ./aqd:inspireId/base:Identifier/base:localId must be unique code for the
+    Plans records
+
+    Local Id must be unique for the Plans records
+
+    BLOCKER
+:)
+
+let $H08:= try {
+    let $localIds := $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_Plan
+    let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+    let $ok := (
+        count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+                and
+                functx:if-empty($localID/text(), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($x/@gml:id)),
+            ("aqd:inspireId", distinct-values($aqdinspireId))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 return
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0table, string($H0table/td), errors:getMaxError($H0table))}
+        {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0, string($H0/td), errors:getMaxError($H0))}
+        {html:build1("H01", $labels:H01, $labels:H01_SHORT, $H01, "", string($countPlans), "", "", $errors:H01)}
+        {html:buildSimple("H03", $labels:H03, $labels:H03_SHORT, $H03, "", "", $H03errorLevel)}
+        {html:build1("H04", $labels:H04, $labels:H04_SHORT, $H04, "", string(count($H04)), " ", "", $errors:H04)}
+        {html:build1("H05", $labels:K05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
+        {html:build1("H06", $labels:K06, $labels:H06_SHORT, $H06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H06)}
+        {html:build2("H07", $labels:H07, $labels:H07_SHORT, $H07, "No duplicate values found", " duplicate value", $errors:H07)}
+        {html:build2("H08", $labels:H08, $labels:H08_SHORT, $H08, "No duplicate values found", " duplicate value", $errors:H08)}
     </table>
 };
 
