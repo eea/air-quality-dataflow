@@ -402,6 +402,112 @@ declare variable $errors:G80 := errors:getError("G80");
 declare variable $errors:G81 := errors:getError("G81");
 declare variable $errors:G85 := errors:getError("G85");
 declare variable $errors:G86 := errors:getError("G86");
+declare variable $errors:H0 := errors:getError("H0");
+declare variable $errors:H01 := errors:getError("H01");
+declare variable $errors:H02 := errors:getError("H02");
+declare variable $errors:H03 := errors:getError("H03");
+declare variable $errors:H04 := errors:getError("H04");
+declare variable $errors:H07 := errors:getError("H07");
+declare variable $errors:H08 := errors:getError("H08");
+declare variable $errors:H09 := errors:getError("H09");
+declare variable $errors:H10 := errors:getError("H10");
+declare variable $errors:H11 := errors:getError("H11");
+declare variable $errors:H12 := errors:getError("H12");
+declare variable $errors:H14 := errors:getError("H14");
+declare variable $errors:H16 := errors:getError("H16");
+declare variable $errors:H17 := errors:getError("H17");
+declare variable $errors:H18 := errors:getError("H18");
+declare variable $errors:H19 := errors:getError("H19");
+declare variable $errors:H20 := errors:getError("H20");
+declare variable $errors:H21 := errors:getError("H21");
+declare variable $errors:H22 := errors:getError("H22");
+declare variable $errors:H23 := errors:getError("H23");
+declare variable $errors:H24 := errors:getError("H24");
+declare variable $errors:H25 := errors:getError("H25");
+declare variable $errors:H26 := errors:getError("H26");
+declare variable $errors:H27 := errors:getError("H27");
+declare variable $errors:H28 := errors:getError("H28");
+declare variable $errors:H29 := errors:getError("H29");
+declare variable $errors:H30 := errors:getError("H30");
+declare variable $errors:H31 := errors:getError("H31");
+declare variable $errors:H32 := errors:getError("H32");
+declare variable $errors:H33 := errors:getError("H33");
+declare variable $errors:H34 := errors:getError("H34");
+declare variable $errors:H35 := errors:getError("H35");
+declare variable $errors:J0 := errors:getError("J0");
+declare variable $errors:J01 := errors:getError("J01");
+declare variable $errors:J02 := errors:getError("J02");
+declare variable $errors:J03 := errors:getError("J03");
+declare variable $errors:J04 := errors:getError("J04");
+declare variable $errors:J05 := errors:getError("J05");
+declare variable $errors:J06 := errors:getError("J06");
+declare variable $errors:J07 := errors:getError("J07");
+declare variable $errors:J08 := errors:getError("J08");
+declare variable $errors:J09 := errors:getError("J09");
+declare variable $errors:J10 := errors:getError("J10");
+declare variable $errors:J11 := errors:getError("J11");
+declare variable $errors:J12 := errors:getError("J12");
+declare variable $errors:J13 := errors:getError("J13");
+declare variable $errors:J14 := errors:getError("J14");
+declare variable $errors:J15 := errors:getError("J15");
+declare variable $errors:J16 := errors:getError("J16");
+declare variable $errors:J17 := errors:getError("J17");
+declare variable $errors:J18 := errors:getError("J18");
+declare variable $errors:J19 := errors:getError("J19");
+declare variable $errors:J20 := errors:getError("J20");
+declare variable $errors:J21 := errors:getError("J21");
+declare variable $errors:J22 := errors:getError("J22");
+declare variable $errors:J23 := errors:getError("J23");
+declare variable $errors:J24 := errors:getError("J24");
+declare variable $errors:J25 := errors:getError("J25");
+declare variable $errors:J26 := errors:getError("J26");
+declare variable $errors:J27 := errors:getError("J27");
+declare variable $errors:J28 := errors:getError("J28");
+declare variable $errors:J29 := errors:getError("J29");
+declare variable $errors:J30 := errors:getError("J30");
+declare variable $errors:J31 := errors:getError("J31");
+declare variable $errors:J32 := errors:getError("J32");
+declare variable $errors:K0 := errors:getError("K0");
+declare variable $errors:K01 := errors:getError("K01");
+declare variable $errors:K02 := errors:getError("K02");
+declare variable $errors:K03 := errors:getError("K03");
+declare variable $errors:K04 := errors:getError("K04");
+declare variable $errors:K05 := errors:getError("K05");
+declare variable $errors:K06 := errors:getError("K06");
+declare variable $errors:K07 := errors:getError("K07");
+declare variable $errors:K08 := errors:getError("K08");
+declare variable $errors:K09 := errors:getError("K09");
+declare variable $errors:K10 := errors:getError("K10");
+declare variable $errors:K11 := errors:getError("K11");
+declare variable $errors:K12 := errors:getError("K12");
+declare variable $errors:K13 := errors:getError("K13");
+declare variable $errors:K14 := errors:getError("K14");
+declare variable $errors:K15 := errors:getError("K15");
+declare variable $errors:K16 := errors:getError("K16");
+declare variable $errors:K17 := errors:getError("K17");
+declare variable $errors:K18 := errors:getError("K18");
+declare variable $errors:K19 := errors:getError("K19");
+declare variable $errors:K20 := errors:getError("K20");
+declare variable $errors:K21 := errors:getError("K21");
+declare variable $errors:K22 := errors:getError("K22");
+declare variable $errors:K23 := errors:getError("K23");
+declare variable $errors:K24 := errors:getError("K24");
+declare variable $errors:K25 := errors:getError("K25");
+declare variable $errors:K26 := errors:getError("K26");
+declare variable $errors:K27 := errors:getError("K27");
+declare variable $errors:K28 := errors:getError("K28");
+declare variable $errors:K29 := errors:getError("K29");
+declare variable $errors:K30 := errors:getError("K30");
+declare variable $errors:K31 := errors:getError("K31");
+declare variable $errors:K32 := errors:getError("K32");
+declare variable $errors:K33 := errors:getError("K33");
+declare variable $errors:K34 := errors:getError("K34");
+declare variable $errors:K35 := errors:getError("K35");
+declare variable $errors:K36 := errors:getError("K36");
+declare variable $errors:K37 := errors:getError("K37");
+declare variable $errors:K38 := errors:getError("K38");
+declare variable $errors:K39 := errors:getError("K39");
+declare variable $errors:K40 := errors:getError("K40");
 declare variable $errors:M0 := errors:getError("M0");
 declare variable $errors:M01 := errors:getError("M01");
 declare variable $errors:M02 := errors:getError("M02");
@@ -1150,12 +1256,272 @@ declare variable $labels:H19 := labels:getDefinition("H19");
 declare variable $labels:H19_SHORT := labels:getPrefLabel("H19");
 declare variable $labels:H20 := labels:getDefinition("H20");
 declare variable $labels:H20_SHORT := labels:getPrefLabel("H20");
+declare variable $labels:H21 := labels:getDefinition("H21");
+declare variable $labels:H21_SHORT := labels:getPrefLabel("H21");
+declare variable $labels:H22 := labels:getDefinition("H22");
+declare variable $labels:H22_SHORT := labels:getPrefLabel("H22");
+declare variable $labels:H23 := labels:getDefinition("H23");
+declare variable $labels:H23_SHORT := labels:getPrefLabel("H23");
+declare variable $labels:H24 := labels:getDefinition("H24");
+declare variable $labels:H24_SHORT := labels:getPrefLabel("H24");
+declare variable $labels:H25 := labels:getDefinition("H25");
+declare variable $labels:H25_SHORT := labels:getPrefLabel("H25");
+declare variable $labels:H26 := labels:getDefinition("H26");
+declare variable $labels:H26_SHORT := labels:getPrefLabel("H26");
+declare variable $labels:H27 := labels:getDefinition("H27");
+declare variable $labels:H27_SHORT := labels:getPrefLabel("H27");
+declare variable $labels:H28 := labels:getDefinition("H28");
+declare variable $labels:H28_SHORT := labels:getPrefLabel("H28");
+declare variable $labels:H29 := labels:getDefinition("H29");
+declare variable $labels:H29_SHORT := labels:getPrefLabel("H29");
+declare variable $labels:H30 := labels:getDefinition("H30");
+declare variable $labels:H30_SHORT := labels:getPrefLabel("H30");
+declare variable $labels:H31 := labels:getDefinition("H31");
+declare variable $labels:H31_SHORT := labels:getPrefLabel("H31");
+declare variable $labels:H32 := labels:getDefinition("H32");
+declare variable $labels:H32_SHORT := labels:getPrefLabel("H32");
+declare variable $labels:H33 := labels:getDefinition("H33");
+declare variable $labels:H33_SHORT := labels:getPrefLabel("H33");
+declare variable $labels:H34 := labels:getDefinition("H34");
+declare variable $labels:H34_SHORT := labels:getPrefLabel("H34");
+declare variable $labels:H35 := labels:getDefinition("H35");
+declare variable $labels:H35_SHORT := labels:getPrefLabel("H35");
 declare variable $labels:I0 := labels:getDefinition("I0");
 declare variable $labels:I0_SHORT := labels:getPrefLabel("I0");
+declare variable $labels:I1 := labels:getDefinition("I1");
+declare variable $labels:I1_SHORT := labels:getPrefLabel("I1");
+declare variable $labels:I2 := labels:getDefinition("I2");
+declare variable $labels:I2_SHORT := labels:getPrefLabel("I2");
+declare variable $labels:I3 := labels:getDefinition("I3");
+declare variable $labels:I3_SHORT := labels:getPrefLabel("I3");
+declare variable $labels:I4 := labels:getDefinition("I4");
+declare variable $labels:I4_SHORT := labels:getPrefLabel("I4");
+declare variable $labels:I5 := labels:getDefinition("I5");
+declare variable $labels:I5_SHORT := labels:getPrefLabel("I5");
+declare variable $labels:I6 := labels:getDefinition("I6");
+declare variable $labels:I6_SHORT := labels:getPrefLabel("I6");
+declare variable $labels:I7 := labels:getDefinition("I7");
+declare variable $labels:I7_SHORT := labels:getPrefLabel("I7");
+declare variable $labels:I8 := labels:getDefinition("I8");
+declare variable $labels:I8_SHORT := labels:getPrefLabel("I8");
+declare variable $labels:I9 := labels:getDefinition("I9");
+declare variable $labels:I9_SHORT := labels:getPrefLabel("I9");
+declare variable $labels:I10 := labels:getDefinition("I10");
+declare variable $labels:I10_SHORT := labels:getPrefLabel("I10");
+declare variable $labels:I11 := labels:getDefinition("I11");
+declare variable $labels:I11_SHORT := labels:getPrefLabel("I11");
+declare variable $labels:I11b := labels:getDefinition("I11b");
+declare variable $labels:I11b_SHORT := labels:getPrefLabel("I11b");
+declare variable $labels:I12 := labels:getDefinition("I12");
+declare variable $labels:I12_SHORT := labels:getPrefLabel("I12");
+declare variable $labels:I15 := labels:getDefinition("I15");
+declare variable $labels:I15_SHORT := labels:getPrefLabel("I15");
+declare variable $labels:I16 := labels:getDefinition("I16");
+declare variable $labels:I16_SHORT := labels:getPrefLabel("I16");
+declare variable $labels:I17 := labels:getDefinition("I17");
+declare variable $labels:I17_SHORT := labels:getPrefLabel("I17");
+declare variable $labels:I18 := labels:getDefinition("I18");
+declare variable $labels:I18_SHORT := labels:getPrefLabel("I18");
+declare variable $labels:I19 := labels:getDefinition("I19");
+declare variable $labels:I19_SHORT := labels:getPrefLabel("I19");
+declare variable $labels:I20 := labels:getDefinition("I20");
+declare variable $labels:I20_SHORT := labels:getPrefLabel("I20");
+declare variable $labels:I21 := labels:getDefinition("I21");
+declare variable $labels:I21_SHORT := labels:getPrefLabel("I21");
+declare variable $labels:I22 := labels:getDefinition("I22");
+declare variable $labels:I22_SHORT := labels:getPrefLabel("I22");
+declare variable $labels:I23 := labels:getDefinition("I23");
+declare variable $labels:I23_SHORT := labels:getPrefLabel("I23");
+declare variable $labels:I24 := labels:getDefinition("I24");
+declare variable $labels:I24_SHORT := labels:getPrefLabel("I24");
+declare variable $labels:I25 := labels:getDefinition("I25");
+declare variable $labels:I25_SHORT := labels:getPrefLabel("I25");
+declare variable $labels:I26 := labels:getDefinition("I26");
+declare variable $labels:I26_SHORT := labels:getPrefLabel("I26");
+declare variable $labels:I27 := labels:getDefinition("I27");
+declare variable $labels:I27_SHORT := labels:getPrefLabel("I27");
+declare variable $labels:I29 := labels:getDefinition("I29");
+declare variable $labels:I29_SHORT := labels:getPrefLabel("I29");
+declare variable $labels:I30 := labels:getDefinition("I30");
+declare variable $labels:I30_SHORT := labels:getPrefLabel("I30");
+declare variable $labels:I31 := labels:getDefinition("I31");
+declare variable $labels:I31_SHORT := labels:getPrefLabel("I31");
+declare variable $labels:I32 := labels:getDefinition("I32");
+declare variable $labels:I32_SHORT := labels:getPrefLabel("I32");
+declare variable $labels:I33 := labels:getDefinition("I33");
+declare variable $labels:I33_SHORT := labels:getPrefLabel("I33");
+declare variable $labels:I34 := labels:getDefinition("I34");
+declare variable $labels:I34_SHORT := labels:getPrefLabel("I34");
+declare variable $labels:I35 := labels:getDefinition("I35");
+declare variable $labels:I35_SHORT := labels:getPrefLabel("I35");
+declare variable $labels:I36 := labels:getDefinition("I36");
+declare variable $labels:I36_SHORT := labels:getPrefLabel("I36");
+declare variable $labels:I37 := labels:getDefinition("I37");
+declare variable $labels:I37_SHORT := labels:getPrefLabel("I37");
+declare variable $labels:I38 := labels:getDefinition("I38");
+declare variable $labels:I38_SHORT := labels:getPrefLabel("I38");
+declare variable $labels:I39 := labels:getDefinition("I39");
+declare variable $labels:I39_SHORT := labels:getPrefLabel("I39");
+declare variable $labels:I40 := labels:getDefinition("I40");
+declare variable $labels:I40_SHORT := labels:getPrefLabel("I40");
+declare variable $labels:I41 := labels:getDefinition("I41");
+declare variable $labels:I41_SHORT := labels:getPrefLabel("I41");
+declare variable $labels:I42 := labels:getDefinition("I42");
+declare variable $labels:I42_SHORT := labels:getPrefLabel("I42");
+declare variable $labels:I43 := labels:getDefinition("I43");
+declare variable $labels:I43_SHORT := labels:getPrefLabel("I43");
+declare variable $labels:I44 := labels:getDefinition("I44");
+declare variable $labels:I44_SHORT := labels:getPrefLabel("I44");
+declare variable $labels:I45 := labels:getDefinition("I45");
+declare variable $labels:I45_SHORT := labels:getPrefLabel("I45");
 declare variable $labels:J0 := labels:getDefinition("J0");
 declare variable $labels:J0_SHORT := labels:getPrefLabel("J0");
+declare variable $labels:J01 := labels:getDefinition("J01");
+declare variable $labels:J01_SHORT := labels:getPrefLabel("J01");
+declare variable $labels:J02 := labels:getDefinition("J02");
+declare variable $labels:J02_SHORT := labels:getPrefLabel("J02");
+declare variable $labels:J03 := labels:getDefinition("J03");
+declare variable $labels:J03_SHORT := labels:getPrefLabel("J03");
+declare variable $labels:J04 := labels:getDefinition("J04");
+declare variable $labels:J04_SHORT := labels:getPrefLabel("J04");
+declare variable $labels:J05 := labels:getDefinition("J05");
+declare variable $labels:J05_SHORT := labels:getPrefLabel("J05");
+declare variable $labels:J06 := labels:getDefinition("J06");
+declare variable $labels:J06_SHORT := labels:getPrefLabel("J06");
+declare variable $labels:J07 := labels:getDefinition("J07");
+declare variable $labels:J07_SHORT := labels:getPrefLabel("J07");
+declare variable $labels:J08 := labels:getDefinition("J08");
+declare variable $labels:J08_SHORT := labels:getPrefLabel("J08");
+declare variable $labels:J09 := labels:getDefinition("J09");
+declare variable $labels:J09_SHORT := labels:getPrefLabel("J09");
+declare variable $labels:J10 := labels:getDefinition("J10");
+declare variable $labels:J10_SHORT := labels:getPrefLabel("J10");
+declare variable $labels:J11 := labels:getDefinition("J11");
+declare variable $labels:J11_SHORT := labels:getPrefLabel("J11");
+declare variable $labels:J12 := labels:getDefinition("J12");
+declare variable $labels:J12_SHORT := labels:getPrefLabel("J12");
+declare variable $labels:J13 := labels:getDefinition("J13");
+declare variable $labels:J13_SHORT := labels:getPrefLabel("J13");
+declare variable $labels:J14 := labels:getDefinition("J14");
+declare variable $labels:J14_SHORT := labels:getPrefLabel("J14");
+declare variable $labels:J15 := labels:getDefinition("J15");
+declare variable $labels:J15_SHORT := labels:getPrefLabel("J15");
+declare variable $labels:J16 := labels:getDefinition("J16");
+declare variable $labels:J16_SHORT := labels:getPrefLabel("J16");
+declare variable $labels:J17 := labels:getDefinition("J17");
+declare variable $labels:J17_SHORT := labels:getPrefLabel("J17");
+declare variable $labels:J18 := labels:getDefinition("J18");
+declare variable $labels:J18_SHORT := labels:getPrefLabel("J18");
+declare variable $labels:J19 := labels:getDefinition("J19");
+declare variable $labels:J19_SHORT := labels:getPrefLabel("J19");
+declare variable $labels:J20 := labels:getDefinition("J20");
+declare variable $labels:J20_SHORT := labels:getPrefLabel("J20");
+declare variable $labels:J21 := labels:getDefinition("J21");
+declare variable $labels:J21_SHORT := labels:getPrefLabel("J21");
+declare variable $labels:J22 := labels:getDefinition("J22");
+declare variable $labels:J22_SHORT := labels:getPrefLabel("J22");
+declare variable $labels:J23 := labels:getDefinition("J23");
+declare variable $labels:J23_SHORT := labels:getPrefLabel("J23");
+declare variable $labels:J24 := labels:getDefinition("J24");
+declare variable $labels:J24_SHORT := labels:getPrefLabel("J24");
+declare variable $labels:J25 := labels:getDefinition("J25");
+declare variable $labels:J25_SHORT := labels:getPrefLabel("J25");
+declare variable $labels:J26 := labels:getDefinition("J26");
+declare variable $labels:J26_SHORT := labels:getPrefLabel("J26");
+declare variable $labels:J27 := labels:getDefinition("J27");
+declare variable $labels:J27_SHORT := labels:getPrefLabel("J27");
+declare variable $labels:J28 := labels:getDefinition("J28");
+declare variable $labels:J28_SHORT := labels:getPrefLabel("J28");
+declare variable $labels:J29 := labels:getDefinition("J29");
+declare variable $labels:J29_SHORT := labels:getPrefLabel("J29");
+declare variable $labels:J30 := labels:getDefinition("J30");
+declare variable $labels:J30_SHORT := labels:getPrefLabel("J30");
+declare variable $labels:J31 := labels:getDefinition("J31");
+declare variable $labels:J31_SHORT := labels:getPrefLabel("J31");
+declare variable $labels:J32 := labels:getDefinition("J32");
+declare variable $labels:J32_SHORT := labels:getPrefLabel("J32");
 declare variable $labels:K0 := labels:getDefinition("K0");
 declare variable $labels:K0_SHORT := labels:getPrefLabel("K0");
+declare variable $labels:K01 := labels:getDefinition("K01");
+declare variable $labels:K01_SHORT := labels:getPrefLabel("K01");
+declare variable $labels:K02 := labels:getDefinition("K02");
+declare variable $labels:K02_SHORT := labels:getPrefLabel("K02");
+declare variable $labels:K03 := labels:getDefinition("K03");
+declare variable $labels:K03_SHORT := labels:getPrefLabel("K03");
+declare variable $labels:K04 := labels:getDefinition("K04");
+declare variable $labels:K04_SHORT := labels:getPrefLabel("K04");
+declare variable $labels:K05 := labels:getDefinition("K05");
+declare variable $labels:K05_SHORT := labels:getPrefLabel("K05");
+declare variable $labels:K06 := labels:getDefinition("K06");
+declare variable $labels:K06_SHORT := labels:getPrefLabel("K06");
+declare variable $labels:K07 := labels:getDefinition("K07");
+declare variable $labels:K07_SHORT := labels:getPrefLabel("K07");
+declare variable $labels:K08 := labels:getDefinition("K08");
+declare variable $labels:K08_SHORT := labels:getPrefLabel("K08");
+declare variable $labels:K09 := labels:getDefinition("K09");
+declare variable $labels:K09_SHORT := labels:getPrefLabel("K09");
+declare variable $labels:K10 := labels:getDefinition("K10");
+declare variable $labels:K10_SHORT := labels:getPrefLabel("K10");
+declare variable $labels:K11 := labels:getDefinition("K11");
+declare variable $labels:K11_SHORT := labels:getPrefLabel("K11");
+declare variable $labels:K12 := labels:getDefinition("K12");
+declare variable $labels:K12_SHORT := labels:getPrefLabel("K12");
+declare variable $labels:K13 := labels:getDefinition("K13");
+declare variable $labels:K13_SHORT := labels:getPrefLabel("K13");
+declare variable $labels:K14 := labels:getDefinition("K14");
+declare variable $labels:K14_SHORT := labels:getPrefLabel("K14");
+declare variable $labels:K15 := labels:getDefinition("K15");
+declare variable $labels:K15_SHORT := labels:getPrefLabel("K15");
+declare variable $labels:K16 := labels:getDefinition("K16");
+declare variable $labels:K16_SHORT := labels:getPrefLabel("K16");
+declare variable $labels:K17 := labels:getDefinition("K17");
+declare variable $labels:K17_SHORT := labels:getPrefLabel("K17");
+declare variable $labels:K18 := labels:getDefinition("K18");
+declare variable $labels:K18_SHORT := labels:getPrefLabel("K18");
+declare variable $labels:K19 := labels:getDefinition("K19");
+declare variable $labels:K19_SHORT := labels:getPrefLabel("K19");
+declare variable $labels:K20 := labels:getDefinition("K20");
+declare variable $labels:K20_SHORT := labels:getPrefLabel("K20");
+declare variable $labels:K21 := labels:getDefinition("K21");
+declare variable $labels:K21_SHORT := labels:getPrefLabel("K21");
+declare variable $labels:K22 := labels:getDefinition("K22");
+declare variable $labels:K22_SHORT := labels:getPrefLabel("K22");
+declare variable $labels:K23 := labels:getDefinition("K23");
+declare variable $labels:K23_SHORT := labels:getPrefLabel("K23");
+declare variable $labels:K24 := labels:getDefinition("K24");
+declare variable $labels:K24_SHORT := labels:getPrefLabel("K24");
+declare variable $labels:K25 := labels:getDefinition("K25");
+declare variable $labels:K25_SHORT := labels:getPrefLabel("K25");
+declare variable $labels:K26 := labels:getDefinition("K26");
+declare variable $labels:K26_SHORT := labels:getPrefLabel("K26");
+declare variable $labels:K27 := labels:getDefinition("K27");
+declare variable $labels:K27_SHORT := labels:getPrefLabel("K27");
+declare variable $labels:K28 := labels:getDefinition("K28");
+declare variable $labels:K28_SHORT := labels:getPrefLabel("K28");
+declare variable $labels:K29 := labels:getDefinition("K29");
+declare variable $labels:K29_SHORT := labels:getPrefLabel("K29");
+declare variable $labels:K30 := labels:getDefinition("K30");
+declare variable $labels:K30_SHORT := labels:getPrefLabel("K30");
+declare variable $labels:K31 := labels:getDefinition("K31");
+declare variable $labels:K31_SHORT := labels:getPrefLabel("K31");
+declare variable $labels:K32 := labels:getDefinition("K32");
+declare variable $labels:K32_SHORT := labels:getPrefLabel("K32");
+declare variable $labels:K33 := labels:getDefinition("K33");
+declare variable $labels:K33_SHORT := labels:getPrefLabel("K33");
+declare variable $labels:K34 := labels:getDefinition("K34");
+declare variable $labels:K34_SHORT := labels:getPrefLabel("K34");
+declare variable $labels:K35 := labels:getDefinition("K35");
+declare variable $labels:K35_SHORT := labels:getPrefLabel("K35");
+declare variable $labels:K36 := labels:getDefinition("K36");
+declare variable $labels:K36_SHORT := labels:getPrefLabel("K36");
+declare variable $labels:K37 := labels:getDefinition("K37");
+declare variable $labels:K37_SHORT := labels:getPrefLabel("K37");
+declare variable $labels:K38 := labels:getDefinition("K38");
+declare variable $labels:K38_SHORT := labels:getPrefLabel("K38");
+declare variable $labels:K39 := labels:getDefinition("K39");
+declare variable $labels:K39_SHORT := labels:getPrefLabel("K39");
+declare variable $labels:K40 := labels:getDefinition("K40");
+declare variable $labels:K40_SHORT := labels:getPrefLabel("K40");
 declare variable $labels:M0 := labels:getDefinition("M0");
 declare variable $labels:M0_SHORT := labels:getPrefLabel("M0");
 declare variable $labels:M01 := labels:getDefinition("M01");
@@ -1229,57 +1595,67 @@ declare variable $labels:PLACEHOLDER := "LABEL MISSING";
 declare variable $schemax:INVALIDSTATUS := "invalid";
 declare variable $schemax:SCHEMA := "http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd";
 declare variable $sparqlx:CR_SPARQL_URL := "http://cr.eionet.europa.eu/sparql";
-declare variable $vocabulary:BASE := "http://dd.eionet.europa.eu/vocabulary/aq/";
-declare variable $vocabulary:NAMESPACE := "http://dd.eionet.europa.eu/vocabulary/aq/namespace/";
-declare variable $vocabulary:OBLIGATIONS := "http://rod.eionet.europa.eu/obligations/";
-declare variable $vocabulary:UOM_TIME := "http://dd.eionet.europa.eu/vocabulary/uom/time/";
-declare variable $vocabulary:ENVIRONMENTALOBJECTIVE := "http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/";
+declare variable $vocabulary:ADJUSTMENTSOURCE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/";
+declare variable $vocabulary:ADJUSTMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/";
+declare variable $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/";
+declare variable $vocabulary:AGGREGATION_PROCESS as xs:string := $vocabulary:BASE || "aggregationprocess/";
+declare variable $vocabulary:ANALYTICALTECHNIQUE_VOCABULARY :=  "http://dd.eionet.europa.eu/vocabulary/aq/analyticaltechnique/";
 declare variable $vocabulary:AQ_MANAGEMENET_ZONE := "http://inspire.ec.europa.eu/codeList/ZoneTypeCode/airQualityManagementZone";
 declare variable $vocabulary:AQ_MANAGEMENET_ZONE_LC := "http://inspire.ec.europa.eu/codelist/ZoneTypeCode/airQualityManagementZone";
-declare variable $vocabulary:LEGISLATION_LEVEL := "http://inspire.ec.europa.eu/codeList/LegislationLevelValue/";
-declare variable $vocabulary:LEGISLATION_LEVEL_LC := "http://inspire.ec.europa.eu/codelist/LegislationLevelValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI := "http://inspire.ec.europa.eu/codelist/MediaValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI_UC := "http://inspire.ec.europa.eu/codeList/MediaValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/";
-declare variable $vocabulary:ORGANISATIONAL_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/organisationallevel/";
-declare variable $vocabulary:NETWORK_TYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/networktype/";
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY := ("http://vocab.nerc.ac.uk/collection/P07/current/","http://vocab.nerc.ac.uk/collection/I01/current/","http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/");
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY_I01 := "http://vocab.nerc.ac.uk/collection/I01/current/";
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY_aq := "http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/";
 declare variable $vocabulary:AREA_CLASSIFICATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/";
+declare variable $vocabulary:ASSESSMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/";
+declare variable $vocabulary:BASE := "http://dd.eionet.europa.eu/vocabulary/aq/";
+declare variable $vocabulary:CURRENCIES as xs:string := "http://dd.eionet.europa.eu/vocabulary/common/currencies/";
 declare variable $vocabulary:DISPERSION_LOCAL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/dispersionlocal/";
 declare variable $vocabulary:DISPERSION_REGIONAL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/dispersionregional/";
-declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
-declare variable $vocabulary:POLLUTANT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/";
-declare variable $vocabulary:MEASUREMENTTYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/";
-declare variable $vocabulary:MEASUREMENTMETHOD_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/";
-declare variable $vocabulary:ANALYTICALTECHNIQUE_VOCABULARY :=  "http://dd.eionet.europa.eu/vocabulary/aq/analyticaltechnique/";
-declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
-declare variable $vocabulary:MEASUREMENTEQUIPMENT_VOCABULARY :="http://dd.eionet.europa.eu/vocabulary/aq/measurementequipment/";
-declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
-declare variable $vocabulary:UOM_STATISTICS := "http://dd.eionet.europa.eu/vocabulary/uom/statistics/";
+declare variable $vocabulary:ENVIRONMENTALOBJECTIVE := "http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/";
 declare variable $vocabulary:EQUIVALENCEDEMONSTRATED_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/";
-declare variable $vocabulary:REPMETRIC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/";
-declare variable $vocabulary:OBJECTIVETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/";
-declare variable $vocabulary:ADJUSTMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/";
-declare variable $vocabulary:ADJUSTMENTSOURCE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/";
-declare variable $vocabulary:ASSESSMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/";
-declare variable $vocabulary:PROTECTIONTARGET_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/";
+declare variable $vocabulary:LEGISLATION_LEVEL := "http://inspire.ec.europa.eu/codeList/LegislationLevelValue/";
+declare variable $vocabulary:LEGISLATION_LEVEL_LC := "http://inspire.ec.europa.eu/codelist/LegislationLevelValue/";
+declare variable $vocabulary:MEASURECLASSIFICATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/";
+declare variable $vocabulary:MEASUREMENTEQUIPMENT_VOCABULARY :="http://dd.eionet.europa.eu/vocabulary/aq/measurementequipment/";
+declare variable $vocabulary:MEASUREMENTMETHOD_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/";
+declare variable $vocabulary:MEASUREMENTTYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/";
+declare variable $vocabulary:MEASURETYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measuretype//";
+declare variable $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI := "http://inspire.ec.europa.eu/codelist/MediaValue/";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI_UC := "http://inspire.ec.europa.eu/codeList/MediaValue/";
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY := ("http://vocab.nerc.ac.uk/collection/P07/current/","http://vocab.nerc.ac.uk/collection/I01/current/","http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/");
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY_I01 := "http://vocab.nerc.ac.uk/collection/I01/current/";
 declare variable $vocabulary:METEO_PARAMS_VOCABULARY_M := "http://vocab.nerc.ac.uk/collection/P07/current/";
-declare variable $vocabulary:ZONETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/zonetype/";
-declare variable $vocabulary:PROCESS_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/processparameter/";
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY_aq := "http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/";
 declare variable $vocabulary:MODEL_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/";
-declare variable $vocabulary:PROCESSPARAMETER_RESULTENCODING as xs:string := $vocabulary:PROCESS_PARAMETER || "resultencoding";
-declare variable $vocabulary:PROCESSPARAMETER_RESULTFORMAT as xs:string := $vocabulary:PROCESS_PARAMETER || "resultformat";
-declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europa.eu/obligations/";
-declare variable $vocabulary:OBSERVATIONS_VERIFICATION as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationverification/";
-declare variable $vocabulary:OBSERVATIONS_VALIDITY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationvalidity/";
+declare variable $vocabulary:NAMESPACE := "http://dd.eionet.europa.eu/vocabulary/aq/namespace/";
+declare variable $vocabulary:NETWORK_TYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/networktype/";
+declare variable $vocabulary:OBJECTIVETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/";
+declare variable $vocabulary:OBLIGATIONS := "http://rod.eionet.europa.eu/obligations/";
 declare variable $vocabulary:OBSERVATIONS_PRIMARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/";
 declare variable $vocabulary:OBSERVATIONS_RANGE as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/primaryObservationRange/";
+declare variable $vocabulary:OBSERVATIONS_VALIDITY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationvalidity/";
+declare variable $vocabulary:OBSERVATIONS_VERIFICATION as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationverification/";
+declare variable $vocabulary:ORGANISATIONAL_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/organisationallevel/";
+declare variable $vocabulary:POLLUTANT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/";
+declare variable $vocabulary:PROCESSPARAMETER_RESULTENCODING as xs:string := $vocabulary:PROCESS_PARAMETER || "resultencoding";
+declare variable $vocabulary:PROCESSPARAMETER_RESULTFORMAT as xs:string := $vocabulary:PROCESS_PARAMETER || "resultformat";
+declare variable $vocabulary:PROCESS_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/processparameter/";
+declare variable $vocabulary:PROTECTIONTARGET_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/";
 declare variable $vocabulary:QAQC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/";
-declare variable $vocabulary:AGGREGATION_PROCESS as xs:string := $vocabulary:BASE || "aggregationprocess/";
+declare variable $vocabulary:REPMETRIC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/";
 declare variable $vocabulary:RESULT_ENCODING as xs:string := $vocabulary:BASE || "resultencoding/";
 declare variable $vocabulary:RESULT_FORMAT as xs:string := $vocabulary:BASE || "resultformat/";
+declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europa.eu/obligations/";
+declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
+declare variable $vocabulary:SPACIALSCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/";
+declare variable $vocabulary:SOURCESECTORS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/";
+declare variable $vocabulary:TIMESCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timescale/";
+declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
+declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
+declare variable $vocabulary:UOM_STATISTICS := "http://dd.eionet.europa.eu/vocabulary/uom/statistics/";
+declare variable $vocabulary:UOM_TIME := "http://dd.eionet.europa.eu/vocabulary/uom/time/";
+declare variable $vocabulary:UOM_EMISSION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/emission/";
+declare variable $vocabulary:ZONETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/zonetype/";
+
 
 
 
@@ -1339,6 +1715,11 @@ declare function common:getCdrUrl($countryCode as xs:string) as xs:string {
     return "cdr.eionet.europa.eu/" || lower-case($countryCode) || "/" || $eu || "/aqd/"
 };
 
+(: returns year from aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod
+gml:beginPosition
+or
+gml:timePosition
+:)
 declare function common:getReportingYear($xml as document-node()) as xs:string {
     let $year1 := year-from-dateTime($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod/gml:beginPosition)
     let $year2 := string($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimeInstant/gml:timePosition)
@@ -1467,6 +1848,296 @@ declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPo
         else
             false()
 };
+
+(: Returns error report for ?0 check :)
+declare function common:checkDeliveryReport (
+    $errorClass as xs:string,
+    $statusMessage as xs:string
+) as element(tr) {
+    <tr class="{$errorClass}">
+        <td title="Status">{$statusMessage}</td>
+    </tr>
+};
+
+(: Returns structure with error if node is empty :)
+(: TODO: test if node doesn't exist :)
+declare function common:needsValidString(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (string-length(normalize-space($el/text())) = 0)
+        then
+            <tr>
+                <td title="{$nodeName}">{$nodeName} needs a valid input</td>
+            </tr>
+        else
+            ()
+    }  catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if the given node links to a term that is defined in the vocabulary :)
+declare function common:isInVocabulary(
+  $uri as xs:string?,
+  $vocabularyName as xs:string
+) as xs:boolean {
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris
+};
+
+declare function common:isInVocabularyReport(
+  $main as node()+,
+  $vocabularyName as xs:string
+) as element(tr)* {
+    try {
+        for $el in $main
+            let $uri := $el/@xlink:href
+            return
+            if (not(common:isInVocabulary($uri, $vocabularyName)))
+            then
+                <tr>
+                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                </tr>
+            else
+                ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+        (: (xs:string, xs:anyAtomicType)* :)
+
+declare function common:conditionalReportRow (
+    $ok as xs:boolean,
+    $vals as array(item()*)
+) as element(tr)* {
+    if (not($ok))
+    then
+        let $tr :=
+            <tr>
+            {
+                for $i in 1 to array:size($vals)
+                let $row := array:get($vals, $i)
+                return
+                    if ($row instance of array(*))
+                    then
+                        <td title="{$row(1)}">
+                            {data($row(2))}
+                        </td>
+                    else
+                        <td title="{$row[1]}">
+                            {data($row[2])}
+                        </td>
+            }
+            </tr>
+        (:let $x := trace($tr, 'x:'):)
+        return $tr
+    else
+        ()
+};
+
+
+
+(: returns if a specific node exists in a parent :)
+declare function common:isNodeInParent(
+    $parent as node(),
+    $nodeName as xs:string
+) as xs:boolean {
+    exists($parent/*[name() = $nodeName])
+};
+
+(: prints error if a specific node does not exist in a parent :)
+declare function common:isNodeNotInParentReport(
+    $parent as node(),
+    $nodeName as xs:string
+) as element(tr)* {
+    try {
+        if (not(common:isNodeInParent($parent, $nodeName)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: if node has value, then that value should be an integer :)
+declare function common:maybeNodeValueIsInteger($el) as xs:boolean {
+    (: TODO: is possible to use or :)
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            common:is-a-number($v)
+        else
+            true()
+};
+
+(: prints error if a specific node has value and is not an integer :)
+declare function common:maybeNodeValueIsIntegerReport(
+    $parent as node()?,
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (not(common:maybeNodeValueIsInteger($el)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: If node exists, validate it :)
+declare function common:validatePossibleNodeValue(
+    $el,
+    $validator as function(item()) as xs:boolean
+) {
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            $validator($v)
+        else
+            true()
+};
+
+(: Prints an error if validation for a possible existing node fails :)
+declare function common:validatePossibleNodeValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $validator as function(item()) as xs:boolean
+) {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (not(common:validatePossibleNodeValue($el, $validator)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+
+(: Given a node, if it exists, print error based on provided value :)
+declare function common:validateMaybeNodeWithValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $val as xs:boolean
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (exists($el))
+        then
+            if (not($val))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if a given string is a full ISO date type:)
+declare function common:isDateFullISO(
+    $date as xs:string?
+) as xs:boolean {
+    if ($date castable as xs:dateTime)
+    then
+        true()
+    else
+        false()
+    (:try {
+        let $asd := xs:dateTime($date)
+        return true()
+    } catch *{
+        false()
+    }:)
+
+};
+(: Create report :)
+declare function common:isDateFullISOReport(
+    $el as node()*
+) as element(tr)*
+{
+    let $date := data($el)
+    return
+    try {
+        if (not(common:isDateFullISO($date)))
+        then
+            <tr>
+                <td title="{node-name($el)}">{$date} not in full ISO format</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+declare function common:has-one-node(
+    $seq as item()*,
+    $item as item()?
+) as xs:boolean {
+    let $norm-seq :=
+        for $x in $seq
+        return $x => normalize-space() => lower-case()
+    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+};
+
+
+(: Check if end date is after begin date and if both are in full ISO format:)
+declare function common:isEndDateAfterBeginDate(
+    $begin as node()?,
+    $end as node()?
+) as xs:boolean
+{
+    if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+    then
+        true()
+    else
+        false()
+};
+
+(:
+pseudocode, for brainstorming
+
+validators =[
+    isDate(x),
+    isDate(y),
+    isXBiggerThenY(x, y)
+]
+
+validate([
+    isDate(x),
+    isDate(y),
+    ])
+
+
+    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
+
+isXBiggerThanY(x:orice, y:orice)
+:)
+
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
  :
@@ -9329,55 +10000,50 @@ declare function dataflowH:checkReport($source_url as xs:string, $countryCode as
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "h_preliminary")) then "h_preliminary/" else "h/"
 let $reportingYear := common:getReportingYear($docRoot)
+let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
+
 let $nameSpaces := distinct-values($docRoot//base:namespace)
-let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
 (: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
+        return
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H0 :)
-let $H0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
-        return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+
+let $H0table := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowH:OBLIGATIONS, $countryCode, "h/", $reportingYear))
+        then
+            common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+        else
+            common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
     <table class="maintable hover">
@@ -9394,7 +10060,7 @@ let $meta := map:merge((
     map:entry("count", $countZones),
     map:entry("header", "Check air quality zones"),
     map:entry("dataflow", "Dataflow H"),
-    map:entry("zeroCount", <p>No aqd:AQD_Zone elements found in this XML.</p>),
+    map:entry("zeroCount", <p>No aqd:AQD_Plan elements found in this XML.</p>),
     map:entry("report", <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow H as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>)
 ))
 return
@@ -9523,66 +10189,152 @@ declare variable $dataflowJ:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
 (: Rule implementations :)
 declare function dataflowJ:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
 
-let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
-let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "j_preliminary")) then "j_preliminary/" else "j/"
 let $reportingYear := common:getReportingYear($docRoot)
-let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
-let $nameSpaces := distinct-values($docRoot//base:namespace)
-let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
-(: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+(: Check prefix and namespaces of the gml:featureCollection according to expected root elements
+(More information at http://www.eionet.europa.eu/aqportal/datamodel)
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+Prefix/namespaces check
+:)
 
-(: J0 :)
-let $J0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge(
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))
+    )
+
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
         return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J0
+Check if delivery if this is a new delivery or updated delivery (via reporting year)
+
+Checks if this delivery is new or an update (on same reporting year)
+:)
+
+let $J0 := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if(query:deliveryExists($dataflowJ:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+        then
+                common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+            else
+                common:checkDeliveryReport($errors:WARNING, "New delivery for " || $reportingYear)
+
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J01
+Compile & feedback upon the total number of plans records included in the delivery
+
+Number of AQ Plans reported
+:)
+
+let $countEvaluationScenario := count($docRoot//aqd:AQD_EvaluationScenario)
+let $J01 := try {
+    for $rec in $docRoot//aqd:AQD_EvaluationScenario
+    let $el := $rec/aqd:inspireId/base:Identifier
+    return
+        common:conditionalReportRow(
+        true(),
+        [
+            ("gml:id", data($rec/@gml:id)),
+            ("base:localId", data($el/base:localId)),
+            ("base:namespace", data($el/base:namespace)),
+            ("base:versionId", data($el/base:versionId))
+        ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J02
+Compile & feedback upon the total number of new EvaluationScenarios records included in the delivery.
+ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.
+
+Number of new EvaluationScenarios compared to previous report.
+:)
+
+let $j02 := try {
+    let $el := $docRoot//aqd:AQD_EvaluationScenario
+
+    return ()
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
+(
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("J0", $labels:J0, $labels:J0_SHORT, $J0table, string($J0table/td), errors:getMaxError($J0table))}
+        {html:build3("J0", $labels:J0, $labels:J0_SHORT, $J0, string($J0/td), errors:getMaxError($J0))}
+        {html:build1("J01", $labels:J01, $labels:J01_SHORT, $J01, "", string($countEvaluationScenario), "", "", $errors:J01)}
+        <!--{html:buildSimple("J02", $labels:J02, $labels:J02_SHORT, $J02, "", "", $J02errorLevel)} -->
+
     </table>
+)
 };
+
+(:
+
+
+        {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
+        {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
+        {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
+        {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
+        {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)}
+        {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " not conform to vocabulary", $errors:K10)}
+        {html:build2("K11", $labels:K11, $labels:K11_SHORT, $K11, "All values are valid", "needs valid input", $errors:K11)}
+        {html:build2("K12", $labels:K12, $labels:K12_SHORT, $K12, "All values are valid", "needs valid input", $errors:K12)}
+        {html:build2("K13", $labels:K13, $labels:K13_SHORT, $K13invalid, "All values are valid", " code not equal", $errors:K13)}
+        {html:build2("K14", $labels:K14, $labels:K14_SHORT, $K14invalid, "All values are valid", "needs valid input", $errors:K14)}
+        {html:build2("K15", $labels:K15, $labels:K15_SHORT, $K15invalid, "All values are valid", "needs valid input", $errors:K15)}
+        {html:build2("K16", $labels:K16, $labels:K16_SHORT, $K16, "All values are valid", "not conform to vocabulary",$errors:K16)}
+        {html:build2("K17", $labels:K17, $labels:K17_SHORT, $K17, "All values are valid", "not conform to vocabulary",$errors:K17)}
+        {html:build2("K18", $labels:K18, $labels:K18_SHORT, $K18, "All values are valid", "not conform to vocabulary",$errors:K18)}
+        {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
+        {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
+        {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
+        {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
+        {html:build2("K23", $labels:K23, $labels:K23_SHORT, $K23, "All values are valid", " needs valid input", $errors:K23)}
+        {html:build2("K24", $labels:K24, $labels:K24_SHORT, $K24, "All values are valid", "not conform to vocabulary", $errors:K24)}
+        {html:build2("K25", $labels:K25, $labels:K25_SHORT, $K25, "All values are valid", "not conform to vocabulary", $errors:K25)}
+        {html:build2("K26", $labels:K26, $labels:K26_SHORT, $K26, "All values are valid", "not conform to vocabulary", $errors:K26)}
+        {html:build2("K27", $labels:K27, $labels:K27_SHORT, $K27, "All values are valid", "not full ISO format", $errors:K27)}
+        {html:build2("K28", $labels:K28, $labels:K28_SHORT, $K28, "All values are valid", "not valid", $errors:K28)}
+        {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
+        {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
+        {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
+        {html:build2("K33", $labels:K33, $labels:K33_SHORT, $K33, "All values are valid", "not valid", $errors:K33)}
+        {html:build2("K34", $labels:K34, $labels:K34_SHORT, $K34, "All values are valid", "not valid", $errors:K34)}
+        {html:build2("K35", $labels:K35, $labels:K35_SHORT, $K35, "All values are valid", "not valid", $errors:K35)}
+        {html:build2("K36", $labels:K36, $labels:K36_SHORT, $K36, "All values are valid", "not valid", $errors:K36)}
+        {html:build2("K37", $labels:K37, $labels:K37_SHORT, $K37, "All values are valid", "not valid", $errors:K37)}
+        {html:build2("K38", $labels:K38, $labels:K38_SHORT, $K38, "All values are valid", "not valid", $errors:K38)}
+        {html:build2("K39", $labels:K39, $labels:K39_SHORT, $K39, "All values are valid", "not valid", $errors:K39)}:)
+
+
 
 declare function dataflowJ:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
 
@@ -9598,6 +10350,7 @@ let $meta := map:merge((
 return
     html:buildResultDiv($meta, $result)
 };
+
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
  :
@@ -9607,17 +10360,21 @@ return
  :
  : XQuery script implements dataflow K checks.
  :
- : @author Claudia Ifrim
+ : @author Laszlo Cseh
  :)
 
 
 
 
 
-declare variable $dataflowK:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG","CH","CY","CZ","DE","DK","DZ","EE","EG","ES","FI",
-    "FR","GB","GR","HR","HU","IE","IL","IS","IT","JO","LB","LI","LT","LU","LV","MA","ME","MK","MT","NL","NO","PL","PS","PT",
-     "RO","RS","SE","SI","SK","TN","TR","XK","UK");
 
+
+(: These attributes should be unique :)
+declare variable $dataflowK:UNIQUE_IDS as xs:string* := (
+  "gml:id",
+  "ef:inspireId",
+  "aqd:inspireId"
+);
 
 
 (: Rule implementations :)
@@ -9625,63 +10382,981 @@ declare function dataflowK:checkReport($source_url as xs:string, $countryCode as
 
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
+(: cdr.eionet.europa.eu/be/eu/aqd/ :)
 let $cdrUrl := common:getCdrUrl($countryCode)
 let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
+(: 2004  :)
 let $reportingYear := common:getReportingYear($docRoot)
 let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
-(: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
+let $namespaces := distinct-values($docRoot//base:namespace)
+let $allMeasures := query:getAllMeasuresIds($namespaces)
+
+(: File prefix/namespace check :)
+
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
+        return
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+
+let $K0table := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+            then
+            common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+            else
+            common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
+let $knownMeasures :=
+    if ($isNewDelivery)
+    then
+        distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "k/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+    else
+        distinct-values(data(sparqlx:run(query:getMeasures($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
+
+(: K01 Number of Measures reported :)
+
+let $countMeasures := count($docRoot//aqd:AQD_Measures)
+let $K01 := try {
+    for $rec in $docRoot//aqd:AQD_Measures
+    let $el := $rec/aqd:inspireId/base:Identifier
+    return
+        common:conditionalReportRow(
+        false(),
+        [
+            ("gml:id", data($rec/@gml:id)),
+            ("base:localId", data($el/base:localId)),
+            ("base:namespace", data($el/base:namespace)),
+            ("base:versionId", data($el/base:versionId))
+        ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K02 Compile & feedback upon the total number of new Measures records included in the delivery.
+ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries. :)
+
+let $K02table := try {
+    let $main := $docRoot//aqd:AQD_Measures
+    for $x in $main/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not($inspireId = $knownMeasures)
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+            ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $K02errorLevel :=
+    if (
+        $isNewDelivery
+        and
+        count(
+            for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
+                let $id := $x/base:namespace || "/" || $x/base:localId
+                (:where ($allMeasures = $id):)
+                where query:existsViaNameLocalId($id, 'AQD_Measures')
+                return 1
+        ) > 0
+        )
+    then
+        $errors:K02
+    else
+        $errors:INFO
+
+(: K03 Compile & feedback upon the total number of updated Measures included in the delivery.
+ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
+
+let $K03table := try {
+    let $main := $docRoot//aqd:AQD_Measures
+    for $x in $main/aqd:inspireId/base:Identifier
+    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
+    return
+        common:conditionalReportRow(
+        $ok,
+        [
+            ("gml:id", data($main/@gml:id)),
+            ("aqd:inspireId", $inspireId),
+            ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+        ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $K03errorLevel :=
+    if (not($isNewDelivery) and count($K03table) = 0)
+    then
+        $errors:K03
+    else
+        $errors:INFO
+
+(: K04 Compile & feedback a list of the unique identifier information for all Measures records included in the delivery.
+Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_SourceApportionment (via ./exceedanceAffected), aqd:AQD_Scenario (via aqd:usedForScenario) :)
+
+let $K04table := try {
+    let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_Measures
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        )
+        return common:conditionalReportRow(
+            not($ok),
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href))))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K05
+RESERVE
+:)
+let $K05 := ()
+
+(: K06
+RESERVE
+:)
+let $K06 := ()
+
+(: K07
+All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
+
+All gml ID attributes shall have unique code
+
+    count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+    or count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+    or (
+        count(index-of($efInspireIds, lower-case(normalize-space($efInspireId)))) = 1
+        and not(empty($efInspireId))
+    )
+
+:)
+
+let $K07 := try {
+    let $main := $docRoot//aqd:AQD_Measures
+
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+        (: TODO: would be nice to have something like this, but we have no
+           value for error row
             return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
+                if has-duplicate-children-values($main, $name)
+                then
+                    [$name, $name]
                 else
                     ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        :)
+            let $name := lower-case(normalize-space($name))
+            let $values := $main//(*[lower-case(normalize-space(name())) = $name] |
+                                   @*[lower-case(normalize-space(name())) = $name])
+            return
+                for $v in distinct-values($values)
+                    return
+                        if (common:has-one-node($values, $v))
+                        then
+                            ()
+                        else
+                            [$name, data($v)]
     }
 
-(: K0 :)
-let $K0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
-        return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+    return common:conditionalReportRow(
+        array:size($errors) = 0,
+        $errors
+    )
+
+    (:
+    let $gmlIds := $main//lower-case(normalize-space(@gml:id))
+    let $inspireIds := $main//lower-case(normalize-space(aqd:inspireId))
+    let $efInspireIds := $main//lower-case(normalize-space(ef:inspireId))
+    for $el in $main
+        let $id := $el/@gml:id
+        let $inspireId := $el/aqd:inspireId
+        let $efInspireId := $el/ef:inspireId
+
+        let $ok := (
+            c:has-one($gmlIds, $id)
+            and
+            c:has-one($inspireIds, $inspireId)
+            and
+            c:has-one($efInspireIds, $efInspireId)
+        )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (name($id), data($id)),
+                (node-name($inspireId), data($inspireId)),
+                (node-name($efInspireId), data($efInspireId))
+            ]
+        )
+    :)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K08 ./aqd:inspireId/base:Identifier/base:localId must be unique code for the Measure records :)
+
+let $K08invalid:= try {
+    let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_Measures
+        let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (
+            count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+            and
+            functx:if-empty($localID/text(), "") != ""
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", distinct-values(data($x/aqd:usedForScenario/@xlink:href)))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K09 ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.  :)
+
+let $K09table := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
+        let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+        let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $namespace),
+                ("base:localId", count($localIds))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
+
+(: TODO: should be "and" or "or" in where clause?? :)
+let $K10invalid := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+        let $ok := ($x = $prefLabel and $x = $altLabel)
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $x)
+            ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K11
+aqd:AQD_Measures/aqd:exceedanceAffected MUST reference
+an existing Source Apportionment (I) document via namespace/localId
+
+You must provide a link to a source apportionment document from data flow I via its namespace & localId.
+:)
+
+let $K11 := try{
+    let $el := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
+    let $label := data($el/@xlink:href)
+    let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($el), $el/@xlink:href)
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K12
+aqd:AQD_Measures/aqd:usedForScenario shall reference an existing Scenario
+delivered within a data flow J  via namespace/localId.
+
+A link may be provided to Evaluation Scenario (J). This must be valid via namespace & localId
+:)
+
+let $K12 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
+    let $label := data($el/@xlink:href)
+    let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($el), $el/@xlink:href)
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K13
+aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+
+Unique code of the measure. This may be a unique local code for the measure or
+may be identical to the unique code used in K2.1.
+
+TODO: we implemented just first line of the requirement, the second line contradicts it
+:)
+
+let $K13invalid := try {
+    for $node in $docRoot//aqd:AQD_Measures
+        let $code := $node/aqd:code
+        let $localId := $node/aqd:inspireId/base:Identifier/base:localId
+        let $ok := $code = $localId
+        return common:conditionalReportRow(
+            $ok,
+            [
+                (node-name($code), data($code)),
+                (node-name($localId), data($localId))
+            ]
+        )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure :)
+let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
+let $K14invalid := common:needsValidString(
+        $docRoot//aqd:AQD_Measures, 'aqd:name'
+        )
+
+(: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure :)
+let $K15invalid := common:needsValidString(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:description'
+        )
+
+let $errorLevel := 'error'
+
+(: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
+Measure classification should conform to vocabulary :)
+let $K16 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:classification,
+        $vocabulary:MEASURECLASSIFICATION_VOCABULARY
+        )
+
+(: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
+Measure type should conform to vocabulary :)
+let $K17 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:measureType,
+        $vocabulary:MEASURETYPE_VOCABULARY
+        )
+
+
+(: K18 aqd:AQD_Measures/aqd:administrativeLevel shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/
+Administrative level should conform to vocabulary
+:)
+let $K18 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
+        $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
+        )
+
+(: K19
+aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/
+The measure's timescale should conform to vocabulary
+:)
+let $K19 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:timeScale,
+        $vocabulary:TIMESCALE_VOCABULARY
+        )
+
+
+(: K20 aqd:AQD_Measures/aqd:costs/ should be provided
+Information on the cost of the measure should be provided
+:)
+let $K20 := common:isNodeNotInParentReport(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:costs'
+        )
+
+
+(: K21
+If aqd:costs provided
+aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be
+an integer number. If voided /aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:comment
+must be populated with an explanation of why no costs are available.
+
+The estimated total costs should be provided. If not, an explanation on the
+reasons for not providing it should be included.
+:)
+
+let $K21 := try {
+    let $root := $docRoot//aqd:AQD_Measures
+    let $costs := $root/aqd:costs
+    let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
+    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment
+    let $costsRoot := $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+
+    let $isValidCost := common:is-a-number(data($implCosts))
+    let $hasCost := common:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+
+    return
+        if (common:isNodeInParent($root, 'aqd:costs'))
+        then (
+            if (not($isValidCost))
+            then
+                if (empty($comment/text()))
+                then
+                    if ($hasCost)
+                    then
+                        (
+                         <tr> <td title="{node-name($implCosts)}">{$errors:K21}</td> </tr>
+                        )
+                    else
+                        ( <tr><td title="{node-name($comment)}">{$errors:K21}</td></tr>)
+                else
+                    ()  (: ok, we have a comment :)
+            else
+                ()      (: ok, cost is a number :)
+        )
+        else
+            <tr><td title="{node-name($costs)}">{$errors:K21}</td></tr>
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K22
+If populated,
+/aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:finalImplementationCosts should be an
+integer number
+If the final total costs of the measure is provided, this nneeds to be a number
+
+let $K22 := c:maybeNodeValueIsIntegerReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts'
+)
+:)
+
+let $K22 := common:validatePossibleNodeValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts',
+    common:is-a-number#1
+)
+
+(: K23
+If aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts is
+populated aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency must be populated
+and shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/common/currencies/
+
+If estimated costs are provided, the currency must be provided conforming to
+vocabulary
+
+:)
+
+let $K23 := common:validateMaybeNodeWithValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:estimatedImplementationCosts',
+    common:isInVocabulary(
+        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency/@xlink:href,
+        $vocabulary:CURRENCIES
+    )
+)
+
+
+(: K24
+aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
+
+Source sector should conform to vocabulary
+:)
+
+let $K24 := common:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:sourceSectors,
+    $vocabulary:SOURCESECTORS_VOCABULARY
+    )
+
+(: K25
+aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
+
+Spatial scale should conform to vocabulary
+:)
+
+let $K25 := common:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:spatialScale,
+    $vocabulary:SPACIALSCALE_VOCABULARY
+    )
+
+(: K26
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/
+
+Measure Implementation Status should conform to vocabulary
+:)
+
+let $K26 := common:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status,
+    $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY
+    )
+
+(: K27
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+
+let $K27 := common:isDateFullISOReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+(: K28
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+must be a date in full ISO format
+and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition.
+If voided it should be indeterminatePosition="unknown"
+
+The planned end date for the measure should be provided in the right format,
+if unknown voided using indeterminatePosition="unknown"
+:)
+
+let $K28 := try {
+    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+
+    let $ok := (
+        (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+        or
+        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            ("gml:beginPosition", data($begin)),
+            ("gml:endPosition", data($end))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K29
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+let $K29 := common:isDateFullISOReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+
+(: K30
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+must be a date in full ISO format and must be after
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition.
+
+If voided it should be indeterminatePosition="unknown"
+The planned end date for the measure should be provided in the right format,
+if unknown, voided using indeterminatePosition="unknown"
+:)
+let $K30 := try {
+    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+
+    let $ok := (
+        (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+        or
+        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            ("gml:beginPosition", data($begin)),
+            ("gml:endPosition", data($end))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K31
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+to be provided in the following format yyyy or yyyy-mm-dd
+
+The full effect date of the measure must be provided and the format to be yyyy or yyyy-mm-dd
+:)
+
+let $K31 := try {
+    let $node := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+
+    let $ok := (
+        $node castable as xs:date
+        or
+        $node castable as xs:gYear
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($node), data($node))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K32
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates
+RESERVE
+:)
+
+let $K32 := <tr><td title="aqd:otherDates">{data($docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates)}</td></tr>
+
+(: K33
+A text string may be provided under
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
+If voided an explanation of why this information unavailable shall be provided in
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+:)
+
+let $K33 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
+    let $comment := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+
+    let $ok := (
+        not(
+            empty($main/text())
+            or
+            empty($comment/text())
+        )
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($main), data($main)),
+            (node-name($comment), data($comment))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(:
+K34
+Check that the element
+aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity is
+an integer or floating point numeric >= 0 if attribute xsi:nil="false"
+(example:
+    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false">273</aqd:quantity>
+    )
+:)
+
+let $K34 := try {
+    let $node := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    (: TODO: should write a function for this? there's already is-a-number :)
+    let $isNum := (
+        ($node castable as xs:integer)
+        or
+        ($node castable as xs:float)
+    )
+
+    let $ok := (
+        ($node/@xsi:nil != 'false')
+        or
+        ($isNum and ($node cast as xs:float >= 0))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($node), data($node))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K35
+Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+(example: <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>)
+
+If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty
+:)
+let $K35 := try {
+    let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
+    (:let $asd := trace(functx:if-empty($node/text(), 0), "K35: "):)
+    let $ok := (
+        (functx:if-empty($node/text(), "") != "")
+        or
+        (
+            lower-case($node/@xsi:nil) = "true"
+            and
+            (
+                (lower-case($node/@nilReason) = "unknown")
+                or
+                (lower-case($node/@nilReason) = "unpopulated")
+                or
+                (lower-case($node/@nilReason) = "withheld")
+            )
+        )
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($node), data($node)),
+            (name($node/@nilReason), data($node/@nilReason))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K36
+If aqd:QuantityCommented/aqd:quantity attribute xsi:nil="true"
+aqd:QuantityCommented/aqd:comment must be populated
+
+If the quantification is voided an explanation is required in aqd:comment
+:)
+let $K36 := try {
+    let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
+    let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+
+    let $ok := (
+        (functx:if-empty($quantity/text(), "") = "")
+        or
+        (functx:if-empty($comment/text(), "") = "")
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($quantity), data($quantity)),
+            (node-name($comment), data($comment))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K37
+The unit attribute (aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity/@UoM)
+shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission
+
+the quantification of reductionOfEmissions should conform to vocabulary
+:)
+let $K37 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    let $uri := data($el/@uom)
+    let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
+    let $ok := ($uri and $uri = $validUris)
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($el), data($el)),
+            (name($el/@uom), data($uri))
+        ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K38
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/concentration/
+
+The level of concentration expected should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $K38 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+    let $uri := data($el/@uom)
+    let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+
+    let $isNum := (
+        ($el castable as xs:integer)
+        or
+        ($el castable as xs:float)
+    )
+
+    let $ok := (
+        $validVocabulary
+        and
+        ($isNum and ($el cast as xs:float >= 0))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($el), data($el)),
+            (name($el/@uom), data($uri))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K39
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/statistics
+
+The number of exceecedance expected should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $K39 := try {
+    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+    let $uri := data($el/@uom)
+    let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+
+    let $isNum := (
+        ($el castable as xs:integer)
+        or
+        ($el castable as xs:float)
+    )
+
+    let $ok := (
+        $validVocabulary
+        and
+        ($isNum and ($el cast as xs:float >= 0))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            (node-name($el), data($el)),
+            (name($el/@uom), data($uri))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K40
+Reserve for specificationOfHours
+:)
+
+let $K40 := ()
 
 return
+(
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("K0", $labels:K0, $labels:H0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build3("K0", $labels:K0, $labels:K0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build1("K01", $labels:K01, $labels:K01_SHORT, $K01, "", string($countMeasures), "", "", $errors:K01)}
+        {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
+        {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
+        {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
+        {html:build1("K05", $labels:K05, $labels:K05_SHORT, $K05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K05)}
+        {html:build1("K06", $labels:K06, $labels:K06_SHORT, $K06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K06)}
+        {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
+        {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
+        <!-- {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)} !-->
+        {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
+        {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " not conform to vocabulary", $errors:K10)}
+        {html:build2("K11", $labels:K11, $labels:K11_SHORT, $K11, "All values are valid", "needs valid input", $errors:K11)}
+        {html:build2("K12", $labels:K12, $labels:K12_SHORT, $K12, "All values are valid", "needs valid input", $errors:K12)}
+        {html:build2("K13", $labels:K13, $labels:K13_SHORT, $K13invalid, "All values are valid", " code not equal", $errors:K13)}
+        {html:build2("K14", $labels:K14, $labels:K14_SHORT, $K14invalid, "All values are valid", "needs valid input", $errors:K14)}
+        {html:build2("K15", $labels:K15, $labels:K15_SHORT, $K15invalid, "All values are valid", "needs valid input", $errors:K15)}
+        {html:build2("K16", $labels:K16, $labels:K16_SHORT, $K16, "All values are valid", "not conform to vocabulary",$errors:K16)}
+        {html:build2("K17", $labels:K17, $labels:K17_SHORT, $K17, "All values are valid", "not conform to vocabulary",$errors:K17)}
+        {html:build2("K18", $labels:K18, $labels:K18_SHORT, $K18, "All values are valid", "not conform to vocabulary",$errors:K18)}
+        {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
+        {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
+        {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
+        {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
+        {html:build2("K23", $labels:K23, $labels:K23_SHORT, $K23, "All values are valid", " needs valid input", $errors:K23)}
+        {html:build2("K24", $labels:K24, $labels:K24_SHORT, $K24, "All values are valid", "not conform to vocabulary", $errors:K24)}
+        {html:build2("K25", $labels:K25, $labels:K25_SHORT, $K25, "All values are valid", "not conform to vocabulary", $errors:K25)}
+        {html:build2("K26", $labels:K26, $labels:K26_SHORT, $K26, "All values are valid", "not conform to vocabulary", $errors:K26)}
+        {html:build2("K27", $labels:K27, $labels:K27_SHORT, $K27, "All values are valid", "not full ISO format", $errors:K27)}
+        {html:build2("K28", $labels:K28, $labels:K28_SHORT, $K28, "All values are valid", "not valid", $errors:K28)}
+        {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
+        {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
+        {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
+        {html:build1("K32", $labels:K32, $labels:K32_SHORT, $K32, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K32)}
+        {html:build2("K33", $labels:K33, $labels:K33_SHORT, $K33, "All values are valid", "not valid", $errors:K33)}
+        {html:build2("K34", $labels:K34, $labels:K34_SHORT, $K34, "All values are valid", "not valid", $errors:K34)}
+        {html:build2("K35", $labels:K35, $labels:K35_SHORT, $K35, "All values are valid", "not valid", $errors:K35)}
+        {html:build2("K36", $labels:K36, $labels:K36_SHORT, $K36, "All values are valid", "not valid", $errors:K36)}
+        {html:build2("K37", $labels:K37, $labels:K37_SHORT, $K37, "All values are valid", "not valid", $errors:K37)}
+        {html:build2("K38", $labels:K38, $labels:K38_SHORT, $K38, "All values are valid", "not valid", $errors:K38)}
+        {html:build2("K39", $labels:K39, $labels:K39_SHORT, $K39, "All values are valid", "not valid", $errors:K39)}
+        {html:build1("K40", $labels:K40, $labels:K40_SHORT, $K40, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K40)}
+
     </table>
+)
+
 };
 
 declare function dataflowK:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
@@ -11295,6 +12970,116 @@ declare function envelope:validateEnvelope($source_url as xs:string) as element(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (: Returns error class if there are more than 0 error elements :)
 declare function errors:getClass($elems) {
   if (count($elems) > 0) then
@@ -11360,6 +13145,15 @@ declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
     replace($arg, '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
 };
 
+declare function functx:if-empty
+ ( $arg as item()* ,
+   $value as item()* )  as item()* {
+
+    if (string($arg) != '')
+        then data($arg)
+        else $value
+};
+
 (:~
 : User: George Sofianos
 : Date: 6/17/2016
@@ -11397,15 +13191,16 @@ declare function geox:compareLatLong($srsName as xs:string, $lat as xs:double, $
 };
 
 (:~
-: 
+:
 : User: George Sofianos
 : Date: 5/31/2016
 : Time: 11:48 AM
 :)
 
 
-declare function html:getHead() as element()* {  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>
+declare function html:getHead() as element()* {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>,
+    <meta charset="utf-8"/>
 };
 
 declare function html:getCSS() as element(style) {
@@ -11698,6 +13493,7 @@ declare function html:build0($ruleCode as xs:string, $longText, $text, $records 
 
         return html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
+
 declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $unit as xs:string, $errorLevel as xs:string) {
     let $data := html:parseData($records, "data")
 
@@ -11718,7 +13514,18 @@ declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $rec
         else
             html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
-declare function html:build1($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build1(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11739,7 +13546,15 @@ declare function html:build1($ruleCode as xs:string, $longText, $text, $records 
     return html:buildGeneric($ruleCode, $longText, $text, $data, $validMsg, $bulletType)
 };
 
-declare function html:build2($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $validMsg as xs:string, $unit as xs:string, $errorLevel as xs:string) as element(tr)* {
+declare function html:build2(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $metadata := html:parseData($records, "metadata")
     let $thead := html:parseData($records, "thead")
@@ -11755,6 +13570,7 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $errors:INFO
         else
             $errorLevel
+
     let $message :=
         if ($skipped) then
             $labels:SKIPPED
@@ -11762,9 +13578,25 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $validMsg
         else
             $countRecords || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
-    return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
+
+    return html:buildGeneric(
+        $ruleCode,
+        $longText,
+        $text,
+        $data,
+        $message,
+        $bulletType
+    )
 };
-declare function html:build3($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build3(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
     let $data := html:parseData($records, "data")
     let $bulletType := $errorLevel
     return
@@ -11774,7 +13606,21 @@ declare function html:build3($ruleCode as xs:string, $longText, $text, $records 
             <td><span class="largeText">{$message}</span></td>
         </tr>
 };
-declare function html:build9($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+
+(:  Invalid msg: "10 records found"
+:)
+declare function html:build9(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11790,13 +13636,30 @@ declare function html:build9($ruleCode as xs:string, $longText, $text, $records 
         if ($countRecords = 0) then
             $skippedMsg
         else if ($countInvalid > 0) then
-            $countInvalid || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
+            $countInvalid ||
+            " " ||
+            $unit ||
+            substring("s ", number(not($countRecords > 1)) * 2) ||
+            " found"
         else
             $validMsg
     return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
 };
-(: TODO: maybe remove :)
-declare function html:build7($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+(:  Invalid msg: "X is not unique"
+
+TODO: maybe remove :)
+declare function html:build7(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11835,7 +13698,15 @@ declare %private function html:parseData($records as element(tr)*, $type as xs:s
 };
 
 (: Builds HTML table rows for rules. :)
-declare %private function html:buildGeneric($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $bulletType as xs:string) as element(tr)* {
+declare %private function html:buildGeneric(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $bulletType as xs:string
+) as element(tr)* {
+
     let $countRecords := count($records)
     let $hasFailed := errors:hasFailed(($records, $records//td))
     let $bulletType := if ($hasFailed) then $errors:FAILED else $bulletType
@@ -12079,6 +13950,17 @@ declare function html:createMetadataTR($rowsCount as xs:integer) {
     </tr>
 };
 
+(: TODO: correct name for this function would be html:errorRow :)
+declare function html:createErrorRow(
+    $errCode as xs:anyAtomicType,
+    $errDesc as xs:string
+) {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$errCode}</td>
+        <td title="Error description">{$errDesc}</td>
+    </tr>
+};
+
 (:~
 : AQD Labels
 : @author George Sofianos
@@ -12100,6 +13982,266 @@ declare function html:createMetadataTR($rowsCount as xs:integer) {
 
 
 (: QC Labels :)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -13194,6 +15336,33 @@ declare function query:getModel($url as xs:string) as xs:string {
       }"
 };
 
+(: Checks if X references an existing Y via namespace/localid :)
+declare function query:existsViaNameLocalId(
+        $label as xs:string,
+        $name as xs:string
+) as xs:boolean {
+    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+       SELECT count(?label) as ?cnt
+       WHERE {
+?scenariosXMLURI a aq:" || $name ||";
+aq:inspireId ?inspireId.
+?inspireId rdfs:label ?label.
+?inspireId aq:namespace ?name.
+?inspireId aq:localId ?localId
+FILTER (concat(?name,'/',?localId) = '" || $label || "')
+   }"
+
+    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
+    (:let $asd := trace($count, "count: "):)
+    return
+        if ($count > 0)
+            then
+                true()
+            else
+               false()
+};
+
 (: G :)
 declare function query:getAttainment($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -13207,6 +15376,53 @@ declare function query:getAttainment($url as xs:string) as xs:string {
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?attainment), '" || $url || "'))
    }"
+};
+
+(: J :)
+declare function query:getEvaluationScenarios($url as xs:string) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?EvaluationScenario a aqd:AQD_EvaluationScenario;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?EvaluationScenario), '" || $url || "'))
+   }"
+};
+
+(: K :)
+declare function query:getMeasures($url as xs:string) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?measure a aqd:AQD_Measures;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?measure), '" || $url || "'))
+   }"
+};
+
+declare function query:getAllMeasuresIds($namespaces as xs:string*) as xs:string* {
+  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+   PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+   SELECT *
+   WHERE {
+        ?measure a aqd:AQD_Measures;
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?inspireLabel .
+        ?inspireId aqd:namespace ?namespace
+        FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
+  }"
+  return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
 (: Feature Types queries - These queries return all ids of the specified feature type :)
@@ -13913,6 +16129,15 @@ declare function sparqlx:executeSparqlEndpoint_D($sparql as xs:string) as elemen
 : Date: 6/6/2016
 : Time: 6:30 PM
 :)
+
+
+
+
+
+
+
+
+
 
 
 
