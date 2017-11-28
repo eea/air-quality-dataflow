@@ -556,7 +556,8 @@ WHERE {
 
 } LIMIT 50
 "
-  return data(sparqlx:run($query)//sparql:binding[@name='pollutant']/sparql:literal)
+  let $res := sparqlx:run($query)
+  return data($res//sparql:binding[@name='pollutant']/sparql:uri)
 };
 
 declare function query:getPollutantCodeAndProtectionTarge($cdrUrl as xs:string, $bDir as xs:string) as xs:string {
