@@ -935,7 +935,10 @@ declare function dataflowI:checkReport(
 
     :)
 
-    let $I25 := ()
+    let $I25 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I26
     /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
@@ -947,7 +950,11 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I26 := ()
+    let $I26 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
     (: I27
 
     /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
@@ -957,11 +964,13 @@ declare function dataflowI:checkReport(
 
     ERROR
     :)
-    let $I27 := ()
+    let $I27 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
-    (: 28 is missing in XLS
+    (: I28 is missing in XLS :)
     let $I28 := ()
-    :)
 
     (: I29
 
@@ -976,7 +985,10 @@ declare function dataflowI:checkReport(
     ERROR
 
     :)
-    let $I29 := ()
+    let $I29 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I30
 
@@ -989,8 +1001,10 @@ declare function dataflowI:checkReport(
 
     ERROR
     :)
-    let $I30 := ()
-
+    let $I30 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I31
 
@@ -1009,8 +1023,10 @@ declare function dataflowI:checkReport(
     WARNING
     :)
 
-    let $I31 := ()
-
+    let $I31 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I32
@@ -1030,8 +1046,10 @@ declare function dataflowI:checkReport(
     WARNING
     :)
 
-    let $I32 := ()
-
+    let $I32 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I33
@@ -1046,8 +1064,10 @@ declare function dataflowI:checkReport(
     RESERVE
 
     :)
-    let $I33 := ()
-
+    let $I33 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I34
 
@@ -1061,8 +1081,10 @@ declare function dataflowI:checkReport(
     RESERVE
     :)
 
-    let $I34 := ()
-
+    let $I34 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I35
     WHERE
@@ -1077,8 +1099,10 @@ declare function dataflowI:checkReport(
 
     :)
 
-    let $I35 := ()
-
+    let $I35 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I36
 
@@ -1091,8 +1115,10 @@ declare function dataflowI:checkReport(
 
     :)
 
-    let $I36 := ()
-
+    let $I36 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I37
@@ -1105,8 +1131,10 @@ declare function dataflowI:checkReport(
     ERROR
 
     :)
-    let $I37 := ()
-
+    let $I37 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I38
 
@@ -1119,8 +1147,10 @@ declare function dataflowI:checkReport(
     ERROR
 
     :)
-    let $I38 := ()
-
+    let $I38 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I39
@@ -1135,9 +1165,10 @@ declare function dataflowI:checkReport(
     RESERVE
     :)
 
-    let $I39 := ()
-
-
+    let $I39 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I40
@@ -1154,7 +1185,10 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
 
-    let $I40 := ()
+    let $I40 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I41
@@ -1170,7 +1204,10 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I41 := ()
+    let $I41 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
 
     (: I42
@@ -1191,8 +1228,10 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I42 := ()
-
+    let $I42 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I43
 
@@ -1213,7 +1252,10 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I43 := ()
+    let $I43 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I44
 
@@ -1230,7 +1272,10 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I44 := ()
+    let $I44 := try {
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (:  I45
     "WHERE ./aqd:pollutant xlink:href attribute EQUALs
