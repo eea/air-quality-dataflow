@@ -414,7 +414,9 @@ declare variable $errors:H09 := errors:getError("H09");
 declare variable $errors:H10 := errors:getError("H10");
 declare variable $errors:H11 := errors:getError("H11");
 declare variable $errors:H12 := errors:getError("H12");
+declare variable $errors:H13 := errors:getError("H13");
 declare variable $errors:H14 := errors:getError("H14");
+declare variable $errors:H15 := errors:getError("H15");
 declare variable $errors:H16 := errors:getError("H16");
 declare variable $errors:H17 := errors:getError("H17");
 declare variable $errors:H18 := errors:getError("H18");
@@ -1296,8 +1298,12 @@ declare variable $labels:H11 := labels:getDefinition("H11");
 declare variable $labels:H11_SHORT := labels:getPrefLabel("H11");
 declare variable $labels:H12 := labels:getDefinition("H12");
 declare variable $labels:H12_SHORT := labels:getPrefLabel("H12");
+declare variable $labels:H13 := labels:getDefinition("H13");
+declare variable $labels:H13_SHORT := labels:getPrefLabel("H13");
 declare variable $labels:H14 := labels:getDefinition("H14");
 declare variable $labels:H14_SHORT := labels:getPrefLabel("H14");
+declare variable $labels:H15 := labels:getDefinition("H15");
+declare variable $labels:H15_SHORT := labels:getPrefLabel("H15");
 declare variable $labels:H16 := labels:getDefinition("H16");
 declare variable $labels:H16_SHORT := labels:getPrefLabel("H16");
 declare variable $labels:H17 := labels:getDefinition("H17");
@@ -10261,6 +10267,226 @@ let $H08:= try {
     html:createErrorRow($err:code, $err:description)
 }
 
+(: H09
+ ./aqd:inspireId/base:Identifier/base:namespace List base:namespace
+ and count the number of base:localId assigned to each base:namespace.
+
+ List unique namespaces used and count number of elements
+:)
+
+let $H09 := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier/base:namespace)
+    let $localIds := $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+    let $ok := false()
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("base:namespace", $namespace),
+            ("base:localId", count($localIds))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H10
+Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)
+
+Check namespace is registered
+:)
+
+let $H10 := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+    let $ok := (
+        $x = $prefLabel
+                and
+                $x = $altLabel
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("base:namespace", $x)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H13 RESERVE :)
+
+let $H13 := ()
+
+(: H14
+aqd:AQD_Plan/aqd:code should begin with with the 2-digit country code according to ISO 3166-1.
+
+We recommend you start you codes with the 2-digit country code according to ISO 3166-1.
+:)
+
+let $H14 := try {
+    let $el := $docRoot//aqd:AQD_Plan/aqd:code
+    let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H15 RESERVE :)
+
+let $H15 := ()
+
+(: H30
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description must contain a text string describing the publication
+
+Brief textual description of the published AQ Plan should be provided. If available, include the ISBN number.
+:)
+
+let $H30 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "" != "")
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H31
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:title must contain the title of the publication
+
+Title as written in the published AQ Plan.
+:)
+
+let $H31 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:title
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "" != "")
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H32
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:author must contain the author(s) of the publication
+
+Author(s) should be provided as text (If there are multiple authors, please provide in one field separated by commas)
+:)
+
+let $H32 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:author
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "" != "")
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H33
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition must contaong the
+date of publication in yyyy-mm-dd format
+
+The publication date of the AQ Plan should be provided in yyyy or yyyy-mm-dd format
+:)
+
+let $H33 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
+    for $node in $main
+    let $ok := (
+        $node castable as xs:date
+                or
+                $node castable as xs:gYear
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($node), data($node))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H34
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publisher must container a text string describing the publisher
+
+Publisher should be provided as a text (Publishing institution, academic jourmal, etc.)
+:)
+
+let $H34 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publisher
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "" != "")
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H35
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:webLink must contain a URL to document  or web resource
+describing the last version of full air quality plan
+
+Provided url to the published AQ Plan should be valid
+:)
+
+let $H35 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:webLink
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 return
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
@@ -10268,10 +10494,21 @@ return
         {html:build1("H01", $labels:H01, $labels:H01_SHORT, $H01, "", string($countPlans), "", "", $errors:H01)}
         {html:buildSimple("H03", $labels:H03, $labels:H03_SHORT, $H03, "", "", $H03errorLevel)}
         {html:build1("H04", $labels:H04, $labels:H04_SHORT, $H04, "", string(count($H04)), " ", "", $errors:H04)}
-        {html:build1("H05", $labels:K05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
-        {html:build1("H06", $labels:K06, $labels:H06_SHORT, $H06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H06)}
+        {html:build1("H05", $labels:H05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
+        {html:build1("H06", $labels:H06, $labels:H06_SHORT, $H06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H06)}
         {html:build2("H07", $labels:H07, $labels:H07_SHORT, $H07, "No duplicate values found", " duplicate value", $errors:H07)}
         {html:build2("H08", $labels:H08, $labels:H08_SHORT, $H08, "No duplicate values found", " duplicate value", $errors:H08)}
+        {html:buildUnique("H09", $labels:H09, $labels:H09_SHORT, $H09, "namespace", $errors:H09)}
+        {html:build2("H10", $labels:H10, $labels:H10_SHORT, $H10, "All values are valid", " not conform to vocabulary", $errors:H10)}
+        {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
+        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
+        {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
+        {html:build2("H30", $labels:H30, $labels:H30_SHORT, $H30, "All values are valid", "needs valid input", $errors:H30)}
+        {html:build2("H31", $labels:H31, $labels:H31_SHORT, $H31, "All values are valid", "needs valid input", $errors:H31)}
+        {html:build2("H32", $labels:H32, $labels:H32_SHORT, $H32, "All values are valid", "needs valid input", $errors:H32)}
+        {html:build2("H33", $labels:H33, $labels:H33_SHORT, $H33, "All values are valid", "not valid", $errors:H33)}
+        {html:build2("H34", $labels:H34, $labels:H34_SHORT, $H34, "All values are valid", "needs valid input", $errors:H34)}
+        {html:build2("H35", $labels:H35, $labels:H35_SHORT, $H35, "All values are valid", "not valid", $errors:H35)}
     </table>
 };
 
@@ -15111,6 +15348,8 @@ declare function envelope:validateEnvelope($source_url as xs:string) as element(
 
 
 
+
+
 (: Returns error class if there are more than 0 error elements :)
 declare function errors:getClass($elems) {
   if (count($elems) > 0) then
@@ -16013,6 +16252,10 @@ declare function html:createErrorRow(
 
 
 (: QC Labels :)
+
+
+
+
 
 
 
