@@ -137,17 +137,17 @@ Number of AQ Plans reported
 let $countEvaluationScenario := count($docRoot//aqd:AQD_EvaluationScenario)
 let $J1 := try {
     for $rec in $docRoot//aqd:AQD_EvaluationScenario
-    let $el := $rec/aqd:inspireId/base:Identifier
-    return
-        c:conditionalReportRow(
-        false(),
-        [
-            ("gml:id", data($rec/@gml:id)),
-            ("base:localId", data($el/base:localId)),
-            ("base:namespace", data($el/base:namespace)),
-            ("base:versionId", data($el/base:versionId))
-        ]
-        )
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            c:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -205,17 +205,17 @@ are different to previous delivery (for the same YEAR).
 let $J3 := try {
     let $main := $docRoot//aqd:AQD_EvaluationScenario
     for $x in $main/aqd:inspireId/base:Identifier
-    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
-    return
-        c:conditionalReportRow(
-        $ok,
-        [
-            ("gml:id", data($main/@gml:id)),
-            ("aqd:inspireId", $inspireId),
-            ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
-        ]
-        )
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
+        return
+            c:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -388,19 +388,20 @@ The plan document must have the same reporting year as the source apportionment 
 :)
 
 let $J11 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:usedInPlan
-    let $label := $el/@xlink:href
-    let $ok := query:existsViaNameLocalIdYear(
-            $label,
-            'AQD_Plan',
-            $reportingYear
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $label)
-            ]
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:usedInPlan
+    for $el in $main
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
         )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -414,19 +415,20 @@ via its namespace & localId (for the same reporting year)
 :)
 
 let $J12 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:sourceApportionment
-    let $label := $el/@xlink:href
-    let $ok := query:existsViaNameLocalIdYear(
-            $label,
-            'AQD_SourceApportionment',
-            $reportingYear
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $label)
-            ]
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:sourceApportionment
+    for $el in $main
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_SourceApportionment',
+                $reportingYear
         )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -438,14 +440,15 @@ A code of the scenario should be provided as nn alpha-numeric code starting with
 :)
 
 let $J13 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:codeOfScenario
-    let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
-    return c:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $el)
-            ]
-        )
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:codeOfScenario
+    for $el in $main
+        let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $el)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -652,19 +655,21 @@ Check if start year of the evaluation scenario is the same as the source apporti
 :)
 
 let $J22 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:sourceApportionment
-    let $year := $docRoot//aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
-    let $ok := query:existsViaNameLocalIdYear(
-            $el/@xlink:href,
-            'AQD_SourceApportionment',
-            $year
-    )
-    return c:conditionalReportRow(
-                $ok,
-                [
-                    (node-name($el), $el/@xlink:href)
-                ]
-            )
+    let $main := $docRoot//aqd:AQD_EvaluationScenario
+    for $node in $main
+        let $el := $node/aqd:sourceApportionment
+        let $year := $node/aqd:startYear/gml:TimeInstant/gml:timePosition
+        let $ok := query:existsViaNameLocalIdYear(
+                $el/@xlink:href,
+                'AQD_SourceApportionment',
+                $year
+        )
+        return c:conditionalReportRow(
+                    $ok,
+                    [
+                        (node-name($el), $el/@xlink:href)
+                    ]
+                )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -702,28 +707,30 @@ The baseline total emissions should be provided as integer with correct unit.
 :)
 
 let $J24 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
-    let $ok := (
-        $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
-        and
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_EMISSION_VOCABULARY
+    let $main := $docRoot//aqd:AQD_EvaluationScenario
+    for $node in $main
+        let $el := $node/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:totalEmissions", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -737,26 +744,27 @@ The expected concentration (under baseline scenario) should be provided as an in
 :)
 
 let $J25 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_CONCENTRATION_VOCABULARY
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedConcentration", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -770,26 +778,27 @@ The number of exceecedance expected (under baseline scenario) should be provided
 :)
 
 let $J26 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_STATISTICS
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedExceedances", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -827,7 +836,8 @@ A description of the emission scenario used for the projection analysis should b
 :)
 
 let $J28 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description
+    for $el in $main
     let $ok := (data($el) castable as xs:string
         and
         functx:if-empty(data($el), "" != "")
@@ -852,28 +862,29 @@ The projection total emissions should be provided as integer with correct unit.
 
 
 let $J29 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
-    let $ok := (
-        $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
-        and
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_EMISSION_VOCABULARY
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
+    for $el in $main
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:totalEmissions", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -885,28 +896,29 @@ http://dd.eionet.europa.eu/vocabulary/uom/concentration/
 
 The expected concentration (under projection scenario) should be provided as an integer and its unit should conform to vocabulary
 :)
-
+(:  TODO !!IMPORTANT!! CHECK IF $main node is not empty for all CHECKS  :)
 let $J30 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_CONCENTRATION_VOCABULARY
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedConcentration", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -921,26 +933,27 @@ as an integer and its unit should conform to vocabulary
 :)
 
 let $J31 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        c:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_STATISTICS
+    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            c:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
         )
-    )
-    return c:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedExceedances", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return c:conditionalReportRow(
+                $ok,
+                [
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
