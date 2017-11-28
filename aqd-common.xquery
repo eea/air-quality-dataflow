@@ -87,7 +87,11 @@ declare function common:getReportingYear($xml as document-node()) as xs:string {
         else ""
 };
 
-declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
+(:~ Returns true if $seq1 contains any element from $seq2 :)
+declare function common:containsAny(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:boolean {
     not(empty(
             for $str in $seq2
             where not(empty(index-of($seq1, $str)))
@@ -96,8 +100,11 @@ declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as
     ))
 };
 
-declare function common:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
-as xs:string* {
+(:~ Returns intersection (common elements) of seq1 and seq1 :)
+declare function common:getSublist(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:string* {
 
     distinct-values(
             for $str in $seq2
@@ -107,6 +114,7 @@ as xs:string* {
     )
 };
 
+(:~ Returns a <span> with <a> links for each valid link in given sequence :)
 declare function common:checkLink($text as xs:string*) as element(span)*{
     for $c at $pos in $text
     return
@@ -457,6 +465,7 @@ declare function common:isDateFullISOReport(
         }
 };
 
+(:~ returns True if $seq has one one given node :)
 declare function common:has-one-node(
     $seq as item()*,
     $item as item()?
@@ -464,7 +473,7 @@ declare function common:has-one-node(
     let $norm-seq :=
         for $x in $seq
         return $x => normalize-space() => lower-case()
-return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
 };
 
 (: Check if end date is after begin date and if both are in full ISO format:)
@@ -496,3 +505,15 @@ declare function common:sum-of-nodes(
         return $i
     return sum($numbers)
 };
+
+(:~ Returns true if the given node has no attributes or children :)
+declare function common:has-content(
+    $nodes as element()*
+) {
+    let $res :=
+        for $node in $nodes
+            let $attr := empty($node/@*)
+            let $children := empty($node/*)
+        return $attr or $children
+    return $res = true()
+}

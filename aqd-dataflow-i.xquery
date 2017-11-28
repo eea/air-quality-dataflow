@@ -941,6 +941,7 @@ declare function dataflowI:checkReport(
             let $att := query:getAttainment
 
             let $ok := false()
+
         return common:conditionalReportRow(
             $ok
             [node-name($node), data($node)]
@@ -961,10 +962,12 @@ declare function dataflowI:checkReport(
 
     let $I26 := try {
         for $node in $sources
-            let $ok := false()
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+            let $uom := $area/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
         return common:conditionalReportRow(
             $ok
-            [node-name($node), data($node)]
+            [node-name($area), $uom]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -981,7 +984,9 @@ declare function dataflowI:checkReport(
     :)
     let $I27 := try {
         for $node in $sources
-            let $ok := false()
+            let $length := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+            let $uom := $length/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
         return common:conditionalReportRow(
             $ok
             [node-name($node), data($node)]
@@ -1008,7 +1013,10 @@ declare function dataflowI:checkReport(
     :)
     let $I29 := try {
         for $node in $sources
-            let $ok := false()
+            let $area :=$node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $st := common:has-content($area/aqd:stationUsed)
+            let $mu := common:has-content($area/aqd:modelUsed)
+            let $ok := $st or $mu
         return common:conditionalReportRow(
             $ok
             [node-name($node), data($node)]
