@@ -167,32 +167,32 @@ FILTER (concat(?name,'/',?localId) = '" || $label || "')
             else
                 false()
 };
+
 (: Checks if X references an existing Y via namespace/localid and reporting year :)
 declare function query:existsViaNameLocalIdYear(
         $label as xs:string,
         $name as xs:string,
         $year as xs:string
 ) as xs:boolean {
-    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-       SELECT count(?label) as ?cnt
-       WHERE {
-?scenariosXMLURI a aq:" || $name ||";
-aq:inspireId ?inspireId.
-?inspireId rdfs:label ?label.
-?inspireId aq:namespace ?name.
-?inspireId aq:localId ?localId
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
-FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
-   }"
+
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $name ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
+}
+"
 
     let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
-    return
-        if ($count > 0)
-            then
-                true()
-            else
-                false()
+    return $count > 0
 };
 
 

@@ -937,6 +937,9 @@ declare function dataflowI:checkReport(
 
     let $I25 := try {
         for $node in $sources
+            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification@xlink:href
+            let $att := query:getAttainment
+
             let $ok := false()
         return common:conditionalReportRow(
             $ok
