@@ -763,7 +763,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
@@ -816,7 +816,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
@@ -877,6 +877,7 @@ declare function dataflowI:checkReport(
     ERROR
 
     TODO: check a better replacement for is-a-number
+    TODO: improve reporting
 
     :)
     let $I23 := try {
@@ -890,7 +891,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $a or $b]
                 else
                     ()
         }
@@ -958,7 +959,9 @@ declare function dataflowI:checkReport(
     :)
     let $I27 := ()
 
+    (: 28 is missing in XLS
     let $I28 := ()
+    :)
 
     (: I29
 
@@ -987,19 +990,246 @@ declare function dataflowI:checkReport(
     ERROR
     :)
     let $I30 := ()
+
+
+    (: I31
+
+    The subject of
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute shall be found in
+    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    The exceeding AQ_Model must be included in the corresponding Attainment
+
+    Similar to G74. However, G74 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    :)
+
     let $I31 := ()
+
+
+
+    (: I32
+
+    The subject of
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed
+    xlink:href attribute shall be found in
+    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    The exceeding SamplingPoint must be included in the corresponding Attainment
+
+    Similar to G76. However, G76 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    :)
+
     let $I32 := ()
+
+
+
+    (: I33
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatalExtent
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:administrativeUnit
+    shall be populated
+
+    Spatial extent or administrative unit may be provided
+
+    RESERVE
+
+    :)
     let $I33 := ()
+
+
+    (: I34
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+    shall be populated
+
+    Information on surface are or road lenght shall be provided
+
+    RESERVE
+    :)
+
     let $I34 := ()
+
+
+    (: I35
+    WHERE
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+    shall EQUAL “true”
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+    shall be populated
+
+    If exceedance is TRUE, information on population exposed must be provided
+
+    RESERVE
+
+    :)
+
     let $I35 := ()
+
+
+    (: I36
+
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+    shall be populated
+
+    If exceedance is TRUE, information on area exposed must be provided
+
+    RESERVE
+
+    :)
+
     let $I36 := ()
+
+
+
+    (: I37
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    shall be a calendar year in yyyy format
+
+    Reference year for the population/exposure data in yyyy format
+
+    ERROR
+
+    :)
     let $I37 := ()
+
+
+    (: I38
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+    shall conform to vocabulary
+    http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/
+
+    Exceedance reason must match vocabulary
+
+    ERROR
+
+    :)
     let $I38 := ()
+
+
+
+    (: I39
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+    may be populated if  ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation)
+
+    If the pollutant is SO2, PM10, PM2.5 or CO deduction assessment methods may
+    be populated
+
+    RESERVE
+    :)
+
     let $I39 := ()
+
+
+
+
+    (: I40
+
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+    must conform to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to assessment type is
+    expected
+
+    BLOCKER
+    :)
+
     let $I40 := ()
+
+
+    (: I41
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    must be populated.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a Description of the assessment
+    type is expected
+
+    ERROR
+    :)
+
     let $I41 := ()
+
+
+    (: I42
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), at least one of
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    or
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    must be populated and correctly link to D/D1b.
+
+    Cross check the links provided against D, all assessment methods must exist
+    in D
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to the assessment method
+    in D or D1b is required via xlink:href attribute
+
+    ERROR
+    :)
+
     let $I42 := ()
+
+
+    (: I43
+
+    WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the following elments must be empty or
+    not provided:
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+
+    If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not
+    expected: assessmentType, link to adjusting sampling
+    point/model;assessmentTypeDescription;assessmentType
+
+    ERROR
+    :)
+
     let $I43 := ()
+
+    (: I44
+
+    If
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+    is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected"
+    if another pollutant it must be "noneApplicable"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod
+    populated, adjustmentType must be "fullyCorrected", else "noneApplicable"
+
+    ERROR
+    :)
+
     let $I44 := ()
 
     (:  I45
