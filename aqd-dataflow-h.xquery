@@ -168,23 +168,23 @@ let $H04 := try {
     let $gmlIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(@gml:id))
     let $inspireIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(aqd:inspireId))
     for $x in $docRoot//aqd:AQD_Plan
-    let $id := $x/@gml:id
-    let $inspireId := $x/aqd:inspireId
-    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-    let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
             and
             count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
-    )
-    return common:conditionalReportRow(
+        )
+        return common:conditionalReportRow(
             not($ok),
             [
-            ("gml:id", data($x/@gml:id)),
-            ("aqd:inspireId", distinct-values($aqdinspireId)),
-            ("aqd:pollutant", data($x/aqd:pollutant)),
-            ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
-            ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:pollutant", data($x/aqd:pollutant)),
+                ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
+                ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
             ]
-    )
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -352,7 +352,7 @@ let $H30 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -375,7 +375,7 @@ let $H31 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -398,7 +398,7 @@ let $H32 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -421,9 +421,9 @@ let $H33 := try {
     let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
     for $node in $main
     let $ok := (
-        $node castable as xs:date
-                or
-                $node castable as xs:gYear
+        data($node) castable as xs:date
+        or
+        not(common:isInvalidYear(data($node)))
     )
     return common:conditionalReportRow(
             $ok,
@@ -446,7 +446,7 @@ let $H34 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,

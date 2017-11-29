@@ -461,7 +461,7 @@ let $J14 := try {
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
