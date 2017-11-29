@@ -74,6 +74,34 @@ declare function dataflowI:checkReport(
     let $sources := $docRoot//aqd:AQD_SourceApportionment
     let $allSources := query:sparql-objects-ids($namespaces, $node-name)
 
+    let $samplingPointAssessmentMetadata := ()
+    (:
+        let $results := sparqlx:run(query:getSamplingPointAssessmentMetadata())
+        return distinct-values(
+            for $i in $results
+            return concat(
+                $i/sparql:binding[@name='metadataNamespace']/sparql:literal,
+                "/",
+                $i/sparql:binding[@name='metadataId']/sparql:literal
+            )
+        )
+    :)
+
+    let $assessmentMetadata := ()
+    (:
+    distinct-values(
+        data(
+            sparqlx:run(
+                query:getAssessmentMethods()
+            )//concat(
+                sparql:binding[@name='assessmentMetadataNamespace']/sparql:literal,
+                "/",
+                sparql:binding[@name='assessmentMetadataId']/sparql:literal
+            )
+        )
+    )
+    :)
+
     (: NS Check
     Check prefix and namespaces of the gml:featureCollection according to
     expected root elements (More information at
@@ -1426,13 +1454,18 @@ declare function dataflowI:checkReport(
     in D or D1b is required via xlink:href attribute
 
     ERROR
-    TODO: implement
+    TODO: check implementation
     :)
 
     let $I42 := try {
         for $node in $sources
             let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata
+            let $a-m := $a/@xlink:href
+            let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
+
             let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata
+            let $b-m := $b/@xlink:href
+            let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
 
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
@@ -1443,13 +1476,10 @@ declare function dataflowI:checkReport(
                 then
                     true()
                 else
-                    $needed and (
-                        common:has-content($a/@xlink:href) or
-                        common:has-content($b/@xlink:href)
-                    )
+                    $a-ok or $b-ok
         return common:conditionalReportRow(
             $ok,
-            [node-name($a), data($a/@xlink:href)]
+            ["aqd:samplingPointAssessmentMetadata", data($a/@xlink:href)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)

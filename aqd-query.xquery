@@ -755,18 +755,17 @@ PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
 
-SELECT ?assessmentRegime ?inspireId ?localId ?inspireLabel ?assessmentMethods  ?samplingPointAssessmentMetadata ?metadataId ?metadataNamespace
+SELECT ?assessmentRegime ?inspireId ?localId ?inspireLabel ?assessmentMethods
 WHERE {
       ?assessmentRegime a aqd:AQD_AssessmentRegime ;
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
       ?inspireId aqd:localId ?localId .
       ?assessmentRegime aqd:assessmentMethods ?assessmentMethods .
-      ?assessmentMethods aqd:samplingPointAssessmentMetadata ?samplingPointAssessmentMetadata.
-      ?samplingPointAssessmentMetadata aq:inspireId ?metadataId.
-      ?samplingPointAssessmentMetadata aq:inspireNamespace ?metadataNamespace.
+      FILTER()
       }"
-}
+    return sparqlx:run($query)
+};
 
 
 (: TODO fix this to look at latest envelope :)
