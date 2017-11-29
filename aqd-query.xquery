@@ -330,7 +330,12 @@ declare function query:getAllFeatureIds($featureTypes as xs:string*, $namespaces
 };
 
 (: Generic queries :)
-declare function query:deliveryExists($obligations as xs:string*, $countryCode as xs:string, $dir as xs:string, $reportingYear as xs:string) as xs:boolean {
+declare function query:deliveryExists(
+    $obligations as xs:string*,
+    $countryCode as xs:string,
+    $dir as xs:string,
+    $reportingYear as xs:string
+) as xs:boolean {
   let $query :=
       "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
        SELECT ?envelope
@@ -364,7 +369,11 @@ declare function query:getLangCodesSparql() as xs:string {
 };
 
 (: C - Remove comment after migration :)
-declare function query:getModelEndPosition($latestDEnvelopes as xs:string*, $startDate as xs:string, $endDate as xs:string) as xs:string {
+declare function query:getModelEndPosition(
+    $latestDEnvelopes as xs:string*,
+    $startDate as xs:string,
+    $endDate as xs:string
+) as xs:string {
   let $last := count($latestDEnvelopes)
   let $filters :=
     for $x at $pos in $latestDEnvelopes
@@ -375,9 +384,10 @@ declare function query:getModelEndPosition($latestDEnvelopes as xs:string*, $sta
         concat("CONTAINS(str(?zone), '", $x , "')")
   let $filters := string-join($filters, "")
   return
-    concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+    concat("
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
 SELECT DISTINCT ?inspireLabel
     WHERE {
@@ -394,7 +404,11 @@ SELECT DISTINCT ?inspireLabel
 }")
 };
 
-declare function query:getSamplingPointEndPosition($latestDEnvelopes as xs:string*, $startDate as xs:string, $endDate as xs:string) as xs:string {
+declare function query:getSamplingPointEndPosition(
+    $latestDEnvelopes as xs:string*,
+    $startDate as xs:string,
+    $endDate as xs:string
+) as xs:string {
   let $last := count($latestDEnvelopes)
   let $filters :=
     for $x at $pos in $latestDEnvelopes
@@ -425,7 +439,10 @@ declare function query:getSamplingPointEndPosition($latestDEnvelopes as xs:strin
 };
 
 (: Returns latest report envelope for this country and Year :)
-declare function query:getLatestEnvelope($cdrUrl as xs:string, $reportingYear as xs:string) as xs:string {
+declare function query:getLatestEnvelope(
+    $cdrUrl as xs:string,
+    $reportingYear as xs:string
+) as xs:string {
   let $query := concat("PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
   SELECT *
    WHERE {
@@ -458,7 +475,10 @@ limit 1"
   return if ($result) then $result else "FILENOTFOUND"
 };
 
-declare function query:getEnvelopes($cdrUrl as xs:string, $reportingYear as xs:string) as xs:string* {
+declare function query:getEnvelopes(
+    $cdrUrl as xs:string,
+    $reportingYear as xs:string
+) as xs:string* {
   let $query :=
     "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
      SELECT *
@@ -509,28 +529,8 @@ declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:str
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
-(: Returns the pollutants for an attainment
-
-
-
-declare function query:sparql-objects-in-subject(
-    $url as xs:string,
-    $type as xs:string
-) as xs:string {
-  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-
-   SELECT ?inspireLabel
-   WHERE {
-      ?s a " || $type || ";
-      aqd:inspireId ?inspireId .
-      ?inspireId rdfs:label ?inspireLabel .
-      FILTER (CONTAINS(str(?s), '" || $url || "'))
-   }"
-};
-
-
+(:~ Returns the pollutants for an attainment
+TODO: rewrite query, I think it runs slow
 :)
 declare function query:get-pollutant-for-attainment(
     $subj-url as xs:string
@@ -610,7 +610,11 @@ xsd:date(substr(str(?endPosition),1,10)) >= xsd:date('" || $reportingYear || "-1
   }"
 };
 
-declare function query:getG14($envelopeB as xs:string, $envelopeC as xs:string, $reportingYear as xs:string) as xs:string {
+declare function query:getG14(
+    $envelopeB as xs:string,
+    $envelopeC as xs:string,
+    $reportingYear as xs:string
+) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -742,6 +746,29 @@ declare function query:getSamplingPointAssessmentMetadata() as xs:string {
           ?samplingPointAssessmentMetadata aq:inspireNamespace ?metadataNamespace.
           }"
 };
+
+(: returns a list of assessment methods for the inspireid :)
+declare function query:get-assessment-methods-for-inspireid() as xs:string {
+  let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+SELECT ?assessmentRegime ?inspireId ?localId ?inspireLabel ?assessmentMethods  ?samplingPointAssessmentMetadata ?metadataId ?metadataNamespace
+WHERE {
+      ?assessmentRegime a aqd:AQD_AssessmentRegime ;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      ?inspireId aqd:localId ?localId .
+      ?assessmentRegime aqd:assessmentMethods ?assessmentMethods .
+      ?assessmentMethods aqd:samplingPointAssessmentMetadata ?samplingPointAssessmentMetadata.
+      ?samplingPointAssessmentMetadata aq:inspireId ?metadataId.
+      ?samplingPointAssessmentMetadata aq:inspireNamespace ?metadataNamespace.
+      }"
+}
+
+
 (: TODO fix this to look at latest envelope :)
 declare function query:getPollutantlD($cdrUrl as xs:string) as xs:string {
   concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
