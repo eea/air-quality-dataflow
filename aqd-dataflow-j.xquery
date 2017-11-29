@@ -465,7 +465,7 @@ let $J14 := try {
     for $el in $evaluationScenario/aqd:publication/aqd:Publication/aqd:description
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return c:conditionalReportRow(
                 $ok,
@@ -490,7 +490,7 @@ let $J15 := try {
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return c:conditionalReportRow(
                 $ok,
@@ -514,7 +514,7 @@ let $J16 := try {
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return c:conditionalReportRow(
                 $ok,
@@ -565,7 +565,7 @@ let $J18 := try {
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return c:conditionalReportRow(
                 $ok,
@@ -589,9 +589,9 @@ let $J19 := try {
     let $main :=  $evaluationScenario/aqd:publication/aqd:Publication/aqd:webLink
     for $el in $main
         let $ok := (
-            functx:if-empty(data($el), "") != "")
+            functx:if-empty(data($el), "") != ""
             and
-            c:includesURL(data($el)
+            c:includesURL(data($el))
             )
         return c:conditionalReportRow(
                 $ok,
@@ -695,7 +695,7 @@ let $J23 := try {
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return c:conditionalReportRow(
                 $ok,
@@ -853,7 +853,7 @@ let $J28 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
         and
-        functx:if-empty(data($el), "" != "")
+        functx:if-empty(data($el), "") != ""
     )
     return c:conditionalReportRow(
             $ok,
