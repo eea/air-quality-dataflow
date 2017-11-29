@@ -1674,14 +1674,15 @@ declare variable $vocabulary:DISPERSION_LOCAL_VOCABULARY := "http://dd.eionet.eu
 declare variable $vocabulary:DISPERSION_REGIONAL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/dispersionregional/";
 declare variable $vocabulary:ENVIRONMENTALOBJECTIVE := "http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/";
 declare variable $vocabulary:EQUIVALENCEDEMONSTRATED_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/";
+declare variable $vocabulary:EXCEEDANCEREASON_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/";
 declare variable $vocabulary:LEGISLATION_LEVEL := "http://inspire.ec.europa.eu/codeList/LegislationLevelValue/";
 declare variable $vocabulary:LEGISLATION_LEVEL_LC := "http://inspire.ec.europa.eu/codelist/LegislationLevelValue/";
 declare variable $vocabulary:MEASURECLASSIFICATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/";
+declare variable $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/";
 declare variable $vocabulary:MEASUREMENTEQUIPMENT_VOCABULARY :="http://dd.eionet.europa.eu/vocabulary/aq/measurementequipment/";
 declare variable $vocabulary:MEASUREMENTMETHOD_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/";
 declare variable $vocabulary:MEASUREMENTTYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/";
 declare variable $vocabulary:MEASURETYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measuretype//";
-declare variable $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/";
 declare variable $vocabulary:MEDIA_VALUE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/";
 declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI := "http://inspire.ec.europa.eu/codelist/MediaValue/";
 declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI_UC := "http://inspire.ec.europa.eu/codeList/MediaValue/";
@@ -1710,14 +1711,14 @@ declare variable $vocabulary:RESULT_ENCODING as xs:string := $vocabulary:BASE ||
 declare variable $vocabulary:RESULT_FORMAT as xs:string := $vocabulary:BASE || "resultformat/";
 declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europa.eu/obligations/";
 declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
-declare variable $vocabulary:SPACIALSCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/";
 declare variable $vocabulary:SOURCESECTORS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/";
+declare variable $vocabulary:SPACIALSCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/";
 declare variable $vocabulary:TIMESCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timescale/";
 declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
 declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
+declare variable $vocabulary:UOM_EMISSION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/emission/";
 declare variable $vocabulary:UOM_STATISTICS := "http://dd.eionet.europa.eu/vocabulary/uom/statistics/";
 declare variable $vocabulary:UOM_TIME := "http://dd.eionet.europa.eu/vocabulary/uom/time/";
-declare variable $vocabulary:UOM_EMISSION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/emission/";
 declare variable $vocabulary:ZONETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/zonetype/";
 
 
@@ -1793,7 +1794,11 @@ declare function common:getReportingYear($xml as document-node()) as xs:string {
         else ""
 };
 
-declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
+(:~ Returns true if $seq1 contains any element from $seq2 :)
+declare function common:containsAny(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:boolean {
     not(empty(
             for $str in $seq2
             where not(empty(index-of($seq1, $str)))
@@ -1802,8 +1807,11 @@ declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as
     ))
 };
 
-declare function common:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
-as xs:string* {
+(:~ Returns intersection (common elements) of seq1 and seq1 :)
+declare function common:getSublist(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:string* {
 
     distinct-values(
             for $str in $seq2
@@ -1813,6 +1821,7 @@ as xs:string* {
     )
 };
 
+(:~ Returns a <span> with <a> links for each valid link in given sequence :)
 declare function common:checkLink($text as xs:string*) as element(span)*{
     for $c at $pos in $text
     return
@@ -1926,10 +1935,11 @@ declare function common:checkDeliveryReport (
 (: Returns structure with error if node is empty :)
 (: TODO: test if node doesn't exist :)
 declare function common:needsValidString(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (string-length(normalize-space($el/text())) = 0)
         then
@@ -2015,17 +2025,19 @@ declare function common:isNodeInParent(
 
 (: prints error if a specific node does not exist in a parent :)
 declare function common:isNodeNotInParentReport(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
     try {
-        if (not(common:isNodeInParent($parent, $nodeName)))
-        then
-            <tr>
-                <td title="{$nodeName}"> needs valid input</td>
-            </tr>
-        else
-            ()
+        for $el in $parent
+            return
+            if (not(common:isNodeInParent($el, $nodeName)))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -2078,11 +2090,12 @@ declare function common:validatePossibleNodeValue(
 
 (: Prints an error if validation for a possible existing node fails :)
 declare function common:validatePossibleNodeValueReport(
-    $parent as node()?,
+    $parent as node()*,
     $nodeName as xs:string,
     $validator as function(item()) as xs:boolean
 ) {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (not(common:validatePossibleNodeValue($el, $validator)))
         then
@@ -2140,24 +2153,26 @@ declare function common:isDateFullISO(
 };
 (: Create report :)
 declare function common:isDateFullISOReport(
-    $el as node()*
+    $main as node()*
 ) as element(tr)*
 {
-    let $date := data($el)
-    return
-    try {
-        if (not(common:isDateFullISO($date)))
-        then
-            <tr>
-                <td title="{node-name($el)}">{$date} not in full ISO format</td>
-            </tr>
-        else
-            ()
-    } catch * {
-        html:createErrorRow($err:code, $err:description)
-    }
+    for $el in $main
+        let $date := data($el)
+        return
+        try {
+            if (not(common:isDateFullISO($date)))
+            then
+                <tr>
+                    <td title="{node-name($el)}">{$date} not in full ISO format</td>
+                </tr>
+            else
+                ()
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
 };
 
+(:~ returns True if $seq has one one given node :)
 declare function common:has-one-node(
     $seq as item()*,
     $item as item()?
@@ -2168,11 +2183,10 @@ declare function common:has-one-node(
     return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
 };
 
-
 (: Check if end date is after begin date and if both are in full ISO format:)
 declare function common:isEndDateAfterBeginDate(
-    $begin as node()?,
-    $end as node()?
+        $begin as node()?,
+        $end as node()?
 ) as xs:boolean
 {
     if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
@@ -2182,25 +2196,47 @@ declare function common:isEndDateAfterBeginDate(
         false()
 };
 
-(:
-pseudocode, for brainstorming
+(:~ Returns a sum of numbers contained in nodes :)
+declare function common:sum-of-nodes(
+    $nodes as item()*
+) as xs:double {
+    let $numbers :=
+        for $n in $nodes
+            let $d := data($n)
+            let $i :=
+                if ($d castable as xs:double)
+                then
+                    xs:double($d)
+                else
+                    0
+        return $i
+    return sum($numbers)
+};
 
-validators =[
-    isDate(x),
-    isDate(y),
-    isXBiggerThenY(x, y)
-]
+(:~ Returns true if the given node has no attributes or children :)
+declare function common:has-content(
+    $nodes as element()*
+) as xs:boolean {
+    let $res :=
+        for $node in $nodes
+            let $attr := empty($node/@*)
+            let $children := empty($node/*)
+        return $attr or $children
+    return $res = true()
+};
 
-validate([
-    isDate(x),
-    isDate(y),
-    ])
-
-
-    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
-
-isXBiggerThanY(x:orice, y:orice)
-:)
+(:~ Returns true if provided pollutant is one of special values :)
+declare function common:is-polutant-air(
+    $uri as xs:string
+) as xs:boolean {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+    return $uri = $okv
+};
 
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
@@ -10171,23 +10207,23 @@ let $H04 := try {
     let $gmlIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(@gml:id))
     let $inspireIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(aqd:inspireId))
     for $x in $docRoot//aqd:AQD_Plan
-    let $id := $x/@gml:id
-    let $inspireId := $x/aqd:inspireId
-    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
-    let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
             and
             count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
-    )
-    return common:conditionalReportRow(
+        )
+        return common:conditionalReportRow(
             not($ok),
             [
-            ("gml:id", data($x/@gml:id)),
-            ("aqd:inspireId", distinct-values($aqdinspireId)),
-            ("aqd:pollutant", data($x/aqd:pollutant)),
-            ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
-            ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:pollutant", data($x/aqd:pollutant)),
+                ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
+                ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
             ]
-    )
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -10355,7 +10391,7 @@ let $H30 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -10378,7 +10414,7 @@ let $H31 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -10401,7 +10437,7 @@ let $H32 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -10424,9 +10460,9 @@ let $H33 := try {
     let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
     for $node in $main
     let $ok := (
-        $node castable as xs:date
-                or
-                $node castable as xs:gYear
+        data($node) castable as xs:date
+        or
+        not(common:isInvalidYear(data($node)))
     )
     return common:conditionalReportRow(
             $ok,
@@ -10449,7 +10485,7 @@ let $H34 := try {
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
@@ -10555,7 +10591,6 @@ declare function dataflowI:checkReport(
     $countryCode as xs:string
 ) as element(table) {
 
-    let $envelopeUrl := common:getEnvelopeXML($source_url)
     let $docRoot := doc($source_url)
     let $cdrUrl := common:getCdrUrl($countryCode)
 
@@ -10760,9 +10795,8 @@ declare function dataflowI:checkReport(
     List of unique identifier information for all Source Apportionments
     records. Error, if no SA(s)
 
-    TODO: implement pollutant lookup
+    BLOCKER
 
-    Blocker
     :)
     let $I04table :=
         try {
@@ -10815,6 +10849,7 @@ declare function dataflowI:checkReport(
     All gml ID attributes shall have unique code
 
     BLOCKER
+
     :)
     let $I07 := try {
         let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
@@ -10883,8 +10918,6 @@ declare function dataflowI:checkReport(
     List unique namespaces used and count number of elements
 
     BLOCKER
-
-    TODO: check this, $ok is hardcoded
     :)
 
     let $I09table := try {
@@ -10895,7 +10928,7 @@ declare function dataflowI:checkReport(
                 $ok,
                 [
                     ("base:namespace", $namespace),
-                    ("base:localId", count($localIds))
+                    ("base:localId count", count($localIds))
                 ]
             )
     } catch * {
@@ -10912,13 +10945,17 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    (: TODO: should be "and" or "or" in where clause?? :)
     let $I10invalid := try {
+
         let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
-        let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
-                and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
-        let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
-                and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+        let $concept := $vocDoc//skos:Concept[
+            adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and
+            @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)
+        ]
+        let $prefLabel := $concept/skos:prefLabel[1]
+        let $altLabel := $concept/skos:altLabel[1]
+
         for $x in distinct-values($docRoot//base:namespace)
             let $ok := ($x = $prefLabel and $x = $altLabel)
             return common:conditionalReportRow(
@@ -10943,11 +10980,14 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
     let $I11 := try{
-        let $el := $sources/aqd:usedInPlan
-        let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_Plan')
+        for $el in $sources/aqd:usedInPlan
 
-        (: TODO: check that the Plan is for same year :)
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
+            )
 
         return common:conditionalReportRow(
             $ok,
@@ -10959,6 +10999,7 @@ declare function dataflowI:checkReport(
         html:createErrorRow($err:code, $err:description)
     }
 
+
     (: I11b
 
     aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference
@@ -10969,17 +11010,19 @@ declare function dataflowI:checkReport(
     The exceedance situation must have the same reporting year as the source
     apportionment and refer to the same pollutant.
 
+    TODO: this needs to be implemented properly
+
     BLOCKER
     :)
     let $I11b := try{
-        let $el := $sources/aqd:parentExceedanceSituation
-        let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
-        (:
-        aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
-        :)
+        for $el in $sources/aqd:parentExceedanceSituation
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
+            (:
+            aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
+            :)
 
-        (: TODO: check that the reporting year is for same year :)
+            (: TODO: check that the reporting year is for same year :)
 
         return common:conditionalReportRow(
             $ok,
@@ -11002,8 +11045,8 @@ declare function dataflowI:checkReport(
     :)
 
     let $I12 := try {
-        let $el := $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-        let $ok := $el castable as xs:gYear
+        for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := $el castable as xs:gYear
 
         return common:conditionalReportRow(
             $ok,
@@ -11020,10 +11063,13 @@ declare function dataflowI:checkReport(
     (: I15
 
     Across all the delivery, check that the element
-    aqd:QuantityCommented/aqd:quantity is an integer or floating point numeric
-    >= 0 if attribute xsi:nil="false" (example: <aqd:quantity
-    uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3"
-    xsi:nil="false">4.03038</aqd:quantity>)
+    aqd:QuantityCommented/aqd:quantity is
+    * an integer or
+    * floating point numeric >= 0
+    if attribute xsi:nil="false"
+    (example:
+        <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.03038</aqd:quantity>
+    )
 
     Source apportionments should be provided as an integer
 
@@ -11052,33 +11098,30 @@ declare function dataflowI:checkReport(
     (: I16
 
     Across all the delivery, check that the element
-    aqd:QuantityCommented/aqd:quantity is empty if attribute
-    xsi:nil="unpopulated" or "unknown" or "withheld" (example: <aqd:quantity
-    uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>)
+    aqd:QuantityCommented/aqd:quantity is empty
+    if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+    (example:
+    <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+    )
 
-    If quantification is either "unpopulated" or "unknown" or "withheld", the
-    element should be empty
+    If quantification is either "unpopulated" or "unknown" or "withheld",
+    the element should be empty
 
     BLOCKER
     :)
 
     let $I16 := try {
-        let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
-        let $ok := (
-            (functx:if-empty($node/text(), "") != "")
-            or
-            (
-                lower-case($node/@xsi:nil) = "true"
-                and
-                (
-                    (lower-case($node/@nilReason) = "unknown")
-                    or
-                    (lower-case($node/@nilReason) = "unpopulated")
-                    or
-                    (lower-case($node/@nilReason) = "withheld")
-                )
-            )
-        )
+        for $node in $docRoot//aqd:QuantityCommented/aqd:quantity
+            let $reason := $node/@nilReason
+            let $isnil := lower-case($node/@xsi:nil) = "true"
+            let $unpop := lower-case($reason) = ("unknown", "unpopulated", "withheld")
+
+            let $ok :=
+                if ($isnil)
+                then
+                    functx:all-whitespace($node) and $unpop
+                else
+                    true()
 
         return common:conditionalReportRow(
             $ok,
@@ -11102,20 +11145,21 @@ declare function dataflowI:checkReport(
     :)
 
     let $I17 := try {
-        let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
-        let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+        for $el in $docRoot//aqd:QuantityCommented
+            let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
+            let $hascomment := common:has-content($el/aqd:comment)
 
-        let $ok := (
-            (functx:if-empty($quantity/text(), "") = "")
-            or
-            (functx:if-empty($comment/text(), "") = "")
-        )
+            let $ok :=
+                if ($isnil)
+                then
+                    $hascomment
+                else
+                    true()
 
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($quantity), data($quantity)),
-                (node-name($comment), data($comment))
+                (node-name($el), "needs comment")
             ]
         )
     } catch * {
@@ -11135,40 +11179,32 @@ declare function dataflowI:checkReport(
     The unit of measurement of the Source Apportioment must match recommended
     unit for the pollutant
 
-                let $polutant := data($node/aqd:usedInPlan/@xlink:href)
-                let $uom-term := dd:get-uri-for-term($uom)
-
-    TODO: check code, implement checks
+    TODO: doublecheck with test
 
     BLOCKER
     :)
 
     let $I18 := try {
 
-        let $errors := array {
-            for $x in $sources
-                let $quants := $x//aqd:QuantityCommented/aqd:quantity
-                let $uom := $quants/@uom
-                let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
-                let $pollutant-code := query:get-pollutant-for-attainment($att-url)
-                let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
-                let $rec-uom := dd:getRecommendedUnit($pollutant-code)
+        for $x in $sources
+            let $quants := $x//aqd:QuantityCommented/aqd:quantity
+            let $uom := data($quants/@uom)
+            let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
+            let $pollutant-code := query:get-pollutant-for-attainment($att-url)
+            let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
+            let $rec-uom := dd:getRecommendedUnit($pollutant-code)
 
-                return
-                    if ($uom != $rec-uom)
-                    then
-                        [node-name($x), $uom]
-                    else
-                        ()
-        }
+            let $ok := $uom = $rec-uom
 
         return common:conditionalReportRow(
-            array:size($errors) = 0,
-            $errors
+            $ok,
+            [node-name($x), $uom]
         )
+
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
+
 
     (: I19
 
@@ -11184,6 +11220,8 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
+    TODO: improve reporting for this row
+
     :)
 
     let $I19 := try {
@@ -11191,7 +11229,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
                 let $total := data($rb/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
                     $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
                     $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity,
@@ -11203,7 +11241,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
@@ -11240,7 +11278,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
                 let $total := data($ub/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
                     $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                     $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
@@ -11257,7 +11295,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
@@ -11295,7 +11333,7 @@ declare function dataflowI:checkReport(
             for $x in $sources
                 let $li := $x/aqd:localIncrement/aqd:LocalIncrement
                 let $total := data($li/aqd:total/aqd:QuantityCommented/aqd:quantity)
-                let $sum := sum((
+                let $sum := common:sum-of-nodes((
                     $li/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                     $li/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
                     $li/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
@@ -11310,7 +11348,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $total]
                 else
                     ()
         }
@@ -11371,6 +11409,7 @@ declare function dataflowI:checkReport(
     ERROR
 
     TODO: check a better replacement for is-a-number
+    TODO: improve reporting
 
     :)
     let $I23 := try {
@@ -11384,7 +11423,7 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [node-name($x), $a or $b]
                 else
                     ()
         }
@@ -11426,9 +11465,26 @@ declare function dataflowI:checkReport(
 
     WARNING
 
+    TODO: implement this
+
     :)
 
-    let $I25 := ()
+    let $I25 := try {
+        for $node in $sources
+            (:
+            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification/@xlink:href
+            let $att := query:getAttainment
+            :)
+
+            let $ok := false()
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I26
     /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
@@ -11440,7 +11496,19 @@ declare function dataflowI:checkReport(
     ERROR
     :)
 
-    let $I26 := ()
+    let $I26 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+            let $uom := $area/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($area), $uom]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
     (: I27
 
     /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
@@ -11450,8 +11518,20 @@ declare function dataflowI:checkReport(
 
     ERROR
     :)
-    let $I27 := ()
+    let $I27 := try {
+        for $node in $sources
+            let $length := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+            let $uom := $length/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
+    (: I28 is missing in XLS :)
     let $I28 := ()
 
     (: I29
@@ -11467,7 +11547,19 @@ declare function dataflowI:checkReport(
     ERROR
 
     :)
-    let $I29 := ()
+    let $I29 := try {
+        for $node in $sources
+            let $area :=$node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $st := common:has-content($area/aqd:stationUsed)
+            let $mu := common:has-content($area/aqd:modelUsed)
+            let $ok := $st or $mu
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     (: I30
 
@@ -11480,22 +11572,530 @@ declare function dataflowI:checkReport(
 
     ERROR
     :)
-    let $I30 := ()
-    let $I31 := ()
-    let $I32 := ()
-    let $I33 := ()
-    let $I34 := ()
-    let $I35 := ()
-    let $I36 := ()
-    let $I37 := ()
-    let $I38 := ()
-    let $I39 := ()
-    let $I40 := ()
-    let $I41 := ()
-    let $I42 := ()
-    let $I43 := ()
-    let $I44 := ()
-    let $I45 := ()
+    let $I30 := try {
+        for $node in $sources
+            let $a := $node//aqd:stationUsed
+            let $a-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($a/@xlink:href, "SamplingPoint")
+                else
+                    true()
+
+            let $b := $node//aqd:modelUsed
+            let $b-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
+                else
+                    true()
+
+            let $ok := $a and $b
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I31
+
+    The subject of
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute
+    shall be found in
+    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    The exceeding AQ_Model must be included in the corresponding Attainment
+
+    Similar to G74. However, G74 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    TODO: implement this
+
+    :)
+
+    let $I31 := try {
+        for $node in $sources
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $model := query:get-used-model-for-attainment($att-url)
+            let $ok := $mu = $model
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I32
+
+    The subject of
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed
+    xlink:href attribute shall be found in
+    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    The exceeding SamplingPoint must be included in the corresponding Attainment
+
+    Similar to G76. However, G76 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    TODO: implement this
+    :)
+
+    let $I32 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I33
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatalExtent
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:administrativeUnit
+    shall be populated
+
+    Spatial extent or administrative unit may be provided
+
+    RESERVE
+
+    :)
+    let $I33 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := common:has-content($area/aqd:spatalExtent)
+            let $b := common:has-content($area/aqd:administrativeUnit)
+            let $ok := $a or $b
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I34
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+    shall be populated
+
+    Information on surface are or road lenght shall be provided
+
+    RESERVE
+    :)
+
+    let $I34 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := $area/aqd:surfaceArea
+            let $b := $area/aqd:roadLength
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($area), data($area)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I35
+    WHERE
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+    shall EQUAL “true”
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+    shall be populated
+
+    If exceedance is TRUE, information on population exposed must be provided
+
+    RESERVE
+
+    :)
+
+    let $I35 := try {
+        for $node in $sources
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+
+            let $ok :=
+                if (data($a) = "true")
+                then
+                    common:has-content($b)
+                else
+                    true()
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I36
+
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+    shall be populated
+
+    If exceedance is TRUE, information on area exposed must be provided
+
+    RESERVE
+
+    :)
+
+    let $I36 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+            let $ok := common:has-content($area)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($area), data($area)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I37
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    shall be a calendar year in yyyy format
+
+    Reference year for the population/exposure data in yyyy format
+
+    ERROR
+
+    :)
+    let $I37 := try {
+        for $node in $sources
+            let $year := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := data($year) castable as xs:gYear
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($year), data($year)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I38
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+    shall conform to vocabulary
+    http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/
+
+    Exceedance reason must match vocabulary
+
+    ERROR
+
+    :)
+    let $I38 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+            let $link := $el/@xlink:href
+            let $ok := common:isInVocabulary(
+                $link,
+                $vocabulary:EXCEEDANCEREASON_VOCABULARY
+            )
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I39
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+    may be populated if ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation)
+
+    If the pollutant is SO2, PM10, PM2.5 or CO deduction assessment methods may
+    be populated
+
+    RESERVE
+    :)
+
+    let $I39 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), data($el)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I40
+
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+    must conform to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to assessment type is
+    expected
+
+    BLOCKER
+    :)
+
+    let $I40 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+            let $link := $el/@xlink:href
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    common:isInVocabulary(
+                        $link,
+                        $vocabulary:ASSESSMENTTYPE_VOCABULARY
+                    )
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I41
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    must be populated.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a Description of the assessment
+    type is expected
+
+    ERROR
+    :)
+
+    let $I41 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I42
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), at least one of
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    or
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    must be populated and correctly link to D/D1b.
+
+    Cross check the links provided against D, all assessment methods must exist
+    in D
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to the assessment method
+    in D or D1b is required via xlink:href attribute
+
+    ERROR
+    TODO: implement
+    :)
+
+    let $I42 := try {
+        for $node in $sources
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I43
+
+    WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the following elments must be empty or
+    not provided:
+    aqd:assessmentType
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+
+    If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not
+    expected: assessmentType, link to adjusting sampling
+    point/model;assessmentTypeDescription;assessmentType
+
+    ERROR
+    :)
+
+    let $I43 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $check := not(common:is-polutant-air($pollutant))
+            let $meths := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+            let $values := (
+                $meths/aqd:samplingPointAssessmentMetadata/@xlink:href,
+                $meths/aqd:modelAssessmentMetadata/@xlink:href,
+                $meths/aqd:assessmentTypeDescription,
+                $meths/aqd:assessmentType
+            )
+            return
+                if ($check)
+                then
+                    common:conditionalReportRow(
+                        not(empty($values)),
+                        [node-name($node), data($node)]
+                    )
+                else
+                    ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I44
+
+    If
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+    is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected"
+    if another pollutant it must be "noneApplicable"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod
+    populated, adjustmentType must be "fullyCorrected", else "noneApplicable"
+
+    ERROR
+    :)
+
+    let $I44 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $check :=
+                if ($needed)
+                then
+                    $link = "fullyCorrected"
+                else
+                    $link = "noneApplicable"
+
+            let $ok :=
+                if (not($is-populated))
+                then
+                    true()
+                else
+                    $check
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (:  I45
+    "WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001] (via …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+    must be populated & the content of the xlink:href shall conform to
+    http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype,
+    else  this element must not be populated"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod populated,
+    adjustmentSource must conform with vocabulary, else "noneApplicable"
+
+    Error
+
+    :)
+    let $I45 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+            let $conforms := common:isInVocabulary(
+                $link,
+                vocabulary:ADJUSTMENTSOURCE_VOCABULARY
+            )
+
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    if ($conforms)
+                    then
+                        true()
+                    else
+                        data($el) = "noneApplicable"
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
 
     return
         <table class="maintable hover">
@@ -11603,6 +12203,7 @@ declare variable $dataflowJ:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
 declare function dataflowJ:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
 
 let $docRoot := doc($source_url)
+let $evaluationScenario := $docRoot//aqd:AQD_EvaluationScenario
 (: example 2014 :)
 let $reportingYear := common:getReportingYear($docRoot)
 (: example resources/dataflow-j/xml :)
@@ -11681,17 +12282,17 @@ Number of AQ Plans reported
 let $countEvaluationScenario := count($docRoot//aqd:AQD_EvaluationScenario)
 let $J1 := try {
     for $rec in $docRoot//aqd:AQD_EvaluationScenario
-    let $el := $rec/aqd:inspireId/base:Identifier
-    return
-        common:conditionalReportRow(
-        false(),
-        [
-            ("gml:id", data($rec/@gml:id)),
-            ("base:localId", data($el/base:localId)),
-            ("base:namespace", data($el/base:namespace)),
-            ("base:versionId", data($el/base:versionId))
-        ]
-        )
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            common:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -11705,8 +12306,8 @@ Number of new EvaluationScenarios compared to previous report.
 :)
 
 let $J2 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario
-    for $x in $el/aqd:inspireId/base:Identifier
+    for $el in $docRoot//aqd:AQD_EvaluationScenario
+        let $x := $el/aqd:inspireId/base:Identifier
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
         let $ok := not($inspireId = $knownEvaluationScenarios)
         return
@@ -11747,19 +12348,19 @@ are different to previous delivery (for the same YEAR).
 :)
 
 let $J3 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario
-    for $x in $main/aqd:inspireId/base:Identifier
-    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
-    return
-        common:conditionalReportRow(
-        $ok,
-        [
-            ("gml:id", data($main/@gml:id)),
-            ("aqd:inspireId", $inspireId),
-            ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
-        ]
-        )
+    for $main in $docRoot//aqd:AQD_EvaluationScenario
+        let $x := $main/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -11932,19 +12533,20 @@ The plan document must have the same reporting year as the source apportionment 
 :)
 
 let $J11 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:usedInPlan
-    let $label := $el/@xlink:href
-    let $ok := query:existsViaNameLocalIdYear(
-            $label,
-            'AQD_Plan',
-            $reportingYear
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $label)
-            ]
+    for $main in $evaluationScenario
+        let $el := $main/aqd:usedInPlan
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
         )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -11958,19 +12560,20 @@ via its namespace & localId (for the same reporting year)
 :)
 
 let $J12 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:sourceApportionment
-    let $label := $el/@xlink:href
-    let $ok := query:existsViaNameLocalIdYear(
-            $label,
-            'AQD_SourceApportionment',
-            $reportingYear
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $label)
-            ]
+    for $main in $evaluationScenario
+        let $el := $main/aqd:sourceApportionment
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_SourceApportionment',
+                $reportingYear
         )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -11982,14 +12585,16 @@ A code of the scenario should be provided as nn alpha-numeric code starting with
 :)
 
 let $J13 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:codeOfScenario
-    let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
-    return common:conditionalReportRow(
-            $ok,
-            [
-                (node-name($el), $el)
-            ]
-        )
+    for $main in $evaluationScenario
+        let $el := $main/aqd:codeOfScenario
+        let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12001,16 +12606,16 @@ Short textul description of the publication should be provided. If availabel, in
 :)
 
 let $J14 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:description
-    for $el in $main
+    for $el in $evaluationScenario/aqd:publication/aqd:Publication/aqd:description
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
-                    (node-name($el), $el)
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), data($el))
                 ]
             )
 } catch * {
@@ -12025,15 +12630,16 @@ Title as written in the publication.
 :)
 
 let $J15 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:title
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:title
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12048,15 +12654,16 @@ Author(s) should be provided as text (If there are multiple authors, please prov
 :)
 
 let $J16 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:author
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:author
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12072,16 +12679,17 @@ The publication date should be provided in yyyy or yyyy-mm-dd format
 :)
 
 let $J17 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
     for $node in $main
         let $ok := (
-            $node castable as xs:date
+            data($node) castable as xs:date
             or
-            $node castable as xs:gYear
+            not(common:isInvalidYear(data($node)))
         )
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/../../../../../@gml:id)),
                 (node-name($node), data($node))
             ]
         )
@@ -12097,15 +12705,16 @@ Publisher should be provided as a text (Publishing institution, academic jourmal
 :)
 
 let $J18 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publisher
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:publisher
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12121,16 +12730,17 @@ Url to the published AQ Plan should be valid (if provided)
 :)
 
 let $J19 := try {
-    let $main :=  $docRoot//aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:webLink
+    let $main :=  $evaluationScenario/aqd:publication/aqd:Publication/aqd:webLink
     for $el in $main
         let $ok := (
-            functx:if-empty(data($el), "") != "")
+            functx:if-empty(data($el), "") != ""
             and
-            common:includesURL(data($el)
+            common:includesURL(data($el))
             )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12146,12 +12756,13 @@ The year for which the projections are developed must be provided and the yyyy f
 :)
 
 let $J20 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition
+    let $main := $evaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition
     for $el in $main
-        let $ok := data($el) castable as xs:gYear
+        let $ok := not(common:isInvalidYear(data($el)))
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12169,16 +12780,17 @@ for which the source apportionment is available must be provided. Format used yy
 :)
 
 let $J21 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
+    let $main := $evaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
     for $el in $main
         let $ok := (
-            data($el) castable as xs:gYear
+            not(common:isInvalidYear(data($el)))
             and
             functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12196,19 +12808,21 @@ Check if start year of the evaluation scenario is the same as the source apporti
 :)
 
 let $J22 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:sourceApportionment
-    let $year := $docRoot//aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
-    let $ok := query:existsViaNameLocalIdYear(
-            $el/@xlink:href,
-            'AQD_SourceApportionment',
-            $year
-    )
-    return common:conditionalReportRow(
-                $ok,
-                [
-                    (node-name($el), $el/@xlink:href)
-                ]
-            )
+    for $node in $evaluationScenario
+        let $el := $node/aqd:sourceApportionment
+        let $year := $node/aqd:startYear/gml:TimeInstant/gml:timePosition
+        let $ok := query:existsViaNameLocalIdYear(
+                $el/@xlink:href,
+                'AQD_SourceApportionment',
+                $year
+        )
+        return common:conditionalReportRow(
+                    $ok,
+                    [
+                        ("gml:id", data($el/../@gml:id)),
+                        (node-name($el), $el/@xlink:href)
+                    ]
+                )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -12221,15 +12835,16 @@ A description of the emission scenario used for the baseline analysis should be 
 :)
 
 let $J23 := try {
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:description
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:description
     for $el in $main
         let $ok := (data($el) castable as xs:string
             and
-            functx:if-empty(data($el), "" != "")
+            functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el)
                 ]
             )
@@ -12246,28 +12861,30 @@ The baseline total emissions should be provided as integer with correct unit.
 :)
 
 let $J24 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
-    let $ok := (
-        $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
-        and
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_EMISSION_VOCABULARY
+    for $node in $evaluationScenario
+        let $el := $node/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:totalEmissions", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12281,26 +12898,28 @@ The expected concentration (under baseline scenario) should be provided as an in
 :)
 
 let $J25 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_CONCENTRATION_VOCABULARY
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedConcentration", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12314,26 +12933,28 @@ The number of exceecedance expected (under baseline scenario) should be provided
 :)
 
 let $J26 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_STATISTICS
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedExceedances", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12347,7 +12968,7 @@ Measures identified in the AQ-plan that are included in this baseline scenario s
 :)
 
 let $J27 := try{
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:measuresApplied
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:measuresApplied
     for $el in $main
         let $ok := query:existsViaNameLocalIdYear(
                 $el/@xlink:href,
@@ -12357,6 +12978,7 @@ let $J27 := try{
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el/@xlink:href)
                 ]
             )
@@ -12371,14 +12993,16 @@ A description of the emission scenario used for the projection analysis should b
 :)
 
 let $J28 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description
+    for $el in $main
     let $ok := (data($el) castable as xs:string
         and
-        functx:if-empty(data($el), "" != "")
+        functx:if-empty(data($el), "") != ""
     )
     return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($el/../../../@gml:id)),
                 (node-name($el), $el)
             ]
         )
@@ -12396,28 +13020,30 @@ The projection total emissions should be provided as integer with correct unit.
 
 
 let $J29 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
-    let $ok := (
-        $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
-        and
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_EMISSION_VOCABULARY
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
+    for $el in $main
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:totalEmissions", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12429,28 +13055,30 @@ http://dd.eionet.europa.eu/vocabulary/uom/concentration/
 
 The expected concentration (under projection scenario) should be provided as an integer and its unit should conform to vocabulary
 :)
-
+(:  TODO CHECK IF $main node is not empty for all CHECKS  :)
 let $J30 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_CONCENTRATION_VOCABULARY
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedConcentration", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12465,26 +13093,28 @@ as an integer and its unit should conform to vocabulary
 :)
 
 let $J31 := try {
-    let $el := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
-    let $ok := (
-        (data($el) castable as xs:float
-        or
-        data($el) castable as xs:integer)
-        and
-        data($el) >= 0
-        and
-        common:isInVocabulary(
-                $el/@uom,
-                $vocabulary:UOM_STATISTICS
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
         )
-    )
-    return common:conditionalReportRow(
-            $ok,
-            [
-                ("aqd:expectedExceedances", $el),
-                ("uom", $el/@uom)
-            ]
-        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12498,7 +13128,7 @@ Measures identified in the AQ-plan that are included in this projection should b
 :)
 
 let $J32 := try{
-    let $main := $docRoot//aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:measuresApplied
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:measuresApplied
     for $el in $main
         let $ok := query:existsViaNameLocalIdYear(
                 $el/@xlink:href,
@@ -12508,6 +13138,7 @@ let $J32 := try{
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", data($el/../../../@gml:id)),
                     (node-name($el), $el/@xlink:href)
                 ]
             )
@@ -12648,11 +13279,11 @@ let $K0table := try {
     then
         common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
     else
-        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear))
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
             then
-            common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+                common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
             else
-            common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+                common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12669,17 +13300,17 @@ let $knownMeasures :=
 let $countMeasures := count($docRoot//aqd:AQD_Measures)
 let $K01 := try {
     for $rec in $docRoot//aqd:AQD_Measures
-    let $el := $rec/aqd:inspireId/base:Identifier
-    return
-        common:conditionalReportRow(
-        false(),
-        [
-            ("gml:id", data($rec/@gml:id)),
-            ("base:localId", data($el/base:localId)),
-            ("base:namespace", data($el/base:namespace)),
-            ("base:versionId", data($el/base:versionId))
-        ]
-        )
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            common:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -12689,15 +13320,15 @@ let $K01 := try {
 ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries. :)
 
 let $K02table := try {
-    let $main := $docRoot//aqd:AQD_Measures
-    for $x in $main/aqd:inspireId/base:Identifier
+    for $el in $docRoot//aqd:AQD_Measures
+        let $x := $el/aqd:inspireId/base:Identifier
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
         let $ok := not($inspireId = $knownMeasures)
         return
             common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($main/@gml:id)),
+                ("gml:id", data($el/@gml:id)),
                 ("aqd:inspireId", $inspireId)
             ]
             )
@@ -12711,6 +13342,7 @@ let $K02errorLevel :=
         count(
             for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
                 let $id := $x/base:namespace || "/" || $x/base:localId
+                (:where ($allMeasures = $id):)
                 where query:existsViaNameLocalId($id, 'AQD_Measures')
                 return 1
         ) > 0
@@ -12724,19 +13356,19 @@ let $K02errorLevel :=
 ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
 
 let $K03table := try {
-    let $main := $docRoot//aqd:AQD_Measures
-    for $x in $main/aqd:inspireId/base:Identifier
-    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
-    return
-        common:conditionalReportRow(
-        $ok,
-        [
-            ("gml:id", data($main/@gml:id)),
-            ("aqd:inspireId", $inspireId),
-            ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
-        ]
-        )
+    for $main in $docRoot//aqd:AQD_Measures
+        let $x := $main/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12806,8 +13438,7 @@ let $K07 := try {
     let $errors := array {
 
         for $name in $checks
-        (: TODO: would be nice to have something like this, but we have no
-           value for error row
+        (: TODO: would be nice to have something like this, but we have no value for error row
             return
                 if has-duplicate-children-values($main, $name)
                 then
@@ -12906,7 +13537,6 @@ let $K09table := try {
 
 (: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
 
-(: TODO: should be "and" or "or" in where clause?? :)
 let $K10invalid := try {
     let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
     let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
@@ -12934,16 +13564,18 @@ You must provide a link to a source apportionment document from data flow I via 
 :)
 
 let $K11 := try{
-    let $el := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
-    let $label := data($el/@xlink:href)
-    let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
+    let $main := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), $el/@xlink:href)
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -12957,37 +13589,43 @@ A link may be provided to Evaluation Scenario (J). This must be valid via namesp
 :)
 
 let $K12 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
-    let $label := data($el/@xlink:href)
-    let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
+    let $main := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), $el/@xlink:href)
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
 
 (: K13
-aqd:AQD_Measures/aqd:code must be unique and should match base:localId
+aqd:AQD_Measures/aqd:code should be a unique local identifier for each measure record.
+For convenience the same code as localId may be used
 
-Unique code of the measure. This may be a unique local code for the measure or
-may be identical to the unique code used in K2.1.
-
-TODO: we implemented just first line of the requirement, the second line contradicts it
+So, the aqd:code should be unique within XML
 :)
 
 let $K13invalid := try {
+    let $codes := $docRoot//aqd:AQD_Measures/aqd:code
     for $node in $docRoot//aqd:AQD_Measures
         let $code := $node/aqd:code
         let $localId := $node/aqd:inspireId/base:Identifier/base:localId
-        let $ok := $code = $localId
+        let $ok := (
+            $code = $localId
+            and
+            count(fn:index-of($codes,$code)) = 1
+        )
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/@gml:id)),
                 (node-name($code), data($code)),
                 (node-name($localId), data($localId))
             ]
@@ -12999,7 +13637,6 @@ let $K13invalid := try {
 
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
-let $aqdname := $docRoot//aqd:AQD_Measures/aqd:name
 let $K14invalid := common:needsValidString(
         $docRoot//aqd:AQD_Measures, 'aqd:name'
         )
@@ -13010,8 +13647,6 @@ let $K15invalid := common:needsValidString(
         $docRoot//aqd:AQD_Measures,
         'aqd:description'
         )
-
-let $errorLevel := 'error'
 
 (: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
 Measure classification should conform to vocabulary :)
@@ -13055,7 +13690,6 @@ let $K20 := common:isNodeNotInParentReport(
         'aqd:costs'
         )
 
-
 (: K21
 If aqd:costs provided
 aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be
@@ -13068,35 +13702,46 @@ reasons for not providing it should be included.
 
 let $K21 := try {
     let $root := $docRoot//aqd:AQD_Measures
-    let $costs := $root/aqd:costs
-    let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
-    let $comment := $root/aqd:costs/aqd:Costs/aqd:comment
-    let $costsRoot := $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+    for $el in $root
+        let $costs := $el/aqd:costs
+        let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
+        let $comment := $costs/aqd:Costs/aqd:comment
+        let $costsRoot := $costs/aqd:Costs
 
-    let $isValidCost := common:is-a-number(data($implCosts))
-    let $hasCost := common:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+        let $isValidCost := common:is-a-number(data($implCosts))
+        let $hasCost := common:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
 
-    return
-        if (common:isNodeInParent($root, 'aqd:costs'))
-        then (
-            if (not($isValidCost))
-            then
-                if (empty($comment/text()))
+        return
+            if (common:isNodeInParent($el, 'aqd:costs'))
+            then (
+                if (not($isValidCost))
                 then
-                    if ($hasCost)
+                    if (empty($comment/text()))
                     then
-                        (
-                         <tr> <td title="{node-name($implCosts)}">{$errors:K21}</td> </tr>
-                        )
+                        if ($hasCost)
+                        then
+                            (
+                             <tr>
+                                <td title="gml:id">{data($el/@gml:id)}</td>
+                                <td title="aqd:estimatedImplementationCosts"> aqd:estimatedImplementationCosts not provided</td>
+                             </tr>
+                            )
+                        else
+                            (
+                            <tr>
+                                <td title="gml:id">{data($el/@gml:id)}</td>
+                                <td title="aqd:comment"> aqd:comment not provided</td>
+                            </tr>)
                     else
-                        ( <tr><td title="{node-name($comment)}">{$errors:K21}</td></tr>)
+                        ()  (: ok, we have a comment :)
                 else
-                    ()  (: ok, we have a comment :)
+                    ()      (: ok, cost is a number :)
+            )
             else
-                ()      (: ok, cost is a number :)
-        )
-        else
-            <tr><td title="{node-name($costs)}">{$errors:K21}</td></tr>
+                <tr>
+                    <td title="gml:id">{data($el/@gml:id)}</td>
+                    <td title="aqd:costs"> aqd:costs not provided</td>
+                </tr>
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -13131,12 +13776,15 @@ vocabulary
 
 :)
 
-let $K23 := common:validateMaybeNodeWithValueReport(
-    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
-    'aqd:estimatedImplementationCosts',
-    common:isInVocabulary(
-        $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency/@xlink:href,
-        $vocabulary:CURRENCIES
+let $K23 := (
+    for $el in $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+    return common:validateMaybeNodeWithValueReport(
+        $el,
+        'aqd:estimatedImplementationCosts',
+        common:isInVocabulary(
+            $el/aqd:currency/@xlink:href,
+            $vocabulary:CURRENCIES
+        )
     )
 )
 
@@ -13172,10 +13820,22 @@ http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/
 Measure Implementation Status should conform to vocabulary
 :)
 
-let $K26 := common:isInVocabularyReport(
-    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status,
-    $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY
-    )
+let $K26 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status
+    for $el in $main
+        let $uri := $el/@xlink:href
+        return
+        if (not(common:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../@gml:id)}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: K27
 aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
@@ -13199,22 +13859,24 @@ if unknown voided using indeterminatePosition="unknown"
 :)
 
 let $K28 := try {
-    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
-    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
 
-    let $ok := (
-        (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
-        or
-        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
-    )
+        let $ok := (
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+            or
+            (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            ("gml:beginPosition", data($begin)),
-            ("gml:endPosition", data($end))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13229,6 +13891,13 @@ let $K29 := common:isDateFullISOReport(
     $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
 )
 
+(:
+let $K29 := c:errorReport(
+    (isDate() and isDate() and isBigger()) or ()
+{
+}
+)
+:)
 
 (: K30
 If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
@@ -13240,22 +13909,24 @@ The planned end date for the measure should be provided in the right format,
 if unknown, voided using indeterminatePosition="unknown"
 :)
 let $K30 := try {
-    let $begin := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
-    let $end := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
 
-    let $ok := (
-        (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
-        or
-        ($end/@indeterminatePosition = "unknown" and empty($end/text()))
-    )
+        let $ok := (
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+            or
+            (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            ("gml:beginPosition", data($begin)),
-            ("gml:endPosition", data($end))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13268,17 +13939,18 @@ The full effect date of the measure must be provided and the format to be yyyy o
 :)
 
 let $K31 := try {
-    let $node := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+    for $node in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
 
     let $ok := (
-        $node castable as xs:date
+        data($node) castable as xs:date
         or
-        $node castable as xs:gYear
+        not(common:isInvalidYear(data($node)))
     )
 
     return common:conditionalReportRow(
         $ok,
         [
+            ("gml:id", data($node/../../../../../@gml:id)),
             (node-name($node), data($node))
         ]
     )
@@ -13301,24 +13973,24 @@ If voided an explanation of why this information unavailable shall be provided i
 :)
 
 let $K33 := try {
-    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
-    let $comment := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation
+        let $main := $el/aqd:monitoringProgressIndicators
+        let $comment := $el/aqd:comment
 
-    let $ok := (
-        not(
-            empty($main/text())
-            or
-            empty($comment/text())
+        let $ok := (
+                functx:if-empty(data($main),"") != ""
+                or
+                functx:if-empty(data($comment),"") != ""
         )
-    )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($main), data($main)),
-            (node-name($comment), data($comment))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../@gml:id)),
+                ("aqd:monitoringProgressIndicators", data($main)),
+                ("aqd:comment", data($comment))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13334,26 +14006,29 @@ an integer or floating point numeric >= 0 if attribute xsi:nil="false"
 :)
 
 let $K34 := try {
-    let $node := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
-    (: TODO: should write a function for this? there's already is-a-number :)
-    let $isNum := (
-        ($node castable as xs:integer)
-        or
-        ($node castable as xs:float)
-    )
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        (: TODO: should write a function for this? there's already is-a-number :)
+        let $isNum := (
+            (data($node) castable as xs:integer)
+            or
+            (data($node) castable as xs:float)
+        )
 
-    let $ok := (
-        ($node/@xsi:nil != 'false')
-        or
-        ($isNum and ($node cast as xs:float >= 0))
-    )
+        let $ok := (
+            ($node/@xsi:nil != 'false')
+            or
+            ($isNum and ($node cast as xs:float >= 0))
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($node), data($node))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../../../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("xsi:nil", $node/@xsi:nil)
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13366,31 +14041,33 @@ Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute 
 If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty
 :)
 let $K35 := try {
-    let $node := $docRoot//aqd:QuantityCommented/aqd:quantity
-    (:let $asd := trace(functx:if-empty($node/text(), 0), "K35: "):)
-    let $ok := (
-        (functx:if-empty($node/text(), "") != "")
-        or
-        (
-            lower-case($node/@xsi:nil) = "true"
-            and
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        let $ok := (
+            (functx:if-empty($node/text(), "") != "")
+            or
             (
-                (lower-case($node/@nilReason) = "unknown")
-                or
-                (lower-case($node/@nilReason) = "unpopulated")
-                or
-                (lower-case($node/@nilReason) = "withheld")
+                lower-case($node/@xsi:nil) = "true"
+                and
+                (
+                    (lower-case($node/@nilReason) = "unknown")
+                    or
+                    (lower-case($node/@nilReason) = "unpopulated")
+                    or
+                    (lower-case($node/@nilReason) = "withheld")
+                )
             )
         )
-    )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($node), data($node)),
-            (name($node/@nilReason), data($node/@nilReason))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../../../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("xsi:nil", data($node/@xsi:nil)),
+                ("nilReason", data($node/@nilReason))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13403,22 +14080,28 @@ aqd:QuantityCommented/aqd:comment must be populated
 If the quantification is voided an explanation is required in aqd:comment
 :)
 let $K36 := try {
-    let $quantity := $docRoot//aqd:QuantityCommented/aqd:quantity
-    let $comment := $docRoot//aqd:QuantityCommented/aqd:comment
+    for $main in $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented
+        let $quantity := $main/aqd:quantity
+        let $comment := $main/aqd:comment
 
-    let $ok := (
-        (functx:if-empty($quantity/text(), "") = "")
-        or
-        (functx:if-empty($comment/text(), "") = "")
-    )
+        let $ok := (
+            lower-case(functx:if-empty(data($quantity/@xsi:nil), "")) = "false"
+            or
+            (
+            lower-case(functx:if-empty(data($quantity/@xsi:nil), "")) = "true"
+            and
+            functx:if-empty(data($comment), "") != ""
+            )
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($quantity), data($quantity)),
-            (node-name($comment), data($comment))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/../../@gml:id)),
+                ("aqd:quantity", data($quantity)),
+                ("aqd:comment", data($comment))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13430,18 +14113,20 @@ shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission
 the quantification of reductionOfEmissions should conform to vocabulary
 :)
 let $K37 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
-    let $uri := data($el/@uom)
-    let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
-    let $ok := ($uri and $uri = $validUris)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
+        let $ok := ($uri and $uri = $validUris)
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:quantity", data($el)),
+                ("uom", data($uri))
+            ]
+        )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -13457,29 +14142,31 @@ The level of concentration expected should be provided as an integer and its uni
 :)
 
 let $K38 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
-    let $uri := data($el/@uom)
-    let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
 
-    let $isNum := (
-        ($el castable as xs:integer)
-        or
-        ($el castable as xs:float)
-    )
+        let $isNum := (
+            (data($el) castable as xs:integer)
+            or
+            (data($el) castable as xs:float)
+        )
 
-    let $ok := (
-        $validVocabulary
-        and
-        ($isNum and ($el cast as xs:float >= 0))
-    )
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:levelOfConcentration", data($el)),
+                ("uom", data($uri))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13494,29 +14181,31 @@ The number of exceecedance expected should be provided as an integer and its uni
 :)
 
 let $K39 := try {
-    let $el := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
-    let $uri := data($el/@uom)
-    let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
 
-    let $isNum := (
-        ($el castable as xs:integer)
-        or
-        ($el castable as xs:float)
-    )
+        let $isNum := (
+            ($el castable as xs:integer)
+            or
+            ($el castable as xs:float)
+        )
 
-    let $ok := (
-        $validVocabulary
-        and
-        ($isNum and ($el cast as xs:float >= 0))
-    )
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
 
-    return common:conditionalReportRow(
-        $ok,
-        [
-            (node-name($el), data($el)),
-            (name($el/@uom), data($uri))
-        ]
-    )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:numberOfExceedances", data($el)),
+                ("uom", data($uri))
+            ]
+        )
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -13540,6 +14229,7 @@ return
         {html:build1("K06", $labels:K06, $labels:K06_SHORT, $K06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K06)}
         {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
         {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
+        <!-- {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)} !-->
         {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
         {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " not conform to vocabulary", $errors:K10)}
         {html:build2("K11", $labels:K11, $labels:K11_SHORT, $K11, "All values are valid", "needs valid input", $errors:K11)}
@@ -15396,32 +16086,6 @@ declare function filter:filterByName($results as element(result)*, $elem as xs:s
     for $x in $results
     where ($x/*[local-name() = $elem] = $string)
     return $x
-};
-
-(:~
-: User: George Sofianos
-: Date: 11/14/16
-: Time: 2:00 PM
-:)
-
-declare function functx:is-leap-year($date as xs:anyAtomicType?) as xs:boolean {
-    for $year in xs:integer(substring(string($date),1,4))
-    return ($year mod 4 = 0 and
-            $year mod 100 != 0) or
-            $year mod 400 = 0
-};
-
-declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
-    replace($arg, '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
-};
-
-declare function functx:if-empty
- ( $arg as item()* ,
-   $value as item()* )  as item()* {
-
-    if (string($arg) != '')
-        then data($arg)
-        else $value
 };
 
 (:~
@@ -17625,52 +18289,57 @@ declare function query:existsViaNameLocalId(
         $label as xs:string,
         $name as xs:string
 ) as xs:boolean {
-  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-       SELECT count(?label) as ?cnt
-       WHERE {
-?scenariosXMLURI a aq:" || $name ||";
-aq:inspireId ?inspireId.
-?inspireId rdfs:label ?label.
-?inspireId aq:namespace ?name.
-?inspireId aq:localId ?localId
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
-   }"
 
-  let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
-  return
-    if ($count > 0)
-    then
-      true()
-    else
-      false()
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $name ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+}"
+
+    let $res := sparqlx:run($query)
+    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
+    return
+        if ($count > 0)
+            then
+                true()
+            else
+                false()
 };
+
 (: Checks if X references an existing Y via namespace/localid and reporting year :)
 declare function query:existsViaNameLocalIdYear(
         $label as xs:string,
-        $name as xs:string,
+        $type as xs:string,
         $year as xs:string
 ) as xs:boolean {
-  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-       SELECT count(?label) as ?cnt
-       WHERE {
-?scenariosXMLURI a aq:" || $name ||";
-aq:inspireId ?inspireId.
-?inspireId rdfs:label ?label.
-?inspireId aq:namespace ?name.
-?inspireId aq:localId ?localId
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
-FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
-   }"
 
-  let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
-  return
-    if ($count > 0)
-    then
-      true()
-    else
-      false()
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $type ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
+}
+"
+
+(: TODO: is correct to use scenariosXMLURI  ? :)
+
+    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
+    return $count > 0
 };
 
 
@@ -17698,8 +18367,8 @@ Used for dataflow I, can be used for any other
 TODO: reuse in other workflows
 :)
 declare function query:sparql-objects-in-subject(
-        $url as xs:string,
-        $type as xs:string
+    $url as xs:string,
+    $type as xs:string
 ) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
@@ -17721,8 +18390,8 @@ Used for dataflow I, can be used for any other
 TODO: reuse in other workflows
 :)
 declare function query:sparql-objects-ids(
-        $namespaces as xs:string*,
-        $type as xs:string
+    $namespaces as xs:string*,
+    $type as xs:string
 ) as xs:string* {
   let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
@@ -17789,8 +18458,8 @@ declare function query:getAllFeatureIds($featureTypes as xs:string*, $namespaces
    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     SELECT ?inspireLabel WHERE {"
   let $mid := string-join(
-          for $featureType in $featureTypes
-          return "
+    for $featureType in $featureTypes
+    return "
     {
       ?zone a " || $featureType || ";
       aqd:inspireId ?inspireid .
@@ -17805,7 +18474,7 @@ declare function query:getAllFeatureIds($featureTypes as xs:string*, $namespaces
 (: Generic queries :)
 declare function query:deliveryExists($obligations as xs:string*, $countryCode as xs:string, $dir as xs:string, $reportingYear as xs:string) as xs:boolean {
   let $query :=
-    "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
+      "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
        SELECT ?envelope
        WHERE {
           ?envelope a aqd:Delivery ;
@@ -17817,7 +18486,7 @@ declare function query:deliveryExists($obligations as xs:string*, $countryCode a
           FILTER(CONTAINS(str(?envelope), '" || common:getCdrUrl($countryCode) || $dir || "'))
           FILTER(STRSTARTS(str(?period), '" || $reportingYear || "'))
        }"
-  return count(sparqlx:run($query)//sparql:binding[@name = 'envelope']/sparql:uri) > 0
+   return count(sparqlx:run($query)//sparql:binding[@name = 'envelope']/sparql:uri) > 0
 };
 
 declare function query:getLangCodesSparql() as xs:string {
@@ -17943,7 +18612,7 @@ declare function query:getEnvelopes($cdrUrl as xs:string, $reportingYear as xs:s
         FILTER(CONTAINS(str(?envelope), '" || $cdrUrl || "'))
         FILTER(STRSTARTS(str(?period), '" || $reportingYear || "'))
      } order by desc(?date)"
-  let $result := data(sparqlx:run($query)//sparql:binding[@name='envelope']/sparql:uri)
+     let $result := data(sparqlx:run($query)//sparql:binding[@name='envelope']/sparql:uri)
   return $result
 };
 
@@ -18004,16 +18673,11 @@ declare function query:sparql-objects-in-subject(
 };
 
 
-
-
-
-
-
 :)
 declare function query:get-pollutant-for-attainment(
-        $subj-url as xs:string
+    $subj-url as xs:string
 ) as xs:string {
-  let $query := "
+    let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -18038,7 +18702,10 @@ WHERE {
   return data($res//sparql:binding[@name='pollutant']/sparql:uri)
 };
 
-declare function query:getPollutantCodeAndProtectionTarge($cdrUrl as xs:string, $bDir as xs:string) as xs:string {
+declare function query:getPollutantCodeAndProtectionTarge(
+    $cdrUrl as xs:string,
+    $bDir as xs:string
+) as xs:string {
   concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
     PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -18240,7 +18907,7 @@ declare function query:getSamplingPointFromFiles($url as xs:string*) as xs:strin
     return "STRSTARTS(str(?samplingPoint), '" || $x || "')"
   let $filters := "FILTER(" || string-join($filters, " OR ") || ")"
   return
-    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
@@ -18280,7 +18947,7 @@ declare function query:getSamplingPointMetadataFromFiles($url as xs:string*) as 
     return "STRSTARTS(str(?samplingPoint), '" || $x || "')"
   let $filters := "FILTER(" || string-join($filters, " OR ") || ")"
   return
-    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
@@ -18352,6 +19019,43 @@ declare function query:getObligationYears() {
 
    FILTER (year(?released) > 2014) .
    } ORDER BY ?countryCode ?ReportingYear ?obligation_nr"
+};
+
+
+(:~ Returns the URI for the aqd:modelUsed used for the given Attainment
+:)
+declare function query:get-used-model-for-attainment(
+    $uri as xs:string
+) as xs:string {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?localId ?inspireLabel ?aqd_attainment ?desc_final ?model_used ?attainment ?source_apportionment
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment ;
+
+    aqd:inspireId ?inspireId .
+    ?inspireId rdfs:label ?inspireLabel .
+    ?inspireId aqd:localId ?localId .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    ?exceedance_area aqd:modelUsed ?model_used .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
+    return ""
+
+(: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
 };
 
 (:~
@@ -18592,6 +19296,2717 @@ declare function sparqlx:executeSparqlEndpoint_D($sparql as xs:string) as elemen
 
 
 
+
+
+(:~
+
+ : --------------------------------
+ : The FunctX XQuery Function Library
+ : --------------------------------
+
+ : Copyright (C) 2007 Datypic
+
+ : This library is free software; you can redistribute it and/or
+ : modify it under the terms of the GNU Lesser General Public
+ : License as published by the Free Software Foundation; either
+ : version 2.1 of the License.
+
+ : This library is distributed in the hope that it will be useful,
+ : but WITHOUT ANY WARRANTY; without even the implied warranty of
+ : MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ : Lesser General Public License for more details.
+
+ : You should have received a copy of the GNU Lesser General Public
+ : License along with this library; if not, write to the Free Software
+ : Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+ : For more information on the FunctX XQuery library, contact contrib@functx.com.
+
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com
+ :)
+
+(:~
+ : Adds attributes to XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-attributes.html
+ : @param   $elements the element(s) to which you wish to add the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:add-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return if ($element/@*[node-name(.) = $attrName])
+                           then ()
+                           else attribute {$attrName}
+                                          {$attrValues[$seq]},
+                    $element/@*,
+                    $element/node() }
+ } ;
+
+(:~
+ : Adds months to a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-months.html
+ : @param   $date the date
+ : @param   $months the number of months to add
+ :)
+declare function functx:add-months
+  ( $date as xs:anyAtomicType? ,
+    $months as xs:integer )  as xs:date? {
+
+   xs:date($date) + functx:yearMonthDuration(0,$months)
+ } ;
+
+(:~
+ : Adds attributes to XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-or-update-attributes.html
+ : @param   $elements the element(s) to which you wish to add the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:add-or-update-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return attribute {$attrName}
+                                     {$attrValues[$seq]},
+                    $element/@*[not(node-name(.) = $attrNames)],
+                    $element/node() }
+ } ;
+
+(:~
+ : Whether a value is all whitespace or a zero-length string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_all-whitespace.html
+ : @param   $arg the string (or node) to test
+ :)
+declare function functx:all-whitespace
+  ( $arg as xs:string? )  as xs:boolean {
+
+   normalize-space($arg) = ''
+ } ;
+
+(:~
+ : Whether all the values in a sequence are distinct
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_are-distinct-values.html
+ : @param   $seq the sequence of values
+ :)
+declare function functx:are-distinct-values
+  ( $seq as xs:anyAtomicType* )  as xs:boolean {
+
+   count(distinct-values($seq)) = count($seq)
+ } ;
+
+(:~
+ : The built-in type of an atomic value
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_atomic-type.html
+ : @param   $values the value(s) whose type you want to determine
+ :)
+declare function functx:atomic-type
+  ( $values as xs:anyAtomicType* )  as xs:string* {
+
+ for $val in $values
+ return
+ (if ($val instance of xs:untypedAtomic) then 'xs:untypedAtomic'
+ else if ($val instance of xs:anyURI) then 'xs:anyURI'
+ else if ($val instance of xs:ENTITY) then 'xs:ENTITY'
+ else if ($val instance of xs:ID) then 'xs:ID'
+ else if ($val instance of xs:NMTOKEN) then 'xs:NMTOKEN'
+ else if ($val instance of xs:language) then 'xs:language'
+ else if ($val instance of xs:NCName) then 'xs:NCName'
+ else if ($val instance of xs:Name) then 'xs:Name'
+ else if ($val instance of xs:token) then 'xs:token'
+ else if ($val instance of xs:normalizedString)
+         then 'xs:normalizedString'
+ else if ($val instance of xs:string) then 'xs:string'
+ else if ($val instance of xs:QName) then 'xs:QName'
+ else if ($val instance of xs:boolean) then 'xs:boolean'
+ else if ($val instance of xs:base64Binary) then 'xs:base64Binary'
+ else if ($val instance of xs:hexBinary) then 'xs:hexBinary'
+ else if ($val instance of xs:byte) then 'xs:byte'
+ else if ($val instance of xs:short) then 'xs:short'
+ else if ($val instance of xs:int) then 'xs:int'
+ else if ($val instance of xs:long) then 'xs:long'
+ else if ($val instance of xs:unsignedByte) then 'xs:unsignedByte'
+ else if ($val instance of xs:unsignedShort) then 'xs:unsignedShort'
+ else if ($val instance of xs:unsignedInt) then 'xs:unsignedInt'
+ else if ($val instance of xs:unsignedLong) then 'xs:unsignedLong'
+ else if ($val instance of xs:positiveInteger)
+         then 'xs:positiveInteger'
+ else if ($val instance of xs:nonNegativeInteger)
+         then 'xs:nonNegativeInteger'
+ else if ($val instance of xs:negativeInteger)
+         then 'xs:negativeInteger'
+ else if ($val instance of xs:nonPositiveInteger)
+         then 'xs:nonPositiveInteger'
+ else if ($val instance of xs:integer) then 'xs:integer'
+ else if ($val instance of xs:decimal) then 'xs:decimal'
+ else if ($val instance of xs:float) then 'xs:float'
+ else if ($val instance of xs:double) then 'xs:double'
+ else if ($val instance of xs:date) then 'xs:date'
+ else if ($val instance of xs:time) then 'xs:time'
+ else if ($val instance of xs:dateTime) then 'xs:dateTime'
+ else if ($val instance of xs:dayTimeDuration)
+         then 'xs:dayTimeDuration'
+ else if ($val instance of xs:yearMonthDuration)
+         then 'xs:yearMonthDuration'
+ else if ($val instance of xs:duration) then 'xs:duration'
+ else if ($val instance of xs:gMonth) then 'xs:gMonth'
+ else if ($val instance of xs:gYear) then 'xs:gYear'
+ else if ($val instance of xs:gYearMonth) then 'xs:gYearMonth'
+ else if ($val instance of xs:gDay) then 'xs:gDay'
+ else if ($val instance of xs:gMonthDay) then 'xs:gMonthDay'
+ else 'unknown')
+ } ;
+
+(:~
+ : The average, counting "empty" values as zero
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_avg-empty-is-zero.html
+ : @param   $values the values to be averaged
+ : @param   $allNodes the sequence of all nodes to find the average over
+ :)
+declare function functx:avg-empty-is-zero
+  ( $values as xs:anyAtomicType* ,
+    $allNodes as node()* )  as xs:double {
+
+   if (empty($allNodes))
+   then 0
+   else sum($values[string(.) != '']) div count($allNodes)
+ } ;
+
+(:~
+ : Whether a value is between two provided values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_between-exclusive.html
+ : @param   $value the value to be tested
+ : @param   $minValue the minimum value
+ : @param   $maxValue the maximum value
+ :)
+declare function functx:between-exclusive
+  ( $value as xs:anyAtomicType? ,
+    $minValue as xs:anyAtomicType ,
+    $maxValue as xs:anyAtomicType )  as xs:boolean {
+
+   $value > $minValue and $value < $maxValue
+ } ;
+
+(:~
+ : Whether a value is between two provided values, or equal to one of them
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_between-inclusive.html
+ : @param   $value the value to be tested
+ : @param   $minValue the minimum value
+ : @param   $maxValue the maximum value
+ :)
+declare function functx:between-inclusive
+  ( $value as xs:anyAtomicType? ,
+    $minValue as xs:anyAtomicType ,
+    $maxValue as xs:anyAtomicType )  as xs:boolean {
+
+   $value >= $minValue and $value <= $maxValue
+ } ;
+
+(:~
+ : Turns a camelCase string into space-separated words
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_camel-case-to-words.html
+ : @param   $arg the string to modify
+ : @param   $delim the delimiter for the words (e.g. a space)
+ :)
+declare function functx:camel-case-to-words
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   concat(substring($arg,1,1),
+             replace(substring($arg,2),'(\p{Lu})',
+                        concat($delim, '$1')))
+ } ;
+
+(:~
+ : Capitalizes the first character of a string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
+ : @param   $arg the word or phrase to capitalize
+ :)
+declare function functx:capitalize-first
+  ( $arg as xs:string? )  as xs:string? {
+
+   concat(upper-case(substring($arg,1,1)),
+             substring($arg,2))
+ } ;
+
+(:~
+ : Changes the names of elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-names-deep.html
+ : @param   $nodes the element(s) to change
+ : @param   $oldNames the sequence of names to change from
+ : @param   $newNames the sequence of names to change to
+ :)
+declare function functx:change-element-names-deep
+  ( $nodes as node()* ,
+    $oldNames as xs:QName* ,
+    $newNames as xs:QName* )  as node()* {
+
+  if (count($oldNames) != count($newNames))
+  then error(xs:QName('functx:Different_number_of_names'))
+  else
+   for $node in $nodes
+   return if ($node instance of element())
+          then element
+                 {functx:if-empty
+                    ($newNames[index-of($oldNames,
+                                           node-name($node))],
+                     node-name($node)) }
+                 {$node/@*,
+                  functx:change-element-names-deep($node/node(),
+                                           $oldNames, $newNames)}
+          else if ($node instance of document-node())
+          then functx:change-element-names-deep($node/node(),
+                                           $oldNames, $newNames)
+          else $node
+ } ;
+
+(:~
+ : Changes the namespace of XML elements and its descendants
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-ns-deep.html
+ : @param   $nodes the nodes to change
+ : @param   $newns the new namespace
+ : @param   $prefix the prefix to use for the new namespace
+ :)
+declare function functx:change-element-ns-deep
+  ( $nodes as node()* ,
+    $newns as xs:string ,
+    $prefix as xs:string )  as node()* {
+
+  for $node in $nodes
+  return if ($node instance of element())
+         then (element
+               {QName ($newns,
+                          concat($prefix,
+                                    if ($prefix = '')
+                                    then ''
+                                    else ':',
+                                    local-name($node)))}
+               {$node/@*,
+                functx:change-element-ns-deep($node/node(),
+                                           $newns, $prefix)})
+         else if ($node instance of document-node())
+         then functx:change-element-ns-deep($node/node(),
+                                           $newns, $prefix)
+         else $node
+ } ;
+
+(:~
+ : Changes the namespace of XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-ns.html
+ : @param   $elements the elements to change
+ : @param   $newns the new namespace
+ : @param   $prefix the prefix to use for the new namespace
+ :)
+declare function functx:change-element-ns
+  ( $elements as element()* ,
+    $newns as xs:string ,
+    $prefix as xs:string )  as element()? {
+
+   for $element in $elements
+   return
+   element {QName ($newns,
+                      concat($prefix,
+                                if ($prefix = '')
+                                then ''
+                                else ':',
+                                local-name($element)))}
+           {$element/@*, $element/node()}
+ } ;
+
+(:~
+ : Converts a string to a sequence of characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_chars.html
+ : @param   $arg the string to split
+ :)
+declare function functx:chars
+  ( $arg as xs:string? )  as xs:string* {
+
+   for $ch in string-to-codepoints($arg)
+   return codepoints-to-string($ch)
+ } ;
+
+(:~
+ : Whether a string contains any of a sequence of strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-any-of.html
+ : @param   $arg the string to test
+ : @param   $searchStrings the strings to look for
+ :)
+declare function functx:contains-any-of
+  ( $arg as xs:string? ,
+    $searchStrings as xs:string* )  as xs:boolean {
+
+   some $searchString in $searchStrings
+   satisfies contains($arg,$searchString)
+ } ;
+
+(:~
+ : Whether one string contains another, without regard to case
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-case-insensitive.html
+ : @param   $arg the string to search
+ : @param   $substring the substring to find
+ :)
+declare function functx:contains-case-insensitive
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:boolean? {
+
+   contains(upper-case($arg), upper-case($substring))
+ } ;
+
+(:~
+ : Whether one string contains another, as a separate word
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-word.html
+ : @param   $arg the string to search
+ : @param   $word the word to find
+ :)
+declare function functx:contains-word
+  ( $arg as xs:string? ,
+    $word as xs:string )  as xs:boolean {
+
+   matches(upper-case($arg),
+           concat('^(.*\W)?',
+                     upper-case(functx:escape-for-regex($word)),
+                     '(\W.*)?$'))
+ } ;
+
+(:~
+ : Copies attributes from one element to another
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_copy-attributes.html
+ : @param   $copyTo the element to copy attributes to
+ : @param   $copyFrom the element to copy attributes from
+ :)
+declare function functx:copy-attributes
+  ( $copyTo as element() ,
+    $copyFrom as element() )  as element() {
+
+   element { node-name($copyTo)}
+           { $copyTo/@*[not(node-name(.) = $copyFrom/@*/node-name(.))],
+             $copyFrom/@*,
+             $copyTo/node() }
+
+ } ;
+
+(:~
+ : Construct a date from a year, month and day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_date.html
+ : @param   $year the year
+ : @param   $month the month
+ : @param   $day the day
+ :)
+declare function functx:date
+  ( $year as xs:anyAtomicType ,
+    $month as xs:anyAtomicType ,
+    $day as xs:anyAtomicType )  as xs:date {
+
+   xs:date(
+     concat(
+       functx:pad-integer-to-length(xs:integer($year),4),'-',
+       functx:pad-integer-to-length(xs:integer($month),2),'-',
+       functx:pad-integer-to-length(xs:integer($day),2)))
+ } ;
+
+(:~
+ : Construct a date/time from individual components
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_datetime.html
+ : @param   $year the year
+ : @param   $month the month
+ : @param   $day the day
+ : @param   $hour the hour
+ : @param   $minute the minute
+ : @param   $second the second
+ :)
+declare function functx:dateTime
+  ( $year as xs:anyAtomicType ,
+    $month as xs:anyAtomicType ,
+    $day as xs:anyAtomicType ,
+    $hour as xs:anyAtomicType ,
+    $minute as xs:anyAtomicType ,
+    $second as xs:anyAtomicType )  as xs:dateTime {
+
+   xs:dateTime(
+     concat(functx:date($year,$month,$day),'T',
+             functx:time($hour,$minute,$second)))
+ } ;
+
+(:~
+ : The day of the year (a number between 1 and 366)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-in-year.html
+ : @param   $date the date
+ :)
+declare function functx:day-in-year
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+  days-from-duration(
+      xs:date($date) - functx:first-day-of-year($date)) + 1
+ } ;
+
+(:~
+ : The abbreviated day of the week, from a date, in English
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week-abbrev-en.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week-abbrev-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat')
+   [functx:day-of-week($date) + 1]
+ } ;
+
+(:~
+ : The name of the day of the week, from a date, in English
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week-name-en.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week-name-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Sunday', 'Monday', 'Tuesday', 'Wednesday',
+    'Thursday', 'Friday', 'Saturday')
+      [functx:day-of-week($date) + 1]
+ } ;
+
+(:~
+ : The day of the week, from a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+  if (empty($date))
+  then ()
+  else xs:integer((xs:date($date) - xs:date('1901-01-06'))
+          div xs:dayTimeDuration('P1D')) mod 7
+ } ;
+
+(:~
+ : Construct a dayTimeDuration from a number of days, hours, etc.
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_daytimeduration.html
+ : @param   $days the number of days
+ : @param   $hours the number of hours
+ : @param   $minutes the number of minutes
+ : @param   $seconds the number of seconds
+ :)
+declare function functx:dayTimeDuration
+  ( $days as xs:decimal? ,
+    $hours as xs:decimal? ,
+    $minutes as xs:decimal? ,
+    $seconds as xs:decimal? )  as xs:dayTimeDuration {
+
+    (xs:dayTimeDuration('P1D') * functx:if-empty($days,0)) +
+    (xs:dayTimeDuration('PT1H') * functx:if-empty($hours,0)) +
+    (xs:dayTimeDuration('PT1M') * functx:if-empty($minutes,0)) +
+    (xs:dayTimeDuration('PT1S') * functx:if-empty($seconds,0))
+ } ;
+
+(:~
+ : Number of days in the month
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_days-in-month.html
+ : @param   $date the date
+ :)
+declare function functx:days-in-month
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+   if (month-from-date(xs:date($date)) = 2 and
+       functx:is-leap-year($date))
+   then 29
+   else
+   (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : The depth (level) of a node in an XML tree
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_depth-of-node.html
+ : @param   $node the node to check
+ :)
+declare function functx:depth-of-node
+  ( $node as node()? )  as xs:integer {
+
+   count($node/ancestor-or-self::node())
+ } ;
+
+(:~
+ : The distinct names of all attributes in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-attribute-names.html
+ : @param   $nodes the root to start from
+ :)
+declare function functx:distinct-attribute-names
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values($nodes//@*/name(.))
+ } ;
+
+(:~
+ : The XML nodes with distinct values, taking into account attributes and descendants
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-deep.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:distinct-deep
+  ( $nodes as node()* )  as node()* {
+
+    for $seq in (1 to count($nodes))
+    return $nodes[$seq][not(functx:is-node-in-sequence-deep-equal(
+                          .,$nodes[position() < $seq]))]
+ } ;
+
+(:~
+ : The distinct names of all elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-element-names.html
+ : @param   $nodes the root(s) to start from
+ :)
+declare function functx:distinct-element-names
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values($nodes/descendant-or-self::*/name(.))
+ } ;
+
+(:~
+ : The distinct paths of all descendant elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-element-paths.html
+ : @param   $nodes the root(s) to start from
+ :)
+declare function functx:distinct-element-paths
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values(functx:path-to-node($nodes/descendant-or-self::*))
+ } ;
+
+(:~
+ : The distinct XML nodes in a sequence (by node identity)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-nodes.html
+ : @param   $nodes the node sequence
+ :)
+declare function functx:distinct-nodes
+  ( $nodes as node()* )  as node()* {
+
+    for $seq in (1 to count($nodes))
+    return $nodes[$seq][not(functx:is-node-in-sequence(
+                                .,$nodes[position() < $seq]))]
+ } ;
+
+(:~
+ : Converts a timezone like "-05:00" or "Z" into xs:dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_duration-from-timezone.html
+ : @param   $timezone the time zone, in (+|-)HH:MM format
+ :)
+declare function functx:duration-from-timezone
+  ( $timezone as xs:string )  as xs:dayTimeDuration {
+
+   xs:dayTimeDuration(
+     if (not(matches($timezone,'Z|[\+\-]\d{2}:\d{2}')))
+     then error(xs:QName('functx:Invalid_Timezone_Value'))
+     else if ($timezone = 'Z')
+     then 'PT0S'
+     else replace($timezone,'\+?(\d{2}):\d{2}','PT$1H')
+        )
+ } ;
+
+(:~
+ : Dynamically evaluates a simple XPath path
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_dynamic-path.html
+ : @param   $parent the root to start from
+ : @param   $path the path expression
+ :)
+declare function functx:dynamic-path
+  ( $parent as node() ,
+    $path as xs:string )  as item()* {
+
+  let $nextStep := functx:substring-before-if-contains($path,'/')
+  let $restOfSteps := substring-after($path,'/')
+  for $child in
+    ($parent/*[functx:name-test(name(),$nextStep)],
+     $parent/@*[functx:name-test(name(),
+                              substring-after($nextStep,'@'))])
+  return if ($restOfSteps)
+         then functx:dynamic-path($child, $restOfSteps)
+         else $child
+ } ;
+
+(:~
+ : Escapes regex special characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_escape-for-regex.html
+ : @param   $arg the string to escape
+ :)
+declare function functx:escape-for-regex
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,
+           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
+ } ;
+
+(:~
+ : Whether one (and only one) of two boolean values is true
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_exclusive-or.html
+ : @param   $arg1 the first boolean value
+ : @param   $arg2 the second boolean value
+ :)
+declare function functx:exclusive-or
+  ( $arg1 as xs:boolean? ,
+    $arg2 as xs:boolean? )  as xs:boolean? {
+
+   $arg1 != $arg2
+ } ;
+
+(:~
+ : The first day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-day-of-month.html
+ : @param   $date the date
+ :)
+declare function functx:first-day-of-month
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)),
+            month-from-date(xs:date($date)),
+            1)
+ } ;
+
+(:~
+ : The first day of the year of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-day-of-year.html
+ : @param   $date the date
+ :)
+declare function functx:first-day-of-year
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)), 1, 1)
+ } ;
+
+(:~
+ : The XML node in a sequence that appears first in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-node.html
+ : @param   $nodes the sequence of nodes
+ :)
+declare function functx:first-node
+  ( $nodes as node()* )  as node()? {
+
+   ($nodes/.)[1]
+ } ;
+
+(:~
+ : Whether an XML node follows another without being its descendant
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_follows-not-descendant.html
+ : @param   $a the first node
+ : @param   $b the second node
+ :)
+declare function functx:follows-not-descendant
+  ( $a as node()? ,
+    $b as node()? )  as xs:boolean {
+
+   $a >> $b and empty($b intersect $a/ancestor::node())
+ } ;
+
+(:~
+ : Moves title words like "the" and "a" to the end of strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_format-as-title-en.html
+ : @param   $titles the titles to format
+ :)
+declare function functx:format-as-title-en
+  ( $titles as xs:string* )  as xs:string* {
+
+   let $wordsToMoveToEnd := ('A', 'An', 'The')
+   for $title in $titles
+   let $firstWord := functx:substring-before-match($title,'\W')
+   return if ($firstWord = $wordsToMoveToEnd)
+          then replace($title,'(.*?)\W(.*)', '$2, $1')
+          else $title
+ } ;
+
+(:~
+ : Returns the fragment from a URI
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_fragment-from-uri.html
+ : @param   $uri the URI
+ :)
+declare function functx:fragment-from-uri
+  ( $uri as xs:string? )  as xs:string? {
+
+   substring-after($uri,'#')
+ } ;
+
+(:~
+ : Splits a string into matching and non-matching regions
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_get-matches-and-non-matches.html
+ : @param   $string the string to split
+ : @param   $regex the pattern
+ :)
+declare function functx:get-matches-and-non-matches
+  ( $string as xs:string? ,
+    $regex as xs:string )  as element()* {
+
+   let $iomf := functx:index-of-match-first($string, $regex)
+   return
+   if (empty($iomf))
+   then <non-match>{$string}</non-match>
+   else
+   if ($iomf > 1)
+   then (<non-match>{substring($string,1,$iomf - 1)}</non-match>,
+         functx:get-matches-and-non-matches(
+            substring($string,$iomf),$regex))
+   else
+   let $length :=
+      string-length($string) -
+      string-length(functx:replace-first($string, $regex,''))
+   return (<match>{substring($string,1,$length)}</match>,
+           if (string-length($string) > $length)
+           then functx:get-matches-and-non-matches(
+              substring($string,$length + 1),$regex)
+           else ())
+ } ;
+
+(:~
+ : Return the matching regions of a string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_get-matches.html
+ : @param   $string the string to split
+ : @param   $regex the pattern
+ :)
+declare function functx:get-matches
+  ( $string as xs:string? ,
+    $regex as xs:string )  as xs:string* {
+
+   functx:get-matches-and-non-matches($string,$regex)/
+     string(self::match)
+ } ;
+
+(:~
+ : Whether an element has element-only content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-element-only-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-element-only-content
+  ( $element as element() )  as xs:boolean {
+
+   not($element/text()[normalize-space(.) != '']) and $element/*
+ } ;
+
+(:~
+ : Whether an element has empty content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-empty-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-empty-content
+  ( $element as element() )  as xs:boolean {
+
+   not($element/node())
+ } ;
+
+(:~
+ : Whether an element has mixed content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-mixed-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-mixed-content
+  ( $element as element() )  as xs:boolean {
+
+   $element/text()[normalize-space(.) != ''] and $element/*
+ } ;
+
+(:~
+ : Whether an element has simple content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-simple-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-simple-content
+  ( $element as element() )  as xs:boolean {
+
+   $element/text() and not($element/*)
+ } ;
+
+(:~
+ : Gets the ID of an XML element
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_id-from-element.html
+ : @param   $element the element
+ :)
+declare function functx:id-from-element
+  ( $element as element()? )  as xs:string? {
+
+  data(($element/@*[id(.) is ..])[1])
+ } ;
+
+(:~
+ : Gets XML element(s) that have an attribute with a particular value
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_id-untyped.html
+ : @param   $node the root node(s) to start from
+ : @param   $id the "id" to find
+ :)
+declare function functx:id-untyped
+  ( $node as node()* ,
+    $id as xs:anyAtomicType )  as element()* {
+
+  $node//*[@* = $id]
+ } ;
+
+(:~
+ : The first argument if it is not empty, otherwise the second argument
+ :
+ : @author  W3C XML Query WG
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_if-absent.html
+ : @param   $arg the item(s) that may be absent
+ : @param   $value the item(s) to use if the item is absent
+ :)
+declare function functx:if-absent
+  ( $arg as item()* ,
+    $value as item()* )  as item()* {
+
+    if (exists($arg))
+    then $arg
+    else $value
+ } ;
+
+(:~
+ : The first argument if it is not blank, otherwise the second argument
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_if-empty.html
+ : @param   $arg the node that may be empty
+ : @param   $value the item(s) to use if the node is empty
+ :)
+declare function functx:if-empty
+  ( $arg as item()? ,
+    $value as item()* )  as item()* {
+
+  if (string($arg) != '')
+  then data($arg)
+  else $value
+ } ;
+
+(:~
+ : The position of a node in a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-deep-equal-node.html
+ : @param   $nodes the node sequence
+ : @param   $nodeToFind the node to find in the sequence
+ :)
+declare function functx:index-of-deep-equal-node
+  ( $nodes as node()* ,
+    $nodeToFind as node() )  as xs:integer* {
+
+  for $seq in (1 to count($nodes))
+  return $seq[deep-equal($nodes[$seq],$nodeToFind)]
+ } ;
+
+(:~
+ : The first position of a matching substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-match-first.html
+ : @param   $arg the string
+ : @param   $pattern the pattern to match
+ :)
+declare function functx:index-of-match-first
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer? {
+
+  if (matches($arg,$pattern))
+  then string-length(tokenize($arg, $pattern)[1]) + 1
+  else ()
+ } ;
+
+(:~
+ : The position of a node in a sequence, based on node identity
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-node.html
+ : @param   $nodes the node sequence
+ : @param   $nodeToFind the node to find in the sequence
+ :)
+declare function functx:index-of-node
+  ( $nodes as node()* ,
+    $nodeToFind as node() )  as xs:integer* {
+
+  for $seq in (1 to count($nodes))
+  return $seq[$nodes[$seq] is $nodeToFind]
+ } ;
+
+(:~
+ : The first position of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string-first.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string-first
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer? {
+
+  if (contains($arg, $substring))
+  then string-length(substring-before($arg, $substring))+1
+  else ()
+ } ;
+
+(:~
+ : The last position of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string-last.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string-last
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer? {
+
+  functx:index-of-string($arg, $substring)[last()]
+ } ;
+
+(:~
+ : The position(s) of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer* {
+
+  if (contains($arg, $substring))
+  then (string-length(substring-before($arg, $substring))+1,
+        for $other in
+           functx:index-of-string(substring-after($arg, $substring),
+                               $substring)
+        return
+          $other +
+          string-length(substring-before($arg, $substring)) +
+          string-length($substring))
+  else ()
+ } ;
+
+(:~
+ : Inserts a string at a specified position
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_insert-string.html
+ : @param   $originalString the original string to insert into
+ : @param   $stringToInsert the string to insert
+ : @param   $pos the position
+ :)
+declare function functx:insert-string
+  ( $originalString as xs:string? ,
+    $stringToInsert as xs:string? ,
+    $pos as xs:integer )  as xs:string {
+
+   concat(substring($originalString,1,$pos - 1),
+             $stringToInsert,
+             substring($originalString,$pos))
+ } ;
+
+(:~
+ : Whether a value is numeric
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-a-number.html
+ : @param   $value the value to test
+ :)
+declare function functx:is-a-number
+  ( $value as xs:anyAtomicType? )  as xs:boolean {
+
+   string(number($value)) != 'NaN'
+ } ;
+
+(:~
+ : Whether a URI is absolute
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-absolute-uri.html
+ : @param   $uri the URI to test
+ :)
+declare function functx:is-absolute-uri
+  ( $uri as xs:string? )  as xs:boolean {
+
+   matches($uri,'^[a-z]+:')
+ } ;
+
+(:~
+ : Whether an XML node is an ancestor of another node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-ancestor.html
+ : @param   $node1 the first node
+ : @param   $node2 the second node
+ :)
+declare function functx:is-ancestor
+  ( $node1 as node() ,
+    $node2 as node() )  as xs:boolean {
+
+   exists($node1 intersect $node2/ancestor::node())
+ } ;
+
+(:~
+ : Whether an XML node is a descendant of another node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-descendant.html
+ : @param   $node1 the first node
+ : @param   $node2 the second node
+ :)
+declare function functx:is-descendant
+  ( $node1 as node() ,
+    $node2 as node() )  as xs:boolean {
+
+   boolean($node2 intersect $node1/ancestor::node())
+ } ;
+
+(:~
+ : Whether a date falls in a leap year
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-leap-year.html
+ : @param   $date the date or year
+ :)
+declare function functx:is-leap-year
+  ( $date as xs:anyAtomicType? )  as xs:boolean {
+
+    for $year in xs:integer(substring(string($date),1,4))
+    return ($year mod 4 = 0 and
+            $year mod 100 != 0) or
+            $year mod 400 = 0
+ } ;
+
+(:~
+ : Whether an XML node is among the descendants of a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-among-descendants-deep-equal.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-among-descendants-deep-equal
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq/descendant-or-self::*/(.|@*)
+   satisfies deep-equal($nodeInSeq,$node)
+ } ;
+
+(:~
+ : Whether an XML node is among the descendants of a sequence, based on node identity
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-among-descendants.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-among-descendants
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq/descendant-or-self::*/(.|@*)
+   satisfies $nodeInSeq is $node
+ } ;
+
+(:~
+ : Whether an XML node is in a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-in-sequence-deep-equal.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-in-sequence-deep-equal
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq satisfies deep-equal($nodeInSeq,$node)
+ } ;
+
+(:~
+ : Whether an XML node is in a sequence, based on node identity
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-in-sequence.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-in-sequence
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq satisfies $nodeInSeq is $node
+ } ;
+
+(:~
+ : Whether an atomic value appears in a sequence
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-value-in-sequence.html
+ : @param   $value the atomic value to test
+ : @param   $seq the sequence of values to search
+ :)
+declare function functx:is-value-in-sequence
+  ( $value as xs:anyAtomicType? ,
+    $seq as xs:anyAtomicType* )  as xs:boolean {
+
+   $value = $seq
+ } ;
+
+(:~
+ : The last day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-day-of-month.html
+ : @param   $date the date
+ :)
+declare function functx:last-day-of-month
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)),
+            month-from-date(xs:date($date)),
+            functx:days-in-month($date))
+ } ;
+
+(:~
+ : The last day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-day-of-year.html
+ : @param   $date the date
+ :)
+declare function functx:last-day-of-year
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)), 12, 31)
+ } ;
+
+(:~
+ : The XML node in a sequence that is last in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-node.html
+ : @param   $nodes the sequence of nodes
+ :)
+declare function functx:last-node
+  ( $nodes as node()* )  as node()? {
+
+   ($nodes/.)[last()]
+ } ;
+
+(:~
+ : All XML elements that don't have any child elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_leaf-elements.html
+ : @param   $root the root
+ :)
+declare function functx:leaf-elements
+  ( $root as node()? )  as element()* {
+
+   $root/descendant-or-self::*[not(*)]
+ } ;
+
+(:~
+ : Trims leading whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_left-trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:left-trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,'^\s+','')
+ } ;
+
+(:~
+ : The number of lines
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_line-count.html
+ : @param   $arg the string to test
+ :)
+declare function functx:line-count
+  ( $arg as xs:string? )  as xs:integer {
+
+   count(functx:lines($arg))
+ } ;
+
+(:~
+ : Split a string into separate lines
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_lines.html
+ : @param   $arg the string to split
+ :)
+declare function functx:lines
+  ( $arg as xs:string? )  as xs:string* {
+
+   tokenize($arg, '(\r\n?|\n\r?)')
+ } ;
+
+(:~
+ : The maximum depth of elements in an XML tree
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-depth.html
+ : @param   $root the root to start from
+ :)
+declare function functx:max-depth
+  ( $root as node()? )  as xs:integer? {
+
+   if ($root/*)
+   then max($root/*/functx:max-depth(.)) + 1
+   else 1
+ } ;
+
+(:~
+ : The maximum value in a sequence, figuring out its type (numeric or string)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-determine-type.html
+ : @param   $seq the sequence of values to test
+ :)
+declare function functx:max-determine-type
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType? {
+
+   if (every $value in $seq satisfies ($value castable as xs:double))
+   then max(for $value in $seq return xs:double($value))
+   else max(for $value in $seq return xs:string($value))
+ } ;
+
+(:~
+ : The maximum line length
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-line-length.html
+ : @param   $arg the string to test
+ :)
+declare function functx:max-line-length
+  ( $arg as xs:string? )  as xs:integer {
+
+   max(
+     for $line in functx:lines($arg)
+     return string-length($line))
+ } ;
+
+(:~
+ : The XML node whose typed value is the maximum
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-node.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:max-node
+  ( $nodes as node()* )  as node()* {
+
+   $nodes[. = max($nodes)]
+ } ;
+
+(:~
+ : The maximum of a sequence of values, treating them like strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-string.html
+ : @param   $strings the sequence of values
+ :)
+declare function functx:max-string
+  ( $strings as xs:anyAtomicType* )  as xs:string? {
+
+   max(for $string in $strings return string($string))
+ } ;
+
+(:~
+ : The minimum value in a sequence, figuring out its type (numeric or string)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-determine-type.html
+ : @param   $seq the sequence of values to test
+ :)
+declare function functx:min-determine-type
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType? {
+
+   if (every $value in $seq satisfies ($value castable as xs:double))
+   then min(for $value in $seq return xs:double($value))
+   else min(for $value in $seq return xs:string($value))
+ } ;
+
+(:~
+ : The XML node whose typed value is the minimum
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-node.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:min-node
+  ( $nodes as node()* )  as node()* {
+
+   $nodes[. = min($nodes)]
+ } ;
+
+(:~
+ : The minimum of a sequence of strings, ignoring "empty" values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-non-empty-string.html
+ : @param   $strings the sequence of strings to search
+ :)
+declare function functx:min-non-empty-string
+  ( $strings as xs:string* )  as xs:string? {
+
+   min($strings[. != ''])
+ } ;
+
+(:~
+ : The minimum of a sequence of values, treating them like strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-string.html
+ : @param   $strings the sequence of strings
+ :)
+declare function functx:min-string
+  ( $strings as xs:anyAtomicType* )  as xs:string? {
+
+   min(for $string in $strings return string($string))
+ } ;
+
+(:~
+ : Converts a string with format MMDDYYYY (with any delimiters) to a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_mmddyyyy-to-date.html
+ : @param   $dateString the MMDDYYYY string
+ :)
+declare function functx:mmddyyyy-to-date
+  ( $dateString as xs:string? )  as xs:date? {
+
+   if (empty($dateString))
+   then ()
+   else if (not(matches($dateString,
+                        '^\D*(\d{2})\D*(\d{2})\D*(\d{4})\D*$')))
+   then error(xs:QName('functx:Invalid_Date_Format'))
+   else xs:date(replace($dateString,
+                        '^\D*(\d{2})\D*(\d{2})\D*(\d{4})\D*$',
+                        '$3-$1-$2'))
+ } ;
+
+(:~
+ : The month of a date as an abbreviated word (Jan, Feb, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_month-abbrev-en.html
+ : @param   $date the date
+ :)
+declare function functx:month-abbrev-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : The month of a date as a word (January, February, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_month-name-en.html
+ : @param   $date the date
+ :)
+declare function functx:month-name-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December')
+   [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : Whether a name matches a list of names or name wildcards
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_name-test.html
+ : @param   $testname the name to test
+ : @param   $names the list of names or name wildcards
+ :)
+declare function functx:name-test
+  ( $testname as xs:string? ,
+    $names as xs:string* )  as xs:boolean {
+
+$testname = $names
+or
+$names = '*'
+or
+functx:substring-after-if-contains($testname,':') =
+   (for $name in $names
+   return substring-after($name,'*:'))
+or
+substring-before($testname,':') =
+   (for $name in $names[contains(.,':*')]
+   return substring-before($name,':*'))
+ } ;
+
+(:~
+ : A list of namespaces used in element/attribute names in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_namespaces-in-use.html
+ : @param   $root the root node to start from
+ :)
+declare function functx:namespaces-in-use
+  ( $root as node()? )  as xs:anyURI* {
+
+   distinct-values(
+      $root/descendant-or-self::*/(.|@*)/namespace-uri(.))
+ } ;
+
+(:~
+ : The next day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_next-day.html
+ : @param   $date the date
+ :)
+declare function functx:next-day
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   xs:date($date) + xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : The XML node kind (element, attribute, text, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_node-kind.html
+ : @param   $nodes the node(s) whose kind you want to determine
+ :)
+declare function functx:node-kind
+  ( $nodes as node()* )  as xs:string* {
+
+ for $node in $nodes
+ return
+ if ($node instance of element()) then 'element'
+ else if ($node instance of attribute()) then 'attribute'
+ else if ($node instance of text()) then 'text'
+ else if ($node instance of document-node()) then 'document-node'
+ else if ($node instance of comment()) then 'comment'
+ else if ($node instance of processing-instruction())
+         then 'processing-instruction'
+ else 'unknown'
+ } ;
+
+(:~
+ : Returns any values that appear more than once in a sequence
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_non-distinct-values.html
+ : @param   $seq the sequence of values
+ :)
+declare function functx:non-distinct-values
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+   for $val in distinct-values($seq)
+   return $val[count($seq[. = $val]) > 1]
+ } ;
+
+(:~
+ : The number of regions that match a pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_number-of-matches.html
+ : @param   $arg the string to test
+ : @param   $pattern the regular expression
+ :)
+declare function functx:number-of-matches
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer {
+
+   count(tokenize($arg,$pattern)) - 1
+ } ;
+
+(:~
+ : Resolves a relative URI and references it, returning an XML document
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_open-ref-document.html
+ : @param   $refNode a node whose value is a relative URI reference
+ :)
+declare function functx:open-ref-document
+  ( $refNode as node() )  as document-node() {
+
+   if (base-uri($refNode))
+   then doc(resolve-uri($refNode, base-uri($refNode)))
+   else doc(resolve-uri($refNode))
+ } ;
+
+(:~
+ : Reformats a number as an ordinal number, e.g. 1st, 2nd, 3rd.
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_ordinal-number-en.html
+ : @param   $num the number
+ :)
+declare function functx:ordinal-number-en
+  ( $num as xs:integer? )  as xs:string {
+
+   concat(xs:string($num),
+         if (matches(xs:string($num),'[04-9]$|1[1-3]$')) then 'th'
+         else if (ends-with(xs:string($num),'1')) then 'st'
+         else if (ends-with(xs:string($num),'2')) then 'nd'
+         else if (ends-with(xs:string($num),'3')) then 'rd'
+         else '')
+ } ;
+
+(:~
+ : Pads an integer to a desired length by adding leading zeros
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_pad-integer-to-length.html
+ : @param   $integerToPad the integer to pad
+ : @param   $length the desired length
+ :)
+declare function functx:pad-integer-to-length
+  ( $integerToPad as xs:anyAtomicType? ,
+    $length as xs:integer )  as xs:string {
+
+   if ($length < string-length(string($integerToPad)))
+   then error(xs:QName('functx:Integer_Longer_Than_Length'))
+   else concat
+         (functx:repeat-string(
+            '0',$length - string-length(string($integerToPad))),
+          string($integerToPad))
+ } ;
+
+(:~
+ : Pads a string to a desired length
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_pad-string-to-length.html
+ : @param   $stringToPad the string to pad
+ : @param   $padChar the character(s) to use as padding
+ : @param   $length the desired length
+ :)
+declare function functx:pad-string-to-length
+  ( $stringToPad as xs:string? ,
+    $padChar as xs:string ,
+    $length as xs:integer )  as xs:string {
+
+   substring(
+     string-join (
+       ($stringToPad, for $i in (1 to $length) return $padChar)
+       ,'')
+    ,1,$length)
+ } ;
+
+(:~
+ : A unique path to an XML node (or sequence of nodes)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_path-to-node-with-pos.html
+ : @param   $node the node sequence
+ :)
+declare function functx:path-to-node-with-pos
+  ( $node as node()? )  as xs:string {
+
+string-join(
+  for $ancestor in $node/ancestor-or-self::*
+  let $sibsOfSameName := $ancestor/../*[name() = name($ancestor)]
+  return concat(name($ancestor),
+   if (count($sibsOfSameName) <= 1)
+   then ''
+   else concat(
+      '[',functx:index-of-node($sibsOfSameName,$ancestor),']'))
+ , '/')
+ } ;
+
+(:~
+ : A path to an XML node (or sequence of nodes)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_path-to-node.html
+ : @param   $nodes the node sequence
+ :)
+declare function functx:path-to-node
+  ( $nodes as node()* )  as xs:string* {
+
+$nodes/string-join(ancestor-or-self::*/name(.), '/')
+ } ;
+
+(:~
+ : Whether an XML node precedes another without being its ancestor
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_precedes-not-ancestor.html
+ : @param   $a the first node
+ : @param   $b the second node
+ :)
+declare function functx:precedes-not-ancestor
+  ( $a as node()? ,
+    $b as node()? )  as xs:boolean {
+
+   $a << $b and empty($a intersect $b/ancestor::node())
+ } ;
+
+(:~
+ : The previous day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_previous-day.html
+ : @param   $date the date
+ :)
+declare function functx:previous-day
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   xs:date($date) - xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : Removes attributes from an XML fragment, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-attributes-deep.html
+ : @param   $nodes the root(s) to start from
+ : @param   $names the names of the attributes to remove, or * for all attributes
+ :)
+declare function functx:remove-attributes-deep
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return if ($node instance of element())
+          then  element { node-name($node)}
+                { $node/@*[not(functx:name-test(name(),$names))],
+                  functx:remove-attributes-deep($node/node(), $names)}
+          else if ($node instance of document-node())
+          then functx:remove-attributes-deep($node/node(), $names)
+          else $node
+ } ;
+
+(:~
+ : Removes attributes from an XML element, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-attributes.html
+ : @param   $elements the element(s) from which to remove the attributes
+ : @param   $names the names of the attributes to remove, or * for all attributes
+ :)
+declare function functx:remove-attributes
+  ( $elements as element()* ,
+    $names as xs:string* )  as element() {
+
+   for $element in $elements
+   return element
+     {node-name($element)}
+     {$element/@*[not(functx:name-test(name(),$names))],
+      $element/node() }
+ } ;
+
+(:~
+ : Removes descendant elements from an XML node, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements-deep.html
+ : @param   $nodes root(s) to start from
+ : @param   $names the names of the elements to remove
+ :)
+declare function functx:remove-elements-deep
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return
+     if ($node instance of element())
+     then if (functx:name-test(name($node),$names))
+          then ()
+          else element { node-name($node)}
+                { $node/@*,
+                  functx:remove-elements-deep($node/node(), $names)}
+     else if ($node instance of document-node())
+     then functx:remove-elements-deep($node/node(), $names)
+     else $node
+ } ;
+
+(:~
+ : Removes descendant XML elements but keeps their content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements-not-contents.html
+ : @param   $nodes the root(s) to start from
+ : @param   $names the names of the elements to remove
+ :)
+declare function functx:remove-elements-not-contents
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return
+    if ($node instance of element())
+    then if (functx:name-test(name($node),$names))
+         then functx:remove-elements-not-contents($node/node(), $names)
+         else element {node-name($node)}
+              {$node/@*,
+              functx:remove-elements-not-contents($node/node(),$names)}
+    else if ($node instance of document-node())
+    then functx:remove-elements-not-contents($node/node(), $names)
+    else $node
+ } ;
+
+(:~
+ : Removes child elements from an XML node, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements.html
+ : @param   $elements the element(s) from which you wish to remove the children
+ : @param   $names the names of the child elements to remove
+ :)
+declare function functx:remove-elements
+  ( $elements as element()* ,
+    $names as xs:string* )  as element()* {
+
+   for $element in $elements
+   return element
+     {node-name($element)}
+     {$element/@*,
+      $element/node()[not(functx:name-test(name(),$names))] }
+ } ;
+
+(:~
+ : Repeats a string a given number of times
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_repeat-string.html
+ : @param   $stringToRepeat the string to repeat
+ : @param   $count the desired number of copies
+ :)
+declare function functx:repeat-string
+  ( $stringToRepeat as xs:string? ,
+    $count as xs:integer )  as xs:string {
+
+   string-join((for $i in 1 to $count return $stringToRepeat),
+                        '')
+ } ;
+
+(:~
+ : Replaces the beginning of a string, up to a matched pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-beginning.html
+ : @param   $arg the entire string to change
+ : @param   $pattern the pattern of characters to replace up to
+ : @param   $replacement the replacement string
+ :)
+declare function functx:replace-beginning
+  ( $arg as xs:string? ,
+    $pattern as xs:string ,
+    $replacement as xs:string )  as xs:string {
+
+   replace($arg, concat('^.*?', $pattern), $replacement)
+ } ;
+
+(:~
+ : Updates the content of one or more elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-element-values.html
+ : @param   $elements the elements whose content you wish to replace
+ : @param   $values the replacement values
+ :)
+declare function functx:replace-element-values
+  ( $elements as element()* ,
+    $values as xs:anyAtomicType* )  as element()* {
+
+   for $element at $seq in $elements
+   return element { node-name($element)}
+             { $element/@*,
+               $values[$seq] }
+ } ;
+
+(:~
+ : Replaces the first match of a pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-first.html
+ : @param   $arg the entire string to change
+ : @param   $pattern the pattern of characters to replace
+ : @param   $replacement the replacement string
+ :)
+declare function functx:replace-first
+  ( $arg as xs:string? ,
+    $pattern as xs:string ,
+    $replacement as xs:string )  as xs:string {
+
+   replace($arg, concat('(^.*?)', $pattern),
+             concat('$1',$replacement))
+ } ;
+
+(:~
+ : Performs multiple replacements, using pairs of replace parameters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-multi.html
+ : @param   $arg the string to manipulate
+ : @param   $changeFrom the sequence of strings or patterns to change from
+ : @param   $changeTo the sequence of strings to change to
+ :)
+declare function functx:replace-multi
+  ( $arg as xs:string? ,
+    $changeFrom as xs:string* ,
+    $changeTo as xs:string* )  as xs:string? {
+
+   if (count($changeFrom) > 0)
+   then functx:replace-multi(
+          replace($arg, $changeFrom[1],
+                     functx:if-absent($changeTo[1],'')),
+          $changeFrom[position() > 1],
+          $changeTo[position() > 1])
+   else $arg
+ } ;
+
+(:~
+ : Reverses the order of characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_reverse-string.html
+ : @param   $arg the string to reverse
+ :)
+declare function functx:reverse-string
+  ( $arg as xs:string? )  as xs:string {
+
+   codepoints-to-string(reverse(string-to-codepoints($arg)))
+ } ;
+
+(:~
+ : Trims trailing whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_right-trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:right-trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,'\s+$','')
+ } ;
+
+(:~
+ : Returns the scheme from a URI
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_scheme-from-uri.html
+ : @param   $uri the URI
+ :)
+declare function functx:scheme-from-uri
+  ( $uri as xs:string? )  as xs:string? {
+
+   substring-before($uri,':')
+ } ;
+
+(:~
+ : Whether two sequences have the same XML node content and/or values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-deep-equal.html
+ : @param   $seq1 the first sequence
+ : @param   $seq2 the second sequence
+ :)
+declare function functx:sequence-deep-equal
+  ( $seq1 as item()* ,
+    $seq2 as item()* )  as xs:boolean {
+
+  every $i in 1 to max((count($seq1),count($seq2)))
+  satisfies deep-equal($seq1[$i],$seq2[$i])
+ } ;
+
+(:~
+ : Whether two sequences contain the same XML nodes, regardless of order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-node-equal-any-order.html
+ : @param   $seq1 the first sequence of nodes
+ : @param   $seq2 the second sequence of nodes
+ :)
+declare function functx:sequence-node-equal-any-order
+  ( $seq1 as node()* ,
+    $seq2 as node()* )  as xs:boolean {
+
+  not( ($seq1 except $seq2, $seq2 except $seq1))
+ } ;
+
+(:~
+ : Whether two sequences contain the same XML nodes, in the same order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-node-equal.html
+ : @param   $seq1 the first sequence of nodes
+ : @param   $seq2 the second sequence of nodes
+ :)
+declare function functx:sequence-node-equal
+  ( $seq1 as node()* ,
+    $seq2 as node()* )  as xs:boolean {
+
+  every $i in 1 to max((count($seq1),count($seq2)))
+  satisfies $seq1[$i] is $seq2[$i]
+ } ;
+
+(:~
+ : The sequence type that represents a sequence of nodes or values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-type.html
+ : @param   $items the items whose sequence type you want to determine
+ :)
+declare function functx:sequence-type
+  ( $items as item()* )  as xs:string {
+
+concat(
+  if (empty($items))
+  then 'empty-sequence()'
+  else if (every $val in $items
+           satisfies $val instance of xs:anyAtomicType)
+  then if (count(distinct-values(functx:atomic-type($items)))
+           > 1)
+  then 'xs:anyAtomicType'
+  else functx:atomic-type($items[1])
+  else if (some $val in $items
+           satisfies $val instance of xs:anyAtomicType)
+  then 'item()'
+  else if (count(distinct-values(functx:node-kind($items))) > 1)
+  then 'node()'
+  else concat(functx:node-kind($items[1]),'()')
+  ,
+  if (count($items) > 1)
+  then '+' else '')
+   } ;
+
+(:~
+ : The siblings of an XML element that have the same name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_siblings-same-name.html
+ : @param   $element the node
+ :)
+declare function functx:siblings-same-name
+  ( $element as element()? )  as element()* {
+
+   $element/../*[node-name(.) = node-name($element)]
+   except $element
+ } ;
+
+(:~
+ : The siblings of an XML node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_siblings.html
+ : @param   $node the node
+ :)
+declare function functx:siblings
+  ( $node as node()? )  as node()* {
+
+   $node/../node() except $node
+ } ;
+
+(:~
+ : Sorts a sequence of numeric values or nodes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-as-numeric.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-as-numeric
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by number($item)
+   return $item
+ } ;
+
+(:~
+ : Sorts a sequence of values or nodes regardless of capitalization
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-case-insensitive.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-case-insensitive
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by upper-case(string($item))
+   return $item
+ } ;
+
+(:~
+ : Sorts a sequence of nodes in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-document-order.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-document-order
+  ( $seq as node()* )  as node()* {
+
+   $seq/.
+ } ;
+
+(:~
+ : Sorts a sequence of values or nodes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by $item
+   return $item
+ } ;
+
+(:~
+ : Performs substring-after, returning the entire string if it does not contain the delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-if-contains.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-after-if-contains
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string? {
+
+   if (contains($arg,$delim))
+   then substring-after($arg,$delim)
+   else $arg
+ } ;
+
+(:~
+ : The substring after the last text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-last-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-after-last-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string {
+
+   replace($arg,concat('^.*',$regex),'')
+ } ;
+
+(:~
+ : The substring after the last occurrence of a delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-last.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-after-last
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
+ } ;
+
+(:~
+ : The substring after the first text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-after-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string? {
+
+   replace($arg,concat('^.*?',$regex),'')
+ } ;
+
+(:~
+ : Performs substring-before, returning the entire string if it does not contain the delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-if-contains.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-before-if-contains
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string? {
+
+   if (contains($arg,$delim))
+   then substring-before($arg,$delim)
+   else $arg
+ } ;
+
+(:~
+ : The substring after the first text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-last-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-before-last-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string? {
+
+   replace($arg,concat('^(.*)',$regex,'.*'),'$1')
+ } ;
+
+(:~
+ : The substring before the last occurrence of a delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-last.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-before-last
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   if (matches($arg, functx:escape-for-regex($delim)))
+   then replace($arg,
+            concat('^(.*)', functx:escape-for-regex($delim),'.*'),
+            '$1')
+   else ''
+ } ;
+
+(:~
+ : The substring before the last text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-before-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string {
+
+   tokenize($arg,$regex)[1]
+ } ;
+
+(:~
+ : Construct a time from an hour, minute and second
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_time.html
+ : @param   $hour the hour
+ : @param   $minute the minute
+ : @param   $second the second
+ :)
+declare function functx:time
+  ( $hour as xs:anyAtomicType ,
+    $minute as xs:anyAtomicType ,
+    $second as xs:anyAtomicType )  as xs:time {
+
+   xs:time(
+     concat(
+       functx:pad-integer-to-length(xs:integer($hour),2),':',
+       functx:pad-integer-to-length(xs:integer($minute),2),':',
+       functx:pad-integer-to-length(xs:integer($second),2)))
+ } ;
+
+(:~
+ : Converts an xs:dayTimeDuration into a timezone like "-05:00" or "Z"
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_timezone-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:timezone-from-duration
+  ( $duration as xs:dayTimeDuration )  as xs:string {
+
+   if (string($duration) = ('PT0S','-PT0S'))
+   then 'Z'
+   else if (matches(string($duration),'-PT[1-9]H'))
+   then replace(string($duration),'PT([1-9])H','0$1:00')
+   else if (matches(string($duration),'PT[1-9]H'))
+   then replace(string($duration),'PT([1-9])H','+0$1:00')
+   else if (matches(string($duration),'-PT1[0-4]H'))
+   then replace(string($duration),'PT(1[0-4])H','$1:00')
+   else if (matches(string($duration),'PT1[0-4]H'))
+   then replace(string($duration),'PT(1[0-4])H','+$1:00')
+   else error(xs:QName('functx:Invalid_Duration_Value'))
+ } ;
+
+(:~
+ : The total number of days in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-days-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-days-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : The total number of hours in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-hours-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-hours-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1H')
+ } ;
+
+(:~
+ : The total number of minutes in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-minutes-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-minutes-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1M')
+ } ;
+
+(:~
+ : The total number of months in a yearMonthDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-months-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-months-from-duration
+  ( $duration as xs:yearMonthDuration? )  as xs:decimal? {
+
+   $duration div xs:yearMonthDuration('P1M')
+ } ;
+
+(:~
+ : The total number of seconds in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-seconds-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-seconds-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1S')
+ } ;
+
+(:~
+ : The total number of years in a yearMonthDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-years-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-years-from-duration
+  ( $duration as xs:yearMonthDuration? )  as xs:decimal? {
+
+   $duration div xs:yearMonthDuration('P1Y')
+ } ;
+
+(:~
+ : Trims leading and trailing whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace(replace($arg,'\s+$',''),'^\s+','')
+ } ;
+
+(:~
+ : Updates the attribute value of an XML element
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_update-attributes.html
+ : @param   $elements the element(s) for which you wish to update the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:update-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return if ($element/@*[node-name(.) = $attrName])
+                           then attribute {$attrName}
+                                     {$attrValues[$seq]}
+                           else (),
+                    $element/@*[not(node-name(.) = $attrNames)],
+                    $element/node() }
+ } ;
+
+(:~
+ : The values in one sequence that aren't in another sequence
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-except.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-except
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values($arg1[not(.=$arg2)])
+ } ;
+
+(:~
+ : The intersection of two sequences of values
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-intersect.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-intersect
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values($arg1[.=$arg2])
+ } ;
+
+(:~
+ : The union of two sequences of values
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-union.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-union
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values(($arg1, $arg2))
+ } ;
+
+(:~
+ : The number of words
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_word-count.html
+ : @param   $arg the string to measure
+ :)
+declare function functx:word-count
+  ( $arg as xs:string? )  as xs:integer {
+
+   count(tokenize($arg, '\W+')[. != ''])
+ } ;
+
+(:~
+ : Turns a string of words into camelCase
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_words-to-camel-case.html
+ : @param   $arg the string to modify
+ :)
+declare function functx:words-to-camel-case
+  ( $arg as xs:string? )  as xs:string {
+
+     string-join((tokenize($arg,'\s+')[1],
+       for $word in tokenize($arg,'\s+')[position() > 1]
+       return functx:capitalize-first($word))
+      ,'')
+ } ;
+
+(:~
+ : Wraps a sequence of atomic values in XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_wrap-values-in-elements.html
+ : @param   $values the values to wrap in elements
+ : @param   $elementName the name of the elements to construct
+ :)
+declare function functx:wrap-values-in-elements
+  ( $values as xs:anyAtomicType* ,
+    $elementName as xs:QName )  as element()* {
+
+   for $value in $values
+   return element {$elementName} {$value}
+ } ;
+
+(:~
+ : Construct a yearMonthDuration from a number of years and months
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_yearmonthduration.html
+ : @param   $years the number of years
+ : @param   $months the number of months
+ :)
+declare function functx:yearMonthDuration
+  ( $years as xs:decimal? ,
+    $months as xs:integer? )  as xs:yearMonthDuration {
+
+    (xs:yearMonthDuration('P1M') * functx:if-empty($months,0)) +
+    (xs:yearMonthDuration('P1Y') * functx:if-empty($years,0))
+ } ;
 
 (:~
 : User: George Sofianos

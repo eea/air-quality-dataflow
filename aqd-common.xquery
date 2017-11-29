@@ -87,7 +87,11 @@ declare function common:getReportingYear($xml as document-node()) as xs:string {
         else ""
 };
 
-declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
+(:~ Returns true if $seq1 contains any element from $seq2 :)
+declare function common:containsAny(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:boolean {
     not(empty(
             for $str in $seq2
             where not(empty(index-of($seq1, $str)))
@@ -96,8 +100,11 @@ declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as
     ))
 };
 
-declare function common:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
-as xs:string* {
+(:~ Returns intersection (common elements) of seq1 and seq1 :)
+declare function common:getSublist(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:string* {
 
     distinct-values(
             for $str in $seq2
@@ -107,6 +114,7 @@ as xs:string* {
     )
 };
 
+(:~ Returns a <span> with <a> links for each valid link in given sequence :)
 declare function common:checkLink($text as xs:string*) as element(span)*{
     for $c at $pos in $text
     return
@@ -220,10 +228,11 @@ declare function common:checkDeliveryReport (
 (: Returns structure with error if node is empty :)
 (: TODO: test if node doesn't exist :)
 declare function common:needsValidString(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (string-length(normalize-space($el/text())) = 0)
         then
@@ -309,17 +318,19 @@ declare function common:isNodeInParent(
 
 (: prints error if a specific node does not exist in a parent :)
 declare function common:isNodeNotInParentReport(
-    $parent as node(),
+    $parent as node()*,
     $nodeName as xs:string
 ) as element(tr)* {
     try {
-        if (not(common:isNodeInParent($parent, $nodeName)))
-        then
-            <tr>
-                <td title="{$nodeName}"> needs valid input</td>
-            </tr>
-        else
-            ()
+        for $el in $parent
+            return
+            if (not(common:isNodeInParent($el, $nodeName)))
+            then
+                <tr>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -372,11 +383,12 @@ declare function common:validatePossibleNodeValue(
 
 (: Prints an error if validation for a possible existing node fails :)
 declare function common:validatePossibleNodeValueReport(
-    $parent as node()?,
+    $parent as node()*,
     $nodeName as xs:string,
     $validator as function(item()) as xs:boolean
 ) {
-    let $el := $parent/*[name() = $nodeName]
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
     return try {
         if (not(common:validatePossibleNodeValue($el, $validator)))
         then
@@ -434,24 +446,26 @@ declare function common:isDateFullISO(
 };
 (: Create report :)
 declare function common:isDateFullISOReport(
-    $el as node()*
+    $main as node()*
 ) as element(tr)*
 {
-    let $date := data($el)
-    return
-    try {
-        if (not(common:isDateFullISO($date)))
-        then
-            <tr>
-                <td title="{node-name($el)}">{$date} not in full ISO format</td>
-            </tr>
-        else
-            ()
-    } catch * {
-        html:createErrorRow($err:code, $err:description)
-    }
+    for $el in $main
+        let $date := data($el)
+        return
+        try {
+            if (not(common:isDateFullISO($date)))
+            then
+                <tr>
+                    <td title="{node-name($el)}">{$date} not in full ISO format</td>
+                </tr>
+            else
+                ()
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
 };
 
+(:~ returns True if $seq has one one given node :)
 declare function common:has-one-node(
     $seq as item()*,
     $item as item()?
@@ -462,11 +476,10 @@ declare function common:has-one-node(
     return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
 };
 
-
 (: Check if end date is after begin date and if both are in full ISO format:)
 declare function common:isEndDateAfterBeginDate(
-    $begin as node()?,
-    $end as node()?
+        $begin as node()?,
+        $end as node()?
 ) as xs:boolean
 {
     if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
@@ -476,23 +489,45 @@ declare function common:isEndDateAfterBeginDate(
         false()
 };
 
-(:
-pseudocode, for brainstorming
+(:~ Returns a sum of numbers contained in nodes :)
+declare function common:sum-of-nodes(
+    $nodes as item()*
+) as xs:double {
+    let $numbers :=
+        for $n in $nodes
+            let $d := data($n)
+            let $i :=
+                if ($d castable as xs:double)
+                then
+                    xs:double($d)
+                else
+                    0
+        return $i
+    return sum($numbers)
+};
 
-validators =[
-    isDate(x),
-    isDate(y),
-    isXBiggerThenY(x, y)
-]
+(:~ Returns true if the given node has no attributes or children :)
+declare function common:has-content(
+    $nodes as element()*
+) as xs:boolean {
+    let $res :=
+        for $node in $nodes
+            let $attr := empty($node/@*)
+            let $children := empty($node/*)
+        return $attr or $children
+    return $res = true()
+};
 
-validate([
-    isDate(x),
-    isDate(y),
-    ])
-
-
-    (isDate(x) and isDate(y) and isXBiggerThanY(x, y)) or (hasNodeAttribute())
-
-isXBiggerThanY(x:orice, y:orice)
-:)
+(:~ Returns true if provided pollutant is one of special values :)
+declare function common:is-polutant-air(
+    $uri as xs:string
+) as xs:boolean {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+    return $uri = $okv
+};
 
