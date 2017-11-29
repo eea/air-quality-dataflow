@@ -1445,10 +1445,25 @@ declare function dataflowI:checkReport(
 
     let $I42 := try {
         for $node in $sources
-            let $ok := false()
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata
+
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and (
+                        common:has-content($a/@xlink:href) or
+                        common:has-content($b/@xlink:href)
+                    )
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($a), data($a/@xlink:href)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
