@@ -1072,7 +1072,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
             ("gml:id", data($node/@gml:id)),
-            (node-name($node), data($node))
+            ("aqd:stationUsed", data($node//aqd:stationUsed)),
+            ("aqd:modelUsed", data($node//aqd:modelUsed))
             ]
         )
     } catch * {
