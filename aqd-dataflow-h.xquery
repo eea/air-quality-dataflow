@@ -341,6 +341,83 @@ let $H14 := try {
 
 let $H15 := ()
 
+(: H27
+aqd:AQD_Plan/aqd:timeTable shall contain a text string
+
+Must contain a short textual description of timetable for the implementation of the air quality plan
+:)
+
+let $H27 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:timeTable
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H28
+aqd:AQD_Plan/aqd:referenceImplementation shall contain a URL to document  or web resource describing the
+latest version of full air quality plan. This MUST be valid.
+
+Must contain a URL to document  or web resource describing the last version of full air quality plan
+:)
+
+let $H28 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:referenceImplementation
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H29
+aqd:AQD_Plan/aqd:referenceImplementation must contain a URL to a document or web resource where
+information about the implementation of the air quality plan can be found.
+
+Must contain a URL to a document or web resource where information about the implementation of the air quality
+plan can be found.
+:)
+
+let $H29 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:referenceImplementation
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 (: H30
 aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description must contain a text string describing the publication
 
@@ -500,6 +577,9 @@ return
         {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
         {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
         {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
+        {html:build2("H27", $labels:H27, $labels:H27_SHORT, $H27, "All values are valid", "needs valid input", $errors:H27)}
+        {html:build2("H28", $labels:H28, $labels:H28_SHORT, $H28, "All values are valid", "not valid", $errors:H28)}
+        {html:build2("H29", $labels:H29, $labels:H29_SHORT, $H29, "All values are valid", "not valid", $errors:H29)}
         {html:build2("H30", $labels:H30, $labels:H30_SHORT, $H30, "All values are valid", "needs valid input", $errors:H30)}
         {html:build2("H31", $labels:H31, $labels:H31_SHORT, $H31, "All values are valid", "needs valid input", $errors:H31)}
         {html:build2("H32", $labels:H32, $labels:H32_SHORT, $H32, "All values are valid", "needs valid input", $errors:H32)}
