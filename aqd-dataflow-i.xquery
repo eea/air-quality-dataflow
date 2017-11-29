@@ -959,22 +959,22 @@ declare function dataflowI:checkReport(
 
     WARNING
 
-    TODO: implement this
+    TODO: check this
 
     :)
 
     let $I25 := try {
         for $node in $sources
-            (:
-            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification/@xlink:href
-            let $att := query:getAttainment
-            :)
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $ac := $el/@xlink:href
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $parent-ac := query:get-area-classifications-for-attainment($parent)
 
-            let $ok := false()
+            let $ok := $ac = $parent-ac
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($node), data($node/@gml:id)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1111,10 +1111,18 @@ declare function dataflowI:checkReport(
     (: I31
 
     The subject of
-    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-    xlink:href attribute
-    shall be found in
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
+    xlink:href attribute shall be found in
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
     xlink:href attribute for the AQD_Attainment record cited by
     ./aqd:parentExceedanceSituation
 
@@ -1124,7 +1132,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: implement this
+    TODO: check reporting
 
     :)
 
@@ -1145,12 +1153,22 @@ declare function dataflowI:checkReport(
 
     (: I32
 
+    TODO: original description was wrong in XLS, it was assumed this is correct
+
     The subject of
-    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
     xlink:href attribute shall be found in
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-    xlink:href attribute for the AQD_Attainment record cited by
-    ./aqd:parentExceedanceSituation
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
+    xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation
 
     The exceeding SamplingPoint must be included in the corresponding Attainment
 
@@ -1162,11 +1180,16 @@ declare function dataflowI:checkReport(
     :)
 
     let $I32 := try {
+
         for $node in $sources
-            let $ok := false()
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $station := query:get-used-station-for-attainment($att-url)
+            let $ok := $mu = $station
+
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($mu), data($mu)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
