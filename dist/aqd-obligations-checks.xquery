@@ -11750,22 +11750,22 @@ declare function dataflowI:checkReport(
 
     WARNING
 
-    TODO: implement this
+    TODO: check this
 
     :)
 
     let $I25 := try {
         for $node in $sources
-            (:
-            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification/@xlink:href
-            let $att := query:getAttainment
-            :)
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $ac := $el/@xlink:href
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $parent-ac := query:get-area-classifications-for-attainment($parent)
 
-            let $ok := false()
+            let $ok := $ac = $parent-ac
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($node), data($node/@gml:id)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -11902,10 +11902,18 @@ declare function dataflowI:checkReport(
     (: I31
 
     The subject of
-    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-    xlink:href attribute
-    shall be found in
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
+    xlink:href attribute shall be found in
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
     xlink:href attribute for the AQD_Attainment record cited by
     ./aqd:parentExceedanceSituation
 
@@ -11915,7 +11923,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: implement this
+    TODO: check reporting
 
     :)
 
@@ -11936,12 +11944,22 @@ declare function dataflowI:checkReport(
 
     (: I32
 
+    TODO: original description was wrong in XLS, it was assumed this is correct
+
     The subject of
-    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationlUsed
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
     xlink:href attribute shall be found in
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-    xlink:href attribute for the AQD_Attainment record cited by
-    ./aqd:parentExceedanceSituation
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
+    xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation
 
     The exceeding SamplingPoint must be included in the corresponding Attainment
 
@@ -11953,11 +11971,16 @@ declare function dataflowI:checkReport(
     :)
 
     let $I32 := try {
+
         for $node in $sources
-            let $ok := false()
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $station := query:get-used-station-for-attainment($att-url)
+            let $ok := $mu = $station
+
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($mu), data($mu)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -19364,40 +19387,111 @@ declare function query:getObligationYears() {
 };
 
 
-(:~ Returns the URI for the aqd:modelUsed used for the given Attainment
+(:~ Returns the URIs for the aqd:modelUsed used for the given Attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription
+    /aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
 :)
 declare function query:get-used-model-for-attainment(
     $uri as xs:string
-) as xs:string {
+) as item()* {
 
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT ?localId ?inspireLabel ?aqd_attainment ?desc_final ?model_used ?attainment ?source_apportionment
+SELECT ?model_used ?attainment ?source_apportionment
 WHERE {
-    ?aqd_attainment a aqd:AQD_Attainment ;
-
-    aqd:inspireId ?inspireId .
-    ?inspireId rdfs:label ?inspireLabel .
-    ?inspireId aqd:localId ?localId .
+    ?aqd_attainment a aqd:AQD_Attainment .
 
     ?aqd_attainment aqd:declarationFor ?attainment .
-    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
-
-    ?exceedance_area aqd:modelUsed ?model_used .
-    ?desc_final aqd:exceedanceArea ?exceedance_area .
     ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?exceedance_area aqd:modelUsed ?model_used .
+
+    # only for development
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
 
     filter(contains(str(?attainment), '" || $uri || "'))
 }
 "
     let $res := sparqlx:run($query)
-    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
-    return ""
+    return data($res//sparql:binding[@name='model_used']/sparql:literal)
 
 (: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
+};
+
+(:~ Returns the URIs for the aqd:stationUsed used for the given Attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription
+    /aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed
+:)
+declare function query:get-used-station-for-attainment(
+    $uri as xs:string
+) as item()* {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?station_used ?attainment ?source_apportionment
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?exceedance_area aqd:stationUsed ?station_used .
+
+    # only for development
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='station_used']/sparql:literal)
+
+(: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
+};
+
+
+
+
+(:~ Returns the areaClassification for a given attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/
+    aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+:)
+declare function query:get-area-classifications-for-attainment(
+    $uri as xs:string
+) as item()* {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT DISTINCT ?area_classification
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?excedance_area aqd:areaClassification ?area_classification .
+
+    # optional, just for double-checking
+
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='area_classification']/sparql:literal)
 };
 
 (:~
