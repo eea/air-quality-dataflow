@@ -933,6 +933,8 @@ declare function dataflowI:checkReport(
 
     WARNING
 
+    TODO: implement this
+
     :)
 
     let $I25 := try {
@@ -1064,6 +1066,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
+    TODO: implement this
     :)
 
     let $I31 := try {
@@ -1093,6 +1096,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
+    TODO: implement this
     :)
 
     let $I32 := try {
@@ -1174,7 +1178,16 @@ declare function dataflowI:checkReport(
 
     let $I35 := try {
         for $node in $sources
-            let $ok := false()
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+
+            let $ok :=
+                if (data($a) = "true")
+                then
+                    common:has-content($b)
+                else
+                    true()
+
         return common:conditionalReportRow(
             $ok,
             [node-name($node), data($node)]
@@ -1454,7 +1467,27 @@ declare function dataflowI:checkReport(
 
     let $I44 := try {
         for $node in $sources
-            let $ok := false()
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $check :=
+                if ($needed)
+                then
+                    $link = "fullyCorrected"
+                else
+                    $link = "noneApplicable"
+
+            let $ok :=
+                if (not($populated))
+                then
+                    true()
+                else
+                    $check
         return common:conditionalReportRow(
             $ok,
             [node-name($node), data($node)]
@@ -1479,10 +1512,32 @@ declare function dataflowI:checkReport(
     :)
     let $I45 := try {
         for $node in $sources
-            let $ok := false()
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+            let $conforms := common:isInVocabulary(
+                $link,
+                vocabulary:ADJUSTMENTSOURCE_VOCABULARY
+            )
+
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    if ($conforms)
+                    then
+                        true()
+                    else
+                        data($el) = "noneApplicable"
+
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [node-name($el), $link]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
