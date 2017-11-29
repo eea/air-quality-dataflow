@@ -516,4 +516,17 @@ declare function common:has-content(
             let $children := empty($node/*)
         return $attr or $children
     return $res = true()
-}
+};
+
+(:~ Returns true if provided pollutant is one of special values :)
+declare function common:is-polutant-air(
+    $uri as xs:string
+) {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+    return $uri = $okv
+};

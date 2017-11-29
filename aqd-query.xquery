@@ -562,7 +562,10 @@ WHERE {
   return data($res//sparql:binding[@name='pollutant']/sparql:uri)
 };
 
-declare function query:getPollutantCodeAndProtectionTarge($cdrUrl as xs:string, $bDir as xs:string) as xs:string {
+declare function query:getPollutantCodeAndProtectionTarge(
+    $cdrUrl as xs:string,
+    $bDir as xs:string
+) as xs:string {
   concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
     PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>

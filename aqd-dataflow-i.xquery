@@ -937,13 +937,15 @@ declare function dataflowI:checkReport(
 
     let $I25 := try {
         for $node in $sources
-            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification@xlink:href
+            (:
+            let $ac := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification/@xlink:href
             let $att := query:getAttainment
+            :)
 
             let $ok := false()
 
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -966,7 +968,7 @@ declare function dataflowI:checkReport(
             let $uom := $area/@uom
             let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($area), $uom]
         )
     } catch * {
@@ -988,7 +990,7 @@ declare function dataflowI:checkReport(
             let $uom := $length/@uom
             let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1018,7 +1020,7 @@ declare function dataflowI:checkReport(
             let $mu := common:has-content($area/aqd:modelUsed)
             let $ok := $st or $mu
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1040,7 +1042,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1068,7 +1070,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1097,7 +1099,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1119,9 +1121,12 @@ declare function dataflowI:checkReport(
     :)
     let $I33 := try {
         for $node in $sources
-            let $ok := false()
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := common:has-content($area/aqd:spatalExtent)
+            let $b := common:has-content($area/aqd:administrativeUnit)
+            let $ok := $a or $b
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1142,10 +1147,13 @@ declare function dataflowI:checkReport(
 
     let $I34 := try {
         for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := $area/aqd:surfaceArea
+            let $b := $area/aqd:roadLength
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($area), data($area)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1168,7 +1176,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1188,10 +1196,11 @@ declare function dataflowI:checkReport(
 
     let $I36 := try {
         for $node in $sources
-            let $ok := false()
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+            let $ok := common:has-content($area)
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($area), data($area)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1210,10 +1219,11 @@ declare function dataflowI:checkReport(
     :)
     let $I37 := try {
         for $node in $sources
-            let $ok := false()
+            let $year := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := data($year) castable as xs:gYear
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($year), data($year)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1232,10 +1242,15 @@ declare function dataflowI:checkReport(
     :)
     let $I38 := try {
         for $node in $sources
-            let $ok := false()
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+            let $link := $el/@xlink:href
+            let $ok := common:isInVocabulary(
+                $link,
+                $vocabulary:EXCEEDANCEREASON_VOCABULARY
+            )
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($el), $link]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1244,7 +1259,7 @@ declare function dataflowI:checkReport(
 
     (: I39
     /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
-    may be populated if  ./aqd:pollutant xlink:href attribute EQUALs
+    may be populated if ./aqd:pollutant xlink:href attribute EQUALs
     http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
     …/aqd:parentExceedanceSituation)
 
@@ -1256,10 +1271,19 @@ declare function dataflowI:checkReport(
 
     let $I39 := try {
         for $node in $sources
-            let $ok := false()
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($el), data($el)]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1282,10 +1306,23 @@ declare function dataflowI:checkReport(
 
     let $I40 := try {
         for $node in $sources
-            let $ok := false()
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+            let $link := $el/@xlink:href
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    common:isInVocabulary(
+                        $link,
+                        $vocabulary:ASSESSMENTTYPE_VOCABULARY
+                    )
         return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
+            $ok,
+            [node-name($el), $link]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1307,9 +1344,18 @@ declare function dataflowI:checkReport(
 
     let $I41 := try {
         for $node in $sources
-            let $ok := false()
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1333,13 +1379,14 @@ declare function dataflowI:checkReport(
     in D or D1b is required via xlink:href attribute
 
     ERROR
+    TODO: implement
     :)
 
     let $I42 := try {
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1352,7 +1399,7 @@ declare function dataflowI:checkReport(
     http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
     …/aqd:parentExceedanceSituation), the following elments must be empty or
     not provided:
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+    aqd:assessmentType
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
@@ -1367,11 +1414,25 @@ declare function dataflowI:checkReport(
 
     let $I43 := try {
         for $node in $sources
-            let $ok := false()
-        return common:conditionalReportRow(
-            $ok
-            [node-name($node), data($node)]
-        )
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $check := not(common:is-polutant-air($pollutant))
+            let $meths := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+            let $values := (
+                $meths/aqd:samplingPointAssessmentMetadata/@xlink:href,
+                $meths/aqd:modelAssessmentMetadata/@xlink:href,
+                $meths/aqd:assessmentTypeDescription,
+                $meths/aqd:assessmentType
+            )
+            return
+                if ($check)
+                then
+                    common:conditionalReportRow(
+                        not(empty($values)),
+                        [node-name($node), data($node)]
+                    )
+                else
+                    ()
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -1395,7 +1456,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
@@ -1420,7 +1481,7 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $ok := false()
         return common:conditionalReportRow(
-            $ok
+            $ok,
             [node-name($node), data($node)]
         )
     } catch * {
