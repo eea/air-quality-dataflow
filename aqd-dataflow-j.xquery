@@ -125,7 +125,7 @@ let $isNewDelivery := errors:getMaxError($J0) = $errors:INFO
 let $knownEvaluationScenarios :=
     if ($isNewDelivery)
     then
-        distinct-values(data(sparqlx:run(query:getEvaluationScenarios($cdrUrl || "k/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+        distinct-values(data(sparqlx:run(query:getEvaluationScenarios($cdrUrl || "j/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
     else
         distinct-values(data(sparqlx:run(query:getEvaluationScenarios($latestEnvelopeByYearJ))//sparql:binding[@name='inspireLabel']/sparql:literal))
 
