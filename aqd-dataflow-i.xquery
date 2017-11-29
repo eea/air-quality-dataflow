@@ -463,7 +463,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($el), $el/@xlink:href)
+                ("gml:id", data($el/../@gml:id)),
+                ("aqd:usedInPlan", $el/@xlink:href)
             ]
         )
     } catch * {
@@ -498,7 +499,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($el), $el/@xlink:href)
+                ("gml:id", data($el/../@gml:id)),
+                ("aqd:parentExceedanceSituation", $el/@xlink:href)
             ]
         )
     } catch * {
@@ -522,7 +524,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($el), data($el))
+                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:timePosition", data($el))
             ]
         )
     } catch * {
@@ -553,7 +556,10 @@ declare function dataflowI:checkReport(
             return
                 if (not(common:is-a-number(data($node))))
                 then
-                    [node-name($node), data($node)]
+                    [
+                        ("gml:id", data($node/../../@gml:id)),
+                        (node-name($node), data($node))
+                    ]
                 else
                     ()
         }
@@ -597,8 +603,9 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($node), data($node)),
-                (name($node/@nilReason), data($node/@nilReason))
+                ("gml:id", data($node/../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("nilReason", data($node/@nilReason))
             ]
         )
     } catch * {
@@ -630,6 +637,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($el/../../../../@gml:id)),
                 (node-name($el), "needs comment")
             ]
         )
@@ -669,7 +677,10 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($x), $uom]
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $uom)
+            ]
         )
 
     } catch * {
@@ -712,7 +723,10 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $total]
+                    [
+                        ("gml:id", data($x/@gml:id)),
+                        (node-name($x), $total)
+                    ]
                 else
                     ()
         }
@@ -766,7 +780,10 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $total]
+                    [
+                        ("gml:id", data($x/@gml:id)),
+                        (node-name($x), $total)
+                    ]
                 else
                     ()
         }
@@ -819,7 +836,10 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $total]
+                    [
+                        ("gml:id", data($x/@gml:id)),
+                        (node-name($x), $total)
+                    ]
                 else
                     ()
         }
@@ -853,7 +873,10 @@ declare function dataflowI:checkReport(
             return
                 if (not($ok))
                 then
-                    [node-name($x), $x]
+                    [
+                        ("gml:id", data($x/@gml:id)),
+                        (node-name($x), $x)
+                    ]
                 else
                     ()
         }
@@ -1546,7 +1569,7 @@ declare function dataflowI:checkReport(
             let $link := $el/@xlink:href
             let $conforms := common:isInVocabulary(
                 $link,
-                vocabulary:ADJUSTMENTSOURCE_VOCABULARY
+                $vocabulary:ADJUSTMENTSOURCE_VOCABULARY
             )
 
             let $ok :=
