@@ -147,19 +147,22 @@ declare function query:existsViaNameLocalId(
         $label as xs:string,
         $name as xs:string
 ) as xs:boolean {
-    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
-       SELECT count(?label) as ?cnt
-       WHERE {
-?scenariosXMLURI a aq:" || $name ||";
-aq:inspireId ?inspireId.
-?inspireId rdfs:label ?label.
-?inspireId aq:namespace ?name.
-?inspireId aq:localId ?localId
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
-   }"
 
-    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $name ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+}"
+
+    let $res := sparqlx:run($query)
+    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
     return
         if ($count > 0)
             then
@@ -528,11 +531,6 @@ declare function query:sparql-objects-in-subject(
 };
 
 
-
-
-
-
-
 :)
 declare function query:get-pollutant-for-attainment(
     $subj-url as xs:string
@@ -879,4 +877,41 @@ declare function query:getObligationYears() {
 
    FILTER (year(?released) > 2014) .
    } ORDER BY ?countryCode ?ReportingYear ?obligation_nr"
+};
+
+
+(:~ Returns the URI for the aqd:modelUsed used for the given Attainment
+:)
+declare function query:get-used-model-for-attainment(
+    $uri as xs:string
+) as xs:string {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?localId ?inspireLabel ?aqd_attainment ?desc_final ?model_used ?attainment ?source_apportionment
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment ;
+
+    aqd:inspireId ?inspireId .
+    ?inspireId rdfs:label ?inspireLabel .
+    ?inspireId aqd:localId ?localId .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    ?exceedance_area aqd:modelUsed ?model_used .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
+    return ""
+
+(: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
 };

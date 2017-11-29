@@ -492,7 +492,7 @@ declare function common:isEndDateAfterBeginDate(
 (:~ Returns a sum of numbers contained in nodes :)
 declare function common:sum-of-nodes(
     $nodes as item()*
-) {
+) as xs:double {
     let $numbers :=
         for $n in $nodes
             let $d := data($n)
@@ -509,7 +509,7 @@ declare function common:sum-of-nodes(
 (:~ Returns true if the given node has no attributes or children :)
 declare function common:has-content(
     $nodes as element()*
-) {
+) as xs:boolean {
     let $res :=
         for $node in $nodes
             let $attr := empty($node/@*)
@@ -521,7 +521,7 @@ declare function common:has-content(
 (:~ Returns true if provided pollutant is one of special values :)
 declare function common:is-polutant-air(
     $uri as xs:string
-) {
+) as xs:boolean {
     let $okv := (
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",

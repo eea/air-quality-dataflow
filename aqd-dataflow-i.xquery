@@ -62,7 +62,6 @@ declare function dataflowI:checkReport(
     $countryCode as xs:string
 ) as element(table) {
 
-    let $envelopeUrl := common:getEnvelopeXML($source_url)
     let $docRoot := doc($source_url)
     let $cdrUrl := common:getCdrUrl($countryCode)
 
@@ -613,16 +612,20 @@ declare function dataflowI:checkReport(
 
     If the quantification is voided an explanation is required in aqd:comment
 
-    TODO: fix this
     ERROR
     :)
 
     let $I17 := try {
         for $el in $docRoot//aqd:QuantityCommented
             let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
-            let $hascomment := not(functx:all-whitespace($el/aqd:comment))
+            let $hascomment := common:has-content($el/aqd:comment)
 
-            let $ok := ($isnil and $hascomment) or true()
+            let $ok :=
+                if ($isnil)
+                then
+                    $hascomment
+                else
+                    true()
 
         return common:conditionalReportRow(
             $ok,
@@ -1042,7 +1045,24 @@ declare function dataflowI:checkReport(
     :)
     let $I30 := try {
         for $node in $sources
-            let $ok := false()
+            let $a := $node//aqd:stationUsed
+            let $a-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($a/@xlink:href, "SamplingPoint")
+                else
+                    true()
+
+            let $b := $node//aqd:modelUsed
+            let $b-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
+                else
+                    true()
+
+            let $ok := $a and $b
+
         return common:conditionalReportRow(
             $ok,
             [node-name($node), data($node)]
@@ -1055,7 +1075,8 @@ declare function dataflowI:checkReport(
 
     The subject of
     ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-    xlink:href attribute shall be found in
+    xlink:href attribute
+    shall be found in
     /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
     xlink:href attribute for the AQD_Attainment record cited by
     ./aqd:parentExceedanceSituation
@@ -1067,11 +1088,15 @@ declare function dataflowI:checkReport(
 
     WARNING
     TODO: implement this
+
     :)
 
     let $I31 := try {
         for $node in $sources
-            let $ok := false()
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $model := query:get-used-model-for-attainment($att-url)
+            let $ok := $mu = $model
         return common:conditionalReportRow(
             $ok,
             [node-name($node), data($node)]
@@ -1483,7 +1508,7 @@ declare function dataflowI:checkReport(
                     $link = "noneApplicable"
 
             let $ok :=
-                if (not($populated))
+                if (not($is-populated))
                 then
                     true()
                 else
