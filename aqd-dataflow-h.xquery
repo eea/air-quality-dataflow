@@ -341,6 +341,175 @@ let $H14 := try {
 
 let $H15 := ()
 
+(: H16
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString shall
+not be NULL or voided
+
+You must provide the name of the organisation responsible for the plan
+:)
+
+let $H16 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H17
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString shall not
+be NULL or voided
+
+You must provide a contact point within the organisation responsible for the plan, this may be a generic contact point.
+:)
+
+let $H17 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H18
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress shall
+not be NULL or voided
+
+You must provide an email address for the contact point within the organisation responsible for the plan, this may be
+a generic telephone number.
+:)
+
+let $H18 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H19
+aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition shall not be voided, NULL or an empty tag & shall contain content in yyyy format
+
+Your reference year must be in yyyy format
+:)
+
+let $H19 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
+    let $ok := functx:if-empty(data($el), "") != ""
+            and
+            $el castable as xs:gYear
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), data($el))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H20
+aqd:AQD_Plan/aqd:status  xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/
+
+Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/
+:)
+
+let $H20 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:status
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H21
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute shall resolve to
+one of http://dd.eionet.europa.eu/vocabulary/aq/pollutant/
+
+Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/pollutant/
+:)
+
+let $H21 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H22
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget xlink:href attribute shall resolve
+to one of http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/
+
+Your protection target should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/
+:)
+
+let $H22 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 (: H27
 aqd:AQD_Plan/aqd:timeTable shall contain a text string
 
@@ -577,6 +746,13 @@ return
         {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
         {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
         {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
+        {html:build2("H16", $labels:H16, $labels:H16_SHORT, $H16, "All values are valid", "needs valid input", $errors:H16)}
+        {html:build2("H17", $labels:H17, $labels:H17_SHORT, $H17, "All values are valid", "needs valid input", $errors:H17)}
+        {html:build2("H18", $labels:H18, $labels:H18_SHORT, $H18, "All values are valid", "needs valid input", $errors:H18)}
+        {html:build2("H19", $labels:H19, $labels:H19_SHORT, $H19, "All values are valid", "needs valid input", $errors:H19)}
+        {html:build2("H20", $labels:H20, $labels:H20_SHORT, $H20, "All values are valid", "needs valid input", $errors:H20)}
+        {html:build2("H21", $labels:H21, $labels:H21_SHORT, $H21, "All values are valid", "needs valid input", $errors:H21)}
+        {html:build2("H22", $labels:H22, $labels:H22_SHORT, $H22, "All values are valid", "needs valid input", $errors:H22)}
         {html:build2("H27", $labels:H27, $labels:H27_SHORT, $H27, "All values are valid", "needs valid input", $errors:H27)}
         {html:build2("H28", $labels:H28, $labels:H28_SHORT, $H28, "All values are valid", "not valid", $errors:H28)}
         {html:build2("H29", $labels:H29, $labels:H29_SHORT, $H29, "All values are valid", "not valid", $errors:H29)}
