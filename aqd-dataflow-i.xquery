@@ -663,8 +663,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../../@gml:id)),
-                (node-name($el), "needs comment")
+                ("gml:id", data($el/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($el/..), "needs comment")
             ]
         )
     } catch * {
@@ -1668,7 +1668,9 @@ declare function dataflowI:checkReport(
         {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12, "All values are valid", "needs valid input", $errors:I12)}
         {html:build2("I15", $labels:I15, $labels:I15_SHORT, $I15, "All values are valid", "needs valid input", $errors:I15)}
         {html:build2("I16", $labels:I16, $labels:I16_SHORT, $I16, "All values are valid", "needs valid input", $errors:I16)}
+
         {html:build2("I17", $labels:I17, $labels:I17_SHORT, $I17, "All values are valid", "needs valid input", $errors:I17)}
+
         {html:build2("I18", $labels:I18, $labels:I18_SHORT, $I18, "All values are valid", "needs valid input", $errors:I18)}
         {html:build2("I19", $labels:I19, $labels:I19_SHORT, $I19, "All values are valid", "needs valid input", $errors:I19)}
         {html:build2("I21", $labels:I21, $labels:I21_SHORT, $I21, "All values are valid", "needs valid input", $errors:I21)}

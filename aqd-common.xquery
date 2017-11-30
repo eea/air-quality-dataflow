@@ -277,37 +277,39 @@ declare function common:isInVocabularyReport(
     }
 };
 
-        (: (xs:string, xs:anyAtomicType)* :)
 
+(: Type independent method of getting value at index in an array or sequence :)
+declare function common:get(
+    $seq,
+    $index as xs:integer
+) {
+    if ($seq instance of array(*))
+    then
+        $seq($index)
+    else
+        $seq[$index]
+};
+
+
+(:~ Constructs table rows from provided title/value pairs :)
 declare function common:conditionalReportRow (
     $ok as xs:boolean,
     $vals as array(item()*)
 ) as element(tr)* {
     if (not($ok))
     then
-        let $tr :=
+        array:flatten(
+            array:for-each($vals, function($row) {
             <tr>
-            {
-                for $i in 1 to array:size($vals)
-                let $row := array:get($vals, $i)
-                return
-                    if ($row instance of array(*))
-                    then
-                        <td title="{$row(1)}">
-                            {data($row(2))}
-                        </td>
-                    else
-                        <td title="{$row[1]}">
-                            {data($row[2])}
-                        </td>
-            }
+                <td title="{common:get($row, 2)}">
+                    {data(common:get($row, 2))}
+                </td>
             </tr>
-        (:let $x := trace($tr, 'x:'):)
-        return $tr
+            })
+        )
     else
         ()
 };
-
 
 
 (: returns if a specific node exists in a parent :)
