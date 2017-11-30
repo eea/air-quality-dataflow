@@ -664,7 +664,7 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($el/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($el/..), "needs comment")
+                ("node", node-name($el/..) || " needs comment")
             ]
         )
     } catch * {
@@ -899,16 +899,18 @@ declare function dataflowI:checkReport(
 
     :)
     let $I23 := try {
-        for $x in $sources
-            let $a := data($x/aqd:macroExceedanceSituation/aqd:numericalExceedance)
-            let $b := data($x/aqd:macroExceedanceSituation/aqd:numberExceedances)
 
+        for $x in $sources/aqd:macroExceedanceSituation
+            let $a := data($x/aqd:numericalExceedance)
+            let $b := data($x/aqd:numberExceedances)
             let $ok := common:is-a-number($a) or common:is-a-number($b)
+
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($x/@gml:id)),
-            (node-name($x), $a or $b)
+                ("gml:id", data($x/../@gml:id)),
+                ('aqd:numericalExceedance', $a),
+                ('aqd:numberExceedances', $b)
             ]
         )
     } catch * {
@@ -936,7 +938,7 @@ declare function dataflowI:checkReport(
                 <tr>
                     <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
                     <td title="xlink:href"> {$el/@xlink:href}</td>
-                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                    <td title="{node-name($el)}">not conform to vocabulary</td>
                 </tr>
             else
                 ()

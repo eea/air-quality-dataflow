@@ -298,15 +298,20 @@ declare function common:conditionalReportRow (
 ) as element(tr)* {
     if (not($ok))
     then
+        <tr>{
         array:flatten(
             array:for-each($vals, function($row) {
-            <tr>
-                <td title="{common:get($row, 2)}">
-                    {data(common:get($row, 2))}
+                <td title="{common:get($row, 1)}">
+                    {
+                    functx:if-empty(
+                        data(common:get($row, 2)),
+                        "no value provided"
+                    )
+                    }
                 </td>
-            </tr>
             })
         )
+        }</tr>
     else
         ()
 };
