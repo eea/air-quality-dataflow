@@ -1247,22 +1247,18 @@ declare function dataflowI:checkReport(
 
     let $I32 := try {
 
-        for $node in $sources
-            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+        for $mu in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $node := $mu/ancestor-or-self::aqd:AQD_SourceApportionment
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
             let $station := query:get-used-station-for-attainment($att-url)
-            let $ok :=
-                if (exists($mu))
-                then
-                    $mu/@xlink:href = $station
-                else
-                    true()
+            let $ok := $mu/@xlink:href = $station
 
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($mu), $mu/@xlink:href)
+                (node-name($mu), $mu/@xlink:href),
+                ("used station", $station)
             ]
         )
     } catch * {
