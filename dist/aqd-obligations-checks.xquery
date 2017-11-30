@@ -1838,8 +1838,16 @@ declare function common:checkLink($text as xs:string*) as element(span)*{
         }</span>
 };
 
-declare function common:is-a-number( $value as xs:anyAtomicType? ) as xs:boolean {
-    string(number($value)) != 'NaN'
+(:~ Test if a given value matches a positive number (either integer or decimal)
+(with two places after dot)
+:)
+declare function common:is-a-number(
+    $value as xs:anyAtomicType?
+) as xs:boolean {
+    let $n := string(number($value))
+    let $matches := matches($n, "^\d+(\.\d\d?){0,1}$")
+    let $positive := number($value) > 0
+    return $matches and $positive
 };
 
 declare function common:includesURL($x as xs:string) {
@@ -1961,16 +1969,6 @@ declare function common:isInVocabulary(
 ) as xs:boolean {
     let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
     return $uri and $uri = $validUris
-};
-
-(: Check if the given node equals to a term that is defined in the vocabulary :)
-declare function common:isEqualToTermInVocabulary(
-        $uri as xs:string?,
-        $vocabularyName as xs:string,
-        $vocabularyTermUri as xs:string
-) as xs:boolean {
-    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
-    return $uri and $uri = $validUris and $uri = $vocabularyTermUri
 };
 
 declare function common:isInVocabularyReport(
@@ -11743,16 +11741,16 @@ declare function dataflowI:checkReport(
     The unit of measurement of the Source Apportioment must match recommended
     unit for the pollutant
 
-    TODO: doublecheck with test
-
     BLOCKER
     :)
 
     let $I18 := try {
-        for $x in $sources
-            let $quants := $x//aqd:QuantityCommented/aqd:quantity
-            let $uom := data($quants/@uom)
-            let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
+        for $quant in $sources//aqd:QuantityCommented/aqd:quantity
+
+            let $uom := data($quant/@uom)
+
+            let $node := $quant/ancestor::aqd:AQD_SourceApportionment
+            let $att-url := data($node/aqd:parentExceedanceSituation/@xlink:href)
             let $pollutant-code := query:get-pollutant-for-attainment($att-url)
             let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
             let $rec-uom := dd:getRecommendedUnit($pollutant-code)
@@ -11762,8 +11760,9 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($x/@gml:id)),
-                (node-name($x), $uom)
+                ("gml:id", data($node/@gml:id)),
+                (node-name($quant), $uom),
+                ('recommended', $rec-uom)
             ]
         )
 
@@ -11960,13 +11959,14 @@ declare function dataflowI:checkReport(
     :)
 
     let $I22 := try {
-        for $x in $sources
-            let $ok := not(empty($x/aqd:macroExceedanceSituation))
+        for $node in $sources
+            let $ok := exists($node/aqd:macroExceedanceSituation)
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($x/@gml:id)),
-                (node-name($x), $x)
+                ("gml:id", data($node/@gml:id)),
+                ('aqd:macroExceedanceSituation',
+                    data($node/aqd:macroExceedanceSituation))
             ]
         )
     } catch * {
@@ -11987,15 +11987,12 @@ declare function dataflowI:checkReport(
 
     ERROR
 
-    TODO: check a better replacement for is-a-number
-    TODO: improve reporting
-
     :)
     let $I23 := try {
 
         for $node in $sources/aqd:macroExceedanceSituation
-            let $a := data($node/aqd:numericalExceedance)
-            let $b := data($node/aqd:numberExceedances)
+            let $a := data($node//aqd:numericalExceedance)
+            let $b := data($node//aqd:numberExceedances)
             let $ok := common:is-a-number($a) or common:is-a-number($b)
 
         return common:conditionalReportRow(
