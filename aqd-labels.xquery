@@ -916,11 +916,6 @@ declare variable $labels:J31 := labels:getDefinition("J31");
 declare variable $labels:J31_SHORT := labels:getPrefLabel("J31");
 declare variable $labels:J32 := labels:getDefinition("J32");
 declare variable $labels:J32_SHORT := labels:getPrefLabel("J32");
-<<<<<<< HEAD
-
-=======
->>>>>>> master
-
 declare variable $labels:K0 := labels:getDefinition("K0");
 declare variable $labels:K0_SHORT := labels:getPrefLabel("K0");
 declare variable $labels:K01 := labels:getDefinition("K01");

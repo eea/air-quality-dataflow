@@ -344,8 +344,6 @@ declare variable $errors:G81 := errors:getError("G81");
 declare variable $errors:G85 := errors:getError("G85");
 declare variable $errors:G86 := errors:getError("G86");
 
-<<<<<<< HEAD
-=======
 declare variable $errors:H0 := errors:getError("H0");
 declare variable $errors:H01 := errors:getError("H01");
 declare variable $errors:H02 := errors:getError("H02");
@@ -383,7 +381,6 @@ declare variable $errors:H33 := errors:getError("H33");
 declare variable $errors:H34 := errors:getError("H34");
 declare variable $errors:H35 := errors:getError("H35");
 
->>>>>>> master
 declare variable $errors:I0 := errors:getError("I0");
 declare variable $errors:I01 := errors:getError("I01");
 declare variable $errors:I02 := errors:getError("I02");
@@ -508,10 +505,6 @@ declare variable $errors:K38 := errors:getError("K38");
 declare variable $errors:K39 := errors:getError("K39");
 declare variable $errors:K40 := errors:getError("K40");
 
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 declare variable $errors:M0 := errors:getError("M0");
 declare variable $errors:M01 := errors:getError("M01");
 declare variable $errors:M02 := errors:getError("M02");
