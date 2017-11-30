@@ -948,11 +948,21 @@ declare function dataflowI:checkReport(
 
     (: I25
 
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+        aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:exceedanceArea/
+        aqd:ExceedanceArea/
+        aqd:areaClassification
     xlink:href attribute shall match those
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+        /aqd:AQD_Attainment/
+        aqd:exceedanceDescriptionFinal/
+        aqd:ExceedanceDescription/
+        aqd:exceedanceArea/
+        aqd:ExceedanceArea/
+        aqd:areaClassification
     xlink:href attribute for the AQD_Attainment record cited by
-    ./aqd:parentExceedanceSituation
+        ./aqd:parentExceedanceSituation
 
     Area classification should match classification declared in the
     corresponding Attainment
@@ -966,7 +976,7 @@ declare function dataflowI:checkReport(
     let $I25 := try {
         for $node in $sources
             let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
-            let $ac := $el/@xlink:href
+            let $ac := data($el/@xlink:href)
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
             let $parent-ac := query:get-area-classifications-for-attainment($parent)
 
@@ -974,7 +984,11 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node/@gml:id)]
+            [
+                (node-name($node), data($node/@gml:id)),
+                (node-name($el), $ac),
+                ('AQD_Attainment classification', $parent-ac)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)

@@ -1010,5 +1010,5 @@ WHERE {
 }
 "
     let $res := sparqlx:run($query)
-    return data($res//sparql:binding[@name='area_classification']/sparql:literal)
+    return data($res//sparql:binding[@name='area_classification']/sparql:uri)
 };
