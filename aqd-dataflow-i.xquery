@@ -658,7 +658,7 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                ("node", node-name($node/..) || " needs comment")
+                ("needs comment", node-name($node/..))
             ]
         )
     } catch * {
@@ -728,7 +728,8 @@ declare function dataflowI:checkReport(
     let $I19 := try {
         for $x in $sources
             let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
-            let $total := data($rb/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $rb/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
             let $sum := common:sum-of-nodes((
                 $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
                 $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
@@ -742,7 +743,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum)
             ]
         )
     } catch * {
@@ -772,7 +774,8 @@ declare function dataflowI:checkReport(
     let $I20 := try {
         for $x in $sources
             let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
-            let $total := data($ub/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $ub/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
             let $sum := common:sum-of-nodes((
                 $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
                 $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
@@ -791,7 +794,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum)
             ]
         )
     } catch * {
@@ -1773,6 +1777,7 @@ declare function dataflowI:checkReport(
 
         {html:build2("I18", $labels:I18, $labels:I18_SHORT, $I18, "All values are valid", "needs valid input", $errors:I18)}
         {html:build2("I19", $labels:I19, $labels:I19_SHORT, $I19, "All values are valid", "needs valid input", $errors:I19)}
+        {html:build2("I20", $labels:I20, $labels:I20_SHORT, $I20, "All values are valid", "needs valid input", $errors:I20)}
         {html:build2("I21", $labels:I21, $labels:I21_SHORT, $I21, "All values are valid", "needs valid input", $errors:I21)}
         {html:build2("I22", $labels:I22, $labels:I22_SHORT, $I22, "All values are valid", "needs valid input", $errors:I22)}
         {html:build2("I23", $labels:I23, $labels:I23_SHORT, $I23, "All values are valid", "needs valid input", $errors:I23)}
