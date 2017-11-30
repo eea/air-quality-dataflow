@@ -66,10 +66,17 @@ declare function dataflowK:checkReport($source_url as xs:string, $countryCode as
 let $envelopeUrl := c:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 (: cdr.eionet.europa.eu/be/eu/aqd/ :)
+<<<<<<< HEAD
 let $cdrUrl := c:getCdrUrl($countryCode)
 let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
 (: 2004  :)
 let $reportingYear := c:getReportingYear($docRoot)
+=======
+let $cdrUrl := common:getCdrUrl($countryCode)
+let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
+(: 2004  :)
+let $reportingYear := common:getReportingYear($docRoot)
+>>>>>>> master
 let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
@@ -107,6 +114,7 @@ let $NSinvalid := try {
 let $K0table := try {
     if ($reportingYear = "")
     then
+<<<<<<< HEAD
         c:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
     else
         if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
@@ -114,6 +122,15 @@ let $K0table := try {
                 c:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
             else
                 c:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+=======
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+            then
+                common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+            else
+                common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+>>>>>>> master
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -132,7 +149,11 @@ let $K01 := try {
     for $rec in $docRoot//aqd:AQD_Measures
         let $el := $rec/aqd:inspireId/base:Identifier
         return
+<<<<<<< HEAD
             c:conditionalReportRow(
+=======
+            common:conditionalReportRow(
+>>>>>>> master
             false(),
             [
                 ("gml:id", data($rec/@gml:id)),
@@ -155,7 +176,11 @@ let $K02table := try {
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
         let $ok := not($inspireId = $knownMeasures)
         return
+<<<<<<< HEAD
             c:conditionalReportRow(
+=======
+            common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/@gml:id)),
@@ -191,12 +216,20 @@ let $K03table := try {
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
         let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
         return
+<<<<<<< HEAD
             c:conditionalReportRow(
+=======
+            common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($main/@gml:id)),
                 ("aqd:inspireId", $inspireId),
+<<<<<<< HEAD
                 ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+=======
+                ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+>>>>>>> master
             ]
             )
 } catch * {
@@ -223,13 +256,22 @@ let $K04table := try {
             and
             count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
         )
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             not($ok),
             [
                 ("gml:id", data($x/@gml:id)),
                 ("aqd:inspireId", distinct-values($aqdinspireId)),
+<<<<<<< HEAD
                 ("aqd:AQD_Measures", c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
                 ("aqd:AQD_Scenario", c:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href))))
+=======
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href))))
+>>>>>>> master
             ]
         )
 } catch * {
@@ -282,14 +324,22 @@ let $K07 := try {
             return
                 for $v in distinct-values($values)
                     return
+<<<<<<< HEAD
                         if (c:has-one-node($values, $v))
+=======
+                        if (common:has-one-node($values, $v))
+>>>>>>> master
                         then
                             ()
                         else
                             [$name, data($v)]
     }
 
+<<<<<<< HEAD
     return c:conditionalReportRow(
+=======
+    return common:conditionalReportRow(
+>>>>>>> master
         array:size($errors) = 0,
         $errors
     )
@@ -335,12 +385,20 @@ let $K08invalid:= try {
             and
             functx:if-empty($localID/text(), "") != ""
         )
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
                 ("aqd:inspireId", distinct-values($aqdinspireId)),
+<<<<<<< HEAD
                 ("aqd:AQD_Measures", c:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+=======
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+>>>>>>> master
                 ("aqd:AQD_Scenario", distinct-values(data($x/aqd:usedForScenario/@xlink:href)))
             ]
         )
@@ -354,7 +412,11 @@ let $K09table := try {
     for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
         let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
         let $ok := false()
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("base:namespace", $namespace),
@@ -375,7 +437,11 @@ let $K10invalid := try {
             and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
     for $x in distinct-values($docRoot//base:namespace)
         let $ok := ($x = $prefLabel and $x = $altLabel)
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("base:namespace", $x)
@@ -399,7 +465,11 @@ let $K11 := try{
         let $label := data($el/@xlink:href)
         let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../@gml:id)),
@@ -424,7 +494,11 @@ let $K12 := try {
         let $label := data($el/@xlink:href)
         let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../@gml:id)),
@@ -452,7 +526,11 @@ let $K13invalid := try {
             and
             count(fn:index-of($codes,$code)) = 1
         )
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($node/@gml:id)),
@@ -467,27 +545,43 @@ let $K13invalid := try {
 
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
+<<<<<<< HEAD
 let $K14invalid := c:needsValidString(
+=======
+let $K14invalid := common:needsValidString(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures, 'aqd:name'
         )
 
 (: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
+<<<<<<< HEAD
 let $K15invalid := c:needsValidString(
+=======
+let $K15invalid := common:needsValidString(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures,
         'aqd:description'
         )
 
 (: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
 Measure classification should conform to vocabulary :)
+<<<<<<< HEAD
 let $K16 := c:isInVocabularyReport(
+=======
+let $K16 := common:isInVocabularyReport(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures/aqd:classification,
         $vocabulary:MEASURECLASSIFICATION_VOCABULARY
         )
 
 (: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
 Measure type should conform to vocabulary :)
+<<<<<<< HEAD
 let $K17 := c:isInVocabularyReport(
+=======
+let $K17 := common:isInVocabularyReport(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures/aqd:measureType,
         $vocabulary:MEASURETYPE_VOCABULARY
         )
@@ -497,7 +591,11 @@ let $K17 := c:isInVocabularyReport(
 http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/
 Administrative level should conform to vocabulary
 :)
+<<<<<<< HEAD
 let $K18 := c:isInVocabularyReport(
+=======
+let $K18 := common:isInVocabularyReport(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
         $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
         )
@@ -506,7 +604,11 @@ let $K18 := c:isInVocabularyReport(
 aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/
 The measure's timescale should conform to vocabulary
 :)
+<<<<<<< HEAD
 let $K19 := c:isInVocabularyReport(
+=======
+let $K19 := common:isInVocabularyReport(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures/aqd:timeScale,
         $vocabulary:TIMESCALE_VOCABULARY
         )
@@ -515,7 +617,11 @@ let $K19 := c:isInVocabularyReport(
 (: K20 aqd:AQD_Measures/aqd:costs/ should be provided
 Information on the cost of the measure should be provided
 :)
+<<<<<<< HEAD
 let $K20 := c:isNodeNotInParentReport(
+=======
+let $K20 := common:isNodeNotInParentReport(
+>>>>>>> master
         $docRoot//aqd:AQD_Measures,
         'aqd:costs'
         )
@@ -538,11 +644,19 @@ let $K21 := try {
         let $comment := $costs/aqd:Costs/aqd:comment
         let $costsRoot := $costs/aqd:Costs
 
+<<<<<<< HEAD
         let $isValidCost := c:is-a-number(data($implCosts))
         let $hasCost := c:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
 
         return
             if (c:isNodeInParent($el, 'aqd:costs'))
+=======
+        let $isValidCost := common:is-a-number(data($implCosts))
+        let $hasCost := common:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+
+        return
+            if (common:isNodeInParent($el, 'aqd:costs'))
+>>>>>>> master
             then (
                 if (not($isValidCost))
                 then
@@ -589,10 +703,17 @@ let $K22 := c:maybeNodeValueIsIntegerReport(
 )
 :)
 
+<<<<<<< HEAD
 let $K22 := c:validatePossibleNodeValueReport(
     $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
     'aqd:finalImplementationCosts',
     c:is-a-number#1
+=======
+let $K22 := common:validatePossibleNodeValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts',
+    common:is-a-number#1
+>>>>>>> master
 )
 
 (: K23
@@ -608,10 +729,17 @@ vocabulary
 
 let $K23 := (
     for $el in $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+<<<<<<< HEAD
     return c:validateMaybeNodeWithValueReport(
         $el,
         'aqd:estimatedImplementationCosts',
         c:isInVocabulary(
+=======
+    return common:validateMaybeNodeWithValueReport(
+        $el,
+        'aqd:estimatedImplementationCosts',
+        common:isInVocabulary(
+>>>>>>> master
             $el/aqd:currency/@xlink:href,
             $vocabulary:CURRENCIES
         )
@@ -626,7 +754,11 @@ http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
 Source sector should conform to vocabulary
 :)
 
+<<<<<<< HEAD
 let $K24 := c:isInVocabularyReport(
+=======
+let $K24 := common:isInVocabularyReport(
+>>>>>>> master
     $docRoot//aqd:AQD_Measures/aqd:sourceSectors,
     $vocabulary:SOURCESECTORS_VOCABULARY
     )
@@ -638,7 +770,11 @@ http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
 Spatial scale should conform to vocabulary
 :)
 
+<<<<<<< HEAD
 let $K25 := c:isInVocabularyReport(
+=======
+let $K25 := common:isInVocabularyReport(
+>>>>>>> master
     $docRoot//aqd:AQD_Measures/aqd:spatialScale,
     $vocabulary:SPACIALSCALE_VOCABULARY
     )
@@ -655,7 +791,11 @@ let $K26 := try {
     for $el in $main
         let $uri := $el/@xlink:href
         return
+<<<<<<< HEAD
         if (not(c:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
+=======
+        if (not(common:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
+>>>>>>> master
         then
             <tr>
                 <td title="gml:id">{data($el/../../../@gml:id)}</td>
@@ -674,7 +814,11 @@ must be a date in full ISO date format
 The planned start date for the measure should be provided
 :)
 
+<<<<<<< HEAD
 let $K27 := c:isDateFullISOReport(
+=======
+let $K27 := common:isDateFullISOReport(
+>>>>>>> master
     $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
 )
 
@@ -694,12 +838,20 @@ let $K28 := try {
         let $end := $el/gml:endPosition
 
         let $ok := (
+<<<<<<< HEAD
             (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+=======
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+>>>>>>> master
             or
             (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../../@gml:id)),
@@ -717,7 +869,11 @@ must be a date in full ISO date format
 
 The planned start date for the measure should be provided
 :)
+<<<<<<< HEAD
 let $K29 := c:isDateFullISOReport(
+=======
+let $K29 := common:isDateFullISOReport(
+>>>>>>> master
     $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
 )
 
@@ -744,12 +900,20 @@ let $K30 := try {
         let $end := $el/gml:endPosition
 
         let $ok := (
+<<<<<<< HEAD
             (c:isDateFullISO($begin) and c:isDateFullISO($end) and $end > $begin)
+=======
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+>>>>>>> master
             or
             (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../../@gml:id)),
@@ -774,10 +938,17 @@ let $K31 := try {
     let $ok := (
         data($node) castable as xs:date
         or
+<<<<<<< HEAD
         not(c:isInvalidYear(data($node)))
     )
 
     return c:conditionalReportRow(
+=======
+        not(common:isInvalidYear(data($node)))
+    )
+
+    return common:conditionalReportRow(
+>>>>>>> master
         $ok,
         [
             ("gml:id", data($node/../../../../../@gml:id)),
@@ -813,7 +984,11 @@ let $K33 := try {
                 functx:if-empty(data($comment),"") != ""
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../@gml:id)),
@@ -851,7 +1026,11 @@ let $K34 := try {
             ($isNum and ($node cast as xs:float >= 0))
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($node/../../../@gml:id)),
@@ -889,7 +1068,11 @@ let $K35 := try {
             )
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($node/../../../@gml:id)),
@@ -924,7 +1107,11 @@ let $K36 := try {
             )
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($main/../../@gml:id)),
@@ -949,7 +1136,11 @@ let $K37 := try {
         let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
         let $ok := ($uri and $uri = $validUris)
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../@gml:id)),
@@ -975,7 +1166,11 @@ let $K38 := try {
     let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
     for $el in $main
         let $uri := data($el/@uom)
+<<<<<<< HEAD
         let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+=======
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+>>>>>>> master
 
         let $isNum := (
             (data($el) castable as xs:integer)
@@ -989,7 +1184,11 @@ let $K38 := try {
             ($isNum and ($el cast as xs:float >= 0))
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../@gml:id)),
@@ -1014,7 +1213,11 @@ let $K39 := try {
     let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
     for $el in $main
         let $uri := data($el/@uom)
+<<<<<<< HEAD
         let $validVocabulary := c:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+=======
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+>>>>>>> master
 
         let $isNum := (
             ($el castable as xs:integer)
@@ -1028,7 +1231,11 @@ let $K39 := try {
             ($isNum and ($el cast as xs:float >= 0))
         )
 
+<<<<<<< HEAD
         return c:conditionalReportRow(
+=======
+        return common:conditionalReportRow(
+>>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../@gml:id)),

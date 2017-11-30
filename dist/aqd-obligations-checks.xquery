@@ -66,7 +66,6 @@ declare variable $dataflowEb:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFI
 declare variable $dataflowEb:FEATURE_TYPES := ("aqd:AQD_Model", "aqd:AQD_ModelProcess", "aqd:AQD_ModelArea");
 declare variable $dataflowG:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "679");
 declare variable $dataflowH:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "680");
-declare variable $dataflowI:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "681");
 declare variable $dataflowJ:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "682");
 declare variable $dataflowK:OBLIGATIONS as xs:string* := ($vocabulary:ROD_PREFIX || "683");
 declare variable $dataflowM:FEATURE_TYPES := ("aqd:AQD_Model", "aqd:AQD_ModelProcess", "aqd:AQD_ModelArea");
@@ -402,6 +401,163 @@ declare variable $errors:G80 := errors:getError("G80");
 declare variable $errors:G81 := errors:getError("G81");
 declare variable $errors:G85 := errors:getError("G85");
 declare variable $errors:G86 := errors:getError("G86");
+declare variable $errors:H0 := errors:getError("H0");
+declare variable $errors:H01 := errors:getError("H01");
+declare variable $errors:H02 := errors:getError("H02");
+declare variable $errors:H03 := errors:getError("H03");
+declare variable $errors:H04 := errors:getError("H04");
+declare variable $errors:H05 := errors:getError("H05");
+declare variable $errors:H06 := errors:getError("H06");
+declare variable $errors:H07 := errors:getError("H07");
+declare variable $errors:H08 := errors:getError("H08");
+declare variable $errors:H09 := errors:getError("H09");
+declare variable $errors:H10 := errors:getError("H10");
+declare variable $errors:H11 := errors:getError("H11");
+declare variable $errors:H12 := errors:getError("H12");
+declare variable $errors:H13 := errors:getError("H13");
+declare variable $errors:H14 := errors:getError("H14");
+declare variable $errors:H15 := errors:getError("H15");
+declare variable $errors:H16 := errors:getError("H16");
+declare variable $errors:H17 := errors:getError("H17");
+declare variable $errors:H18 := errors:getError("H18");
+declare variable $errors:H19 := errors:getError("H19");
+declare variable $errors:H20 := errors:getError("H20");
+declare variable $errors:H21 := errors:getError("H21");
+declare variable $errors:H22 := errors:getError("H22");
+declare variable $errors:H23 := errors:getError("H23");
+declare variable $errors:H24 := errors:getError("H24");
+declare variable $errors:H25 := errors:getError("H25");
+declare variable $errors:H26 := errors:getError("H26");
+declare variable $errors:H27 := errors:getError("H27");
+declare variable $errors:H28 := errors:getError("H28");
+declare variable $errors:H29 := errors:getError("H29");
+declare variable $errors:H30 := errors:getError("H30");
+declare variable $errors:H31 := errors:getError("H31");
+declare variable $errors:H32 := errors:getError("H32");
+declare variable $errors:H33 := errors:getError("H33");
+declare variable $errors:H34 := errors:getError("H34");
+declare variable $errors:H35 := errors:getError("H35");
+declare variable $errors:I0 := errors:getError("I0");
+declare variable $errors:I01 := errors:getError("I01");
+declare variable $errors:I02 := errors:getError("I02");
+declare variable $errors:I03 := errors:getError("I03");
+declare variable $errors:I04 := errors:getError("I04");
+declare variable $errors:I05 := errors:getError("I05");
+declare variable $errors:I06 := errors:getError("I06");
+declare variable $errors:I07 := errors:getError("I07");
+declare variable $errors:I08 := errors:getError("I08");
+declare variable $errors:I09 := errors:getError("I08");
+declare variable $errors:I10 := errors:getError("I10");
+declare variable $errors:I11a := errors:getError("I11a");
+declare variable $errors:I11b := errors:getError("I11b");
+declare variable $errors:I12 := errors:getError("I12");
+declare variable $errors:I13 := errors:getError("I13");
+declare variable $errors:I14 := errors:getError("I14");
+declare variable $errors:I15 := errors:getError("I15");
+declare variable $errors:I16 := errors:getError("I16");
+declare variable $errors:I17 := errors:getError("I17");
+declare variable $errors:I18 := errors:getError("I18");
+declare variable $errors:I19 := errors:getError("I19");
+declare variable $errors:I20 := errors:getError("I20");
+declare variable $errors:I21 := errors:getError("I21");
+declare variable $errors:I22 := errors:getError("I22");
+declare variable $errors:I23 := errors:getError("I23");
+declare variable $errors:I24 := errors:getError("I24");
+declare variable $errors:I25 := errors:getError("I25");
+declare variable $errors:I26 := errors:getError("I26");
+declare variable $errors:I27 := errors:getError("I27");
+declare variable $errors:I28 := errors:getError("I28");
+declare variable $errors:I29 := errors:getError("I29");
+declare variable $errors:I30 := errors:getError("I30");
+declare variable $errors:I31 := errors:getError("I31");
+declare variable $errors:I32 := errors:getError("I32");
+declare variable $errors:I33 := errors:getError("I33");
+declare variable $errors:I34 := errors:getError("I34");
+declare variable $errors:I35 := errors:getError("I35");
+declare variable $errors:I36 := errors:getError("I36");
+declare variable $errors:I37 := errors:getError("I37");
+declare variable $errors:I38 := errors:getError("I38");
+declare variable $errors:I39 := errors:getError("I39");
+declare variable $errors:I40 := errors:getError("I40");
+declare variable $errors:I41 := errors:getError("I41");
+declare variable $errors:I42 := errors:getError("I42");
+declare variable $errors:I43 := errors:getError("I43");
+declare variable $errors:I44 := errors:getError("I44");
+declare variable $errors:I45 := errors:getError("I45");
+declare variable $errors:J0 := errors:getError("J0");
+declare variable $errors:J1 := errors:getError("J1");
+declare variable $errors:J2 := errors:getError("J2");
+declare variable $errors:J3 := errors:getError("J3");
+declare variable $errors:J4 := errors:getError("J4");
+declare variable $errors:J5 := errors:getError("J5");
+declare variable $errors:J6 := errors:getError("J6");
+declare variable $errors:J7 := errors:getError("J7");
+declare variable $errors:J8 := errors:getError("J8");
+declare variable $errors:J9 := errors:getError("J9");
+declare variable $errors:J10 := errors:getError("J10");
+declare variable $errors:J11 := errors:getError("J11");
+declare variable $errors:J12 := errors:getError("J12");
+declare variable $errors:J13 := errors:getError("J13");
+declare variable $errors:J14 := errors:getError("J14");
+declare variable $errors:J15 := errors:getError("J15");
+declare variable $errors:J16 := errors:getError("J16");
+declare variable $errors:J17 := errors:getError("J17");
+declare variable $errors:J18 := errors:getError("J18");
+declare variable $errors:J19 := errors:getError("J19");
+declare variable $errors:J20 := errors:getError("J20");
+declare variable $errors:J21 := errors:getError("J21");
+declare variable $errors:J22 := errors:getError("J22");
+declare variable $errors:J23 := errors:getError("J23");
+declare variable $errors:J24 := errors:getError("J24");
+declare variable $errors:J25 := errors:getError("J25");
+declare variable $errors:J26 := errors:getError("J26");
+declare variable $errors:J27 := errors:getError("J27");
+declare variable $errors:J28 := errors:getError("J28");
+declare variable $errors:J29 := errors:getError("J29");
+declare variable $errors:J30 := errors:getError("J30");
+declare variable $errors:J31 := errors:getError("J31");
+declare variable $errors:J32 := errors:getError("J32");
+declare variable $errors:K0 := errors:getError("K0");
+declare variable $errors:K01 := errors:getError("K01");
+declare variable $errors:K02 := errors:getError("K02");
+declare variable $errors:K03 := errors:getError("K03");
+declare variable $errors:K04 := errors:getError("K04");
+declare variable $errors:K05 := errors:getError("K05");
+declare variable $errors:K06 := errors:getError("K06");
+declare variable $errors:K07 := errors:getError("K07");
+declare variable $errors:K08 := errors:getError("K08");
+declare variable $errors:K09 := errors:getError("K09");
+declare variable $errors:K10 := errors:getError("K10");
+declare variable $errors:K11 := errors:getError("K11");
+declare variable $errors:K12 := errors:getError("K12");
+declare variable $errors:K13 := errors:getError("K13");
+declare variable $errors:K14 := errors:getError("K14");
+declare variable $errors:K15 := errors:getError("K15");
+declare variable $errors:K16 := errors:getError("K16");
+declare variable $errors:K17 := errors:getError("K17");
+declare variable $errors:K18 := errors:getError("K18");
+declare variable $errors:K19 := errors:getError("K19");
+declare variable $errors:K20 := errors:getError("K20");
+declare variable $errors:K21 := errors:getError("K21");
+declare variable $errors:K22 := errors:getError("K22");
+declare variable $errors:K23 := errors:getError("K23");
+declare variable $errors:K24 := errors:getError("K24");
+declare variable $errors:K25 := errors:getError("K25");
+declare variable $errors:K26 := errors:getError("K26");
+declare variable $errors:K27 := errors:getError("K27");
+declare variable $errors:K28 := errors:getError("K28");
+declare variable $errors:K29 := errors:getError("K29");
+declare variable $errors:K30 := errors:getError("K30");
+declare variable $errors:K31 := errors:getError("K31");
+declare variable $errors:K32 := errors:getError("K32");
+declare variable $errors:K33 := errors:getError("K33");
+declare variable $errors:K34 := errors:getError("K34");
+declare variable $errors:K35 := errors:getError("K35");
+declare variable $errors:K36 := errors:getError("K36");
+declare variable $errors:K37 := errors:getError("K37");
+declare variable $errors:K38 := errors:getError("K38");
+declare variable $errors:K39 := errors:getError("K39");
+declare variable $errors:K40 := errors:getError("K40");
 declare variable $errors:M0 := errors:getError("M0");
 declare variable $errors:M01 := errors:getError("M01");
 declare variable $errors:M02 := errors:getError("M02");
@@ -1126,6 +1282,10 @@ declare variable $labels:H03 := labels:getDefinition("H03");
 declare variable $labels:H03_SHORT := labels:getPrefLabel("H03");
 declare variable $labels:H04 := labels:getDefinition("H04");
 declare variable $labels:H04_SHORT := labels:getPrefLabel("H04");
+declare variable $labels:H05 := labels:getDefinition("H05");
+declare variable $labels:H05_SHORT := labels:getPrefLabel("H05");
+declare variable $labels:H06 := labels:getDefinition("H06");
+declare variable $labels:H06_SHORT := labels:getPrefLabel("H06");
 declare variable $labels:H07 := labels:getDefinition("H07");
 declare variable $labels:H07_SHORT := labels:getPrefLabel("H07");
 declare variable $labels:H08 := labels:getDefinition("H08");
@@ -1138,8 +1298,12 @@ declare variable $labels:H11 := labels:getDefinition("H11");
 declare variable $labels:H11_SHORT := labels:getPrefLabel("H11");
 declare variable $labels:H12 := labels:getDefinition("H12");
 declare variable $labels:H12_SHORT := labels:getPrefLabel("H12");
+declare variable $labels:H13 := labels:getDefinition("H13");
+declare variable $labels:H13_SHORT := labels:getPrefLabel("H13");
 declare variable $labels:H14 := labels:getDefinition("H14");
 declare variable $labels:H14_SHORT := labels:getPrefLabel("H14");
+declare variable $labels:H15 := labels:getDefinition("H15");
+declare variable $labels:H15_SHORT := labels:getPrefLabel("H15");
 declare variable $labels:H16 := labels:getDefinition("H16");
 declare variable $labels:H16_SHORT := labels:getPrefLabel("H16");
 declare variable $labels:H17 := labels:getDefinition("H17");
@@ -1150,12 +1314,278 @@ declare variable $labels:H19 := labels:getDefinition("H19");
 declare variable $labels:H19_SHORT := labels:getPrefLabel("H19");
 declare variable $labels:H20 := labels:getDefinition("H20");
 declare variable $labels:H20_SHORT := labels:getPrefLabel("H20");
+declare variable $labels:H21 := labels:getDefinition("H21");
+declare variable $labels:H21_SHORT := labels:getPrefLabel("H21");
+declare variable $labels:H22 := labels:getDefinition("H22");
+declare variable $labels:H22_SHORT := labels:getPrefLabel("H22");
+declare variable $labels:H23 := labels:getDefinition("H23");
+declare variable $labels:H23_SHORT := labels:getPrefLabel("H23");
+declare variable $labels:H24 := labels:getDefinition("H24");
+declare variable $labels:H24_SHORT := labels:getPrefLabel("H24");
+declare variable $labels:H25 := labels:getDefinition("H25");
+declare variable $labels:H25_SHORT := labels:getPrefLabel("H25");
+declare variable $labels:H26 := labels:getDefinition("H26");
+declare variable $labels:H26_SHORT := labels:getPrefLabel("H26");
+declare variable $labels:H27 := labels:getDefinition("H27");
+declare variable $labels:H27_SHORT := labels:getPrefLabel("H27");
+declare variable $labels:H28 := labels:getDefinition("H28");
+declare variable $labels:H28_SHORT := labels:getPrefLabel("H28");
+declare variable $labels:H29 := labels:getDefinition("H29");
+declare variable $labels:H29_SHORT := labels:getPrefLabel("H29");
+declare variable $labels:H30 := labels:getDefinition("H30");
+declare variable $labels:H30_SHORT := labels:getPrefLabel("H30");
+declare variable $labels:H31 := labels:getDefinition("H31");
+declare variable $labels:H31_SHORT := labels:getPrefLabel("H31");
+declare variable $labels:H32 := labels:getDefinition("H32");
+declare variable $labels:H32_SHORT := labels:getPrefLabel("H32");
+declare variable $labels:H33 := labels:getDefinition("H33");
+declare variable $labels:H33_SHORT := labels:getPrefLabel("H33");
+declare variable $labels:H34 := labels:getDefinition("H34");
+declare variable $labels:H34_SHORT := labels:getPrefLabel("H34");
+declare variable $labels:H35 := labels:getDefinition("H35");
+declare variable $labels:H35_SHORT := labels:getPrefLabel("H35");
 declare variable $labels:I0 := labels:getDefinition("I0");
 declare variable $labels:I0_SHORT := labels:getPrefLabel("I0");
+declare variable $labels:I01 := labels:getDefinition("I01");
+declare variable $labels:I01_SHORT := labels:getPrefLabel("I01");
+declare variable $labels:I02 := labels:getDefinition("I02");
+declare variable $labels:I02_SHORT := labels:getPrefLabel("I02");
+declare variable $labels:I03 := labels:getDefinition("I03");
+declare variable $labels:I03_SHORT := labels:getPrefLabel("I03");
+declare variable $labels:I04 := labels:getDefinition("I04");
+declare variable $labels:I04_SHORT := labels:getPrefLabel("I04");
+declare variable $labels:I05 := labels:getDefinition("I05");
+declare variable $labels:I05_SHORT := labels:getPrefLabel("I05");
+declare variable $labels:I06 := labels:getDefinition("I06");
+declare variable $labels:I06_SHORT := labels:getPrefLabel("I06");
+declare variable $labels:I07 := labels:getDefinition("I07");
+declare variable $labels:I07_SHORT := labels:getPrefLabel("I07");
+declare variable $labels:I08 := labels:getDefinition("I08");
+declare variable $labels:I08_SHORT := labels:getPrefLabel("I08");
+declare variable $labels:I09 := labels:getDefinition("I09");
+declare variable $labels:I09_SHORT := labels:getPrefLabel("I09");
+declare variable $labels:I10 := labels:getDefinition("I10");
+declare variable $labels:I10_SHORT := labels:getPrefLabel("I10");
+declare variable $labels:I11 := labels:getDefinition("I11");
+declare variable $labels:I11_SHORT := labels:getPrefLabel("I11");
+declare variable $labels:I11b := labels:getDefinition("I11b");
+declare variable $labels:I11b_SHORT := labels:getPrefLabel("I11b");
+declare variable $labels:I12 := labels:getDefinition("I12");
+declare variable $labels:I12_SHORT := labels:getPrefLabel("I12");
+declare variable $labels:I13 := labels:getDefinition("I13");
+declare variable $labels:I13_SHORT := labels:getPrefLabel("I13");
+declare variable $labels:I14 := labels:getDefinition("I14");
+declare variable $labels:I14_SHORT := labels:getPrefLabel("I14");
+declare variable $labels:I15 := labels:getDefinition("I15");
+declare variable $labels:I15_SHORT := labels:getPrefLabel("I15");
+declare variable $labels:I16 := labels:getDefinition("I16");
+declare variable $labels:I16_SHORT := labels:getPrefLabel("I16");
+declare variable $labels:I17 := labels:getDefinition("I17");
+declare variable $labels:I17_SHORT := labels:getPrefLabel("I17");
+declare variable $labels:I18 := labels:getDefinition("I18");
+declare variable $labels:I18_SHORT := labels:getPrefLabel("I18");
+declare variable $labels:I19 := labels:getDefinition("I19");
+declare variable $labels:I19_SHORT := labels:getPrefLabel("I19");
+declare variable $labels:I20 := labels:getDefinition("I20");
+declare variable $labels:I20_SHORT := labels:getPrefLabel("I20");
+declare variable $labels:I21 := labels:getDefinition("I21");
+declare variable $labels:I21_SHORT := labels:getPrefLabel("I21");
+declare variable $labels:I22 := labels:getDefinition("I22");
+declare variable $labels:I22_SHORT := labels:getPrefLabel("I22");
+declare variable $labels:I23 := labels:getDefinition("I23");
+declare variable $labels:I23_SHORT := labels:getPrefLabel("I23");
+declare variable $labels:I24 := labels:getDefinition("I24");
+declare variable $labels:I24_SHORT := labels:getPrefLabel("I24");
+declare variable $labels:I25 := labels:getDefinition("I25");
+declare variable $labels:I25_SHORT := labels:getPrefLabel("I25");
+declare variable $labels:I26 := labels:getDefinition("I26");
+declare variable $labels:I26_SHORT := labels:getPrefLabel("I26");
+declare variable $labels:I27 := labels:getDefinition("I27");
+declare variable $labels:I27_SHORT := labels:getPrefLabel("I27");
+declare variable $labels:I28 := labels:getDefinition("I28");
+declare variable $labels:I28_SHORT := labels:getPrefLabel("I28");
+declare variable $labels:I29 := labels:getDefinition("I29");
+declare variable $labels:I29_SHORT := labels:getPrefLabel("I29");
+declare variable $labels:I30 := labels:getDefinition("I30");
+declare variable $labels:I30_SHORT := labels:getPrefLabel("I30");
+declare variable $labels:I31 := labels:getDefinition("I31");
+declare variable $labels:I31_SHORT := labels:getPrefLabel("I31");
+declare variable $labels:I32 := labels:getDefinition("I32");
+declare variable $labels:I32_SHORT := labels:getPrefLabel("I32");
+declare variable $labels:I33 := labels:getDefinition("I33");
+declare variable $labels:I33_SHORT := labels:getPrefLabel("I33");
+declare variable $labels:I34 := labels:getDefinition("I34");
+declare variable $labels:I34_SHORT := labels:getPrefLabel("I34");
+declare variable $labels:I35 := labels:getDefinition("I35");
+declare variable $labels:I35_SHORT := labels:getPrefLabel("I35");
+declare variable $labels:I36 := labels:getDefinition("I36");
+declare variable $labels:I36_SHORT := labels:getPrefLabel("I36");
+declare variable $labels:I37 := labels:getDefinition("I37");
+declare variable $labels:I37_SHORT := labels:getPrefLabel("I37");
+declare variable $labels:I38 := labels:getDefinition("I38");
+declare variable $labels:I38_SHORT := labels:getPrefLabel("I38");
+declare variable $labels:I39 := labels:getDefinition("I39");
+declare variable $labels:I39_SHORT := labels:getPrefLabel("I39");
+declare variable $labels:I40 := labels:getDefinition("I40");
+declare variable $labels:I40_SHORT := labels:getPrefLabel("I40");
+declare variable $labels:I41 := labels:getDefinition("I41");
+declare variable $labels:I41_SHORT := labels:getPrefLabel("I41");
+declare variable $labels:I42 := labels:getDefinition("I42");
+declare variable $labels:I42_SHORT := labels:getPrefLabel("I42");
+declare variable $labels:I43 := labels:getDefinition("I43");
+declare variable $labels:I43_SHORT := labels:getPrefLabel("I43");
+declare variable $labels:I44 := labels:getDefinition("I44");
+declare variable $labels:I44_SHORT := labels:getPrefLabel("I44");
+declare variable $labels:I45 := labels:getDefinition("I45");
+declare variable $labels:I45_SHORT := labels:getPrefLabel("I45");
 declare variable $labels:J0 := labels:getDefinition("J0");
 declare variable $labels:J0_SHORT := labels:getPrefLabel("J0");
+declare variable $labels:J1 := labels:getDefinition("J1");
+declare variable $labels:J1_SHORT := labels:getPrefLabel("J1");
+declare variable $labels:J2 := labels:getDefinition("J2");
+declare variable $labels:J2_SHORT := labels:getPrefLabel("J2");
+declare variable $labels:J3 := labels:getDefinition("J3");
+declare variable $labels:J3_SHORT := labels:getPrefLabel("J3");
+declare variable $labels:J4 := labels:getDefinition("J4");
+declare variable $labels:J4_SHORT := labels:getPrefLabel("J4");
+declare variable $labels:J5 := labels:getDefinition("J5");
+declare variable $labels:J5_SHORT := labels:getPrefLabel("J5");
+declare variable $labels:J6 := labels:getDefinition("J6");
+declare variable $labels:J6_SHORT := labels:getPrefLabel("J6");
+declare variable $labels:J7 := labels:getDefinition("J7");
+declare variable $labels:J7_SHORT := labels:getPrefLabel("J7");
+declare variable $labels:J8 := labels:getDefinition("J8");
+declare variable $labels:J8_SHORT := labels:getPrefLabel("J8");
+declare variable $labels:J9 := labels:getDefinition("J9");
+declare variable $labels:J9_SHORT := labels:getPrefLabel("J9");
+declare variable $labels:J10 := labels:getDefinition("J10");
+declare variable $labels:J10_SHORT := labels:getPrefLabel("J10");
+declare variable $labels:J11 := labels:getDefinition("J11");
+declare variable $labels:J11_SHORT := labels:getPrefLabel("J11");
+declare variable $labels:J12 := labels:getDefinition("J12");
+declare variable $labels:J12_SHORT := labels:getPrefLabel("J12");
+declare variable $labels:J13 := labels:getDefinition("J13");
+declare variable $labels:J13_SHORT := labels:getPrefLabel("J13");
+declare variable $labels:J14 := labels:getDefinition("J14");
+declare variable $labels:J14_SHORT := labels:getPrefLabel("J14");
+declare variable $labels:J15 := labels:getDefinition("J15");
+declare variable $labels:J15_SHORT := labels:getPrefLabel("J15");
+declare variable $labels:J16 := labels:getDefinition("J16");
+declare variable $labels:J16_SHORT := labels:getPrefLabel("J16");
+declare variable $labels:J17 := labels:getDefinition("J17");
+declare variable $labels:J17_SHORT := labels:getPrefLabel("J17");
+declare variable $labels:J18 := labels:getDefinition("J18");
+declare variable $labels:J18_SHORT := labels:getPrefLabel("J18");
+declare variable $labels:J19 := labels:getDefinition("J19");
+declare variable $labels:J19_SHORT := labels:getPrefLabel("J19");
+declare variable $labels:J20 := labels:getDefinition("J20");
+declare variable $labels:J20_SHORT := labels:getPrefLabel("J20");
+declare variable $labels:J21 := labels:getDefinition("J21");
+declare variable $labels:J21_SHORT := labels:getPrefLabel("J21");
+declare variable $labels:J22 := labels:getDefinition("J22");
+declare variable $labels:J22_SHORT := labels:getPrefLabel("J22");
+declare variable $labels:J23 := labels:getDefinition("J23");
+declare variable $labels:J23_SHORT := labels:getPrefLabel("J23");
+declare variable $labels:J24 := labels:getDefinition("J24");
+declare variable $labels:J24_SHORT := labels:getPrefLabel("J24");
+declare variable $labels:J25 := labels:getDefinition("J25");
+declare variable $labels:J25_SHORT := labels:getPrefLabel("J25");
+declare variable $labels:J26 := labels:getDefinition("J26");
+declare variable $labels:J26_SHORT := labels:getPrefLabel("J26");
+declare variable $labels:J27 := labels:getDefinition("J27");
+declare variable $labels:J27_SHORT := labels:getPrefLabel("J27");
+declare variable $labels:J28 := labels:getDefinition("J28");
+declare variable $labels:J28_SHORT := labels:getPrefLabel("J28");
+declare variable $labels:J29 := labels:getDefinition("J29");
+declare variable $labels:J29_SHORT := labels:getPrefLabel("J29");
+declare variable $labels:J30 := labels:getDefinition("J30");
+declare variable $labels:J30_SHORT := labels:getPrefLabel("J30");
+declare variable $labels:J31 := labels:getDefinition("J31");
+declare variable $labels:J31_SHORT := labels:getPrefLabel("J31");
+declare variable $labels:J32 := labels:getDefinition("J32");
+declare variable $labels:J32_SHORT := labels:getPrefLabel("J32");
 declare variable $labels:K0 := labels:getDefinition("K0");
 declare variable $labels:K0_SHORT := labels:getPrefLabel("K0");
+declare variable $labels:K01 := labels:getDefinition("K01");
+declare variable $labels:K01_SHORT := labels:getPrefLabel("K01");
+declare variable $labels:K02 := labels:getDefinition("K02");
+declare variable $labels:K02_SHORT := labels:getPrefLabel("K02");
+declare variable $labels:K03 := labels:getDefinition("K03");
+declare variable $labels:K03_SHORT := labels:getPrefLabel("K03");
+declare variable $labels:K04 := labels:getDefinition("K04");
+declare variable $labels:K04_SHORT := labels:getPrefLabel("K04");
+declare variable $labels:K05 := labels:getDefinition("K05");
+declare variable $labels:K05_SHORT := labels:getPrefLabel("K05");
+declare variable $labels:K06 := labels:getDefinition("K06");
+declare variable $labels:K06_SHORT := labels:getPrefLabel("K06");
+declare variable $labels:K07 := labels:getDefinition("K07");
+declare variable $labels:K07_SHORT := labels:getPrefLabel("K07");
+declare variable $labels:K08 := labels:getDefinition("K08");
+declare variable $labels:K08_SHORT := labels:getPrefLabel("K08");
+declare variable $labels:K09 := labels:getDefinition("K09");
+declare variable $labels:K09_SHORT := labels:getPrefLabel("K09");
+declare variable $labels:K10 := labels:getDefinition("K10");
+declare variable $labels:K10_SHORT := labels:getPrefLabel("K10");
+declare variable $labels:K11 := labels:getDefinition("K11");
+declare variable $labels:K11_SHORT := labels:getPrefLabel("K11");
+declare variable $labels:K12 := labels:getDefinition("K12");
+declare variable $labels:K12_SHORT := labels:getPrefLabel("K12");
+declare variable $labels:K13 := labels:getDefinition("K13");
+declare variable $labels:K13_SHORT := labels:getPrefLabel("K13");
+declare variable $labels:K14 := labels:getDefinition("K14");
+declare variable $labels:K14_SHORT := labels:getPrefLabel("K14");
+declare variable $labels:K15 := labels:getDefinition("K15");
+declare variable $labels:K15_SHORT := labels:getPrefLabel("K15");
+declare variable $labels:K16 := labels:getDefinition("K16");
+declare variable $labels:K16_SHORT := labels:getPrefLabel("K16");
+declare variable $labels:K17 := labels:getDefinition("K17");
+declare variable $labels:K17_SHORT := labels:getPrefLabel("K17");
+declare variable $labels:K18 := labels:getDefinition("K18");
+declare variable $labels:K18_SHORT := labels:getPrefLabel("K18");
+declare variable $labels:K19 := labels:getDefinition("K19");
+declare variable $labels:K19_SHORT := labels:getPrefLabel("K19");
+declare variable $labels:K20 := labels:getDefinition("K20");
+declare variable $labels:K20_SHORT := labels:getPrefLabel("K20");
+declare variable $labels:K21 := labels:getDefinition("K21");
+declare variable $labels:K21_SHORT := labels:getPrefLabel("K21");
+declare variable $labels:K22 := labels:getDefinition("K22");
+declare variable $labels:K22_SHORT := labels:getPrefLabel("K22");
+declare variable $labels:K23 := labels:getDefinition("K23");
+declare variable $labels:K23_SHORT := labels:getPrefLabel("K23");
+declare variable $labels:K24 := labels:getDefinition("K24");
+declare variable $labels:K24_SHORT := labels:getPrefLabel("K24");
+declare variable $labels:K25 := labels:getDefinition("K25");
+declare variable $labels:K25_SHORT := labels:getPrefLabel("K25");
+declare variable $labels:K26 := labels:getDefinition("K26");
+declare variable $labels:K26_SHORT := labels:getPrefLabel("K26");
+declare variable $labels:K27 := labels:getDefinition("K27");
+declare variable $labels:K27_SHORT := labels:getPrefLabel("K27");
+declare variable $labels:K28 := labels:getDefinition("K28");
+declare variable $labels:K28_SHORT := labels:getPrefLabel("K28");
+declare variable $labels:K29 := labels:getDefinition("K29");
+declare variable $labels:K29_SHORT := labels:getPrefLabel("K29");
+declare variable $labels:K30 := labels:getDefinition("K30");
+declare variable $labels:K30_SHORT := labels:getPrefLabel("K30");
+declare variable $labels:K31 := labels:getDefinition("K31");
+declare variable $labels:K31_SHORT := labels:getPrefLabel("K31");
+declare variable $labels:K32 := labels:getDefinition("K32");
+declare variable $labels:K32_SHORT := labels:getPrefLabel("K32");
+declare variable $labels:K33 := labels:getDefinition("K33");
+declare variable $labels:K33_SHORT := labels:getPrefLabel("K33");
+declare variable $labels:K34 := labels:getDefinition("K34");
+declare variable $labels:K34_SHORT := labels:getPrefLabel("K34");
+declare variable $labels:K35 := labels:getDefinition("K35");
+declare variable $labels:K35_SHORT := labels:getPrefLabel("K35");
+declare variable $labels:K36 := labels:getDefinition("K36");
+declare variable $labels:K36_SHORT := labels:getPrefLabel("K36");
+declare variable $labels:K37 := labels:getDefinition("K37");
+declare variable $labels:K37_SHORT := labels:getPrefLabel("K37");
+declare variable $labels:K38 := labels:getDefinition("K38");
+declare variable $labels:K38_SHORT := labels:getPrefLabel("K38");
+declare variable $labels:K39 := labels:getDefinition("K39");
+declare variable $labels:K39_SHORT := labels:getPrefLabel("K39");
+declare variable $labels:K40 := labels:getDefinition("K40");
+declare variable $labels:K40_SHORT := labels:getPrefLabel("K40");
 declare variable $labels:M0 := labels:getDefinition("M0");
 declare variable $labels:M0_SHORT := labels:getPrefLabel("M0");
 declare variable $labels:M01 := labels:getDefinition("M01");
@@ -1229,57 +1659,69 @@ declare variable $labels:PLACEHOLDER := "LABEL MISSING";
 declare variable $schemax:INVALIDSTATUS := "invalid";
 declare variable $schemax:SCHEMA := "http://dd.eionet.europa.eu/schemas/id2011850eu-1.0/AirQualityReporting.xsd";
 declare variable $sparqlx:CR_SPARQL_URL := "http://cr.eionet.europa.eu/sparql";
-declare variable $vocabulary:BASE := "http://dd.eionet.europa.eu/vocabulary/aq/";
-declare variable $vocabulary:NAMESPACE := "http://dd.eionet.europa.eu/vocabulary/aq/namespace/";
-declare variable $vocabulary:OBLIGATIONS := "http://rod.eionet.europa.eu/obligations/";
-declare variable $vocabulary:UOM_TIME := "http://dd.eionet.europa.eu/vocabulary/uom/time/";
-declare variable $vocabulary:ENVIRONMENTALOBJECTIVE := "http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/";
+declare variable $vocabulary:ADJUSTMENTSOURCE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/";
+declare variable $vocabulary:ADJUSTMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/";
+declare variable $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/";
+declare variable $vocabulary:AGGREGATION_PROCESS as xs:string := $vocabulary:BASE || "aggregationprocess/";
+declare variable $vocabulary:ANALYTICALTECHNIQUE_VOCABULARY :=  "http://dd.eionet.europa.eu/vocabulary/aq/analyticaltechnique/";
 declare variable $vocabulary:AQ_MANAGEMENET_ZONE := "http://inspire.ec.europa.eu/codeList/ZoneTypeCode/airQualityManagementZone";
 declare variable $vocabulary:AQ_MANAGEMENET_ZONE_LC := "http://inspire.ec.europa.eu/codelist/ZoneTypeCode/airQualityManagementZone";
-declare variable $vocabulary:LEGISLATION_LEVEL := "http://inspire.ec.europa.eu/codeList/LegislationLevelValue/";
-declare variable $vocabulary:LEGISLATION_LEVEL_LC := "http://inspire.ec.europa.eu/codelist/LegislationLevelValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI := "http://inspire.ec.europa.eu/codelist/MediaValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI_UC := "http://inspire.ec.europa.eu/codeList/MediaValue/";
-declare variable $vocabulary:MEDIA_VALUE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/";
-declare variable $vocabulary:ORGANISATIONAL_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/organisationallevel/";
-declare variable $vocabulary:NETWORK_TYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/networktype/";
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY := ("http://vocab.nerc.ac.uk/collection/P07/current/","http://vocab.nerc.ac.uk/collection/I01/current/","http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/");
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY_I01 := "http://vocab.nerc.ac.uk/collection/I01/current/";
-declare variable $vocabulary:METEO_PARAMS_VOCABULARY_aq := "http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/";
 declare variable $vocabulary:AREA_CLASSIFICATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/";
+declare variable $vocabulary:ASSESSMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/";
+declare variable $vocabulary:BASE := "http://dd.eionet.europa.eu/vocabulary/aq/";
+declare variable $vocabulary:CURRENCIES as xs:string := "http://dd.eionet.europa.eu/vocabulary/common/currencies/";
 declare variable $vocabulary:DISPERSION_LOCAL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/dispersionlocal/";
 declare variable $vocabulary:DISPERSION_REGIONAL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/dispersionregional/";
-declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
-declare variable $vocabulary:POLLUTANT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/";
-declare variable $vocabulary:MEASUREMENTTYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/";
-declare variable $vocabulary:MEASUREMENTMETHOD_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/";
-declare variable $vocabulary:ANALYTICALTECHNIQUE_VOCABULARY :=  "http://dd.eionet.europa.eu/vocabulary/aq/analyticaltechnique/";
-declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
-declare variable $vocabulary:MEASUREMENTEQUIPMENT_VOCABULARY :="http://dd.eionet.europa.eu/vocabulary/aq/measurementequipment/";
-declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
-declare variable $vocabulary:UOM_STATISTICS := "http://dd.eionet.europa.eu/vocabulary/uom/statistics/";
+declare variable $vocabulary:ENVIRONMENTALOBJECTIVE := "http://dd.eionet.europa.eu/vocabulary/aq/environmentalobjective/";
 declare variable $vocabulary:EQUIVALENCEDEMONSTRATED_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/equivalencedemonstrated/";
-declare variable $vocabulary:REPMETRIC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/";
-declare variable $vocabulary:OBJECTIVETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/";
-declare variable $vocabulary:ADJUSTMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/";
-declare variable $vocabulary:ADJUSTMENTSOURCE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype/";
-declare variable $vocabulary:ASSESSMENTTYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype/";
-declare variable $vocabulary:PROTECTIONTARGET_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/";
+declare variable $vocabulary:EXCEEDANCEREASON_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/";
+declare variable $vocabulary:LEGISLATION_LEVEL := "http://inspire.ec.europa.eu/codeList/LegislationLevelValue/";
+declare variable $vocabulary:LEGISLATION_LEVEL_LC := "http://inspire.ec.europa.eu/codelist/LegislationLevelValue/";
+declare variable $vocabulary:MEASURECLASSIFICATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/";
+declare variable $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/";
+declare variable $vocabulary:MEASUREMENTEQUIPMENT_VOCABULARY :="http://dd.eionet.europa.eu/vocabulary/aq/measurementequipment/";
+declare variable $vocabulary:MEASUREMENTMETHOD_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementmethod/";
+declare variable $vocabulary:MEASUREMENTTYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measurementtype/";
+declare variable $vocabulary:MEASURETYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/measuretype//";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/inspire/MediaValue/";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI := "http://inspire.ec.europa.eu/codelist/MediaValue/";
+declare variable $vocabulary:MEDIA_VALUE_VOCABULARY_BASE_URI_UC := "http://inspire.ec.europa.eu/codeList/MediaValue/";
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY := ("http://vocab.nerc.ac.uk/collection/P07/current/","http://vocab.nerc.ac.uk/collection/I01/current/","http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/");
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY_I01 := "http://vocab.nerc.ac.uk/collection/I01/current/";
 declare variable $vocabulary:METEO_PARAMS_VOCABULARY_M := "http://vocab.nerc.ac.uk/collection/P07/current/";
-declare variable $vocabulary:ZONETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/zonetype/";
-declare variable $vocabulary:PROCESS_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/processparameter/";
+declare variable $vocabulary:METEO_PARAMS_VOCABULARY_aq := "http://dd.eionet.europa.eu/vocabulary/aq/meteoparameter/";
 declare variable $vocabulary:MODEL_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/modelparameter/";
-declare variable $vocabulary:PROCESSPARAMETER_RESULTENCODING as xs:string := $vocabulary:PROCESS_PARAMETER || "resultencoding";
-declare variable $vocabulary:PROCESSPARAMETER_RESULTFORMAT as xs:string := $vocabulary:PROCESS_PARAMETER || "resultformat";
-declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europa.eu/obligations/";
-declare variable $vocabulary:OBSERVATIONS_VERIFICATION as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationverification/";
-declare variable $vocabulary:OBSERVATIONS_VALIDITY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationvalidity/";
+declare variable $vocabulary:NAMESPACE := "http://dd.eionet.europa.eu/vocabulary/aq/namespace/";
+declare variable $vocabulary:NETWORK_TYPE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/networktype/";
+declare variable $vocabulary:OBJECTIVETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/objectivetype/";
+declare variable $vocabulary:OBLIGATIONS := "http://rod.eionet.europa.eu/obligations/";
 declare variable $vocabulary:OBSERVATIONS_PRIMARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/primaryObservation/";
 declare variable $vocabulary:OBSERVATIONS_RANGE as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/primaryObservationRange/";
+declare variable $vocabulary:OBSERVATIONS_VALIDITY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationvalidity/";
+declare variable $vocabulary:OBSERVATIONS_VERIFICATION as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/observationverification/";
+declare variable $vocabulary:ORGANISATIONAL_LEVEL_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/organisationallevel/";
+declare variable $vocabulary:POLLUTANT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/";
+declare variable $vocabulary:PROCESSPARAMETER_RESULTENCODING as xs:string := $vocabulary:PROCESS_PARAMETER || "resultencoding";
+declare variable $vocabulary:PROCESSPARAMETER_RESULTFORMAT as xs:string := $vocabulary:PROCESS_PARAMETER || "resultformat";
+declare variable $vocabulary:PROCESS_PARAMETER as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/processparameter/";
+declare variable $vocabulary:PROTECTIONTARGET_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/";
 declare variable $vocabulary:QAQC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/cdrqaqc/";
-declare variable $vocabulary:AGGREGATION_PROCESS as xs:string := $vocabulary:BASE || "aggregationprocess/";
+declare variable $vocabulary:REPMETRIC_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/reportingmetric/";
 declare variable $vocabulary:RESULT_ENCODING as xs:string := $vocabulary:BASE || "resultencoding/";
 declare variable $vocabulary:RESULT_FORMAT as xs:string := $vocabulary:BASE || "resultformat/";
+declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europa.eu/obligations/";
+declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
+declare variable $vocabulary:SOURCESECTORS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/";
+declare variable $vocabulary:SPACIALSCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/";
+declare variable $vocabulary:STATUSAQPLAN_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/";
+declare variable $vocabulary:TIMESCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timescale/";
+declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
+declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
+declare variable $vocabulary:UOM_EMISSION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/emission/";
+declare variable $vocabulary:UOM_STATISTICS := "http://dd.eionet.europa.eu/vocabulary/uom/statistics/";
+declare variable $vocabulary:UOM_TIME := "http://dd.eionet.europa.eu/vocabulary/uom/time/";
+declare variable $vocabulary:ZONETYPE_VOCABULARY as xs:string := "http://dd.eionet.europa.eu/vocabulary/aq/zonetype/";
+
 
 
 
@@ -1339,6 +1781,11 @@ declare function common:getCdrUrl($countryCode as xs:string) as xs:string {
     return "cdr.eionet.europa.eu/" || lower-case($countryCode) || "/" || $eu || "/aqd/"
 };
 
+(: returns year from aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod
+gml:beginPosition
+or
+gml:timePosition
+:)
 declare function common:getReportingYear($xml as document-node()) as xs:string {
     let $year1 := year-from-dateTime($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimePeriod/gml:beginPosition)
     let $year2 := string($xml//aqd:AQD_ReportingHeader/aqd:reportingPeriod/gml:TimeInstant/gml:timePosition)
@@ -1348,7 +1795,11 @@ declare function common:getReportingYear($xml as document-node()) as xs:string {
         else ""
 };
 
-declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as xs:boolean {
+(:~ Returns true if $seq1 contains any element from $seq2 :)
+declare function common:containsAny(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:boolean {
     not(empty(
             for $str in $seq2
             where not(empty(index-of($seq1, $str)))
@@ -1357,8 +1808,11 @@ declare function common:containsAny($seq1 as xs:string*, $seq2 as xs:string*) as
     ))
 };
 
-declare function common:getSublist($seq1 as xs:string*, $seq2 as xs:string*)
-as xs:string* {
+(:~ Returns intersection (common elements) of seq1 and seq1 :)
+declare function common:getSublist(
+    $seq1 as xs:string*,
+    $seq2 as xs:string*
+) as xs:string* {
 
     distinct-values(
             for $str in $seq2
@@ -1368,6 +1822,7 @@ as xs:string* {
     )
 };
 
+(:~ Returns a <span> with <a> links for each valid link in given sequence :)
 declare function common:checkLink($text as xs:string*) as element(span)*{
     for $c at $pos in $text
     return
@@ -1466,6 +1921,328 @@ declare function common:isDateTimeIncluded($reportingYear as xs:string, $beginPo
             else false()
         else
             false()
+};
+
+(: Returns error report for ?0 check :)
+declare function common:checkDeliveryReport (
+    $errorClass as xs:string,
+    $statusMessage as xs:string
+) as element(tr) {
+    <tr class="{$errorClass}">
+        <td title="Status">{$statusMessage}</td>
+    </tr>
+};
+
+(: Returns structure with error if node is empty :)
+(: TODO: test if node doesn't exist :)
+declare function common:needsValidString(
+    $parent as node()*,
+    $nodeName as xs:string
+) as element(tr)* {
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
+    return try {
+        if (string-length(normalize-space($el/text())) = 0)
+        then
+            <tr>
+                <td title="gml:id">{data($el/../@gml:id)}</td>
+                <td title="{$nodeName}">{$nodeName} needs a valid input</td>
+            </tr>
+        else
+            ()
+    }  catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if the given node links to a term that is defined in the vocabulary :)
+declare function common:isInVocabulary(
+  $uri as xs:string?,
+  $vocabularyName as xs:string
+) as xs:boolean {
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris
+};
+
+declare function common:isInVocabularyReport(
+  $main as node()+,
+  $vocabularyName as xs:string
+) as element(tr)* {
+    try {
+        for $el in $main
+            let $uri := $el/@xlink:href
+            return
+            if (not(common:isInVocabulary($uri, $vocabularyName)))
+            then
+                <tr>
+                    <td title="gml:id">{data($el/../@gml:id)}</td>
+                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                </tr>
+            else
+                ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+        (: (xs:string, xs:anyAtomicType)* :)
+
+declare function common:conditionalReportRow (
+    $ok as xs:boolean,
+    $vals as array(item()*)
+) as element(tr)* {
+    if (not($ok))
+    then
+        let $tr :=
+            <tr>
+            {
+                for $i in 1 to array:size($vals)
+                let $row := array:get($vals, $i)
+                return
+                    if ($row instance of array(*))
+                    then
+                        <td title="{$row(1)}">
+                            {data($row(2))}
+                        </td>
+                    else
+                        <td title="{$row[1]}">
+                            {data($row[2])}
+                        </td>
+            }
+            </tr>
+        (:let $x := trace($tr, 'x:'):)
+        return $tr
+    else
+        ()
+};
+
+
+
+(: returns if a specific node exists in a parent :)
+declare function common:isNodeInParent(
+    $parent as node(),
+    $nodeName as xs:string
+) as xs:boolean {
+    exists($parent/*[name() = $nodeName])
+};
+
+(: prints error if a specific node does not exist in a parent :)
+declare function common:isNodeNotInParentReport(
+    $parent as node()*,
+    $nodeName as xs:string
+) as element(tr)* {
+    try {
+        for $el in $parent
+            return
+            if (not(common:isNodeInParent($el, $nodeName)))
+            then
+                <tr>
+                    <td title="gml:id">{data($el/@gml:id)}</td>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: if node has value, then that value should be an integer :)
+declare function common:maybeNodeValueIsInteger($el) as xs:boolean {
+    (: TODO: is possible to use or :)
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            common:is-a-number($v)
+        else
+            true()
+};
+
+(: prints error if a specific node has value and is not an integer :)
+declare function common:maybeNodeValueIsIntegerReport(
+    $parent as node()?,
+    $nodeName as xs:string
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (not(common:maybeNodeValueIsInteger($el)))
+        then
+            <tr>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: If node exists, validate it :)
+declare function common:validatePossibleNodeValue(
+    $el,
+    $validator as function(item()) as xs:boolean
+) {
+    let $v := data($el)
+    return
+        if (exists($v))
+        then
+            $validator($v)
+        else
+            true()
+};
+
+(: Prints an error if validation for a possible existing node fails :)
+declare function common:validatePossibleNodeValueReport(
+    $parent as node()*,
+    $nodeName as xs:string,
+    $validator as function(item()) as xs:boolean
+) {
+    let $main := $parent/*[name() = $nodeName]
+    for $el in $main
+    return try {
+        if (not(common:validatePossibleNodeValue($el, $validator)))
+        then
+            <tr>
+                <td title="gml:id"> {data($el/../../../../@gml:id)}</td>
+                <td title="{$nodeName}"> needs valid input</td>
+            </tr>
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+
+(: Given a node, if it exists, print error based on provided value :)
+declare function common:validateMaybeNodeWithValueReport(
+    $parent as node()?,
+    $nodeName as xs:string,
+    $val as xs:boolean
+) as element(tr)* {
+    let $el := $parent/*[name() = $nodeName]
+    return try {
+        if (exists($el))
+        then
+            if (not($val))
+            then
+                <tr>
+                    <td title="gml:id"> {data($el/../../../@gml:id)}</td>
+                    <td title="{$nodeName}"> needs valid input</td>
+                </tr>
+            else
+                ()
+        else
+            ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+};
+
+(: Check if a given string is a full ISO date type:)
+declare function common:isDateFullISO(
+    $date as xs:string?
+) as xs:boolean {
+    if ($date castable as xs:dateTime)
+    then
+        true()
+    else
+        false()
+    (:try {
+        let $asd := xs:dateTime($date)
+        return true()
+    } catch *{
+        false()
+    }:)
+
+};
+(: Create report :)
+declare function common:isDateFullISOReport(
+    $main as node()*
+) as element(tr)*
+{
+    for $el in $main
+        let $date := data($el)
+        return
+        try {
+            if (not(common:isDateFullISO($date)))
+            then
+                <tr>
+                    <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                    <td title="{node-name($el)}">{$date}</td>
+                </tr>
+            else
+                ()
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+};
+
+(:~ returns True if $seq has one one given node :)
+declare function common:has-one-node(
+    $seq as item()*,
+    $item as item()?
+) as xs:boolean {
+    let $norm-seq :=
+        for $x in $seq
+        return $x => normalize-space() => lower-case()
+    return count(index-of($norm-seq, lower-case(normalize-space($item)))) = 1
+};
+
+(: Check if end date is after begin date and if both are in full ISO format:)
+declare function common:isEndDateAfterBeginDate(
+        $begin as node()?,
+        $end as node()?
+) as xs:boolean
+{
+    if(common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+    then
+        true()
+    else
+        false()
+};
+
+(:~ Returns a sum of numbers contained in nodes :)
+declare function common:sum-of-nodes(
+    $nodes as item()*
+) as xs:double {
+    let $numbers :=
+        for $n in $nodes
+            let $d := data($n)
+            let $i :=
+                if ($d castable as xs:double)
+                then
+                    xs:double($d)
+                else
+                    0
+        return $i
+    return sum($numbers)
+};
+
+(:~ Returns true if the given node has no attributes or children :)
+declare function common:has-content(
+    $nodes as element()*
+) as xs:boolean {
+    let $res :=
+        for $node in $nodes
+            let $attr := empty($node/@*)
+            let $children := empty($node/*)
+        return $attr or $children
+    return $res = true()
+};
+
+(:~ Returns true if provided pollutant is one of special values :)
+declare function common:is-polutant-air(
+    $uri as xs:string
+) as xs:boolean {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+        "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+    return $uri = $okv
 };
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
@@ -9329,60 +10106,707 @@ declare function dataflowH:checkReport($source_url as xs:string, $countryCode as
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "h_preliminary")) then "h_preliminary/" else "h/"
 let $reportingYear := common:getReportingYear($docRoot)
+let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
+
 let $nameSpaces := distinct-values($docRoot//base:namespace)
-let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
 (: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
-
-(: H0 :)
-let $H0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
         return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H0 Checks if this delivery is new or an update (on same reporting year) :)
+
+let $H0 := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowH:OBLIGATIONS, $countryCode, "h/", $reportingYear))
+        then
+            common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+        else
+            common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+let $isNewDelivery := errors:getMaxError($H0) = $errors:INFO
+
+(: H01 Number of AQ Plans reported :)
+
+let $countPlans := count($docRoot//aqd:AQD_Plan)
+let $H01 := try {
+    for $rec in $docRoot//aqd:AQD_Plan
+    let $el := $rec/aqd:inspireId/base:Identifier
+    return
+        common:conditionalReportRow(
+                false(),
+                [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+                ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H03 Number of existing Plans compared to previous report (same reporting year). Blocker will be returned if
+XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
+
+let $H03 := try {
+    let $main := $docRoot//aqd:AQD_Plan
+    for $x in $main/aqd:inspireId/base:Identifier
+    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan'))
+    return
+        common:conditionalReportRow(
+                $ok,
+                [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+                ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $H03errorLevel :=
+    if (not($isNewDelivery) and count($H03) = 0)
+    then
+        $errors:K03
+    else
+        $errors:INFO
+
+(: H4
+
+Compile & feedback a list of the unique identifier information for all Plans records included in the delivery.
+Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:protectionTarget,
+/gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:firstExceedanceYear,
+
+
+List of unique identifier information for all Plan records. Blocker if no Plans.
+:)
+
+let $H04 := try {
+    let $gmlIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_Plan/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_Plan
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        )
+        return common:conditionalReportRow(
+            not($ok),
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:pollutant", data($x/aqd:pollutant)),
+                ("aqd:protectionTarget", data($x/aqd:protectionTarget)),
+                ("aqd:firstExceedanceYear", data($x/aqd:firstExceedanceYear))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H05 RESERVE :)
+
+let $H05 := ()
+
+(: H06 RESERVE :)
+
+let $H06 := ()
+
+(: H07
+
+    All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have
+    unique content
+
+    All gml ID attributes shall have unique code
+
+    BLOCKER
+:)
+
+let $H07 := try {
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+        let $name := lower-case(normalize-space($name))
+        let $values := $docRoot//aqd:AQD_Plan//(*[lower-case(normalize-space(name())) = $name] |
+                @*[lower-case(normalize-space(name())) = $name])
+        return
+            for $v in distinct-values($values)
+            return
+                if (common:has-one-node($values, $v))
+                then
+                    ()
+                else
+                    [$name, data($v)]
     }
+    return common:conditionalReportRow(
+            array:size($errors) = 0,
+            $errors
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H08
+
+    ./aqd:inspireId/base:Identifier/base:localId must be unique code for the
+    Plans records
+
+    Local Id must be unique for the Plans records
+
+    BLOCKER
+:)
+
+let $H08:= try {
+    let $localIds := $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_Plan
+    let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+    let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+    let $ok := (
+        count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+                and
+                functx:if-empty($localID/text(), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($x/@gml:id)),
+            ("aqd:inspireId", distinct-values($aqdinspireId))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H09
+ ./aqd:inspireId/base:Identifier/base:namespace List base:namespace
+ and count the number of base:localId assigned to each base:namespace.
+
+ List unique namespaces used and count number of elements
+:)
+
+let $H09 := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier/base:namespace)
+    let $localIds := $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+    let $ok := false()
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("base:namespace", $namespace),
+            ("base:localId", count($localIds))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H10
+Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)
+
+Check namespace is registered
+:)
+
+let $H10 := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+    let $ok := (
+        $x = $prefLabel
+                and
+                $x = $altLabel
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("base:namespace", $x)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H13 RESERVE :)
+
+let $H13 := ()
+
+(: H14
+aqd:AQD_Plan/aqd:code should begin with with the 2-digit country code according to ISO 3166-1.
+
+We recommend you start you codes with the 2-digit country code according to ISO 3166-1.
+:)
+
+let $H14 := try {
+    let $el := $docRoot//aqd:AQD_Plan/aqd:code
+    let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H15 RESERVE :)
+
+let $H15 := ()
+
+(: H16
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString shall
+not be NULL or voided
+
+You must provide the name of the organisation responsible for the plan
+:)
+
+let $H16 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H17
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString shall not
+be NULL or voided
+
+You must provide a contact point within the organisation responsible for the plan, this may be a generic contact point.
+:)
+
+let $H17 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H18
+aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress shall
+not be NULL or voided
+
+You must provide an email address for the contact point within the organisation responsible for the plan, this may be
+a generic telephone number.
+:)
+
+let $H18 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H19
+aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition shall not be voided, NULL or an empty tag & shall contain content in yyyy format
+
+Your reference year must be in yyyy format
+:)
+
+let $H19 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
+    let $ok := functx:if-empty(data($el), "") != ""
+            and
+            $el castable as xs:gYear
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), data($el))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H20
+aqd:AQD_Plan/aqd:status  xlink:href attribute shall resolve to one of http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/
+
+Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/
+:)
+
+let $H20 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:status
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H21
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute shall resolve to
+one of http://dd.eionet.europa.eu/vocabulary/aq/pollutant/
+
+Your plan status should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/pollutant/
+:)
+
+let $H21 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H22
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget xlink:href attribute shall resolve
+to one of http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/
+
+Your protection target should use one of those listed at http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/
+:)
+
+let $H22 := try {
+    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
+    let $uri := $el/@xlink:href
+    return
+        if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
+        then
+            <tr>
+                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H27
+aqd:AQD_Plan/aqd:timeTable shall contain a text string
+
+Must contain a short textual description of timetable for the implementation of the air quality plan
+:)
+
+let $H27 := try {
+    let $main := $docRoot/aqd:AQD_Plan/aqd:timeTable
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../../@gml:id)),
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H28
+aqd:AQD_Plan/aqd:referenceImplementation shall contain a URL to document  or web resource describing the
+latest version of full air quality plan. This MUST be valid.
+
+Must contain a URL to document  or web resource describing the last version of full air quality plan
+:)
+
+let $H28 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:referenceImplementation
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H29
+aqd:AQD_Plan/aqd:referenceImplementation must contain a URL to a document or web resource where
+information about the implementation of the air quality plan can be found.
+
+Must contain a URL to a document or web resource where information about the implementation of the air quality
+plan can be found.
+:)
+
+let $H29 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:referenceImplementation
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H30
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description must contain a text string describing the publication
+
+Brief textual description of the published AQ Plan should be provided. If available, include the ISBN number.
+:)
+
+let $H30 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:description
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H31
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:title must contain the title of the publication
+
+Title as written in the published AQ Plan.
+:)
+
+let $H31 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:title
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H32
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:author must contain the author(s) of the publication
+
+Author(s) should be provided as text (If there are multiple authors, please provide in one field separated by commas)
+:)
+
+let $H32 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:author
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H33
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition must contaong the
+date of publication in yyyy-mm-dd format
+
+The publication date of the AQ Plan should be provided in yyyy or yyyy-mm-dd format
+:)
+
+let $H33 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
+    for $node in $main
+    let $ok := (
+        data($node) castable as xs:date
+        or
+        not(common:isInvalidYear(data($node)))
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($node), data($node))
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H34
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publisher must container a text string describing the publisher
+
+Publisher should be provided as a text (Publishing institution, academic jourmal, etc.)
+:)
+
+let $H34 := try {
+    let $main := $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:publisher
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H35
+aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:webLink must contain a URL to document  or web resource
+describing the last version of full air quality plan
+
+Provided url to the published AQ Plan should be valid
+:)
+
+let $H35 := try {
+    let $main :=  $docRoot//aqd:AQD_Plan/aqd:publication/aqd:Publication/aqd:webLink
+    for $el in $main
+    let $ok := (
+        functx:if-empty(data($el), "") != "")
+            and
+            common:includesURL(data($el)
+            )
+    return common:conditionalReportRow(
+            $ok,
+            [
+            (node-name($el), $el)
+            ]
+    )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0table, string($H0table/td), errors:getMaxError($H0table))}
+        {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0, string($H0/td), errors:getMaxError($H0))}
+        {html:build1("H01", $labels:H01, $labels:H01_SHORT, $H01, "", string($countPlans), "", "", $errors:H01)}
+        {html:buildSimple("H03", $labels:H03, $labels:H03_SHORT, $H03, "", "", $H03errorLevel)}
+        {html:build1("H04", $labels:H04, $labels:H04_SHORT, $H04, "", string(count($H04)), " ", "", $errors:H04)}
+        {html:build1("H05", $labels:H05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
+        {html:build1("H06", $labels:H06, $labels:H06_SHORT, $H06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H06)}
+        {html:build2("H07", $labels:H07, $labels:H07_SHORT, $H07, "No duplicate values found", " duplicate value", $errors:H07)}
+        {html:build2("H08", $labels:H08, $labels:H08_SHORT, $H08, "No duplicate values found", " duplicate value", $errors:H08)}
+        {html:buildUnique("H09", $labels:H09, $labels:H09_SHORT, $H09, "namespace", $errors:H09)}
+        {html:build2("H10", $labels:H10, $labels:H10_SHORT, $H10, "All values are valid", " not conform to vocabulary", $errors:H10)}
+        {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
+        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
+        {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
+        {html:build2("H16", $labels:H16, $labels:H16_SHORT, $H16, "All values are valid", "needs valid input", $errors:H16)}
+        {html:build2("H17", $labels:H17, $labels:H17_SHORT, $H17, "All values are valid", "needs valid input", $errors:H17)}
+        {html:build2("H18", $labels:H18, $labels:H18_SHORT, $H18, "All values are valid", "needs valid input", $errors:H18)}
+        {html:build2("H19", $labels:H19, $labels:H19_SHORT, $H19, "All values are valid", "needs valid input", $errors:H19)}
+        {html:build2("H20", $labels:H20, $labels:H20_SHORT, $H20, "All values are valid", "needs valid input", $errors:H20)}
+        {html:build2("H21", $labels:H21, $labels:H21_SHORT, $H21, "All values are valid", "needs valid input", $errors:H21)}
+        {html:build2("H22", $labels:H22, $labels:H22_SHORT, $H22, "All values are valid", "needs valid input", $errors:H22)}
+        {html:build2("H27", $labels:H27, $labels:H27_SHORT, $H27, "All values are valid", "needs valid input", $errors:H27)}
+        {html:build2("H28", $labels:H28, $labels:H28_SHORT, $H28, "All values are valid", "not valid", $errors:H28)}
+        {html:build2("H29", $labels:H29, $labels:H29_SHORT, $H29, "All values are valid", "not valid", $errors:H29)}
+        {html:build2("H30", $labels:H30, $labels:H30_SHORT, $H30, "All values are valid", "needs valid input", $errors:H30)}
+        {html:build2("H31", $labels:H31, $labels:H31_SHORT, $H31, "All values are valid", "needs valid input", $errors:H31)}
+        {html:build2("H32", $labels:H32, $labels:H32_SHORT, $H32, "All values are valid", "needs valid input", $errors:H32)}
+        {html:build2("H33", $labels:H33, $labels:H33_SHORT, $H33, "All values are valid", "not valid", $errors:H33)}
+        {html:build2("H34", $labels:H34, $labels:H34_SHORT, $H34, "All values are valid", "needs valid input", $errors:H34)}
+        {html:build2("H35", $labels:H35, $labels:H35_SHORT, $H35, "All values are valid", "not valid", $errors:H35)}
     </table>
 };
 
@@ -9394,7 +10818,7 @@ let $meta := map:merge((
     map:entry("count", $countZones),
     map:entry("header", "Check air quality zones"),
     map:entry("dataflow", "Dataflow H"),
-    map:entry("zeroCount", <p>No aqd:AQD_Zone elements found in this XML.</p>),
+    map:entry("zeroCount", <p>No aqd:AQD_Plan elements found in this XML.</p>),
     map:entry("report", <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow H as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>)
 ))
 return
@@ -9420,83 +10844,1677 @@ declare variable $dataflowI:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
     "FR","GB","GR","HR","HU","IE","IL","IS","IT","JO","LB","LI","LT","LU","LV","MA","ME","MK","MT","NL","NO","PL","PS","PT",
      "RO","RS","SE","SI","SK","TN","TR","XK","UK");
 
-
+declare variable $dataflowI:OBLIGATIONS as xs:string* :=
+    ($vocabulary:ROD_PREFIX || "681");
 
 (: Rule implementations :)
-declare function dataflowI:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
+declare function dataflowI:checkReport(
+    $source_url as xs:string,
+    $countryCode as xs:string
+) as element(table) {
 
-let $envelopeUrl := common:getEnvelopeXML($source_url)
-let $docRoot := doc($source_url)
-let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "i_preliminary")) then "i_preliminary/" else "i/"
-let $reportingYear := common:getReportingYear($docRoot)
-let $nameSpaces := distinct-values($docRoot//base:namespace)
+    let $docRoot := doc($source_url)
+    let $cdrUrl := common:getCdrUrl($countryCode)
 
-(: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+    let $reportingYear := common:getReportingYear($docRoot)
+    let $namespaces := distinct-values($docRoot//base:namespace)
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
+    let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
+
+    let $node-name := 'aqd:AQD_SourceApportionment'
+    let $sources := $docRoot//aqd:AQD_SourceApportionment
+    let $allSources := query:sparql-objects-ids($namespaces, $node-name)
+
+    let $samplingPointAssessmentMetadata := ()
+    (:
+        let $results := sparqlx:run(query:getSamplingPointAssessmentMetadata())
+        return distinct-values(
+            for $i in $results
+            return concat(
+                $i/sparql:binding[@name='metadataNamespace']/sparql:literal,
+                "/",
+                $i/sparql:binding[@name='metadataId']/sparql:literal
+            )
+        )
+    :)
+
+    let $assessmentMetadata := ()
+    (:
+    distinct-values(
+        data(
+            sparqlx:run(
+                query:getAssessmentMethods()
+            )//concat(
+                sparql:binding[@name='assessmentMetadataNamespace']/sparql:literal,
+                "/",
+                sparql:binding[@name='assessmentMetadataId']/sparql:literal
+            )
+        )
+    )
+    :)
+
+    (: NS Check
+    Check prefix and namespaces of the gml:featureCollection according to
+    expected root elements (More information at
+    http://www.eionet.europa.eu/aqportal/datamodel)
+
+    File prefix/namespace check
+
+    BLOCKER
+    :)
+    let $NSinvalid :=
+        try {
+            let $XQmap := inspect:static-context((), 'namespaces')
+            let $fileMap := map:merge((
+                for $x in in-scope-prefixes($docRoot/*)
+                return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+
+            return map:for-each($fileMap, function($a, $b) {
+                let $x := map:get($XQmap, $a)
+                return
+                    if ($x != "" and not($x = $b)) then
+                        <tr>
+                            <td title="Prefix">{$a}</td>
+                            <td title="File namespace">{$b}</td>
+                            <td title="XQuery namespace">{$x}</td>
+                        </tr>
+                    else
+                        ()
+            })
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+
+    (: I0 Check
+    Check if delivery if this is a new delivery or updated delivery (via
+    reporting year)
+
+    Checks if this delivery is new or an update (on same reporting year)
+
+    WARNING
+    :)
+
+    let $I0table :=
+        try {
+            if ($reportingYear = "") then
+                <tr class="{$errors:ERROR}">
+                    <td title="Status">Reporting Year is missing.</td>
+                </tr>
+            else if (query:deliveryExists($dataflowI:OBLIGATIONS, $countryCode, "i/", $reportingYear)) then
+                <tr class="{$errors:WARNING}">
+                    <td title="Status">Updating delivery for {$reportingYear}</td>
+                </tr>
+            else
+                <tr class="{$errors:INFO}">
+                    <td title="Status">New delivery for {$reportingYear}</td>
+                </tr>
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+
+    let $isNewDelivery := errors:getMaxError($I0table) = $errors:INFO
+
+    let $deliveries := sparqlx:run(
+        query:sparql-objects-in-subject($cdrUrl || "g/", $node-name)
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $latest-delivery := sparqlx:run(
+        query:sparql-objects-in-subject(
+            $latestEnvelopeByYearI,
+            $node-name
+        )
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $knownSources :=
+        if ($isNewDelivery) then
+            distinct-values(data($deliveries))
+        else
+            distinct-values(data($latest-delivery))
+
+    (: I1
+
+    Compile & feedback upon the total number of Source Apportionments included
+    in the delivery
+
+    Number of Source Apportionments reported
+    :)
+    let $countSources := count($sources)
+    let $tblAllSources :=
+        try {
+            for $rec in $sources
             return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
+                <tr>
+                    <td title="gml:id">{data($rec/@gml:id)}</td>
+                    <td title="base:localId">{data($rec/aqd:inspireId/base:Identifier/base:localId)}</td>
+                    <td title="base:namespace">{data($rec/aqd:inspireId/base:Identifier/base:namespace)}</td>
+                </tr>
+        }  catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+
+    (: I02
+
+    Compile & feedback upon the total number of new  Source Apportionments
+    records included in the delivery. ERROR will be returned if XML is a new
+    delivery and localId are not new compared to previous deliveries.
+
+    Number of new  Source Apportionments compared to previous report. ERROR
+    will be returned if XML is a new delivery and localId are not new compared
+    to previous deliveries
+
+    BLOCKER
+
+    :)
+    let $I02table :=
+        try {
+            for $x in $sources
+            let $inspireId := concat(
+                data($x/aqd:inspireId/base:Identifier/base:namespace),
+                "/",
+                data($x/aqd:inspireId/base:Identifier/base:localId)
+            )
+            where (not($inspireId = $knownSources))
+            return
+                <tr>
+                    <td title="gml:id">{data($x/@gml:id)}</td>
+                    <td title="aqd:inspireId">{$inspireId}</td>
+                </tr>
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+    let $I02errorLevel :=
+        if ($isNewDelivery and count(
+            for $x in $sources
+                let $id := $x/aqd:inspireId/base:Identifier/base:namespace
+                            || "/"
+                            || $x/aqd:inspireId/base:Identifier/base:localId
+            where ($allSources = $id)
+            return 1) > 0) then
+                $errors:I02
+            else
+                $errors:INFO
+
+    (: I03
+
+    Compile & feedback upon the total number of updated Source Apportionments
+    included in the delivery. ERROR will be returned if XML is an update and
+    ALL localId (100%) are different to previous delivery (for the same YEAR).
+
+    Number of existing Plans compared to previous report. ERROR will be
+    returned if XML is an update and ALL localId (100%) are different to
+    previous delivery (for the same YEAR).
+
+    BLOCKER
+
+    TODO: please check
+
+    - :)
+    let $I03table :=
+        try {
+            for $x in $sources
+            let $inspireId := data($x/aqd:inspireId/base:Identifier/base:namespace)
+                                ||  "/"
+                                || data($x/aqd:inspireId/base:Identifier/base:localId)
+            where ($inspireId = $knownSources)
+            return
+                <tr>
+                    <td title="gml:id">{data($x/@gml:id)}</td>
+                    <td title="aqd:inspireId">{$inspireId}</td>
+                </tr>
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+    let $I03errorLevel :=
+        if (not($isNewDelivery) and count($I03table) = 0) then
+            $errors:I03
+        else
+            $errors:INFO
+
+    (: I04
+
+    Compile & feedback a list of the unique identifier information for all
+    Source Apportionments records included in the delivery. Feedback report
+    shall include the:
+
+    * gml:id attribute,
+    * ./aqd:inspireId,
+    * aqd:AQD_Plan (via ./usedInPlan),
+    * aqd:AQD_Attainment (via aqd:parentExceedanceSituation),
+    * aqd:pollutant (via Attainment link under aqd:parentExceedanceSituation)
+
+    List of unique identifier information for all Source Apportionments
+    records. Error, if no SA(s)
+
+    BLOCKER
+
+    :)
+    let $I04table :=
+        try {
+            let $gmlIds := $sources/lower-case(normalize-space(@gml:id))
+            let $inspireIds := $sources/lower-case(normalize-space(aqd:inspireId))
+
+            for $x in $sources
+                let $id := $x/@gml:id
+                let $inspireId := $x/aqd:inspireId
+                let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+                let $one-gmlid := count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+                let $one-inspireid := count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+
+                let $att-url := $x/aqd:parentExceedanceSituation/@xlink:href
+                let $pollutant-code := query:get-pollutant-for-attainment($att-url)
+                let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
+
+            where $one-gmlid and $one-inspireid
+            return
+                <tr>
+                    <td title="gml:id">
+                        {distinct-values($x/@gml:id)}
+                    </td>
+                    <td title="aqd:inspireId">
+                        {distinct-values($aqdinspireId)}
+                    </td>
+                    <td title="aqd:usedInPlan">
+                        {common:checkLink(distinct-values(data($x/aqd:usedInPlan/@xlink:href)))}
+                    </td>
+                    <td title="aqd:parentExceedanceSituation">
+                        {common:checkLink(distinct-values(data($att-url)))}
+                    </td>
+                    <td title="aqd:pollutant">{$pollutant}</td>
+                </tr>
+        } catch * {
+            html:createErrorRow($err:code, $err:description)
+        }
+
+    (: I05 reserved :)
+    let $I05 := ()
+
+    (: I06 reserved :)
+    let $I06 := ()
+
+    (: I07
+
+    All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have
+    unique content
+
+    All gml ID attributes shall have unique code
+
+    BLOCKER
+
+    :)
+    let $I07 := try {
+        let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+        let $errors := array {
+
+            for $name in $checks
+                let $name := lower-case(normalize-space($name))
+                let $values := $sources//(*[lower-case(normalize-space(name())) = $name] |
+                                            @*[lower-case(normalize-space(name())) = $name])
+                return
+                    for $v in distinct-values($values)
+                        return
+                            if (common:has-one-node($values, $v))
+                            then
+                                ()
+                            else
+                                [$name, data($v)]
+        }
+        return common:conditionalReportRow(
+            array:size($errors) = 0,
+            $errors
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I08
+
+    ./aqd:inspireId/base:Identifier/base:localId must be unique code for the
+    Plans records
+
+    Local Id must be unique for the Plans records
+
+    BLOCKER
+    :)
+    let $I08invalid:= try {
+        let $localIds := $sources/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+        for $x in $sources
+            let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+            let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+            let $ok := (
+                count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+                and
+                functx:if-empty($localID/text(), "") != ""
+            )
+            return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($x/@gml:id)),
+                    ("aqd:inspireId", distinct-values($aqdinspireId))
+                ]
+            )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I09
+
+    ./aqd:inspireId/base:Identifier/base:namespace
+
+    List base:namespace and count the number of base:localId assigned to each
+    base:namespace.
+
+    List unique namespaces used and count number of elements
+
+    BLOCKER
+    :)
+
+    let $I09table := try {
+        for $namespace in distinct-values($sources/aqd:inspireId/base:Identifier/base:namespace)
+            let $localIds := $sources/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+            let $ok := false()
+            return common:conditionalReportRow(
+                $ok,
+                [
+                    ("base:namespace", $namespace),
+                    ("base:localId count", count($localIds))
+                ]
+            )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I10
+
+    Check that namespace is registered in vocabulary
+    (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)
+
+    Check namespace is registered
+
+    ERROR
+    :)
+
+    let $I10invalid := try {
+
+        let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+        let $concept := $vocDoc//skos:Concept[
+            adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and
+            @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)
+        ]
+        let $prefLabel := $concept/skos:prefLabel[1]
+        let $altLabel := $concept/skos:altLabel[1]
+
+        for $x in distinct-values($docRoot//base:namespace)
+            let $ok := ($x = $prefLabel and $x = $altLabel)
+            return common:conditionalReportRow(
+                $ok,
+                [
+                    ("base:namespace", $x)
+                ]
+            )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I11
+
+    aqd:AQD_SourceApportionment/aqd:usedInPlan shall reference an existing
+    H document for the same reporting year same year via namespace/localId
+
+    You must provide a reference to a plan document from data flow H via its
+    namespace & localId. The plan document must have the same reporting year as
+    the source apportionment document.
+
+    BLOCKER
+    :)
+    let $I11 := try{
+        for $el in $sources/aqd:usedInPlan
+
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
+            )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                ("aqd:usedInPlan", $el/@xlink:href)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I11b
+
+    aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference
+    an existing exceedance situation delivered within a data flow G  and the
+    reporting year of G & I shall be the same year via namespace/localId.
+
+    You must provide a reference to an exceedance situation from data flow G.
+    The exceedance situation must have the same reporting year as the source
+    apportionment and refer to the same pollutant.
+
+    TODO: this needs to be implemented properly
+
+    BLOCKER
+    :)
+    let $I11b := try{
+        for $el in $sources/aqd:parentExceedanceSituation
+            let $label := data($el/@xlink:href)
+            let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
+            (:
+            aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
+            :)
+
+            (: TODO: check that the reporting year is for same year :)
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                ("aqd:parentExceedanceSituation", $el/@xlink:href)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I12
+
+    aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    shall be a calendar year in yyyy format
+
+    Reference year must be a calendar year in yyyy format
+
+    BLOCKER
+    :)
+
+    let $I12 := try {
+        for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := $el castable as xs:gYear
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:timePosition", data($el))
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I13, I14 are missing in xls file :)
+
+    (: I15
+
+    Across all the delivery, check that the element
+    aqd:QuantityCommented/aqd:quantity is
+    * an integer or
+    * floating point numeric >= 0
+    if attribute xsi:nil="false"
+    (example:
+        <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/concentration/ug.m-3" xsi:nil="false">4.03038</aqd:quantity>
+    )
+
+    Source apportionments should be provided as an integer
+
+    BLOCKER
+    :)
+    let $I15 := try {
+        let $nodes := $sources//aqd:QuantityCommented/aqd:quantity[@xsi:nil="false"]
+        let $errors := array {
+            for $node in $nodes
+            return
+                if (not(common:is-a-number(data($node))))
+                then
+                    [
+                        ("gml:id", data($node/../../@gml:id)),
+                        (node-name($node), data($node))
+                    ]
                 else
                     ()
-        })
+        }
+
+        return common:conditionalReportRow(
+            array:size($errors) = 0,
+            $errors
+        )
     } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        html:createErrorRow($err:code, $err:description)
     }
 
-(: I0 :)
-let $I0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
-        return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
+    (: I16
+
+    Across all the delivery, check that the element
+    aqd:QuantityCommented/aqd:quantity is empty
+    if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+    (example:
+    <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>
+    )
+
+    If quantification is either "unpopulated" or "unknown" or "withheld",
+    the element should be empty
+
+    BLOCKER
+    :)
+
+    let $I16 := try {
+        for $node in $docRoot//aqd:QuantityCommented/aqd:quantity
+            let $reason := $node/@nilReason
+            let $isnil := lower-case($node/@xsi:nil) = "true"
+            let $unpop := lower-case($reason) = ("unknown", "unpopulated", "withheld")
+
+            let $ok :=
+                if ($isnil)
+                then
+                    functx:all-whitespace($node) and $unpop
+                else
+                    true()
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("nilReason", data($node/@nilReason))
+            ]
+        )
     } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        html:createErrorRow($err:code, $err:description)
     }
 
-return
-    <table class="maintable hover">
+    (: I17
+
+    Across all the delivery, If aqd:QuantityCommented/aqd:quantity attribute
+    xsi:nil="true" aqd:QuantityCommented/aqd:comment must be populated
+
+    If the quantification is voided an explanation is required in aqd:comment
+
+    ERROR
+    :)
+
+    let $I17 := try {
+        for $el in $docRoot//aqd:QuantityCommented
+            let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
+            let $hascomment := common:has-content($el/aqd:comment)
+
+            let $ok :=
+                if ($isnil)
+                then
+                    $hascomment
+                else
+                    true()
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../../@gml:id)),
+                (node-name($el), "needs comment")
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I18
+
+    Across all the delivery, check that the unit attribute
+    (.../aqd:QuantityCommented/aqd:quantity@uom)
+    corresponds to the recommended unit (via vocabulary) of the
+    pollutant found at aqd:AQD_Attainment/aqd:pollutant xlink:href attribute
+    for the
+    AQD_Attainment record cited by ./aqd:parentExceedanceSituation
+
+    The unit of measurement of the Source Apportioment must match recommended
+    unit for the pollutant
+
+    TODO: doublecheck with test
+
+    BLOCKER
+    :)
+
+    let $I18 := try {
+        for $x in $sources
+            let $quants := $x//aqd:QuantityCommented/aqd:quantity
+            let $uom := data($quants/@uom)
+            let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
+            let $pollutant-code := query:get-pollutant-for-attainment($att-url)
+            let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
+            let $rec-uom := dd:getRecommendedUnit($pollutant-code)
+
+            let $ok := $uom = $rec-uom
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $uom)
+            ]
+        )
+
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I19
+
+    aqd:AQD_SourceApportionment/aqd:regionalBackground/aqd:RegionalBackground/aqd:total/aqd:QuantityCommented/aqd:quantity
+    must equal to the sum of
+    aqd:regionalBackground/aqd:RegionalBackground/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity
+    + aqd:regionalBackground/aqd:RegionalBackground/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+    + aqd:regionalBackground/aqd:RegionalBackground/aqd:natural/aqd:QuantityCommented/aqd:quantity
+    + aqd:regionalBackground/aqd:RegionalBackground/aqd:other/aqd:QuantityCommented/aqd:quantity
+
+    The total regional background source contribution must be equal to the sum
+    of its components.
+
+    BLOCKER
+
+    TODO: improve reporting for this row
+
+    :)
+
+    let $I19 := try {
+        for $x in $sources
+            let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
+            let $total := data($rb/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $sum := common:sum-of-nodes((
+                $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
+                $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
+                $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity,
+                $rb/aqd:other/aqd:QuantityCommented/aqd:quantity
+            ))
+
+            let $ok := $sum = $total
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $total)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I20
+
+    aqd:AQD_SourceApportionment/aqd:urbanBackground/aqd:UrbanBackground/aqd:total/aqd:QuantityCommented/aqd:quantity
+    must equal the sum of
+      aqd:urbanBackground/aqd:UrbanBackground/aqd:traffic/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:agriculture/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:shipping/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:natural/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+    + aqd:urbanBackground/aqd:UrbanBackground/aqd:other/aqd:QuantityCommented/aqd:quantity
+
+    The total urban background source contribution must be equal to the sum of its components.
+
+    BLOCKER
+
+    :)
+
+    let $I20 := try {
+        for $x in $sources
+            let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
+            let $total := data($ub/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $sum := common:sum-of-nodes((
+                $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:shipping/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:natural/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
+                $ub/aqd:other/aqd:QuantityCommented/aqd:quantity
+            ))
+
+            let $ok := $total = $sum
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $total)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I21
+
+    aqd:AQD_SourceApportionment/aqd:localIncrement/aqd:LocalIncrement/aqd:total/aqd:QuantityCommented/aqd:quantity
+    must equal to the sum of
+    aqd:localIncrement/aqd:LocalIncrement/aqd:traffic/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:agriculture/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:shipping/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:natural/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+    + aqd:localIncrement/aqd:LocalIncrement/aqd:other/aqd:QuantityCommented/aqd:quantity
+
+    The total local increment source contribution must be equal to the sum of
+    its components.
+
+    BLOCKER
+
+    :)
+
+    let $I21 := try {
+        for $x in $sources
+            let $li := $x/aqd:localIncrement/aqd:LocalIncrement
+            let $total := data($li/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $sum := common:sum-of-nodes((
+                $li/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:shipping/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:natural/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
+                $li/aqd:other/aqd:QuantityCommented/aqd:quantity
+            ))
+            let $ok := $total = $sum
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $total)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+
+    (: I22
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation must be presented
+    and must not be an empty tag
+
+    The macro exceedance situation relevant to the source apportionment must be
+    populated
+
+    Blocker
+
+    :)
+
+    let $I22 := try {
+        for $x in $sources
+            let $ok := not(empty($x/aqd:macroExceedanceSituation))
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                (node-name($x), $x)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I23
+
+    Either
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:numericalExceedance
+    OR
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:numberExceedances
+    must be provided (just one or the other) AS an integer or floating point
+    numeric > 0, no more that 2 decimal places expected
+
+    numericalExceedance or numberExceedances must be provided
+
+    ERROR
+
+    TODO: check a better replacement for is-a-number
+    TODO: improve reporting
+
+    :)
+    let $I23 := try {
+        for $x in $sources
+            let $a := data($x/aqd:macroExceedanceSituation/aqd:numericalExceedance)
+            let $b := data($x/aqd:macroExceedanceSituation/aqd:numberExceedances)
+
+            let $ok := common:is-a-number($a) or common:is-a-number($b)
+        return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($x/@gml:id)),
+            (node-name($x), $a or $b)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I24
+
+    The content of
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+    xlink:xref must be provided and must resolve to a areaClassification in
+    http://dd.eionet.europa.eu/vocabulary/aq/areaclassification/
+
+    Area Classification is mandatory and must conform to vocabulary
+
+    BLOCKER
+
+    :)
+    let $I24 := try {
+        for $el in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $uri := $el/@xlink:href
+            return
+            if (not(common:isInVocabulary($uri, $vocabulary:AREA_CLASSIFICATION_VOCABULARY)))
+            then
+                <tr>
+                    <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                    <td title="xlink:href"> {$el/@xlink:href}</td>
+                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                </tr>
+            else
+                ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I25
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+    xlink:href attribute shall match those
+    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    Area classification should match classification declared in the
+    corresponding Attainment
+
+    WARNING
+
+    TODO: check this
+
+    :)
+
+    let $I25 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $ac := $el/@xlink:href
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $parent-ac := query:get-area-classifications-for-attainment($parent)
+
+            let $ok := $ac = $parent-ac
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node/@gml:id)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I26
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+    uom attribute shall resolve to
+    http://dd.eionet.europa.eu/vocabulary/uom/area/km2
+
+    Exceedence area uom attribute must be in Square kilometers.
+
+    ERROR
+    :)
+
+    let $I26 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+            let $uom := $area/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+        return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            ("uom", $uom)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I27
+
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+    uom attribute shall be http://dd.eionet.europa.eu/vocabulary/uom/length/km
+
+    Exceedence area uom attribute must be in Square kilometers.
+
+    ERROR
+    :)
+    let $I27 := try {
+        for $node in $sources
+            let $length := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+            let $uom := $length/@uom
+            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+        return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            ("uom", $uom)
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I28 is missing in XLS :)
+    let $I28 := ()
+
+    (: I29
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+    must be populated
+
+    A link to the exceeding SamplingPoint(s) and/or Model(s) must be provided
+    [at least one]
+
+    ERROR
+
+    :)
+    let $I29 := try {
+        for $node in $sources
+            let $area :=$node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $st := common:has-content($area/aqd:stationUsed)
+            let $mu := common:has-content($area/aqd:modelUsed)
+            let $ok := $st or $mu
+        return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            ("aqd:stationUsed", data($area/aqd:stationUsed)),
+            ("aqd:modelUsed", data($area/aqd:modelUsed))
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I30
+
+    If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid
+    elements:
+    stationUsed must link To SamplingPoint via namespace/localid
+    modelUsed must link to AQD_Model via namespace/ localid
+
+    If SamplingPoint(s) and/or Model(s) are provided, these must be valid
+
+    ERROR
+    :)
+    let $I30 := try {
+        for $node in $sources
+            let $a := $node//aqd:stationUsed
+            let $a-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($a/@xlink:href, "SamplingPoint")
+                else
+                    true()
+
+            let $b := $node//aqd:modelUsed
+            let $b-ok :=
+                if (common:has-content($a))
+                then
+                    query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
+                else
+                    true()
+
+            let $ok := $a and $b
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            ("aqd:stationUsed", data($node//aqd:stationUsed)),
+            ("aqd:modelUsed", data($node//aqd:modelUsed))
+            ]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I31
+
+    The subject of
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
+    xlink:href attribute shall be found in
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:modelUsed
+    xlink:href attribute for the AQD_Attainment record cited by
+    ./aqd:parentExceedanceSituation
+
+    The exceeding AQ_Model must be included in the corresponding Attainment
+
+    Similar to G74. However, G74 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    TODO: check reporting
+
+    :)
+
+    let $I31 := try {
+        for $node in $sources
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $model := query:get-used-model-for-attainment($att-url)
+            let $ok := $mu = $model
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I32
+
+    TODO: original description was wrong in XLS, it was assumed this is correct
+
+    The subject of
+        ./aqd:macroExceedanceSituation
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
+    xlink:href attribute shall be found in
+        /aqd:AQD_Attainment
+        /aqd:exceedanceDescriptionFinal
+        /aqd:ExceedanceDescription
+        /aqd:exceedanceArea
+        /aqd:ExceedanceArea
+        /aqd:stationUsed
+    xlink:href attribute for the AQD_Attainment record cited by ./aqd:parentExceedanceSituation
+
+    The exceeding SamplingPoint must be included in the corresponding Attainment
+
+    Similar to G76. However, G76 checks against C and I31 should check against
+    G instead
+
+    WARNING
+    TODO: implement this
+    :)
+
+    let $I32 := try {
+
+        for $node in $sources
+            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $station := query:get-used-station-for-attainment($att-url)
+            let $ok := $mu = $station
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($mu), data($mu)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I33
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:spatalExtent
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:administrativeUnit
+    shall be populated
+
+    Spatial extent or administrative unit may be provided
+
+    RESERVE
+
+    :)
+    let $I33 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := common:has-content($area/aqd:spatalExtent)
+            let $b := common:has-content($area/aqd:administrativeUnit)
+            let $ok := $a or $b
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I34
+
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
+    OR
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
+    shall be populated
+
+    Information on surface are or road lenght shall be provided
+
+    RESERVE
+    :)
+
+    let $I34 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $a := $area/aqd:surfaceArea
+            let $b := $area/aqd:roadLength
+            let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($area), data($area)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I35
+    WHERE
+    ./aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+    shall EQUAL “true”
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+    shall be populated
+
+    If exceedance is TRUE, information on population exposed must be provided
+
+    RESERVE
+
+    :)
+
+    let $I35 := try {
+        for $node in $sources
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:populationExposed
+
+            let $ok :=
+                if (data($a) = "true")
+                then
+                    common:has-content($b)
+                else
+                    true()
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I36
+
+    /aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+    shall be populated
+
+    If exceedance is TRUE, information on area exposed must be provided
+
+    RESERVE
+
+    :)
+
+    let $I36 := try {
+        for $node in $sources
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+            let $ok := common:has-content($area)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($area), data($area)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I37
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    shall be a calendar year in yyyy format
+
+    Reference year for the population/exposure data in yyyy format
+
+    ERROR
+
+    :)
+    let $I37 := try {
+        for $node in $sources
+            let $year := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := data($year) castable as xs:gYear
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($year), data($year)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I38
+
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+    shall conform to vocabulary
+    http://dd.eionet.europa.eu/vocabulary/aq/exceedancereason/
+
+    Exceedance reason must match vocabulary
+
+    ERROR
+
+    :)
+    let $I38 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+            let $link := $el/@xlink:href
+            let $ok := common:isInVocabulary(
+                $link,
+                $vocabulary:EXCEEDANCEREASON_VOCABULARY
+            )
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I39
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+    may be populated if ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation)
+
+    If the pollutant is SO2, PM10, PM2.5 or CO deduction assessment methods may
+    be populated
+
+    RESERVE
+    :)
+
+    let $I39 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), data($el)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I40
+
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+    must conform to http://dd.eionet.europa.eu/vocabulary/aq/assessmenttype.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to assessment type is
+    expected
+
+    BLOCKER
+    :)
+
+    let $I40 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+            let $link := $el/@xlink:href
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    common:isInVocabulary(
+                        $link,
+                        $vocabulary:ASSESSMENTTYPE_VOCABULARY
+                    )
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I41
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    must be populated.
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a Description of the assessment
+    type is expected
+
+    ERROR
+    :)
+
+    let $I41 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $needed and common:has-content($el)
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+
+    (: I42
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), at least one of
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    or
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    must be populated and correctly link to D/D1b.
+
+    Cross check the links provided against D, all assessment methods must exist
+    in D
+
+    If the pollutant is SO2, PM10, PM2.5 or CO a link to the assessment method
+    in D or D1b is required via xlink:href attribute
+
+    ERROR
+    TODO: check implementation
+    :)
+
+    let $I42 := try {
+        for $node in $sources
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata
+            let $a-m := $a/@xlink:href
+            let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
+
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata
+            let $b-m := $b/@xlink:href
+            let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
+
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    $a-ok or $b-ok
+        return common:conditionalReportRow(
+            $ok,
+            ["aqd:samplingPointAssessmentMetadata", data($a/@xlink:href)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I43
+
+    WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the following elments must be empty or
+    not provided:
+    aqd:assessmentType
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentTypeDescription
+    ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
+
+    If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not
+    expected: assessmentType, link to adjusting sampling
+    point/model;assessmentTypeDescription;assessmentType
+
+    ERROR
+    :)
+
+    let $I43 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $check := not(common:is-polutant-air($pollutant))
+            let $meths := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+            let $values := (
+                $meths/aqd:samplingPointAssessmentMetadata/@xlink:href,
+                $meths/aqd:modelAssessmentMetadata/@xlink:href,
+                $meths/aqd:assessmentTypeDescription,
+                $meths/aqd:assessmentType
+            )
+            return
+                if ($check)
+                then
+                    common:conditionalReportRow(
+                        not(empty($values)),
+                        [node-name($node), data($node)]
+                    )
+                else
+                    ()
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (: I44
+
+    If
+    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+    is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
+    …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected"
+    if another pollutant it must be "noneApplicable"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod
+    populated, adjustmentType must be "fullyCorrected", else "noneApplicable"
+
+    ERROR
+    :)
+
+    let $I44 := try {
+        for $node in $sources
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $check :=
+                if ($needed)
+                then
+                    $link = "fullyCorrected"
+                else
+                    $link = "noneApplicable"
+
+            let $ok :=
+                if (not($is-populated))
+                then
+                    true()
+                else
+                    $check
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($node), data($node)]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    (:  I45
+    "WHERE ./aqd:pollutant xlink:href attribute EQUALs
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001] (via …/aqd:parentExceedanceSituation),
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+    must be populated & the content of the xlink:href shall conform to
+    http://dd.eionet.europa.eu/vocabulary/aq/adjustmentsourcetype,
+    else  this element must not be populated"
+
+    If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod populated,
+    adjustmentSource must conform with vocabulary, else "noneApplicable"
+
+    Error
+
+    :)
+    let $I45 := try {
+        for $node in $sources
+            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parent)
+            let $needed := common:is-polutant-air($pollutant)
+
+            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentSource
+            let $is-populated := common:has-content($el)
+            let $link := $el/@xlink:href
+            let $conforms := common:isInVocabulary(
+                $link,
+                $vocabulary:ADJUSTMENTSOURCE_VOCABULARY
+            )
+
+            let $ok :=
+                if (not($needed))
+                then
+                    true()
+                else
+                    if ($conforms)
+                    then
+                        true()
+                    else
+                        data($el) = "noneApplicable"
+
+        return common:conditionalReportRow(
+            $ok,
+            [node-name($el), $link]
+        )
+    } catch * {
+        html:createErrorRow($err:code, $err:description)
+    }
+
+    return
+        <table class="maintable hover">
+
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("I0", $labels:I0, $labels:I0_SHORT, $I0table, string($I0table/td), errors:getMaxError($I0table))}
+        {html:build1("I01", $labels:I01, $labels:I01_SHORT, $tblAllSources, "", string($countSources), "", "", $errors:I01)}
+        {html:buildSimple("I02", $labels:I02, $labels:I02_SHORT, $I02table, "", "report", $I02errorLevel)}
+        {html:buildSimple("I03", $labels:I03, $labels:I03_SHORT, $I03table, "", "", $I03errorLevel)}
+        {html:build1("I04", $labels:I04, $labels:I04_SHORT, $I04table, "", string(count($I04table)), " ", "", $errors:I04)}
+        {html:build1("I05", $labels:I05, $labels:I05_SHORT, $I05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I05)}
+        {html:build1("I06", $labels:I06, $labels:I06_SHORT, $I06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I06)}
+        {html:build2("I07", $labels:I07, $labels:I07_SHORT, $I07, "No duplicate values found", " duplicate value", $errors:I07)}
+        {html:build2("I08", $labels:I08, $labels:I08_SHORT, $I08invalid, "No duplicate values found", " duplicate value", $errors:I08)}
+        {html:build2("I09", $labels:I09, $labels:I09_SHORT, $I09table, "namespace", "", $errors:I09)}
+        (: TODO: I don't think the label is ok here :)
+        {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
+
+        {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,
+                     "All values are valid", "needs valid input", $errors:I11a)}
+        {html:build2("I11b", $labels:I11b, $labels:I11b_SHORT, $I11b,
+                     "All values are valid", "needs valid input", $errors:I11b)}
+
+        {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12, "All values are valid", "needs valid input", $errors:I12)}
+        {html:build2("I15", $labels:I15, $labels:I15_SHORT, $I15, "All values are valid", "needs valid input", $errors:I15)}
+        {html:build2("I16", $labels:I16, $labels:I16_SHORT, $I16, "All values are valid", "needs valid input", $errors:I16)}
+        {html:build2("I17", $labels:I17, $labels:I17_SHORT, $I17, "All values are valid", "needs valid input", $errors:I17)}
+        {html:build2("I18", $labels:I18, $labels:I18_SHORT, $I18, "All values are valid", "needs valid input", $errors:I18)}
+        {html:build2("I19", $labels:I19, $labels:I19_SHORT, $I19, "All values are valid", "needs valid input", $errors:I19)}
+        {html:build2("I21", $labels:I21, $labels:I21_SHORT, $I21, "All values are valid", "needs valid input", $errors:I21)}
+        {html:build2("I22", $labels:I22, $labels:I22_SHORT, $I22, "All values are valid", "needs valid input", $errors:I22)}
+        {html:build2("I23", $labels:I23, $labels:I23_SHORT, $I23, "All values are valid", "needs valid input", $errors:I23)}
+        {html:build2("I24", $labels:I24, $labels:I24_SHORT, $I24, "All values are valid", "needs valid input", $errors:I24)}
+        {html:build2("I25", $labels:I25, $labels:I25_SHORT, $I25, "All values are valid", "needs valid input", $errors:I25)}
+        {html:build2("I26", $labels:I26, $labels:I26_SHORT, $I26, "All values are valid", "needs valid input", $errors:I26)}
+        {html:build2("I27", $labels:I27, $labels:I27_SHORT, $I27, "All values are valid", "needs valid input", $errors:I27)}
+        (: 28 is missing in XLS
+        {html:build2("I28", $labels:I28, $labels:I28_SHORT, $I28, "All values are valid", "needs valid input", $errors:I28)}
+        :)
+        {html:build2("I29", $labels:I29, $labels:I29_SHORT, $I29, "All values are valid", "needs valid input", $errors:I29)}
+        {html:build2("I30", $labels:I30, $labels:I30_SHORT, $I30, "All values are valid", "needs valid input", $errors:I30)}
+        {html:build2("I31", $labels:I31, $labels:I31_SHORT, $I31, "All values are valid", "needs valid input", $errors:I31)}
+        {html:build2("I32", $labels:I32, $labels:I32_SHORT, $I32, "All values are valid", "needs valid input", $errors:I32)}
+        {html:build2("I33", $labels:I33, $labels:I33_SHORT, $I33, "All values are valid", "needs valid input", $errors:I33)}
+        {html:build2("I34", $labels:I34, $labels:I34_SHORT, $I34, "All values are valid", "needs valid input", $errors:I34)}
+        {html:build2("I35", $labels:I35, $labels:I35_SHORT, $I35, "All values are valid", "needs valid input", $errors:I35)}
+        {html:build2("I36", $labels:I36, $labels:I36_SHORT, $I36, "All values are valid", "needs valid input", $errors:I36)}
+        {html:build2("I37", $labels:I37, $labels:I37_SHORT, $I37, "All values are valid", "needs valid input", $errors:I37)}
+        {html:build2("I38", $labels:I38, $labels:I38_SHORT, $I38, "All values are valid", "needs valid input", $errors:I38)}
+        {html:build2("I39", $labels:I39, $labels:I39_SHORT, $I39, "All values are valid", "needs valid input", $errors:I39)}
+        {html:build2("I40", $labels:I40, $labels:I40_SHORT, $I40, "All values are valid", "needs valid input", $errors:I40)}
+        {html:build2("I41", $labels:I41, $labels:I41_SHORT, $I41, "All values are valid", "needs valid input", $errors:I41)}
+        {html:build2("I42", $labels:I42, $labels:I42_SHORT, $I42, "All values are valid", "needs valid input", $errors:I42)}
+        {html:build2("I43", $labels:I43, $labels:I43_SHORT, $I43, "All values are valid", "needs valid input", $errors:I43)}
+        {html:build2("I44", $labels:I44, $labels:I44_SHORT, $I44, "All values are valid", "needs valid input", $errors:I44)}
+        {html:build2("I45", $labels:I45, $labels:I45_SHORT, $I45, "All values are valid", "needs valid input", $errors:I45)}
+
+        (:
+        :)
+
     </table>
 };
 
-declare function dataflowI:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
 
-let $countZones := count(doc($source_url)//aqd:AQD_SourceApportionment)
-let $result := if ($countZones > 0) then dataflowI:checkReport($source_url, $countryCode) else ()
-let $meta := map:merge((
-    map:entry("count", $countZones),
-    map:entry("header", "Check air quality zones"),
-    map:entry("dataflow", "Dataflow I"),
-    map:entry("zeroCount", <p>No aqd:AQD_SourceApportionment elements found in this XML.</p>),
-    map:entry("report", <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow I as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>)
-))
-return
-    html:buildResultDiv($meta, $result)
+declare function dataflowI:proceed(
+    $source_url as xs:string,
+    $countryCode as xs:string
+) as element(div) {
+
+    let $countZones := count(doc($source_url)//aqd:AQD_SourceApportionment)
+    let $result := if ($countZones > 0) then dataflowI:checkReport($source_url, $countryCode) else ()
+    let $meta := map:merge((
+        map:entry("count", $countZones),
+        map:entry("header", "Check air quality zones"),
+        map:entry("dataflow", "Dataflow I"),
+        map:entry("zeroCount", <p>No aqd:AQD_SourceApportionment elements found in this XML.</p>),
+        map:entry("report", <p>This check evaluated the delivery by executing tier-1 tests on air quality zones data in Dataflow I as specified in <a href="http://www.eionet.europa.eu/aqportal/qaqc/">e-reporting QA/QC rules documentation</a>.</p>)
+    ))
+    return
+        html:buildResultDiv($meta, $result)
 };
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
@@ -9523,66 +12541,992 @@ declare variable $dataflowJ:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
 (: Rule implementations :)
 declare function dataflowJ:checkReport($source_url as xs:string, $countryCode as xs:string) as element(table) {
 
-let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
-let $cdrUrl := common:getCdrUrl($countryCode)
-let $bdir := if (contains($source_url, "j_preliminary")) then "j_preliminary/" else "j/"
+let $evaluationScenario := $docRoot//aqd:AQD_EvaluationScenario
+(: example 2014 :)
 let $reportingYear := common:getReportingYear($docRoot)
-let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
-let $nameSpaces := distinct-values($docRoot//base:namespace)
-let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
+(: example resources/dataflow-j/xml :)
+let $envelopeUrl := common:getEnvelopeXML($source_url)
+(: example cdr.eionet.europa.eu/be/eu/aqd/ :)
+let $cdrUrl := common:getCdrUrl($countryCode)
+(: example http://cdr.eionet.europa.eu/be/eu/aqd/j/envwmp5lw :)
+let $latestEnvelopeByYearJ := query:getLatestEnvelope($cdrUrl || "j/", $reportingYear)
 
-(: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+(: NS
+Check prefix and namespaces of the gml:featureCollection according to expected root elements
+(More information at http://www.eionet.europa.eu/aqportal/datamodel)
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
-            return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
-                else
-                    ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+Prefix/namespaces check
+:)
 
-(: J0 :)
-let $J0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge(
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))
+    )
+
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
         return
-            <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
-            </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J0
+Check if delivery if this is a new delivery or updated delivery (via reporting year)
+
+Checks if this delivery is new or an update (on same reporting year)
+:)
+
+let $J0 := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if(query:deliveryExists($dataflowJ:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+        then
+                common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+            else
+                common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+let $isNewDelivery := errors:getMaxError($J0) = $errors:INFO
+let $knownEvaluationScenarios :=
+    if ($isNewDelivery)
+    then
+        distinct-values(data(sparqlx:run(query:getEvaluationScenarios($cdrUrl || "j/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+    else
+        distinct-values(data(sparqlx:run(query:getEvaluationScenarios($latestEnvelopeByYearJ))//sparql:binding[@name='inspireLabel']/sparql:literal))
+
+(: J1
+Compile & feedback upon the total number of plans records included in the delivery
+
+Number of AQ Plans reported
+:)
+
+let $countEvaluationScenario := count($docRoot//aqd:AQD_EvaluationScenario)
+let $J1 := try {
+    for $rec in $docRoot//aqd:AQD_EvaluationScenario
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            common:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J2
+Compile & feedback upon the total number of new EvaluationScenarios records included in the delivery.
+ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.
+
+Number of new EvaluationScenarios compared to previous report.
+:)
+
+let $J2 := try {
+    for $el in $docRoot//aqd:AQD_EvaluationScenario
+        let $x := $el/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not($inspireId = $knownEvaluationScenarios)
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+            ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $J2errorLevel :=
+    if (
+        $isNewDelivery
+        and
+        count(
+            for $x in $docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier
+                let $id := $x/base:namespace || "/" || $x/base:localId
+                where query:existsViaNameLocalId($id, 'AQD_EvaluationScenario')
+                return 1
+        ) > 0
+        )
+    then
+        $errors:K02
+    else
+        $errors:INFO
+
+(: J3
+Compile & feedback upon the total number of updated EvaluationScenarios records included in the delivery.
+ERROR will be returned if XML is an update and ALL localId (100%) are different
+to previous delivery (for the same YEAR).
+
+Number of existing EvaluationScenarios compared to previous report.
+ERROR will be returned if XML is an update and ALL localId (100%)
+are different to previous delivery (for the same YEAR).
+:)
+
+let $J3 := try {
+    for $main in $docRoot//aqd:AQD_EvaluationScenario
+        let $x := $main/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $J3errorLevel :=
+    if (not($isNewDelivery) and count($J3) = 0)
+    then
+        $errors:J3
+    else
+        $errors:INFO
+
+(: J4
+Compile & feedback a list of the unique identifier information
+for all EvaluationScenarios records included in the delivery.
+Feedback report shall include the gml:id attribute, ./aqd:inspireId, ./aqd:pollutant, ./aqd:protectionTarget,
+
+List of unique identifier information for all EvaluationScenarios records. Blocker if no EvaluationScenarios
+:)
+
+let $J4 := try {
+    let $gmlIds := $docRoot//aqd:AQD_EvaluationScenario/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_EvaluationScenario/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_EvaluationScenario
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        )
+        return common:conditionalReportRow(
+            not($ok),
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:pollutant", data($x/aqd:pollutant)),
+                ("aqd:protectionTarget", data($x/aqd:protectionTarget))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: J5 RESERVE :)
+
+let $J5 := ()
+
+(: J6 RESERVE :)
+
+let $J6 := ()
+
+(: J7
+All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
+
+All gml ID attributes shall have unique code
+:)
+
+let $J7 := try {
+    let $main := $docRoot//aqd:AQD_EvaluationScenario
+
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+            let $name := lower-case(normalize-space($name))
+            let $values := $main//(*[lower-case(normalize-space(name())) = $name] |
+                                   @*[lower-case(normalize-space(name())) = $name])
+            return
+                for $v in distinct-values($values)
+                    return
+                        if (common:has-one-node($values, $v))
+                        then
+                            ()
+                        else
+                            [$name, data($v)]
     }
+
+    return common:conditionalReportRow(
+        array:size($errors) = 0,
+        $errors
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J8
+./aqd:inspireId/base:Identifier/base:localId must be unique code for the Plans records
+
+Local Id must be unique for the EvaluationScenarios records
+:)
+
+let $J8 := try {
+    let $localIds := $docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_EvaluationScenario
+        let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (
+            count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+            and
+            functx:if-empty($localID/text(), "") != ""
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J9
+ ./aqd:inspireId/base:Identifier/base:namespace List base:namespace
+ and count the number of base:localId assigned to each base:namespace.
+
+ List unique namespaces used and count number of elements
+:)
+
+let $J9 := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier/base:namespace)
+        let $localIds := $docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+        let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $namespace),
+                ("base:localId", count($localIds))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J10
+Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view)
+
+Check namespace is registered
+:)
+
+let $J10 := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+        let $ok := (
+            $x = $prefLabel
+            and
+            $x = $altLabel
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $x)
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J11
+aqd:AQD_EvaluationScenario/aqd:usedInPlan shall reference an existing AQD_Plan (H) document
+for the same reporting year same year via namespace/localId
+
+You must provide a reference to a plan document from data flow H via its namespace & localId.
+The plan document must have the same reporting year as the source apportionment document.
+:)
+
+let $J11 := try {
+    for $main in $evaluationScenario
+        let $el := $main/aqd:usedInPlan
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_Plan',
+                $reportingYear
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J12
+aqd:AQD_EvaluationScenario/aqd:sourceApportionment MUST reference an existing AQD_SourceApportionment (I) document
+via namespace/localId record for the same reporting year .
+
+You must provide a link to a Source Apportionment (I) document from data flow I
+via its namespace & localId (for the same reporting year)
+:)
+
+let $J12 := try {
+    for $main in $evaluationScenario
+        let $el := $main/aqd:sourceApportionment
+        let $label := $el/@xlink:href
+        let $ok := query:existsViaNameLocalIdYear(
+                $label,
+                'AQD_SourceApportionment',
+                $reportingYear
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    (node-name($el), $label)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J13
+aqd:AQD_EvaluationScenario/aqd:codeOfScenario should begin with with the 2-digit country code according to ISO 3166-1.
+
+A code of the scenario should be provided as nn alpha-numeric code starting with the country ISO code
+:)
+
+let $J13 := try {
+    for $main in $evaluationScenario
+        let $el := $main/aqd:codeOfScenario
+        let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J14
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:description shall be a text string
+
+Short textul description of the publication should be provided. If availabel, include the ISBN number.
+:)
+
+let $J14 := try {
+    for $el in $evaluationScenario/aqd:publication/aqd:Publication/aqd:description
+        let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), data($el))
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J15
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:title
+shall be a text string
+
+Title as written in the publication.
+:)
+
+let $J15 := try {
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:title
+    for $el in $main
+        let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J16
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:author shall be a text string (if provided)
+
+Author(s) should be provided as text (If there are multiple authors, please provide in one field separated by commas)
+:)
+
+let $J16 := try {
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:author
+    for $el in $main
+        let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J17
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
+may be a data in yyyy or yyyy-mm-dd format
+
+The publication date should be provided in yyyy or yyyy-mm-dd format
+:)
+
+let $J17 := try {
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:publicationDate/gml:TimeInstant/gml:timePosition
+    for $node in $main
+        let $ok := (
+            data($node) castable as xs:date
+            or
+            not(common:isInvalidYear(data($node)))
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../../../../../@gml:id)),
+                (node-name($node), data($node))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J18
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:publisher
+shall be a text string
+
+Publisher should be provided as a text (Publishing institution, academic jourmal, etc.)
+:)
+
+let $J18 := try {
+    let $main := $evaluationScenario/aqd:publication/aqd:Publication/aqd:publisher
+    for $el in $main
+        let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J19
+aqd:AQD_EvaluationScenario/aqd:publication/aqd:Publication/aqd:webLink
+as a valid url (if provided)
+
+Url to the published AQ Plan should be valid (if provided)
+:)
+
+let $J19 := try {
+    let $main :=  $evaluationScenario/aqd:publication/aqd:Publication/aqd:webLink
+    for $el in $main
+        let $ok := (
+            functx:if-empty(data($el), "") != ""
+            and
+            common:includesURL(data($el))
+            )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J20
+aqd:AQD_EvaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition must be provided and must conform to yyyy format
+
+The year for which the projections are developed must be provided and the yyyy format used
+:)
+
+let $J20 := try {
+    let $main := $evaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition
+    for $el in $main
+        let $ok := not(common:isInvalidYear(data($el)))
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J21
+aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
+must be provided and must conform to yyyy format
+
+Reference year from which the projections started and
+for which the source apportionment is available must be provided. Format used yyyy.
+:)
+
+let $J21 := try {
+    let $main := $evaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
+    for $el in $main
+        let $ok := (
+            not(common:isInvalidYear(data($el)))
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J22
+Check aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition must be equal to
+aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+referenced via the xlink of (aqd:AQD_EvaluationScenario/aqd:sourceApportionment)
+
+Check if start year of the evaluation scenario is the same as the source apportionment reference year
+:)
+
+let $J22 := try {
+    for $node in $evaluationScenario
+        let $el := $node/aqd:sourceApportionment
+        let $year := $node/aqd:startYear/gml:TimeInstant/gml:timePosition
+        let $ok := query:existsViaNameLocalIdYear(
+                $el/@xlink:href,
+                'AQD_SourceApportionment',
+                $year
+        )
+        return common:conditionalReportRow(
+                    $ok,
+                    [
+                        ("gml:id", data($el/../@gml:id)),
+                        (node-name($el), $el/@xlink:href)
+                    ]
+                )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J23
+aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:description shall be a text string
+
+A description of the emission scenario used for the baseline analysis should be provided as text
+:)
+
+let $J23 := try {
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:description
+    for $el in $main
+        let $ok := (data($el) castable as xs:string
+            and
+            functx:if-empty(data($el), "") != ""
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J24
+Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1
+
+The baseline total emissions should be provided as integer with correct unit.
+:)
+
+let $J24 := try {
+    for $node in $evaluationScenario
+        let $el := $node/aqd:baselineScenario/aqd:Scenario/aqd:totalEmissions
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J25
+Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/concentration/
+
+The expected concentration (under baseline scenario) should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $J25 := try {
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J26
+Check that the element aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/statistics
+
+The number of exceecedance expected (under baseline scenario) should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $J26 := try {
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J27
+aqd:AQD_EvaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:measuresApplied
+shall reference an existing AQD_Measures delivered within a data flow K
+and the reporting year of K & J shall be the same year via namespace/localId.
+
+Measures identified in the AQ-plan that are included in this baseline scenario should be provided (link to dataflow K)
+:)
+
+let $J27 := try{
+    let $main := $evaluationScenario/aqd:baselineScenario/aqd:Scenario/aqd:measuresApplied
+    for $el in $main
+        let $ok := query:existsViaNameLocalIdYear(
+                $el/@xlink:href,
+                'AQD_Measures',
+                $reportingYear
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el/@xlink:href)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J28
+aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description shall be a text string
+
+A description of the emission scenario used for the projection analysis should be provided as text
+:)
+
+let $J28 := try {
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:description
+    for $el in $main
+    let $ok := (data($el) castable as xs:string
+        and
+        functx:if-empty(data($el), "") != ""
+    )
+    return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                (node-name($el), $el)
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J29
+Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1
+
+The projection total emissions should be provided as integer with correct unit.
+:)
+
+
+let $J29 := try {
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:totalEmissions
+    for $el in $main
+        let $ok := (
+            $el/@uom eq "http://dd.eionet.europa.eu/vocabulary/uom/emission/kt.year-1"
+            and
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_EMISSION_VOCABULARY
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:totalEmissions", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J30
+Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/concentration/
+
+The expected concentration (under projection scenario) should be provided as an integer and its unit should conform to vocabulary
+:)
+(:  TODO CHECK IF $main node is not empty for all CHECKS  :)
+let $J30 := try {
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedConcentration
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_CONCENTRATION_VOCABULARY
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedConcentration", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J31
+Check that the element aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+is an integer or floating point numeric >= 0 and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/statistics
+
+The number of exceecedance expected (under projection scenario) should be provided
+as an integer and its unit should conform to vocabulary
+:)
+
+let $J31 := try {
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:AQD_Scenario/aqd:expectedExceedances
+    for $el in $main
+        let $ok := (
+            (data($el) castable as xs:float
+            or
+            data($el) castable as xs:integer)
+            and
+            data($el) >= 0
+            and
+            common:isInVocabulary(
+                    $el/@uom,
+                    $vocabulary:UOM_STATISTICS
+            )
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    ("aqd:expectedExceedances", $el),
+                    ("uom", $el/@uom)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: J32
+aqd:AQD_EvaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:measuresApplied
+shall reference an existing AQD_Measures delivered within a data flow K
+and the reporting year of K & J shall be the same year via namespace/localId.
+
+Measures identified in the AQ-plan that are included in this projection should be provided (link to dataflow K)
+:)
+
+let $J32 := try{
+    let $main := $evaluationScenario/aqd:projectionScenario/aqd:Scenario/aqd:measuresApplied
+    for $el in $main
+        let $ok := query:existsViaNameLocalIdYear(
+                $el/@xlink:href,
+                'AQD_Measures',
+                $reportingYear
+        )
+        return common:conditionalReportRow(
+                $ok,
+                [
+                    ("gml:id", data($el/../../../@gml:id)),
+                    (node-name($el), $el/@xlink:href)
+                ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 return
+(
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("J0", $labels:J0, $labels:J0_SHORT, $J0table, string($J0table/td), errors:getMaxError($J0table))}
+        {html:build3("J0", $labels:J0, $labels:J0_SHORT, $J0, string($J0/td), errors:getMaxError($J0))}
+        {html:build1("J1", $labels:J1, $labels:J1_SHORT, $J1, "", string($countEvaluationScenario), "", "", $errors:J1)}
+        {html:buildSimple("J2", $labels:J2, $labels:J2_SHORT, $J2, "", "", $J2errorLevel)}
+        {html:buildSimple("J3", $labels:J3, $labels:J3_SHORT, $J3, "", "", $J3errorLevel)}
+        {html:build1("J4", $labels:J4, $labels:J4_SHORT, $J4, "", string(count($J4)), " ", "", $errors:J4)}
+        {html:build1("J5", $labels:J5, $labels:J5_SHORT, $J5, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:J5)}
+        {html:build1("J6", $labels:J6, $labels:J6_SHORT, $J6, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:J6)}
+        {html:build2("J7", $labels:J7, $labels:J7_SHORT, $J7, "No duplicate values found", " duplicate value", $errors:J7)}
+        {html:build2("J8", $labels:J8, $labels:J8_SHORT, $J8, "No duplicate values found", " duplicate value", $errors:J8)}
+        {html:buildUnique("J9", $labels:J9, $labels:J9_SHORT, $J9, "namespace", $errors:J9)}
+        {html:build2("J10", $labels:J10, $labels:J10_SHORT, $J10, "All values are valid", " not conform to vocabulary", $errors:J10)}
+        {html:build2("J11", $labels:J11, $labels:J11_SHORT, $J11, "All values are valid", "needs valid input", $errors:J11)}
+        {html:build2("J12", $labels:J12, $labels:J12_SHORT, $J12, "All values are valid", "needs valid input", $errors:J12)}
+        {html:build2("J13", $labels:J13, $labels:J13_SHORT, $J13, "All values are valid", " not valid", $errors:J13)}
+        {html:build2("J14", $labels:J14, $labels:J14_SHORT, $J14, "All values are valid", "needs valid input", $errors:J14)}
+        {html:build2("J15", $labels:J15, $labels:J15_SHORT, $J15, "All values are valid", "needs valid input", $errors:J15)}
+        {html:build2("J16", $labels:J16, $labels:J16_SHORT, $J16, "All values are valid", "needs valid input", $errors:J16)}
+        {html:build2("J17", $labels:J17, $labels:J17_SHORT, $J17, "All values are valid", "not valid", $errors:J17)}
+        {html:build2("J18", $labels:J18, $labels:J18_SHORT, $J18, "All values are valid", "needs valid input", $errors:J18)}
+        {html:build2("J19", $labels:J19, $labels:J19_SHORT, $J19, "All values are valid", "not valid", $errors:J19)}
+        {html:build2("J20", $labels:J20, $labels:J20_SHORT, $J20, "All values are valid", "not valid", $errors:J20)}
+        {html:build2("J21", $labels:J21, $labels:J21_SHORT, $J21, "All values are valid", "not valid", $errors:J21)}
+        {html:build2("J22", $labels:J22, $labels:J22_SHORT, $J22, "All values are valid", "not valid", $errors:J22)}
+        {html:build2("J23", $labels:J23, $labels:J23_SHORT, $J23, "All values are valid", "not valid", $errors:J23)}
+        {html:build2("J24", $labels:J24, $labels:J24_SHORT, $J24, "All values are valid", "not valid", $errors:J24)}
+        {html:build2("J25", $labels:J25, $labels:J25_SHORT, $J25, "All values are valid", "not valid", $errors:J25)}
+        {html:build2("J26", $labels:J26, $labels:J26_SHORT, $J26, "All values are valid", "not valid", $errors:J26)}
+        {html:build2("J27", $labels:J27, $labels:J27_SHORT, $J27, "All values are valid", "not valid", $errors:J27)}
+        {html:build2("J28", $labels:J28, $labels:J28_SHORT, $J28, "All values are valid", "not valid", $errors:J28)}
+        {html:build2("J29", $labels:J29, $labels:J29_SHORT, $J29, "All values are valid", "not valid", $errors:J29)}
+        {html:build2("J30", $labels:J30, $labels:J30_SHORT, $J30, "All values are valid", "not valid", $errors:J30)}
+        {html:build2("J31", $labels:J31, $labels:J31_SHORT, $J31, "All values are valid", "not valid", $errors:J31)}
+        {html:build2("J32", $labels:J32, $labels:J32_SHORT, $J32, "All values are valid", "not valid", $errors:J32)}
+
     </table>
+)
 };
+
 
 declare function dataflowJ:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
 
@@ -9598,6 +13542,7 @@ let $meta := map:merge((
 return
     html:buildResultDiv($meta, $result)
 };
+
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
  :
@@ -9607,17 +13552,21 @@ return
  :
  : XQuery script implements dataflow K checks.
  :
- : @author Claudia Ifrim
+ : @author Laszlo Cseh
  :)
 
 
 
 
 
-declare variable $dataflowK:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG","CH","CY","CZ","DE","DK","DZ","EE","EG","ES","FI",
-    "FR","GB","GR","HR","HU","IE","IL","IS","IT","JO","LB","LI","LT","LU","LV","MA","ME","MK","MT","NL","NO","PL","PS","PT",
-     "RO","RS","SE","SI","SK","TN","TR","XK","UK");
 
+
+(: These attributes should be unique :)
+declare variable $dataflowK:UNIQUE_IDS as xs:string* := (
+  "gml:id",
+  "ef:inspireId",
+  "aqd:inspireId"
+);
 
 
 (: Rule implementations :)
@@ -9625,63 +13574,1037 @@ declare function dataflowK:checkReport($source_url as xs:string, $countryCode as
 
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
+(: cdr.eionet.europa.eu/be/eu/aqd/ :)
 let $cdrUrl := common:getCdrUrl($countryCode)
 let $bdir := if (contains($source_url, "k_preliminary")) then "k_preliminary/" else "k/"
+(: 2004  :)
 let $reportingYear := common:getReportingYear($docRoot)
 let $latestEnvelopeB := query:getLatestEnvelope($cdrUrl || $bdir, $reportingYear)
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base:Identifier/base:namespace)
 
-(: File prefix/namespace check :)
-let $NSinvalid :=
-    try {
-        let $XQmap := inspect:static-context((), 'namespaces')
-        let $fileMap := map:merge((
-            for $x in in-scope-prefixes($docRoot/*)
-            return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
-        return map:for-each($fileMap, function($a, $b) {
-            let $x := map:get($XQmap, $a)
+let $namespaces := distinct-values($docRoot//base:namespace)
+
+(: File prefix/namespace check :)
+
+let $NSinvalid := try {
+    let $XQmap := inspect:static-context((), 'namespaces')
+    let $fileMap := map:merge((
+        for $x in in-scope-prefixes($docRoot/*)
+        return map:entry($x, string(namespace-uri-for-prefix($x, $docRoot/*)))))
+
+    return map:for-each($fileMap, function($a, $b) {
+        let $x := map:get($XQmap, $a)
+        return
+            if ($x != "" and not($x = $b)) then
+                <tr>
+                    <td title="Prefix">{$a}</td>
+                    <td title="File namespace">{$b}</td>
+                    <td title="XQuery namespace">{$x}</td>
+                </tr>
+            else
+                ()
+    })
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K0 Checks if this delivery is new or an update (on same reporting year) :)
+
+let $K0table := try {
+    if ($reportingYear = "")
+    then
+        common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
+    else
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+            then
+                common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
+            else
+                common:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $isNewDelivery := errors:getMaxError($K0table) = $errors:INFO
+let $knownMeasures :=
+    if ($isNewDelivery)
+    then
+        distinct-values(data(sparqlx:run(query:getMeasures($cdrUrl || "k/"))//sparql:binding[@name='inspireLabel']/sparql:literal))
+    else
+        distinct-values(data(sparqlx:run(query:getMeasures($latestEnvelopeByYearK))//sparql:binding[@name='inspireLabel']/sparql:literal))
+
+(: K01 Number of Measures reported :)
+
+let $countMeasures := count($docRoot//aqd:AQD_Measures)
+let $K01 := try {
+    for $rec in $docRoot//aqd:AQD_Measures
+        let $el := $rec/aqd:inspireId/base:Identifier
+        return
+            common:conditionalReportRow(
+            false(),
+            [
+                ("gml:id", data($rec/@gml:id)),
+                ("base:localId", data($el/base:localId)),
+                ("base:namespace", data($el/base:namespace)),
+                ("base:versionId", data($el/base:versionId))
+            ]
+            )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K02 Compile & feedback upon the total number of new Measures records included in the delivery.
+ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries. :)
+
+let $K02table := try {
+    for $el in $docRoot//aqd:AQD_Measures
+        let $x := $el/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not($inspireId = $knownMeasures)
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+            ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $K02errorLevel :=
+    if (
+        $isNewDelivery
+        and
+        count(
+            for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
+                let $id := $x/base:namespace || "/" || $x/base:localId
+                (:where ($allMeasures = $id):)
+                where query:existsViaNameLocalId($id, 'AQD_Measures')
+                return 1
+        ) > 0
+        )
+    then
+        $errors:K02
+    else
+        $errors:INFO
+
+(: K03 Compile & feedback upon the total number of updated Measures included in the delivery.
+ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
+
+let $K03table := try {
+    for $main in $docRoot//aqd:AQD_Measures
+        let $x := $main/aqd:inspireId/base:Identifier
+        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
+        return
+            common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/@gml:id)),
+                ("aqd:inspireId", $inspireId),
+                ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
+            ]
+            )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $K03errorLevel :=
+    if (not($isNewDelivery) and count($K03table) = 0)
+    then
+        $errors:K03
+    else
+        $errors:INFO
+
+(: K04 Compile & feedback a list of the unique identifier information for all Measures records included in the delivery.
+Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_SourceApportionment (via ./exceedanceAffected), aqd:AQD_Scenario (via aqd:usedForScenario) :)
+
+let $K04table := try {
+    let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
+    let $inspireIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(aqd:inspireId))
+    for $x in $docRoot//aqd:AQD_Measures
+        let $id := $x/@gml:id
+        let $inspireId := $x/aqd:inspireId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+            and
+            count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+        )
+        return common:conditionalReportRow(
+            not($ok),
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", common:checkLink(distinct-values(data($x/aqd:usedForScenario/@xlink:href))))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K05
+RESERVE
+:)
+let $K05 := ()
+
+(: K06
+RESERVE
+:)
+let $K06 := ()
+
+(: K07
+All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have unique content
+
+All gml ID attributes shall have unique code
+
+    count(index-of($gmlIds, lower-case(normalize-space($id)))) = 1
+    or count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
+    or (
+        count(index-of($efInspireIds, lower-case(normalize-space($efInspireId)))) = 1
+        and not(empty($efInspireId))
+    )
+
+:)
+
+let $K07 := try {
+    let $main := $docRoot//aqd:AQD_Measures
+
+    let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
+
+    let $errors := array {
+
+        for $name in $checks
+        (: TODO: would be nice to have something like this, but we have no value for error row
             return
-                if ($x != "" and not($x = $b)) then
-                    <tr>
-                        <td title="Prefix">{$a}</td>
-                        <td title="File namespace">{$b}</td>
-                        <td title="XQuery namespace">{$x}</td>
-                    </tr>
+                if has-duplicate-children-values($main, $name)
+                then
+                    [$name, $name]
                 else
                     ()
-        })
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
+        :)
+            let $name := lower-case(normalize-space($name))
+            let $values := $main//(*[lower-case(normalize-space(name())) = $name] |
+                                   @*[lower-case(normalize-space(name())) = $name])
+            return
+                for $v in distinct-values($values)
+                    return
+                        if (common:has-one-node($values, $v))
+                        then
+                            ()
+                        else
+                            [$name, data($v)]
     }
 
-(: K0 :)
-let $K0table :=
-    try {
-        let $all := dd:getValidConcepts($vocabulary:ZONETYPE_VOCABULARY || "rdf")
-        for $x in $docRoot//aqd:aqdZoneType
-        where not($x/@xlink:href = $all)
+    return common:conditionalReportRow(
+        array:size($errors) = 0,
+        $errors
+    )
+
+    (:
+    let $gmlIds := $main//lower-case(normalize-space(@gml:id))
+    let $inspireIds := $main//lower-case(normalize-space(aqd:inspireId))
+    let $efInspireIds := $main//lower-case(normalize-space(ef:inspireId))
+    for $el in $main
+        let $id := $el/@gml:id
+        let $inspireId := $el/aqd:inspireId
+        let $efInspireId := $el/ef:inspireId
+
+        let $ok := (
+            c:has-one($gmlIds, $id)
+            and
+            c:has-one($inspireIds, $inspireId)
+            and
+            c:has-one($efInspireIds, $efInspireId)
+        )
+        return c:conditionalReportRow(
+            $ok,
+            [
+                (name($id), data($id)),
+                (node-name($inspireId), data($inspireId)),
+                (node-name($efInspireId), data($efInspireId))
+            ]
+        )
+    :)
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K08 ./aqd:inspireId/base:Identifier/base:localId must be unique code for the Measure records :)
+
+let $K08invalid:= try {
+    let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
+    for $x in $docRoot//aqd:AQD_Measures
+        let $localID := $x/aqd:inspireId/base:Identifier/base:localId
+        let $aqdinspireId := concat($x/aqd:inspireId/base:Identifier/base:localId, "/", $x/aqd:inspireId/base:Identifier/base:namespace)
+        let $ok := (
+            count(index-of($localIds, lower-case(normalize-space($localID)))) = 1
+            and
+            functx:if-empty($localID/text(), "") != ""
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($x/@gml:id)),
+                ("aqd:inspireId", distinct-values($aqdinspireId)),
+                ("aqd:AQD_Measures", common:checkLink(distinct-values(data($x/aqd:exceedanceAffected/@xlink:href)))),
+                ("aqd:AQD_Scenario", distinct-values(data($x/aqd:usedForScenario/@xlink:href)))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K09 ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.  :)
+
+let $K09table := try {
+    for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
+        let $localIds := $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
+        let $ok := false()
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $namespace),
+                ("base:localId", count($localIds))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
+
+let $K10invalid := try {
+    let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
+    let $prefLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:prefLabel[1]
+    let $altLabel := $vocDoc//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE
+            and @rdf:about = concat($vocabulary:NAMESPACE, $countryCode)]/skos:altLabel[1]
+    for $x in distinct-values($docRoot//base:namespace)
+        let $ok := ($x = $prefLabel and $x = $altLabel)
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("base:namespace", $x)
+            ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K11
+aqd:AQD_Measures/aqd:exceedanceAffected MUST reference
+an existing Source Apportionment (I) document via namespace/localId
+
+You must provide a link to a source apportionment document from data flow I via its namespace & localId.
+:)
+
+let $K11 := try{
+    let $main := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K12
+aqd:AQD_Measures/aqd:usedForScenario shall reference an existing Scenario
+delivered within a data flow J  via namespace/localId.
+
+A link may be provided to Evaluation Scenario (J). This must be valid via namespace & localId
+:)
+
+let $K12 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
+    for $el in $main
+        let $label := data($el/@xlink:href)
+        let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../@gml:id)),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K13
+aqd:AQD_Measures/aqd:code should be a unique local identifier for each measure record.
+For convenience the same code as localId may be used
+
+So, the aqd:code should be unique within XML
+:)
+
+let $K13invalid := try {
+    let $codes := $docRoot//aqd:AQD_Measures/aqd:code
+    for $node in $docRoot//aqd:AQD_Measures
+        let $code := $node/aqd:code
+        let $localId := $node/aqd:inspireId/base:Identifier/base:localId
+        let $ok := (
+            $code = $localId
+            and
+            count(fn:index-of($codes,$code)) = 1
+        )
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/@gml:id)),
+                (node-name($code), data($code)),
+                (node-name($localId), data($localId))
+            ]
+        )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure :)
+let $K14invalid := common:needsValidString(
+        $docRoot//aqd:AQD_Measures, 'aqd:name'
+        )
+
+(: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
+A short name for the measure :)
+let $K15invalid := common:needsValidString(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:description'
+        )
+
+(: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
+Measure classification should conform to vocabulary :)
+let $K16 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:classification,
+        $vocabulary:MEASURECLASSIFICATION_VOCABULARY
+        )
+
+(: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
+Measure type should conform to vocabulary :)
+let $K17 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:measureType,
+        $vocabulary:MEASURETYPE_VOCABULARY
+        )
+
+
+(: K18 aqd:AQD_Measures/aqd:administrativeLevel shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/administrativelevel/
+Administrative level should conform to vocabulary
+:)
+let $K18 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
+        $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
+        )
+
+(: K19
+aqd:AQD_Measures/aqd:timeScale shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/timescale/
+The measure's timescale should conform to vocabulary
+:)
+let $K19 := common:isInVocabularyReport(
+        $docRoot//aqd:AQD_Measures/aqd:timeScale,
+        $vocabulary:TIMESCALE_VOCABULARY
+        )
+
+
+(: K20 aqd:AQD_Measures/aqd:costs/ should be provided
+Information on the cost of the measure should be provided
+:)
+let $K20 := common:isNodeNotInParentReport(
+        $docRoot//aqd:AQD_Measures,
+        'aqd:costs'
+        )
+
+(: K21
+If aqd:costs provided
+aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts should be
+an integer number. If voided /aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:comment
+must be populated with an explanation of why no costs are available.
+
+The estimated total costs should be provided. If not, an explanation on the
+reasons for not providing it should be included.
+:)
+
+let $K21 := try {
+    let $root := $docRoot//aqd:AQD_Measures
+    for $el in $root
+        let $costs := $el/aqd:costs
+        let $implCosts := $costs/aqd:Costs/aqd:estimatedImplementationCosts
+        let $comment := $costs/aqd:Costs/aqd:comment
+        let $costsRoot := $costs/aqd:Costs
+
+        let $isValidCost := common:is-a-number(data($implCosts))
+        let $hasCost := common:isNodeInParent($costsRoot, 'aqd:estimatedImplementationCosts')
+
         return
+            if (common:isNodeInParent($el, 'aqd:costs'))
+            then (
+                if (not($isValidCost))
+                then
+                    if (empty($comment/text()))
+                    then
+                        if ($hasCost)
+                        then
+                            (
+                             <tr>
+                                <td title="gml:id">{data($el/@gml:id)}</td>
+                                <td title="aqd:estimatedImplementationCosts"> aqd:estimatedImplementationCosts not provided</td>
+                             </tr>
+                            )
+                        else
+                            (
+                            <tr>
+                                <td title="gml:id">{data($el/@gml:id)}</td>
+                                <td title="aqd:comment"> aqd:comment not provided</td>
+                            </tr>)
+                    else
+                        ()  (: ok, we have a comment :)
+                else
+                    ()      (: ok, cost is a number :)
+            )
+            else
+                <tr>
+                    <td title="gml:id">{data($el/@gml:id)}</td>
+                    <td title="aqd:costs"> aqd:costs not provided</td>
+                </tr>
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K22
+If populated,
+/aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:finalImplementationCosts should be an
+integer number
+If the final total costs of the measure is provided, this nneeds to be a number
+
+let $K22 := c:maybeNodeValueIsIntegerReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts'
+)
+:)
+
+let $K22 := common:validatePossibleNodeValueReport(
+    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
+    'aqd:finalImplementationCosts',
+    common:is-a-number#1
+)
+
+(: K23
+If aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:estimatedImplementationCosts is
+populated aqd:AQD_Measures/aqd:costs/aqd:Costs/aqd:currency must be populated
+and shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/common/currencies/
+
+If estimated costs are provided, the currency must be provided conforming to
+vocabulary
+
+:)
+
+let $K23 := (
+    for $el in $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs
+    return common:validateMaybeNodeWithValueReport(
+        $el,
+        'aqd:estimatedImplementationCosts',
+        common:isInVocabulary(
+            $el/aqd:currency/@xlink:href,
+            $vocabulary:CURRENCIES
+        )
+    )
+)
+
+
+(: K24
+aqd:AQD_Measures/aqd:sourceSectors shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/
+
+Source sector should conform to vocabulary
+:)
+
+let $K24 := common:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:sourceSectors,
+    $vocabulary:SOURCESECTORS_VOCABULARY
+    )
+
+(: K25
+aqd:AQD_Measures/aqd:spatialScale shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/
+
+Spatial scale should conform to vocabulary
+:)
+
+let $K25 := common:isInVocabularyReport(
+    $docRoot//aqd:AQD_Measures/aqd:spatialScale,
+    $vocabulary:SPACIALSCALE_VOCABULARY
+    )
+
+(: K26
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/aq/measureimplementationstatus/
+
+Measure Implementation Status should conform to vocabulary
+:)
+
+let $K26 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:status
+    for $el in $main
+        let $uri := $el/@xlink:href
+        return
+        if (not(common:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
+        then
             <tr>
-                <td title="aqd:AQD_Zone">{string($x/../am:inspireId/base:Identifier/base:localId)}</td>
-                <td title="aqd:aqdZoneType">{data($x/@xlink:href)}</td>
+                <td title="gml:id">{data($el/../../../@gml:id)}</td>
+                <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
-    } catch * {
-        <tr class="{$errors:FAILED}">
-            <td title="Error code">{$err:code}</td>
-            <td title="Error description">{$err:description}</td>
-        </tr>
-    }
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K27
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+
+let $K27 := common:isDateFullISOReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+(: K28
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:endPosition
+must be a date in full ISO format
+and must be after aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition.
+If voided it should be indeterminatePosition="unknown"
+
+The planned end date for the measure should be provided in the right format,
+if unknown voided using indeterminatePosition="unknown"
+:)
+
+let $K28 := try {
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
+
+        let $ok := (
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+            or
+            (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K29
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+must be a date in full ISO date format
+
+The planned start date for the measure should be provided
+:)
+let $K29 := common:isDateFullISOReport(
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+)
+
+(:
+let $K29 := c:errorReport(
+    (isDate() and isDate() and isBigger()) or ()
+{
+}
+)
+:)
+
+(: K30
+If not voided, aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:endPosition
+must be a date in full ISO format and must be after
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition.
+
+If voided it should be indeterminatePosition="unknown"
+The planned end date for the measure should be provided in the right format,
+if unknown, voided using indeterminatePosition="unknown"
+:)
+let $K30 := try {
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod
+        let $begin := $el/gml:beginPosition
+        let $end := $el/gml:endPosition
+
+        let $ok := (
+            (common:isDateFullISO($begin) and common:isDateFullISO($end) and $end > $begin)
+            or
+            (lower-case($end/@indeterminatePosition) = "unknown" and functx:if-empty(data($end),"") eq "")
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:beginPosition", data($begin)),
+                ("gml:endPosition", data($end))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K31
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+to be provided in the following format yyyy or yyyy-mm-dd
+
+The full effect date of the measure must be provided and the format to be yyyy or yyyy-mm-dd
+:)
+
+let $K31 := try {
+    for $node in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:plannedFullEffectDate/gml:TimeInstant/gml:timePosition
+
+    let $ok := (
+        data($node) castable as xs:date
+        or
+        not(common:isInvalidYear(data($node)))
+    )
+
+    return common:conditionalReportRow(
+        $ok,
+        [
+            ("gml:id", data($node/../../../../../@gml:id)),
+            (node-name($node), data($node))
+        ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K32
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates
+RESERVE
+:)
+
+let $K32 := <tr><td title="aqd:otherDates">{data($docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:otherDates)}</td></tr>
+
+(: K33
+A text string may be provided under
+aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:monitoringProgressIndicators
+If voided an explanation of why this information unavailable shall be provided in
+/aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:comment
+:)
+
+let $K33 := try {
+    for $el in $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation
+        let $main := $el/aqd:monitoringProgressIndicators
+        let $comment := $el/aqd:comment
+
+        let $ok := (
+                functx:if-empty(data($main),"") != ""
+                or
+                functx:if-empty(data($comment),"") != ""
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../@gml:id)),
+                ("aqd:monitoringProgressIndicators", data($main)),
+                ("aqd:comment", data($comment))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(:
+K34
+Check that the element
+aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity is
+an integer or floating point numeric >= 0 if attribute xsi:nil="false"
+(example:
+    <aqd:quantity uom="http://dd.eionet.europa.eu/vocabulary/uom/emission/t.year-1" xsi:nil="false">273</aqd:quantity>
+    )
+:)
+
+let $K34 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        (: TODO: should write a function for this? there's already is-a-number :)
+        let $isNum := (
+            (data($node) castable as xs:integer)
+            or
+            (data($node) castable as xs:float)
+        )
+
+        let $ok := (
+            ($node/@xsi:nil != 'false')
+            or
+            ($isNum and ($node cast as xs:float >= 0))
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../../../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("xsi:nil", $node/@xsi:nil)
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K35
+Check that the element aqd:QuantityCommented/aqd:quantity is empty if attribute xsi:nil="unpopulated" or "unknown" or "withheld"
+(example: <aqd:quantity uom="Unknown" nilReason="Unpopulated" xsi:nil="true"/>)
+
+If quantification is either "unpopulated" or "unknown" or "withheld", the element should be empty
+:)
+let $K35 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $node in $main
+        let $ok := (
+            (functx:if-empty($node/text(), "") != "")
+            or
+            (
+                lower-case($node/@xsi:nil) = "true"
+                and
+                (
+                    (lower-case($node/@nilReason) = "unknown")
+                    or
+                    (lower-case($node/@nilReason) = "unpopulated")
+                    or
+                    (lower-case($node/@nilReason) = "withheld")
+                )
+            )
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($node/../../../@gml:id)),
+                ("aqd:quantity", data($node)),
+                ("xsi:nil", data($node/@xsi:nil)),
+                ("nilReason", data($node/@nilReason))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+
+(: K36
+If aqd:QuantityCommented/aqd:quantity attribute xsi:nil="true"
+aqd:QuantityCommented/aqd:comment must be populated
+
+If the quantification is voided an explanation is required in aqd:comment
+:)
+let $K36 := try {
+    for $main in $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented
+        let $quantity := $main/aqd:quantity
+        let $comment := $main/aqd:comment
+
+        let $ok := (
+            lower-case(functx:if-empty(data($quantity/@xsi:nil), "")) = "false"
+            or
+            (
+            lower-case(functx:if-empty(data($quantity/@xsi:nil), "")) = "true"
+            and
+            functx:if-empty(data($comment), "") != ""
+            )
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($main/../../@gml:id)),
+                ("aqd:quantity", data($quantity)),
+                ("aqd:comment", data($comment))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K37
+The unit attribute (aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity/@UoM)
+shall correspond to http://dd.eionet.europa.eu/vocabulary/uom/emission
+
+the quantification of reductionOfEmissions should conform to vocabulary
+:)
+let $K37 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:reductionOfEmissions/aqd:QuantityCommented/aqd:quantity
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validUris := dd:getValidConcepts($vocabulary:UOM_EMISSION_VOCABULARY || "rdf")
+        let $ok := ($uri and $uri = $validUris)
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:quantity", data($el)),
+                ("uom", data($uri))
+            ]
+        )
+
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K38
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/concentration/
+
+The level of concentration expected should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $K38 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:levelOfConcentration
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_CONCENTRATION_VOCABULARY)
+
+        let $isNum := (
+            (data($el) castable as xs:integer)
+            or
+            (data($el) castable as xs:float)
+        )
+
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:levelOfConcentration", data($el)),
+                ("uom", data($uri))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K39
+Check that the element aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+is an integer or floating point numeric >= 0
+and the unit (@uom) shall resolve to the codelist
+http://dd.eionet.europa.eu/vocabulary/uom/statistics
+
+The number of exceecedance expected should be provided as an integer and its unit should conform to vocabulary
+:)
+
+let $K39 := try {
+    let $main := $docRoot//aqd:AQD_Measures/aqd:expectedImpact/aqd:ExpectedImpact/aqd:numberOfExceedances
+    for $el in $main
+        let $uri := data($el/@uom)
+        let $validVocabulary := common:isInVocabulary($uri, $vocabulary:UOM_STATISTICS)
+
+        let $isNum := (
+            ($el castable as xs:integer)
+            or
+            ($el castable as xs:float)
+        )
+
+        let $ok := (
+            $validVocabulary
+            and
+            ($isNum and ($el cast as xs:float >= 0))
+        )
+
+        return common:conditionalReportRow(
+            $ok,
+            [
+                ("gml:id", data($el/../../../@gml:id)),
+                ("aqd:numberOfExceedances", data($el)),
+                ("uom", data($uri))
+            ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: K40
+Reserve for specificationOfHours
+:)
+
+let $K40 := ()
 
 return
+(
     <table class="maintable hover">
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
-        {html:build3("K0", $labels:K0, $labels:H0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build3("K0", $labels:K0, $labels:K0_SHORT, $K0table, string($K0table/td), errors:getMaxError($K0table))}
+        {html:build1("K01", $labels:K01, $labels:K01_SHORT, $K01, "", string($countMeasures), "", "", $errors:K01)}
+        {html:buildSimple("K02", $labels:K02, $labels:K02_SHORT, $K02table, "", "", $K02errorLevel)}
+        {html:buildSimple("K03", $labels:K03, $labels:K03_SHORT, $K03table, "", "", $K03errorLevel)}
+        {html:build1("K04", $labels:K04, $labels:K04_SHORT, $K04table, "", string(count($K04table)), " ", "", $errors:K04)}
+        {html:build1("K05", $labels:K05, $labels:K05_SHORT, $K05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K05)}
+        {html:build1("K06", $labels:K06, $labels:K06_SHORT, $K06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K06)}
+        {html:build2("K07", $labels:K07, $labels:K07_SHORT, $K07, "No duplicate values found", " duplicate value", $errors:K07)}
+        {html:build2("K08", $labels:K08, $labels:K08_SHORT, $K08invalid, "No duplicate values found", " duplicate value", $errors:K08)}
+        <!-- {html:build2("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", "", $errors:K09)} !-->
+        {html:buildUnique("K09", $labels:K09, $labels:K09_SHORT, $K09table, "namespace", $errors:K09)}
+        {html:build2("K10", $labels:K10, $labels:K10_SHORT, $K10invalid, "All values are valid", " not conform to vocabulary", $errors:K10)}
+        {html:build2("K11", $labels:K11, $labels:K11_SHORT, $K11, "All values are valid", "needs valid input", $errors:K11)}
+        {html:build2("K12", $labels:K12, $labels:K12_SHORT, $K12, "All values are valid", "needs valid input", $errors:K12)}
+        {html:build2("K13", $labels:K13, $labels:K13_SHORT, $K13invalid, "All values are valid", " code not equal", $errors:K13)}
+        {html:build2("K14", $labels:K14, $labels:K14_SHORT, $K14invalid, "All values are valid", "needs valid input", $errors:K14)}
+        {html:build2("K15", $labels:K15, $labels:K15_SHORT, $K15invalid, "All values are valid", "needs valid input", $errors:K15)}
+        {html:build2("K16", $labels:K16, $labels:K16_SHORT, $K16, "All values are valid", "not conform to vocabulary",$errors:K16)}
+        {html:build2("K17", $labels:K17, $labels:K17_SHORT, $K17, "All values are valid", "not conform to vocabulary",$errors:K17)}
+        {html:build2("K18", $labels:K18, $labels:K18_SHORT, $K18, "All values are valid", "not conform to vocabulary",$errors:K18)}
+        {html:build2("K19", $labels:K19, $labels:K19_SHORT, $K19, "All values are valid", "not conform to vocabulary", $errors:K19)}
+        {html:build2("K20", $labels:K20, $labels:K20_SHORT, $K20, "All values are valid", " needs valid input", $errors:K20)}
+        {html:build2("K21", $labels:K21, $labels:K21_SHORT, $K21, "All values are valid", " needs valid input", $errors:K21)}
+        {html:build2("K22", $labels:K22, $labels:K22_SHORT, $K22, "All values are valid", " needs valid input", $errors:K22)}
+        {html:build2("K23", $labels:K23, $labels:K23_SHORT, $K23, "All values are valid", " needs valid input", $errors:K23)}
+        {html:build2("K24", $labels:K24, $labels:K24_SHORT, $K24, "All values are valid", "not conform to vocabulary", $errors:K24)}
+        {html:build2("K25", $labels:K25, $labels:K25_SHORT, $K25, "All values are valid", "not conform to vocabulary", $errors:K25)}
+        {html:build2("K26", $labels:K26, $labels:K26_SHORT, $K26, "All values are valid", "not conform to vocabulary", $errors:K26)}
+        {html:build2("K27", $labels:K27, $labels:K27_SHORT, $K27, "All values are valid", "not full ISO format", $errors:K27)}
+        {html:build2("K28", $labels:K28, $labels:K28_SHORT, $K28, "All values are valid", "not valid", $errors:K28)}
+        {html:build2("K29", $labels:K29, $labels:K29_SHORT, $K29, "All values are valid", "not full ISO format", $errors:K29)}
+        {html:build2("K30", $labels:K30, $labels:K30_SHORT, $K30, "All values are valid", "not valid", $errors:K30)}
+        {html:build2("K31", $labels:K31, $labels:K31_SHORT, $K31, "All values are valid", "not valid", $errors:K31)}
+        {html:build1("K32", $labels:K32, $labels:K32_SHORT, $K32, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K32)}
+        {html:build2("K33", $labels:K33, $labels:K33_SHORT, $K33, "All values are valid", "not valid", $errors:K33)}
+        {html:build2("K34", $labels:K34, $labels:K34_SHORT, $K34, "All values are valid", "not valid", $errors:K34)}
+        {html:build2("K35", $labels:K35, $labels:K35_SHORT, $K35, "All values are valid", "not valid", $errors:K35)}
+        {html:build2("K36", $labels:K36, $labels:K36_SHORT, $K36, "All values are valid", "not valid", $errors:K36)}
+        {html:build2("K37", $labels:K37, $labels:K37_SHORT, $K37, "All values are valid", "not valid", $errors:K37)}
+        {html:build2("K38", $labels:K38, $labels:K38_SHORT, $K38, "All values are valid", "not valid", $errors:K38)}
+        {html:build2("K39", $labels:K39, $labels:K39_SHORT, $K39, "All values are valid", "not valid", $errors:K39)}
+        {html:build1("K40", $labels:K40, $labels:K40_SHORT, $K40, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:K40)}
+
     </table>
+)
+
 };
 
 declare function dataflowK:proceed($source_url as xs:string, $countryCode as xs:string) as element(div) {
@@ -11295,6 +16218,167 @@ declare function envelope:validateEnvelope($source_url as xs:string) as element(
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (: Returns error class if there are more than 0 error elements :)
 declare function errors:getClass($elems) {
   if (count($elems) > 0) then
@@ -11345,23 +16429,6 @@ declare function filter:filterByName($results as element(result)*, $elem as xs:s
 
 (:~
 : User: George Sofianos
-: Date: 11/14/16
-: Time: 2:00 PM
-:)
-
-declare function functx:is-leap-year($date as xs:anyAtomicType?) as xs:boolean {
-    for $year in xs:integer(substring(string($date),1,4))
-    return ($year mod 4 = 0 and
-            $year mod 100 != 0) or
-            $year mod 400 = 0
-};
-
-declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
-    replace($arg, '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
-};
-
-(:~
-: User: George Sofianos
 : Date: 6/17/2016
 : Time: 12:03 PM
 :)
@@ -11397,15 +16464,16 @@ declare function geox:compareLatLong($srsName as xs:string, $lat as xs:double, $
 };
 
 (:~
-: 
+:
 : User: George Sofianos
 : Date: 5/31/2016
 : Time: 11:48 AM
 :)
 
 
-declare function html:getHead() as element()* {  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>
+declare function html:getHead() as element()* {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">&#32;</link>,
+    <meta charset="utf-8"/>
 };
 
 declare function html:getCSS() as element(style) {
@@ -11698,6 +16766,7 @@ declare function html:build0($ruleCode as xs:string, $longText, $text, $records 
 
         return html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
+
 declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $unit as xs:string, $errorLevel as xs:string) {
     let $data := html:parseData($records, "data")
 
@@ -11718,7 +16787,18 @@ declare function html:buildUnique($ruleCode as xs:string, $longText, $text, $rec
         else
             html:buildGeneric($ruleCode, $longText, $text, $records, $message, $bulletType)
 };
-declare function html:build1($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build1(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11739,7 +16819,15 @@ declare function html:build1($ruleCode as xs:string, $longText, $text, $records 
     return html:buildGeneric($ruleCode, $longText, $text, $data, $validMsg, $bulletType)
 };
 
-declare function html:build2($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $validMsg as xs:string, $unit as xs:string, $errorLevel as xs:string) as element(tr)* {
+declare function html:build2(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $metadata := html:parseData($records, "metadata")
     let $thead := html:parseData($records, "thead")
@@ -11755,6 +16843,7 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $errors:INFO
         else
             $errorLevel
+
     let $message :=
         if ($skipped) then
             $labels:SKIPPED
@@ -11762,9 +16851,25 @@ declare function html:build2($ruleCode as xs:string, $longText, $text, $records 
             $validMsg
         else
             $countRecords || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
-    return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
+
+    return html:buildGeneric(
+        $ruleCode,
+        $longText,
+        $text,
+        $data,
+        $message,
+        $bulletType
+    )
 };
-declare function html:build3($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $errorLevel as xs:string) as element(tr)* {
+
+declare function html:build3(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $errorLevel as xs:string
+) as element(tr)* {
     let $data := html:parseData($records, "data")
     let $bulletType := $errorLevel
     return
@@ -11774,7 +16879,21 @@ declare function html:build3($ruleCode as xs:string, $longText, $text, $records 
             <td><span class="largeText">{$message}</span></td>
         </tr>
 };
-declare function html:build9($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+
+(:  Invalid msg: "10 records found"
+:)
+declare function html:build9(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11790,13 +16909,30 @@ declare function html:build9($ruleCode as xs:string, $longText, $text, $records 
         if ($countRecords = 0) then
             $skippedMsg
         else if ($countInvalid > 0) then
-            $countInvalid || " " || $unit || substring("s ", number(not($countRecords > 1)) * 2) || " found"
+            $countInvalid ||
+            " " ||
+            $unit ||
+            substring("s ", number(not($countRecords > 1)) * 2) ||
+            " found"
         else
             $validMsg
     return html:buildGeneric($ruleCode, $longText, $text, $data, $message, $bulletType)
 };
-(: TODO: maybe remove :)
-declare function html:build7($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $valueHeading as xs:string, $validMsg as xs:string, $unit as xs:string, $skippedMsg, $errorLevel as xs:string) as element(tr)* {
+
+(:  Invalid msg: "X is not unique"
+
+TODO: maybe remove :)
+declare function html:build7(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $valueHeading as xs:string,
+    $validMsg as xs:string,
+    $unit as xs:string,
+    $skippedMsg,
+    $errorLevel as xs:string
+) as element(tr)* {
 
     let $data := html:parseData($records, "data")
     let $countRecords := count($data)
@@ -11835,7 +16971,15 @@ declare %private function html:parseData($records as element(tr)*, $type as xs:s
 };
 
 (: Builds HTML table rows for rules. :)
-declare %private function html:buildGeneric($ruleCode as xs:string, $longText, $text, $records as element(tr)*, $message as xs:string, $bulletType as xs:string) as element(tr)* {
+declare %private function html:buildGeneric(
+    $ruleCode as xs:string,
+    $longText,
+    $text,
+    $records as element(tr)*,
+    $message as xs:string,
+    $bulletType as xs:string
+) as element(tr)* {
+
     let $countRecords := count($records)
     let $hasFailed := errors:hasFailed(($records, $records//td))
     let $bulletType := if ($hasFailed) then $errors:FAILED else $bulletType
@@ -12079,6 +17223,17 @@ declare function html:createMetadataTR($rowsCount as xs:integer) {
     </tr>
 };
 
+(: TODO: correct name for this function would be html:errorRow :)
+declare function html:createErrorRow(
+    $errCode as xs:anyAtomicType,
+    $errDesc as xs:string
+) {
+    <tr class="{$errors:FAILED}">
+        <td title="Error code">{$errCode}</td>
+        <td title="Error description">{$errDesc}</td>
+    </tr>
+};
+
 (:~
 : AQD Labels
 : @author George Sofianos
@@ -12100,6 +17255,280 @@ declare function html:createMetadataTR($rowsCount as xs:integer) {
 
 
 (: QC Labels :)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -13077,7 +18506,7 @@ declare function query:getZone($url as xs:string?) as xs:string {
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
   FILTER (CONTAINS(str(?zone), '" || $url || "'))
-  }"   
+  }"
 };
 
 (: C :)
@@ -13194,6 +18623,65 @@ declare function query:getModel($url as xs:string) as xs:string {
       }"
 };
 
+(: Checks if X references an existing Y via namespace/localid :)
+declare function query:existsViaNameLocalId(
+        $label as xs:string,
+        $name as xs:string
+) as xs:boolean {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $name ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+}"
+
+    let $res := sparqlx:run($query)
+    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
+    return
+        if ($count > 0)
+            then
+                true()
+            else
+                false()
+};
+
+(: Checks if X references an existing Y via namespace/localid and reporting year :)
+declare function query:existsViaNameLocalIdYear(
+        $label as xs:string,
+        $type as xs:string,
+        $year as xs:string
+) as xs:boolean {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT count(?label) as ?cnt
+WHERE {
+    ?scenariosXMLURI a aq:" || $type ||";
+    aq:inspireId ?inspireId.
+    ?inspireId rdfs:label ?label.
+    ?inspireId aq:namespace ?name.
+    ?inspireId aq:localId ?localId
+    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
+}
+"
+
+(: TODO: is correct to use scenariosXMLURI  ? :)
+
+    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
+    return $count > 0
+};
+
+
 (: G :)
 declare function query:getAttainment($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -13206,6 +18694,87 @@ declare function query:getAttainment($url as xs:string) as xs:string {
       aqd:inspireId ?inspireId .
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?attainment), '" || $url || "'))
+   }"
+};
+
+(:~ Creates a SPARQL query string to query all objects of given type in a URL
+
+The result is a list of inspireLabels
+
+Used for dataflow I, can be used for any other
+
+TODO: reuse in other workflows
+:)
+declare function query:sparql-objects-in-subject(
+    $url as xs:string,
+    $type as xs:string
+) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?s a " || $type || ";
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?s), '" || $url || "'))
+   }"
+};
+
+(:~ Creates a SPARQL query to return all inspireIds for given aqd:namespace
+
+Used for dataflow I, can be used for any other
+
+TODO: reuse in other workflows
+:)
+declare function query:sparql-objects-ids(
+    $namespaces as xs:string*,
+    $type as xs:string
+) as xs:string* {
+  let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+   PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+   SELECT *
+   WHERE {
+        ?attainment a " || $type || ";
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?inspireLabel .
+        ?inspireId aqd:namespace ?namespace
+        FILTER(str(?namespace) in ('" || string-join($namespaces, "','") || "'))
+  }"
+  return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
+};
+
+(: J :)
+declare function query:getEvaluationScenarios($url as xs:string) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?EvaluationScenario a aqd:AQD_EvaluationScenario;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?EvaluationScenario), '" || $url || "'))
+   }"
+};
+
+(: K :)
+declare function query:getMeasures($url as xs:string) as xs:string {
+  "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+   PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+   PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+   SELECT ?inspireLabel
+   WHERE {
+      ?measure a aqd:AQD_Measures;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      FILTER (CONTAINS(str(?measure), '" || $url || "'))
    }"
 };
 
@@ -13242,7 +18811,12 @@ declare function query:getAllFeatureIds($featureTypes as xs:string*, $namespaces
 };
 
 (: Generic queries :)
-declare function query:deliveryExists($obligations as xs:string*, $countryCode as xs:string, $dir as xs:string, $reportingYear as xs:string) as xs:boolean {
+declare function query:deliveryExists(
+    $obligations as xs:string*,
+    $countryCode as xs:string,
+    $dir as xs:string,
+    $reportingYear as xs:string
+) as xs:boolean {
   let $query :=
       "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
        SELECT ?envelope
@@ -13276,7 +18850,11 @@ declare function query:getLangCodesSparql() as xs:string {
 };
 
 (: C - Remove comment after migration :)
-declare function query:getModelEndPosition($latestDEnvelopes as xs:string*, $startDate as xs:string, $endDate as xs:string) as xs:string {
+declare function query:getModelEndPosition(
+    $latestDEnvelopes as xs:string*,
+    $startDate as xs:string,
+    $endDate as xs:string
+) as xs:string {
   let $last := count($latestDEnvelopes)
   let $filters :=
     for $x at $pos in $latestDEnvelopes
@@ -13287,9 +18865,10 @@ declare function query:getModelEndPosition($latestDEnvelopes as xs:string*, $sta
         concat("CONTAINS(str(?zone), '", $x , "')")
   let $filters := string-join($filters, "")
   return
-    concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+    concat("
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
 SELECT DISTINCT ?inspireLabel
     WHERE {
@@ -13306,7 +18885,11 @@ SELECT DISTINCT ?inspireLabel
 }")
 };
 
-declare function query:getSamplingPointEndPosition($latestDEnvelopes as xs:string*, $startDate as xs:string, $endDate as xs:string) as xs:string {
+declare function query:getSamplingPointEndPosition(
+    $latestDEnvelopes as xs:string*,
+    $startDate as xs:string,
+    $endDate as xs:string
+) as xs:string {
   let $last := count($latestDEnvelopes)
   let $filters :=
     for $x at $pos in $latestDEnvelopes
@@ -13337,7 +18920,10 @@ declare function query:getSamplingPointEndPosition($latestDEnvelopes as xs:strin
 };
 
 (: Returns latest report envelope for this country and Year :)
-declare function query:getLatestEnvelope($cdrUrl as xs:string, $reportingYear as xs:string) as xs:string {
+declare function query:getLatestEnvelope(
+    $cdrUrl as xs:string,
+    $reportingYear as xs:string
+) as xs:string {
   let $query := concat("PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
   SELECT *
    WHERE {
@@ -13370,7 +18956,10 @@ limit 1"
   return if ($result) then $result else "FILENOTFOUND"
 };
 
-declare function query:getEnvelopes($cdrUrl as xs:string, $reportingYear as xs:string) as xs:string* {
+declare function query:getEnvelopes(
+    $cdrUrl as xs:string,
+    $reportingYear as xs:string
+) as xs:string* {
   let $query :=
     "PREFIX aqd: <http://rod.eionet.europa.eu/schema.rdf#>
      SELECT *
@@ -13421,7 +19010,41 @@ declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:str
   return data(sparqlx:run($query)//sparql:binding[@name='inspireLabel']/sparql:literal)
 };
 
-declare function query:getPollutantCodeAndProtectionTarge($cdrUrl as xs:string, $bDir as xs:string) as xs:string {
+(:~ Returns the pollutants for an attainment
+TODO: rewrite query, I think it runs slow
+:)
+declare function query:get-pollutant-for-attainment(
+    $subj-url as xs:string
+) as xs:string {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT distinct
+
+  ?pollutant
+
+WHERE {
+ ?s ?p ?o .
+
+ optional { ?s aqd:declarationFor ?uf}
+ optional { ?s aqd:pollutant ?pollutant}
+
+ filter(?p = <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>).
+ filter(?o = aqd:AQD_Attainment) .
+ filter(contains(str(?uf), '" || $subj-url || "'))
+
+} LIMIT 50
+"
+  let $res := sparqlx:run($query)
+  return data($res//sparql:binding[@name='pollutant']/sparql:uri)
+};
+
+declare function query:getPollutantCodeAndProtectionTarge(
+    $cdrUrl as xs:string,
+    $bDir as xs:string
+) as xs:string {
   concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
     PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -13468,7 +19091,11 @@ xsd:date(substr(str(?endPosition),1,10)) >= xsd:date('" || $reportingYear || "-1
   }"
 };
 
-declare function query:getG14($envelopeB as xs:string, $envelopeC as xs:string, $reportingYear as xs:string) as xs:string {
+declare function query:getG14(
+    $envelopeB as xs:string,
+    $envelopeC as xs:string,
+    $reportingYear as xs:string
+) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
@@ -13600,6 +19227,28 @@ declare function query:getSamplingPointAssessmentMetadata() as xs:string {
           ?samplingPointAssessmentMetadata aq:inspireNamespace ?metadataNamespace.
           }"
 };
+
+(: returns a list of assessment methods for the inspireid :)
+declare function query:get-assessment-methods-for-inspireid() as xs:string {
+  let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+PREFIX aq: <http://reference.eionet.europa.eu/aq/ontology/>
+
+SELECT ?assessmentRegime ?inspireId ?localId ?inspireLabel ?assessmentMethods
+WHERE {
+      ?assessmentRegime a aqd:AQD_AssessmentRegime ;
+      aqd:inspireId ?inspireId .
+      ?inspireId rdfs:label ?inspireLabel .
+      ?inspireId aqd:localId ?localId .
+      ?assessmentRegime aqd:assessmentMethods ?assessmentMethods .
+      FILTER()
+      }"
+    return sparqlx:run($query)
+};
+
+
 (: TODO fix this to look at latest envelope :)
 declare function query:getPollutantlD($cdrUrl as xs:string) as xs:string {
   concat("PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -13735,6 +19384,114 @@ declare function query:getObligationYears() {
 
    FILTER (year(?released) > 2014) .
    } ORDER BY ?countryCode ?ReportingYear ?obligation_nr"
+};
+
+
+(:~ Returns the URIs for the aqd:modelUsed used for the given Attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription
+    /aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+:)
+declare function query:get-used-model-for-attainment(
+    $uri as xs:string
+) as item()* {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?model_used ?attainment ?source_apportionment
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?exceedance_area aqd:modelUsed ?model_used .
+
+    # only for development
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='model_used']/sparql:literal)
+
+(: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
+};
+
+(:~ Returns the URIs for the aqd:stationUsed used for the given Attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription
+    /aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed
+:)
+declare function query:get-used-station-for-attainment(
+    $uri as xs:string
+) as item()* {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?station_used ?attainment ?source_apportionment
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?exceedance_area aqd:stationUsed ?station_used .
+
+    # only for development
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='station_used']/sparql:literal)
+
+(: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
+};
+
+
+
+
+(:~ Returns the areaClassification for a given attainment
+
+/aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/
+    aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+:)
+declare function query:get-area-classifications-for-attainment(
+    $uri as xs:string
+) as item()* {
+
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT DISTINCT ?area_classification
+WHERE {
+    ?aqd_attainment a aqd:AQD_Attainment .
+
+    ?aqd_attainment aqd:declarationFor ?attainment .
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
+    ?desc_final aqd:exceedanceArea ?exceedance_area .
+    ?excedance_area aqd:areaClassification ?area_classification .
+
+    # optional, just for double-checking
+
+    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
+
+    filter(contains(str(?attainment), '" || $uri || "'))
+}
+"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='area_classification']/sparql:literal)
 };
 
 (:~
@@ -13966,6 +19723,2727 @@ declare function sparqlx:executeSparqlEndpoint_D($sparql as xs:string) as elemen
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+(:~
+
+ : --------------------------------
+ : The FunctX XQuery Function Library
+ : --------------------------------
+
+ : Copyright (C) 2007 Datypic
+
+ : This library is free software; you can redistribute it and/or
+ : modify it under the terms of the GNU Lesser General Public
+ : License as published by the Free Software Foundation; either
+ : version 2.1 of the License.
+
+ : This library is distributed in the hope that it will be useful,
+ : but WITHOUT ANY WARRANTY; without even the implied warranty of
+ : MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ : Lesser General Public License for more details.
+
+ : You should have received a copy of the GNU Lesser General Public
+ : License along with this library; if not, write to the Free Software
+ : Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+
+ : For more information on the FunctX XQuery library, contact contrib@functx.com.
+
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com
+ :)
+
+(:~
+ : Adds attributes to XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-attributes.html
+ : @param   $elements the element(s) to which you wish to add the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:add-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return if ($element/@*[node-name(.) = $attrName])
+                           then ()
+                           else attribute {$attrName}
+                                          {$attrValues[$seq]},
+                    $element/@*,
+                    $element/node() }
+ } ;
+
+(:~
+ : Adds months to a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-months.html
+ : @param   $date the date
+ : @param   $months the number of months to add
+ :)
+declare function functx:add-months
+  ( $date as xs:anyAtomicType? ,
+    $months as xs:integer )  as xs:date? {
+
+   xs:date($date) + functx:yearMonthDuration(0,$months)
+ } ;
+
+(:~
+ : Adds attributes to XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_add-or-update-attributes.html
+ : @param   $elements the element(s) to which you wish to add the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:add-or-update-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return attribute {$attrName}
+                                     {$attrValues[$seq]},
+                    $element/@*[not(node-name(.) = $attrNames)],
+                    $element/node() }
+ } ;
+
+(:~
+ : Whether a value is all whitespace or a zero-length string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_all-whitespace.html
+ : @param   $arg the string (or node) to test
+ :)
+declare function functx:all-whitespace
+  ( $arg as xs:string? )  as xs:boolean {
+
+   normalize-space($arg) = ''
+ } ;
+
+(:~
+ : Whether all the values in a sequence are distinct
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_are-distinct-values.html
+ : @param   $seq the sequence of values
+ :)
+declare function functx:are-distinct-values
+  ( $seq as xs:anyAtomicType* )  as xs:boolean {
+
+   count(distinct-values($seq)) = count($seq)
+ } ;
+
+(:~
+ : The built-in type of an atomic value
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_atomic-type.html
+ : @param   $values the value(s) whose type you want to determine
+ :)
+declare function functx:atomic-type
+  ( $values as xs:anyAtomicType* )  as xs:string* {
+
+ for $val in $values
+ return
+ (if ($val instance of xs:untypedAtomic) then 'xs:untypedAtomic'
+ else if ($val instance of xs:anyURI) then 'xs:anyURI'
+ else if ($val instance of xs:ENTITY) then 'xs:ENTITY'
+ else if ($val instance of xs:ID) then 'xs:ID'
+ else if ($val instance of xs:NMTOKEN) then 'xs:NMTOKEN'
+ else if ($val instance of xs:language) then 'xs:language'
+ else if ($val instance of xs:NCName) then 'xs:NCName'
+ else if ($val instance of xs:Name) then 'xs:Name'
+ else if ($val instance of xs:token) then 'xs:token'
+ else if ($val instance of xs:normalizedString)
+         then 'xs:normalizedString'
+ else if ($val instance of xs:string) then 'xs:string'
+ else if ($val instance of xs:QName) then 'xs:QName'
+ else if ($val instance of xs:boolean) then 'xs:boolean'
+ else if ($val instance of xs:base64Binary) then 'xs:base64Binary'
+ else if ($val instance of xs:hexBinary) then 'xs:hexBinary'
+ else if ($val instance of xs:byte) then 'xs:byte'
+ else if ($val instance of xs:short) then 'xs:short'
+ else if ($val instance of xs:int) then 'xs:int'
+ else if ($val instance of xs:long) then 'xs:long'
+ else if ($val instance of xs:unsignedByte) then 'xs:unsignedByte'
+ else if ($val instance of xs:unsignedShort) then 'xs:unsignedShort'
+ else if ($val instance of xs:unsignedInt) then 'xs:unsignedInt'
+ else if ($val instance of xs:unsignedLong) then 'xs:unsignedLong'
+ else if ($val instance of xs:positiveInteger)
+         then 'xs:positiveInteger'
+ else if ($val instance of xs:nonNegativeInteger)
+         then 'xs:nonNegativeInteger'
+ else if ($val instance of xs:negativeInteger)
+         then 'xs:negativeInteger'
+ else if ($val instance of xs:nonPositiveInteger)
+         then 'xs:nonPositiveInteger'
+ else if ($val instance of xs:integer) then 'xs:integer'
+ else if ($val instance of xs:decimal) then 'xs:decimal'
+ else if ($val instance of xs:float) then 'xs:float'
+ else if ($val instance of xs:double) then 'xs:double'
+ else if ($val instance of xs:date) then 'xs:date'
+ else if ($val instance of xs:time) then 'xs:time'
+ else if ($val instance of xs:dateTime) then 'xs:dateTime'
+ else if ($val instance of xs:dayTimeDuration)
+         then 'xs:dayTimeDuration'
+ else if ($val instance of xs:yearMonthDuration)
+         then 'xs:yearMonthDuration'
+ else if ($val instance of xs:duration) then 'xs:duration'
+ else if ($val instance of xs:gMonth) then 'xs:gMonth'
+ else if ($val instance of xs:gYear) then 'xs:gYear'
+ else if ($val instance of xs:gYearMonth) then 'xs:gYearMonth'
+ else if ($val instance of xs:gDay) then 'xs:gDay'
+ else if ($val instance of xs:gMonthDay) then 'xs:gMonthDay'
+ else 'unknown')
+ } ;
+
+(:~
+ : The average, counting "empty" values as zero
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_avg-empty-is-zero.html
+ : @param   $values the values to be averaged
+ : @param   $allNodes the sequence of all nodes to find the average over
+ :)
+declare function functx:avg-empty-is-zero
+  ( $values as xs:anyAtomicType* ,
+    $allNodes as node()* )  as xs:double {
+
+   if (empty($allNodes))
+   then 0
+   else sum($values[string(.) != '']) div count($allNodes)
+ } ;
+
+(:~
+ : Whether a value is between two provided values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_between-exclusive.html
+ : @param   $value the value to be tested
+ : @param   $minValue the minimum value
+ : @param   $maxValue the maximum value
+ :)
+declare function functx:between-exclusive
+  ( $value as xs:anyAtomicType? ,
+    $minValue as xs:anyAtomicType ,
+    $maxValue as xs:anyAtomicType )  as xs:boolean {
+
+   $value > $minValue and $value < $maxValue
+ } ;
+
+(:~
+ : Whether a value is between two provided values, or equal to one of them
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_between-inclusive.html
+ : @param   $value the value to be tested
+ : @param   $minValue the minimum value
+ : @param   $maxValue the maximum value
+ :)
+declare function functx:between-inclusive
+  ( $value as xs:anyAtomicType? ,
+    $minValue as xs:anyAtomicType ,
+    $maxValue as xs:anyAtomicType )  as xs:boolean {
+
+   $value >= $minValue and $value <= $maxValue
+ } ;
+
+(:~
+ : Turns a camelCase string into space-separated words
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_camel-case-to-words.html
+ : @param   $arg the string to modify
+ : @param   $delim the delimiter for the words (e.g. a space)
+ :)
+declare function functx:camel-case-to-words
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   concat(substring($arg,1,1),
+             replace(substring($arg,2),'(\p{Lu})',
+                        concat($delim, '$1')))
+ } ;
+
+(:~
+ : Capitalizes the first character of a string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_capitalize-first.html
+ : @param   $arg the word or phrase to capitalize
+ :)
+declare function functx:capitalize-first
+  ( $arg as xs:string? )  as xs:string? {
+
+   concat(upper-case(substring($arg,1,1)),
+             substring($arg,2))
+ } ;
+
+(:~
+ : Changes the names of elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-names-deep.html
+ : @param   $nodes the element(s) to change
+ : @param   $oldNames the sequence of names to change from
+ : @param   $newNames the sequence of names to change to
+ :)
+declare function functx:change-element-names-deep
+  ( $nodes as node()* ,
+    $oldNames as xs:QName* ,
+    $newNames as xs:QName* )  as node()* {
+
+  if (count($oldNames) != count($newNames))
+  then error(xs:QName('functx:Different_number_of_names'))
+  else
+   for $node in $nodes
+   return if ($node instance of element())
+          then element
+                 {functx:if-empty
+                    ($newNames[index-of($oldNames,
+                                           node-name($node))],
+                     node-name($node)) }
+                 {$node/@*,
+                  functx:change-element-names-deep($node/node(),
+                                           $oldNames, $newNames)}
+          else if ($node instance of document-node())
+          then functx:change-element-names-deep($node/node(),
+                                           $oldNames, $newNames)
+          else $node
+ } ;
+
+(:~
+ : Changes the namespace of XML elements and its descendants
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-ns-deep.html
+ : @param   $nodes the nodes to change
+ : @param   $newns the new namespace
+ : @param   $prefix the prefix to use for the new namespace
+ :)
+declare function functx:change-element-ns-deep
+  ( $nodes as node()* ,
+    $newns as xs:string ,
+    $prefix as xs:string )  as node()* {
+
+  for $node in $nodes
+  return if ($node instance of element())
+         then (element
+               {QName ($newns,
+                          concat($prefix,
+                                    if ($prefix = '')
+                                    then ''
+                                    else ':',
+                                    local-name($node)))}
+               {$node/@*,
+                functx:change-element-ns-deep($node/node(),
+                                           $newns, $prefix)})
+         else if ($node instance of document-node())
+         then functx:change-element-ns-deep($node/node(),
+                                           $newns, $prefix)
+         else $node
+ } ;
+
+(:~
+ : Changes the namespace of XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_change-element-ns.html
+ : @param   $elements the elements to change
+ : @param   $newns the new namespace
+ : @param   $prefix the prefix to use for the new namespace
+ :)
+declare function functx:change-element-ns
+  ( $elements as element()* ,
+    $newns as xs:string ,
+    $prefix as xs:string )  as element()? {
+
+   for $element in $elements
+   return
+   element {QName ($newns,
+                      concat($prefix,
+                                if ($prefix = '')
+                                then ''
+                                else ':',
+                                local-name($element)))}
+           {$element/@*, $element/node()}
+ } ;
+
+(:~
+ : Converts a string to a sequence of characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_chars.html
+ : @param   $arg the string to split
+ :)
+declare function functx:chars
+  ( $arg as xs:string? )  as xs:string* {
+
+   for $ch in string-to-codepoints($arg)
+   return codepoints-to-string($ch)
+ } ;
+
+(:~
+ : Whether a string contains any of a sequence of strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-any-of.html
+ : @param   $arg the string to test
+ : @param   $searchStrings the strings to look for
+ :)
+declare function functx:contains-any-of
+  ( $arg as xs:string? ,
+    $searchStrings as xs:string* )  as xs:boolean {
+
+   some $searchString in $searchStrings
+   satisfies contains($arg,$searchString)
+ } ;
+
+(:~
+ : Whether one string contains another, without regard to case
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-case-insensitive.html
+ : @param   $arg the string to search
+ : @param   $substring the substring to find
+ :)
+declare function functx:contains-case-insensitive
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:boolean? {
+
+   contains(upper-case($arg), upper-case($substring))
+ } ;
+
+(:~
+ : Whether one string contains another, as a separate word
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_contains-word.html
+ : @param   $arg the string to search
+ : @param   $word the word to find
+ :)
+declare function functx:contains-word
+  ( $arg as xs:string? ,
+    $word as xs:string )  as xs:boolean {
+
+   matches(upper-case($arg),
+           concat('^(.*\W)?',
+                     upper-case(functx:escape-for-regex($word)),
+                     '(\W.*)?$'))
+ } ;
+
+(:~
+ : Copies attributes from one element to another
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_copy-attributes.html
+ : @param   $copyTo the element to copy attributes to
+ : @param   $copyFrom the element to copy attributes from
+ :)
+declare function functx:copy-attributes
+  ( $copyTo as element() ,
+    $copyFrom as element() )  as element() {
+
+   element { node-name($copyTo)}
+           { $copyTo/@*[not(node-name(.) = $copyFrom/@*/node-name(.))],
+             $copyFrom/@*,
+             $copyTo/node() }
+
+ } ;
+
+(:~
+ : Construct a date from a year, month and day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_date.html
+ : @param   $year the year
+ : @param   $month the month
+ : @param   $day the day
+ :)
+declare function functx:date
+  ( $year as xs:anyAtomicType ,
+    $month as xs:anyAtomicType ,
+    $day as xs:anyAtomicType )  as xs:date {
+
+   xs:date(
+     concat(
+       functx:pad-integer-to-length(xs:integer($year),4),'-',
+       functx:pad-integer-to-length(xs:integer($month),2),'-',
+       functx:pad-integer-to-length(xs:integer($day),2)))
+ } ;
+
+(:~
+ : Construct a date/time from individual components
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_datetime.html
+ : @param   $year the year
+ : @param   $month the month
+ : @param   $day the day
+ : @param   $hour the hour
+ : @param   $minute the minute
+ : @param   $second the second
+ :)
+declare function functx:dateTime
+  ( $year as xs:anyAtomicType ,
+    $month as xs:anyAtomicType ,
+    $day as xs:anyAtomicType ,
+    $hour as xs:anyAtomicType ,
+    $minute as xs:anyAtomicType ,
+    $second as xs:anyAtomicType )  as xs:dateTime {
+
+   xs:dateTime(
+     concat(functx:date($year,$month,$day),'T',
+             functx:time($hour,$minute,$second)))
+ } ;
+
+(:~
+ : The day of the year (a number between 1 and 366)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-in-year.html
+ : @param   $date the date
+ :)
+declare function functx:day-in-year
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+  days-from-duration(
+      xs:date($date) - functx:first-day-of-year($date)) + 1
+ } ;
+
+(:~
+ : The abbreviated day of the week, from a date, in English
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week-abbrev-en.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week-abbrev-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat')
+   [functx:day-of-week($date) + 1]
+ } ;
+
+(:~
+ : The name of the day of the week, from a date, in English
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week-name-en.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week-name-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Sunday', 'Monday', 'Tuesday', 'Wednesday',
+    'Thursday', 'Friday', 'Saturday')
+      [functx:day-of-week($date) + 1]
+ } ;
+
+(:~
+ : The day of the week, from a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_day-of-week.html
+ : @param   $date the date
+ :)
+declare function functx:day-of-week
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+  if (empty($date))
+  then ()
+  else xs:integer((xs:date($date) - xs:date('1901-01-06'))
+          div xs:dayTimeDuration('P1D')) mod 7
+ } ;
+
+(:~
+ : Construct a dayTimeDuration from a number of days, hours, etc.
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_daytimeduration.html
+ : @param   $days the number of days
+ : @param   $hours the number of hours
+ : @param   $minutes the number of minutes
+ : @param   $seconds the number of seconds
+ :)
+declare function functx:dayTimeDuration
+  ( $days as xs:decimal? ,
+    $hours as xs:decimal? ,
+    $minutes as xs:decimal? ,
+    $seconds as xs:decimal? )  as xs:dayTimeDuration {
+
+    (xs:dayTimeDuration('P1D') * functx:if-empty($days,0)) +
+    (xs:dayTimeDuration('PT1H') * functx:if-empty($hours,0)) +
+    (xs:dayTimeDuration('PT1M') * functx:if-empty($minutes,0)) +
+    (xs:dayTimeDuration('PT1S') * functx:if-empty($seconds,0))
+ } ;
+
+(:~
+ : Number of days in the month
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_days-in-month.html
+ : @param   $date the date
+ :)
+declare function functx:days-in-month
+  ( $date as xs:anyAtomicType? )  as xs:integer? {
+
+   if (month-from-date(xs:date($date)) = 2 and
+       functx:is-leap-year($date))
+   then 29
+   else
+   (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+    [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : The depth (level) of a node in an XML tree
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_depth-of-node.html
+ : @param   $node the node to check
+ :)
+declare function functx:depth-of-node
+  ( $node as node()? )  as xs:integer {
+
+   count($node/ancestor-or-self::node())
+ } ;
+
+(:~
+ : The distinct names of all attributes in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-attribute-names.html
+ : @param   $nodes the root to start from
+ :)
+declare function functx:distinct-attribute-names
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values($nodes//@*/name(.))
+ } ;
+
+(:~
+ : The XML nodes with distinct values, taking into account attributes and descendants
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-deep.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:distinct-deep
+  ( $nodes as node()* )  as node()* {
+
+    for $seq in (1 to count($nodes))
+    return $nodes[$seq][not(functx:is-node-in-sequence-deep-equal(
+                          .,$nodes[position() < $seq]))]
+ } ;
+
+(:~
+ : The distinct names of all elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-element-names.html
+ : @param   $nodes the root(s) to start from
+ :)
+declare function functx:distinct-element-names
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values($nodes/descendant-or-self::*/name(.))
+ } ;
+
+(:~
+ : The distinct paths of all descendant elements in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-element-paths.html
+ : @param   $nodes the root(s) to start from
+ :)
+declare function functx:distinct-element-paths
+  ( $nodes as node()* )  as xs:string* {
+
+   distinct-values(functx:path-to-node($nodes/descendant-or-self::*))
+ } ;
+
+(:~
+ : The distinct XML nodes in a sequence (by node identity)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_distinct-nodes.html
+ : @param   $nodes the node sequence
+ :)
+declare function functx:distinct-nodes
+  ( $nodes as node()* )  as node()* {
+
+    for $seq in (1 to count($nodes))
+    return $nodes[$seq][not(functx:is-node-in-sequence(
+                                .,$nodes[position() < $seq]))]
+ } ;
+
+(:~
+ : Converts a timezone like "-05:00" or "Z" into xs:dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_duration-from-timezone.html
+ : @param   $timezone the time zone, in (+|-)HH:MM format
+ :)
+declare function functx:duration-from-timezone
+  ( $timezone as xs:string )  as xs:dayTimeDuration {
+
+   xs:dayTimeDuration(
+     if (not(matches($timezone,'Z|[\+\-]\d{2}:\d{2}')))
+     then error(xs:QName('functx:Invalid_Timezone_Value'))
+     else if ($timezone = 'Z')
+     then 'PT0S'
+     else replace($timezone,'\+?(\d{2}):\d{2}','PT$1H')
+        )
+ } ;
+
+(:~
+ : Dynamically evaluates a simple XPath path
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_dynamic-path.html
+ : @param   $parent the root to start from
+ : @param   $path the path expression
+ :)
+declare function functx:dynamic-path
+  ( $parent as node() ,
+    $path as xs:string )  as item()* {
+
+  let $nextStep := functx:substring-before-if-contains($path,'/')
+  let $restOfSteps := substring-after($path,'/')
+  for $child in
+    ($parent/*[functx:name-test(name(),$nextStep)],
+     $parent/@*[functx:name-test(name(),
+                              substring-after($nextStep,'@'))])
+  return if ($restOfSteps)
+         then functx:dynamic-path($child, $restOfSteps)
+         else $child
+ } ;
+
+(:~
+ : Escapes regex special characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_escape-for-regex.html
+ : @param   $arg the string to escape
+ :)
+declare function functx:escape-for-regex
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,
+           '(\.|\[|\]|\\|\||\-|\^|\$|\?|\*|\+|\{|\}|\(|\))','\\$1')
+ } ;
+
+(:~
+ : Whether one (and only one) of two boolean values is true
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_exclusive-or.html
+ : @param   $arg1 the first boolean value
+ : @param   $arg2 the second boolean value
+ :)
+declare function functx:exclusive-or
+  ( $arg1 as xs:boolean? ,
+    $arg2 as xs:boolean? )  as xs:boolean? {
+
+   $arg1 != $arg2
+ } ;
+
+(:~
+ : The first day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-day-of-month.html
+ : @param   $date the date
+ :)
+declare function functx:first-day-of-month
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)),
+            month-from-date(xs:date($date)),
+            1)
+ } ;
+
+(:~
+ : The first day of the year of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-day-of-year.html
+ : @param   $date the date
+ :)
+declare function functx:first-day-of-year
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)), 1, 1)
+ } ;
+
+(:~
+ : The XML node in a sequence that appears first in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_first-node.html
+ : @param   $nodes the sequence of nodes
+ :)
+declare function functx:first-node
+  ( $nodes as node()* )  as node()? {
+
+   ($nodes/.)[1]
+ } ;
+
+(:~
+ : Whether an XML node follows another without being its descendant
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_follows-not-descendant.html
+ : @param   $a the first node
+ : @param   $b the second node
+ :)
+declare function functx:follows-not-descendant
+  ( $a as node()? ,
+    $b as node()? )  as xs:boolean {
+
+   $a >> $b and empty($b intersect $a/ancestor::node())
+ } ;
+
+(:~
+ : Moves title words like "the" and "a" to the end of strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_format-as-title-en.html
+ : @param   $titles the titles to format
+ :)
+declare function functx:format-as-title-en
+  ( $titles as xs:string* )  as xs:string* {
+
+   let $wordsToMoveToEnd := ('A', 'An', 'The')
+   for $title in $titles
+   let $firstWord := functx:substring-before-match($title,'\W')
+   return if ($firstWord = $wordsToMoveToEnd)
+          then replace($title,'(.*?)\W(.*)', '$2, $1')
+          else $title
+ } ;
+
+(:~
+ : Returns the fragment from a URI
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_fragment-from-uri.html
+ : @param   $uri the URI
+ :)
+declare function functx:fragment-from-uri
+  ( $uri as xs:string? )  as xs:string? {
+
+   substring-after($uri,'#')
+ } ;
+
+(:~
+ : Splits a string into matching and non-matching regions
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_get-matches-and-non-matches.html
+ : @param   $string the string to split
+ : @param   $regex the pattern
+ :)
+declare function functx:get-matches-and-non-matches
+  ( $string as xs:string? ,
+    $regex as xs:string )  as element()* {
+
+   let $iomf := functx:index-of-match-first($string, $regex)
+   return
+   if (empty($iomf))
+   then <non-match>{$string}</non-match>
+   else
+   if ($iomf > 1)
+   then (<non-match>{substring($string,1,$iomf - 1)}</non-match>,
+         functx:get-matches-and-non-matches(
+            substring($string,$iomf),$regex))
+   else
+   let $length :=
+      string-length($string) -
+      string-length(functx:replace-first($string, $regex,''))
+   return (<match>{substring($string,1,$length)}</match>,
+           if (string-length($string) > $length)
+           then functx:get-matches-and-non-matches(
+              substring($string,$length + 1),$regex)
+           else ())
+ } ;
+
+(:~
+ : Return the matching regions of a string
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_get-matches.html
+ : @param   $string the string to split
+ : @param   $regex the pattern
+ :)
+declare function functx:get-matches
+  ( $string as xs:string? ,
+    $regex as xs:string )  as xs:string* {
+
+   functx:get-matches-and-non-matches($string,$regex)/
+     string(self::match)
+ } ;
+
+(:~
+ : Whether an element has element-only content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-element-only-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-element-only-content
+  ( $element as element() )  as xs:boolean {
+
+   not($element/text()[normalize-space(.) != '']) and $element/*
+ } ;
+
+(:~
+ : Whether an element has empty content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-empty-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-empty-content
+  ( $element as element() )  as xs:boolean {
+
+   not($element/node())
+ } ;
+
+(:~
+ : Whether an element has mixed content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-mixed-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-mixed-content
+  ( $element as element() )  as xs:boolean {
+
+   $element/text()[normalize-space(.) != ''] and $element/*
+ } ;
+
+(:~
+ : Whether an element has simple content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_has-simple-content.html
+ : @param   $element the XML element to test
+ :)
+declare function functx:has-simple-content
+  ( $element as element() )  as xs:boolean {
+
+   $element/text() and not($element/*)
+ } ;
+
+(:~
+ : Gets the ID of an XML element
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_id-from-element.html
+ : @param   $element the element
+ :)
+declare function functx:id-from-element
+  ( $element as element()? )  as xs:string? {
+
+  data(($element/@*[id(.) is ..])[1])
+ } ;
+
+(:~
+ : Gets XML element(s) that have an attribute with a particular value
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_id-untyped.html
+ : @param   $node the root node(s) to start from
+ : @param   $id the "id" to find
+ :)
+declare function functx:id-untyped
+  ( $node as node()* ,
+    $id as xs:anyAtomicType )  as element()* {
+
+  $node//*[@* = $id]
+ } ;
+
+(:~
+ : The first argument if it is not empty, otherwise the second argument
+ :
+ : @author  W3C XML Query WG
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_if-absent.html
+ : @param   $arg the item(s) that may be absent
+ : @param   $value the item(s) to use if the item is absent
+ :)
+declare function functx:if-absent
+  ( $arg as item()* ,
+    $value as item()* )  as item()* {
+
+    if (exists($arg))
+    then $arg
+    else $value
+ } ;
+
+(:~
+ : The first argument if it is not blank, otherwise the second argument
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_if-empty.html
+ : @param   $arg the node that may be empty
+ : @param   $value the item(s) to use if the node is empty
+ :)
+declare function functx:if-empty
+  ( $arg as item()? ,
+    $value as item()* )  as item()* {
+
+  if (string($arg) != '')
+  then data($arg)
+  else $value
+ } ;
+
+(:~
+ : The position of a node in a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-deep-equal-node.html
+ : @param   $nodes the node sequence
+ : @param   $nodeToFind the node to find in the sequence
+ :)
+declare function functx:index-of-deep-equal-node
+  ( $nodes as node()* ,
+    $nodeToFind as node() )  as xs:integer* {
+
+  for $seq in (1 to count($nodes))
+  return $seq[deep-equal($nodes[$seq],$nodeToFind)]
+ } ;
+
+(:~
+ : The first position of a matching substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-match-first.html
+ : @param   $arg the string
+ : @param   $pattern the pattern to match
+ :)
+declare function functx:index-of-match-first
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer? {
+
+  if (matches($arg,$pattern))
+  then string-length(tokenize($arg, $pattern)[1]) + 1
+  else ()
+ } ;
+
+(:~
+ : The position of a node in a sequence, based on node identity
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-node.html
+ : @param   $nodes the node sequence
+ : @param   $nodeToFind the node to find in the sequence
+ :)
+declare function functx:index-of-node
+  ( $nodes as node()* ,
+    $nodeToFind as node() )  as xs:integer* {
+
+  for $seq in (1 to count($nodes))
+  return $seq[$nodes[$seq] is $nodeToFind]
+ } ;
+
+(:~
+ : The first position of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string-first.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string-first
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer? {
+
+  if (contains($arg, $substring))
+  then string-length(substring-before($arg, $substring))+1
+  else ()
+ } ;
+
+(:~
+ : The last position of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string-last.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string-last
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer? {
+
+  functx:index-of-string($arg, $substring)[last()]
+ } ;
+
+(:~
+ : The position(s) of a substring
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_index-of-string.html
+ : @param   $arg the string
+ : @param   $substring the substring to find
+ :)
+declare function functx:index-of-string
+  ( $arg as xs:string? ,
+    $substring as xs:string )  as xs:integer* {
+
+  if (contains($arg, $substring))
+  then (string-length(substring-before($arg, $substring))+1,
+        for $other in
+           functx:index-of-string(substring-after($arg, $substring),
+                               $substring)
+        return
+          $other +
+          string-length(substring-before($arg, $substring)) +
+          string-length($substring))
+  else ()
+ } ;
+
+(:~
+ : Inserts a string at a specified position
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_insert-string.html
+ : @param   $originalString the original string to insert into
+ : @param   $stringToInsert the string to insert
+ : @param   $pos the position
+ :)
+declare function functx:insert-string
+  ( $originalString as xs:string? ,
+    $stringToInsert as xs:string? ,
+    $pos as xs:integer )  as xs:string {
+
+   concat(substring($originalString,1,$pos - 1),
+             $stringToInsert,
+             substring($originalString,$pos))
+ } ;
+
+(:~
+ : Whether a value is numeric
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-a-number.html
+ : @param   $value the value to test
+ :)
+declare function functx:is-a-number
+  ( $value as xs:anyAtomicType? )  as xs:boolean {
+
+   string(number($value)) != 'NaN'
+ } ;
+
+(:~
+ : Whether a URI is absolute
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-absolute-uri.html
+ : @param   $uri the URI to test
+ :)
+declare function functx:is-absolute-uri
+  ( $uri as xs:string? )  as xs:boolean {
+
+   matches($uri,'^[a-z]+:')
+ } ;
+
+(:~
+ : Whether an XML node is an ancestor of another node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-ancestor.html
+ : @param   $node1 the first node
+ : @param   $node2 the second node
+ :)
+declare function functx:is-ancestor
+  ( $node1 as node() ,
+    $node2 as node() )  as xs:boolean {
+
+   exists($node1 intersect $node2/ancestor::node())
+ } ;
+
+(:~
+ : Whether an XML node is a descendant of another node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-descendant.html
+ : @param   $node1 the first node
+ : @param   $node2 the second node
+ :)
+declare function functx:is-descendant
+  ( $node1 as node() ,
+    $node2 as node() )  as xs:boolean {
+
+   boolean($node2 intersect $node1/ancestor::node())
+ } ;
+
+(:~
+ : Whether a date falls in a leap year
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-leap-year.html
+ : @param   $date the date or year
+ :)
+declare function functx:is-leap-year
+  ( $date as xs:anyAtomicType? )  as xs:boolean {
+
+    for $year in xs:integer(substring(string($date),1,4))
+    return ($year mod 4 = 0 and
+            $year mod 100 != 0) or
+            $year mod 400 = 0
+ } ;
+
+(:~
+ : Whether an XML node is among the descendants of a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-among-descendants-deep-equal.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-among-descendants-deep-equal
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq/descendant-or-self::*/(.|@*)
+   satisfies deep-equal($nodeInSeq,$node)
+ } ;
+
+(:~
+ : Whether an XML node is among the descendants of a sequence, based on node identity
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-among-descendants.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-among-descendants
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq/descendant-or-self::*/(.|@*)
+   satisfies $nodeInSeq is $node
+ } ;
+
+(:~
+ : Whether an XML node is in a sequence, based on contents and attributes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-in-sequence-deep-equal.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-in-sequence-deep-equal
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq satisfies deep-equal($nodeInSeq,$node)
+ } ;
+
+(:~
+ : Whether an XML node is in a sequence, based on node identity
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-node-in-sequence.html
+ : @param   $node the node to test
+ : @param   $seq the sequence of nodes to search
+ :)
+declare function functx:is-node-in-sequence
+  ( $node as node()? ,
+    $seq as node()* )  as xs:boolean {
+
+   some $nodeInSeq in $seq satisfies $nodeInSeq is $node
+ } ;
+
+(:~
+ : Whether an atomic value appears in a sequence
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_is-value-in-sequence.html
+ : @param   $value the atomic value to test
+ : @param   $seq the sequence of values to search
+ :)
+declare function functx:is-value-in-sequence
+  ( $value as xs:anyAtomicType? ,
+    $seq as xs:anyAtomicType* )  as xs:boolean {
+
+   $value = $seq
+ } ;
+
+(:~
+ : The last day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-day-of-month.html
+ : @param   $date the date
+ :)
+declare function functx:last-day-of-month
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)),
+            month-from-date(xs:date($date)),
+            functx:days-in-month($date))
+ } ;
+
+(:~
+ : The last day of the month of a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-day-of-year.html
+ : @param   $date the date
+ :)
+declare function functx:last-day-of-year
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   functx:date(year-from-date(xs:date($date)), 12, 31)
+ } ;
+
+(:~
+ : The XML node in a sequence that is last in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_last-node.html
+ : @param   $nodes the sequence of nodes
+ :)
+declare function functx:last-node
+  ( $nodes as node()* )  as node()? {
+
+   ($nodes/.)[last()]
+ } ;
+
+(:~
+ : All XML elements that don't have any child elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_leaf-elements.html
+ : @param   $root the root
+ :)
+declare function functx:leaf-elements
+  ( $root as node()? )  as element()* {
+
+   $root/descendant-or-self::*[not(*)]
+ } ;
+
+(:~
+ : Trims leading whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_left-trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:left-trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,'^\s+','')
+ } ;
+
+(:~
+ : The number of lines
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_line-count.html
+ : @param   $arg the string to test
+ :)
+declare function functx:line-count
+  ( $arg as xs:string? )  as xs:integer {
+
+   count(functx:lines($arg))
+ } ;
+
+(:~
+ : Split a string into separate lines
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_lines.html
+ : @param   $arg the string to split
+ :)
+declare function functx:lines
+  ( $arg as xs:string? )  as xs:string* {
+
+   tokenize($arg, '(\r\n?|\n\r?)')
+ } ;
+
+(:~
+ : The maximum depth of elements in an XML tree
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-depth.html
+ : @param   $root the root to start from
+ :)
+declare function functx:max-depth
+  ( $root as node()? )  as xs:integer? {
+
+   if ($root/*)
+   then max($root/*/functx:max-depth(.)) + 1
+   else 1
+ } ;
+
+(:~
+ : The maximum value in a sequence, figuring out its type (numeric or string)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-determine-type.html
+ : @param   $seq the sequence of values to test
+ :)
+declare function functx:max-determine-type
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType? {
+
+   if (every $value in $seq satisfies ($value castable as xs:double))
+   then max(for $value in $seq return xs:double($value))
+   else max(for $value in $seq return xs:string($value))
+ } ;
+
+(:~
+ : The maximum line length
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-line-length.html
+ : @param   $arg the string to test
+ :)
+declare function functx:max-line-length
+  ( $arg as xs:string? )  as xs:integer {
+
+   max(
+     for $line in functx:lines($arg)
+     return string-length($line))
+ } ;
+
+(:~
+ : The XML node whose typed value is the maximum
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-node.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:max-node
+  ( $nodes as node()* )  as node()* {
+
+   $nodes[. = max($nodes)]
+ } ;
+
+(:~
+ : The maximum of a sequence of values, treating them like strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_max-string.html
+ : @param   $strings the sequence of values
+ :)
+declare function functx:max-string
+  ( $strings as xs:anyAtomicType* )  as xs:string? {
+
+   max(for $string in $strings return string($string))
+ } ;
+
+(:~
+ : The minimum value in a sequence, figuring out its type (numeric or string)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-determine-type.html
+ : @param   $seq the sequence of values to test
+ :)
+declare function functx:min-determine-type
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType? {
+
+   if (every $value in $seq satisfies ($value castable as xs:double))
+   then min(for $value in $seq return xs:double($value))
+   else min(for $value in $seq return xs:string($value))
+ } ;
+
+(:~
+ : The XML node whose typed value is the minimum
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-node.html
+ : @param   $nodes the sequence of nodes to test
+ :)
+declare function functx:min-node
+  ( $nodes as node()* )  as node()* {
+
+   $nodes[. = min($nodes)]
+ } ;
+
+(:~
+ : The minimum of a sequence of strings, ignoring "empty" values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-non-empty-string.html
+ : @param   $strings the sequence of strings to search
+ :)
+declare function functx:min-non-empty-string
+  ( $strings as xs:string* )  as xs:string? {
+
+   min($strings[. != ''])
+ } ;
+
+(:~
+ : The minimum of a sequence of values, treating them like strings
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_min-string.html
+ : @param   $strings the sequence of strings
+ :)
+declare function functx:min-string
+  ( $strings as xs:anyAtomicType* )  as xs:string? {
+
+   min(for $string in $strings return string($string))
+ } ;
+
+(:~
+ : Converts a string with format MMDDYYYY (with any delimiters) to a date
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_mmddyyyy-to-date.html
+ : @param   $dateString the MMDDYYYY string
+ :)
+declare function functx:mmddyyyy-to-date
+  ( $dateString as xs:string? )  as xs:date? {
+
+   if (empty($dateString))
+   then ()
+   else if (not(matches($dateString,
+                        '^\D*(\d{2})\D*(\d{2})\D*(\d{4})\D*$')))
+   then error(xs:QName('functx:Invalid_Date_Format'))
+   else xs:date(replace($dateString,
+                        '^\D*(\d{2})\D*(\d{2})\D*(\d{4})\D*$',
+                        '$3-$1-$2'))
+ } ;
+
+(:~
+ : The month of a date as an abbreviated word (Jan, Feb, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_month-abbrev-en.html
+ : @param   $date the date
+ :)
+declare function functx:month-abbrev-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')
+    [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : The month of a date as a word (January, February, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_month-name-en.html
+ : @param   $date the date
+ :)
+declare function functx:month-name-en
+  ( $date as xs:anyAtomicType? )  as xs:string? {
+
+   ('January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December')
+   [month-from-date(xs:date($date))]
+ } ;
+
+(:~
+ : Whether a name matches a list of names or name wildcards
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_name-test.html
+ : @param   $testname the name to test
+ : @param   $names the list of names or name wildcards
+ :)
+declare function functx:name-test
+  ( $testname as xs:string? ,
+    $names as xs:string* )  as xs:boolean {
+
+$testname = $names
+or
+$names = '*'
+or
+functx:substring-after-if-contains($testname,':') =
+   (for $name in $names
+   return substring-after($name,'*:'))
+or
+substring-before($testname,':') =
+   (for $name in $names[contains(.,':*')]
+   return substring-before($name,':*'))
+ } ;
+
+(:~
+ : A list of namespaces used in element/attribute names in an XML fragment
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_namespaces-in-use.html
+ : @param   $root the root node to start from
+ :)
+declare function functx:namespaces-in-use
+  ( $root as node()? )  as xs:anyURI* {
+
+   distinct-values(
+      $root/descendant-or-self::*/(.|@*)/namespace-uri(.))
+ } ;
+
+(:~
+ : The next day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_next-day.html
+ : @param   $date the date
+ :)
+declare function functx:next-day
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   xs:date($date) + xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : The XML node kind (element, attribute, text, etc.)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_node-kind.html
+ : @param   $nodes the node(s) whose kind you want to determine
+ :)
+declare function functx:node-kind
+  ( $nodes as node()* )  as xs:string* {
+
+ for $node in $nodes
+ return
+ if ($node instance of element()) then 'element'
+ else if ($node instance of attribute()) then 'attribute'
+ else if ($node instance of text()) then 'text'
+ else if ($node instance of document-node()) then 'document-node'
+ else if ($node instance of comment()) then 'comment'
+ else if ($node instance of processing-instruction())
+         then 'processing-instruction'
+ else 'unknown'
+ } ;
+
+(:~
+ : Returns any values that appear more than once in a sequence
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_non-distinct-values.html
+ : @param   $seq the sequence of values
+ :)
+declare function functx:non-distinct-values
+  ( $seq as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+   for $val in distinct-values($seq)
+   return $val[count($seq[. = $val]) > 1]
+ } ;
+
+(:~
+ : The number of regions that match a pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_number-of-matches.html
+ : @param   $arg the string to test
+ : @param   $pattern the regular expression
+ :)
+declare function functx:number-of-matches
+  ( $arg as xs:string? ,
+    $pattern as xs:string )  as xs:integer {
+
+   count(tokenize($arg,$pattern)) - 1
+ } ;
+
+(:~
+ : Resolves a relative URI and references it, returning an XML document
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_open-ref-document.html
+ : @param   $refNode a node whose value is a relative URI reference
+ :)
+declare function functx:open-ref-document
+  ( $refNode as node() )  as document-node() {
+
+   if (base-uri($refNode))
+   then doc(resolve-uri($refNode, base-uri($refNode)))
+   else doc(resolve-uri($refNode))
+ } ;
+
+(:~
+ : Reformats a number as an ordinal number, e.g. 1st, 2nd, 3rd.
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_ordinal-number-en.html
+ : @param   $num the number
+ :)
+declare function functx:ordinal-number-en
+  ( $num as xs:integer? )  as xs:string {
+
+   concat(xs:string($num),
+         if (matches(xs:string($num),'[04-9]$|1[1-3]$')) then 'th'
+         else if (ends-with(xs:string($num),'1')) then 'st'
+         else if (ends-with(xs:string($num),'2')) then 'nd'
+         else if (ends-with(xs:string($num),'3')) then 'rd'
+         else '')
+ } ;
+
+(:~
+ : Pads an integer to a desired length by adding leading zeros
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_pad-integer-to-length.html
+ : @param   $integerToPad the integer to pad
+ : @param   $length the desired length
+ :)
+declare function functx:pad-integer-to-length
+  ( $integerToPad as xs:anyAtomicType? ,
+    $length as xs:integer )  as xs:string {
+
+   if ($length < string-length(string($integerToPad)))
+   then error(xs:QName('functx:Integer_Longer_Than_Length'))
+   else concat
+         (functx:repeat-string(
+            '0',$length - string-length(string($integerToPad))),
+          string($integerToPad))
+ } ;
+
+(:~
+ : Pads a string to a desired length
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_pad-string-to-length.html
+ : @param   $stringToPad the string to pad
+ : @param   $padChar the character(s) to use as padding
+ : @param   $length the desired length
+ :)
+declare function functx:pad-string-to-length
+  ( $stringToPad as xs:string? ,
+    $padChar as xs:string ,
+    $length as xs:integer )  as xs:string {
+
+   substring(
+     string-join (
+       ($stringToPad, for $i in (1 to $length) return $padChar)
+       ,'')
+    ,1,$length)
+ } ;
+
+(:~
+ : A unique path to an XML node (or sequence of nodes)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_path-to-node-with-pos.html
+ : @param   $node the node sequence
+ :)
+declare function functx:path-to-node-with-pos
+  ( $node as node()? )  as xs:string {
+
+string-join(
+  for $ancestor in $node/ancestor-or-self::*
+  let $sibsOfSameName := $ancestor/../*[name() = name($ancestor)]
+  return concat(name($ancestor),
+   if (count($sibsOfSameName) <= 1)
+   then ''
+   else concat(
+      '[',functx:index-of-node($sibsOfSameName,$ancestor),']'))
+ , '/')
+ } ;
+
+(:~
+ : A path to an XML node (or sequence of nodes)
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_path-to-node.html
+ : @param   $nodes the node sequence
+ :)
+declare function functx:path-to-node
+  ( $nodes as node()* )  as xs:string* {
+
+$nodes/string-join(ancestor-or-self::*/name(.), '/')
+ } ;
+
+(:~
+ : Whether an XML node precedes another without being its ancestor
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_precedes-not-ancestor.html
+ : @param   $a the first node
+ : @param   $b the second node
+ :)
+declare function functx:precedes-not-ancestor
+  ( $a as node()? ,
+    $b as node()? )  as xs:boolean {
+
+   $a << $b and empty($a intersect $b/ancestor::node())
+ } ;
+
+(:~
+ : The previous day
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_previous-day.html
+ : @param   $date the date
+ :)
+declare function functx:previous-day
+  ( $date as xs:anyAtomicType? )  as xs:date? {
+
+   xs:date($date) - xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : Removes attributes from an XML fragment, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-attributes-deep.html
+ : @param   $nodes the root(s) to start from
+ : @param   $names the names of the attributes to remove, or * for all attributes
+ :)
+declare function functx:remove-attributes-deep
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return if ($node instance of element())
+          then  element { node-name($node)}
+                { $node/@*[not(functx:name-test(name(),$names))],
+                  functx:remove-attributes-deep($node/node(), $names)}
+          else if ($node instance of document-node())
+          then functx:remove-attributes-deep($node/node(), $names)
+          else $node
+ } ;
+
+(:~
+ : Removes attributes from an XML element, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-attributes.html
+ : @param   $elements the element(s) from which to remove the attributes
+ : @param   $names the names of the attributes to remove, or * for all attributes
+ :)
+declare function functx:remove-attributes
+  ( $elements as element()* ,
+    $names as xs:string* )  as element() {
+
+   for $element in $elements
+   return element
+     {node-name($element)}
+     {$element/@*[not(functx:name-test(name(),$names))],
+      $element/node() }
+ } ;
+
+(:~
+ : Removes descendant elements from an XML node, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements-deep.html
+ : @param   $nodes root(s) to start from
+ : @param   $names the names of the elements to remove
+ :)
+declare function functx:remove-elements-deep
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return
+     if ($node instance of element())
+     then if (functx:name-test(name($node),$names))
+          then ()
+          else element { node-name($node)}
+                { $node/@*,
+                  functx:remove-elements-deep($node/node(), $names)}
+     else if ($node instance of document-node())
+     then functx:remove-elements-deep($node/node(), $names)
+     else $node
+ } ;
+
+(:~
+ : Removes descendant XML elements but keeps their content
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements-not-contents.html
+ : @param   $nodes the root(s) to start from
+ : @param   $names the names of the elements to remove
+ :)
+declare function functx:remove-elements-not-contents
+  ( $nodes as node()* ,
+    $names as xs:string* )  as node()* {
+
+   for $node in $nodes
+   return
+    if ($node instance of element())
+    then if (functx:name-test(name($node),$names))
+         then functx:remove-elements-not-contents($node/node(), $names)
+         else element {node-name($node)}
+              {$node/@*,
+              functx:remove-elements-not-contents($node/node(),$names)}
+    else if ($node instance of document-node())
+    then functx:remove-elements-not-contents($node/node(), $names)
+    else $node
+ } ;
+
+(:~
+ : Removes child elements from an XML node, based on name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_remove-elements.html
+ : @param   $elements the element(s) from which you wish to remove the children
+ : @param   $names the names of the child elements to remove
+ :)
+declare function functx:remove-elements
+  ( $elements as element()* ,
+    $names as xs:string* )  as element()* {
+
+   for $element in $elements
+   return element
+     {node-name($element)}
+     {$element/@*,
+      $element/node()[not(functx:name-test(name(),$names))] }
+ } ;
+
+(:~
+ : Repeats a string a given number of times
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_repeat-string.html
+ : @param   $stringToRepeat the string to repeat
+ : @param   $count the desired number of copies
+ :)
+declare function functx:repeat-string
+  ( $stringToRepeat as xs:string? ,
+    $count as xs:integer )  as xs:string {
+
+   string-join((for $i in 1 to $count return $stringToRepeat),
+                        '')
+ } ;
+
+(:~
+ : Replaces the beginning of a string, up to a matched pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-beginning.html
+ : @param   $arg the entire string to change
+ : @param   $pattern the pattern of characters to replace up to
+ : @param   $replacement the replacement string
+ :)
+declare function functx:replace-beginning
+  ( $arg as xs:string? ,
+    $pattern as xs:string ,
+    $replacement as xs:string )  as xs:string {
+
+   replace($arg, concat('^.*?', $pattern), $replacement)
+ } ;
+
+(:~
+ : Updates the content of one or more elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-element-values.html
+ : @param   $elements the elements whose content you wish to replace
+ : @param   $values the replacement values
+ :)
+declare function functx:replace-element-values
+  ( $elements as element()* ,
+    $values as xs:anyAtomicType* )  as element()* {
+
+   for $element at $seq in $elements
+   return element { node-name($element)}
+             { $element/@*,
+               $values[$seq] }
+ } ;
+
+(:~
+ : Replaces the first match of a pattern
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-first.html
+ : @param   $arg the entire string to change
+ : @param   $pattern the pattern of characters to replace
+ : @param   $replacement the replacement string
+ :)
+declare function functx:replace-first
+  ( $arg as xs:string? ,
+    $pattern as xs:string ,
+    $replacement as xs:string )  as xs:string {
+
+   replace($arg, concat('(^.*?)', $pattern),
+             concat('$1',$replacement))
+ } ;
+
+(:~
+ : Performs multiple replacements, using pairs of replace parameters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_replace-multi.html
+ : @param   $arg the string to manipulate
+ : @param   $changeFrom the sequence of strings or patterns to change from
+ : @param   $changeTo the sequence of strings to change to
+ :)
+declare function functx:replace-multi
+  ( $arg as xs:string? ,
+    $changeFrom as xs:string* ,
+    $changeTo as xs:string* )  as xs:string? {
+
+   if (count($changeFrom) > 0)
+   then functx:replace-multi(
+          replace($arg, $changeFrom[1],
+                     functx:if-absent($changeTo[1],'')),
+          $changeFrom[position() > 1],
+          $changeTo[position() > 1])
+   else $arg
+ } ;
+
+(:~
+ : Reverses the order of characters
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_reverse-string.html
+ : @param   $arg the string to reverse
+ :)
+declare function functx:reverse-string
+  ( $arg as xs:string? )  as xs:string {
+
+   codepoints-to-string(reverse(string-to-codepoints($arg)))
+ } ;
+
+(:~
+ : Trims trailing whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_right-trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:right-trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace($arg,'\s+$','')
+ } ;
+
+(:~
+ : Returns the scheme from a URI
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_scheme-from-uri.html
+ : @param   $uri the URI
+ :)
+declare function functx:scheme-from-uri
+  ( $uri as xs:string? )  as xs:string? {
+
+   substring-before($uri,':')
+ } ;
+
+(:~
+ : Whether two sequences have the same XML node content and/or values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-deep-equal.html
+ : @param   $seq1 the first sequence
+ : @param   $seq2 the second sequence
+ :)
+declare function functx:sequence-deep-equal
+  ( $seq1 as item()* ,
+    $seq2 as item()* )  as xs:boolean {
+
+  every $i in 1 to max((count($seq1),count($seq2)))
+  satisfies deep-equal($seq1[$i],$seq2[$i])
+ } ;
+
+(:~
+ : Whether two sequences contain the same XML nodes, regardless of order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-node-equal-any-order.html
+ : @param   $seq1 the first sequence of nodes
+ : @param   $seq2 the second sequence of nodes
+ :)
+declare function functx:sequence-node-equal-any-order
+  ( $seq1 as node()* ,
+    $seq2 as node()* )  as xs:boolean {
+
+  not( ($seq1 except $seq2, $seq2 except $seq1))
+ } ;
+
+(:~
+ : Whether two sequences contain the same XML nodes, in the same order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-node-equal.html
+ : @param   $seq1 the first sequence of nodes
+ : @param   $seq2 the second sequence of nodes
+ :)
+declare function functx:sequence-node-equal
+  ( $seq1 as node()* ,
+    $seq2 as node()* )  as xs:boolean {
+
+  every $i in 1 to max((count($seq1),count($seq2)))
+  satisfies $seq1[$i] is $seq2[$i]
+ } ;
+
+(:~
+ : The sequence type that represents a sequence of nodes or values
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sequence-type.html
+ : @param   $items the items whose sequence type you want to determine
+ :)
+declare function functx:sequence-type
+  ( $items as item()* )  as xs:string {
+
+concat(
+  if (empty($items))
+  then 'empty-sequence()'
+  else if (every $val in $items
+           satisfies $val instance of xs:anyAtomicType)
+  then if (count(distinct-values(functx:atomic-type($items)))
+           > 1)
+  then 'xs:anyAtomicType'
+  else functx:atomic-type($items[1])
+  else if (some $val in $items
+           satisfies $val instance of xs:anyAtomicType)
+  then 'item()'
+  else if (count(distinct-values(functx:node-kind($items))) > 1)
+  then 'node()'
+  else concat(functx:node-kind($items[1]),'()')
+  ,
+  if (count($items) > 1)
+  then '+' else '')
+   } ;
+
+(:~
+ : The siblings of an XML element that have the same name
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_siblings-same-name.html
+ : @param   $element the node
+ :)
+declare function functx:siblings-same-name
+  ( $element as element()? )  as element()* {
+
+   $element/../*[node-name(.) = node-name($element)]
+   except $element
+ } ;
+
+(:~
+ : The siblings of an XML node
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_siblings.html
+ : @param   $node the node
+ :)
+declare function functx:siblings
+  ( $node as node()? )  as node()* {
+
+   $node/../node() except $node
+ } ;
+
+(:~
+ : Sorts a sequence of numeric values or nodes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-as-numeric.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-as-numeric
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by number($item)
+   return $item
+ } ;
+
+(:~
+ : Sorts a sequence of values or nodes regardless of capitalization
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-case-insensitive.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-case-insensitive
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by upper-case(string($item))
+   return $item
+ } ;
+
+(:~
+ : Sorts a sequence of nodes in document order
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort-document-order.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort-document-order
+  ( $seq as node()* )  as node()* {
+
+   $seq/.
+ } ;
+
+(:~
+ : Sorts a sequence of values or nodes
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_sort.html
+ : @param   $seq the sequence to sort
+ :)
+declare function functx:sort
+  ( $seq as item()* )  as item()* {
+
+   for $item in $seq
+   order by $item
+   return $item
+ } ;
+
+(:~
+ : Performs substring-after, returning the entire string if it does not contain the delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-if-contains.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-after-if-contains
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string? {
+
+   if (contains($arg,$delim))
+   then substring-after($arg,$delim)
+   else $arg
+ } ;
+
+(:~
+ : The substring after the last text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-last-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-after-last-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string {
+
+   replace($arg,concat('^.*',$regex),'')
+ } ;
+
+(:~
+ : The substring after the last occurrence of a delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-last.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-after-last
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   replace ($arg,concat('^.*',functx:escape-for-regex($delim)),'')
+ } ;
+
+(:~
+ : The substring after the first text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-after-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-after-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string? {
+
+   replace($arg,concat('^.*?',$regex),'')
+ } ;
+
+(:~
+ : Performs substring-before, returning the entire string if it does not contain the delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-if-contains.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-before-if-contains
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string? {
+
+   if (contains($arg,$delim))
+   then substring-before($arg,$delim)
+   else $arg
+ } ;
+
+(:~
+ : The substring after the first text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-last-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-before-last-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string? {
+
+   replace($arg,concat('^(.*)',$regex,'.*'),'$1')
+ } ;
+
+(:~
+ : The substring before the last occurrence of a delimiter
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-last.html
+ : @param   $arg the string to substring
+ : @param   $delim the delimiter
+ :)
+declare function functx:substring-before-last
+  ( $arg as xs:string? ,
+    $delim as xs:string )  as xs:string {
+
+   if (matches($arg, functx:escape-for-regex($delim)))
+   then replace($arg,
+            concat('^(.*)', functx:escape-for-regex($delim),'.*'),
+            '$1')
+   else ''
+ } ;
+
+(:~
+ : The substring before the last text that matches a regex
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_substring-before-match.html
+ : @param   $arg the string to substring
+ : @param   $regex the regular expression
+ :)
+declare function functx:substring-before-match
+  ( $arg as xs:string? ,
+    $regex as xs:string )  as xs:string {
+
+   tokenize($arg,$regex)[1]
+ } ;
+
+(:~
+ : Construct a time from an hour, minute and second
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_time.html
+ : @param   $hour the hour
+ : @param   $minute the minute
+ : @param   $second the second
+ :)
+declare function functx:time
+  ( $hour as xs:anyAtomicType ,
+    $minute as xs:anyAtomicType ,
+    $second as xs:anyAtomicType )  as xs:time {
+
+   xs:time(
+     concat(
+       functx:pad-integer-to-length(xs:integer($hour),2),':',
+       functx:pad-integer-to-length(xs:integer($minute),2),':',
+       functx:pad-integer-to-length(xs:integer($second),2)))
+ } ;
+
+(:~
+ : Converts an xs:dayTimeDuration into a timezone like "-05:00" or "Z"
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_timezone-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:timezone-from-duration
+  ( $duration as xs:dayTimeDuration )  as xs:string {
+
+   if (string($duration) = ('PT0S','-PT0S'))
+   then 'Z'
+   else if (matches(string($duration),'-PT[1-9]H'))
+   then replace(string($duration),'PT([1-9])H','0$1:00')
+   else if (matches(string($duration),'PT[1-9]H'))
+   then replace(string($duration),'PT([1-9])H','+0$1:00')
+   else if (matches(string($duration),'-PT1[0-4]H'))
+   then replace(string($duration),'PT(1[0-4])H','$1:00')
+   else if (matches(string($duration),'PT1[0-4]H'))
+   then replace(string($duration),'PT(1[0-4])H','+$1:00')
+   else error(xs:QName('functx:Invalid_Duration_Value'))
+ } ;
+
+(:~
+ : The total number of days in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-days-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-days-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('P1D')
+ } ;
+
+(:~
+ : The total number of hours in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-hours-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-hours-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1H')
+ } ;
+
+(:~
+ : The total number of minutes in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-minutes-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-minutes-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1M')
+ } ;
+
+(:~
+ : The total number of months in a yearMonthDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-months-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-months-from-duration
+  ( $duration as xs:yearMonthDuration? )  as xs:decimal? {
+
+   $duration div xs:yearMonthDuration('P1M')
+ } ;
+
+(:~
+ : The total number of seconds in a dayTimeDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-seconds-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-seconds-from-duration
+  ( $duration as xs:dayTimeDuration? )  as xs:decimal? {
+
+   $duration div xs:dayTimeDuration('PT1S')
+ } ;
+
+(:~
+ : The total number of years in a yearMonthDuration
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_total-years-from-duration.html
+ : @param   $duration the duration
+ :)
+declare function functx:total-years-from-duration
+  ( $duration as xs:yearMonthDuration? )  as xs:decimal? {
+
+   $duration div xs:yearMonthDuration('P1Y')
+ } ;
+
+(:~
+ : Trims leading and trailing whitespace
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_trim.html
+ : @param   $arg the string to trim
+ :)
+declare function functx:trim
+  ( $arg as xs:string? )  as xs:string {
+
+   replace(replace($arg,'\s+$',''),'^\s+','')
+ } ;
+
+(:~
+ : Updates the attribute value of an XML element
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_update-attributes.html
+ : @param   $elements the element(s) for which you wish to update the attribute
+ : @param   $attrNames the name(s) of the attribute(s) to add
+ : @param   $attrValues the value(s) of the attribute(s) to add
+ :)
+declare function functx:update-attributes
+  ( $elements as element()* ,
+    $attrNames as xs:QName* ,
+    $attrValues as xs:anyAtomicType* )  as element()? {
+
+   for $element in $elements
+   return element { node-name($element)}
+                  { for $attrName at $seq in $attrNames
+                    return if ($element/@*[node-name(.) = $attrName])
+                           then attribute {$attrName}
+                                     {$attrValues[$seq]}
+                           else (),
+                    $element/@*[not(node-name(.) = $attrNames)],
+                    $element/node() }
+ } ;
+
+(:~
+ : The values in one sequence that aren't in another sequence
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-except.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-except
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values($arg1[not(.=$arg2)])
+ } ;
+
+(:~
+ : The intersection of two sequences of values
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-intersect.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-intersect
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values($arg1[.=$arg2])
+ } ;
+
+(:~
+ : The union of two sequences of values
+ :
+ : @author  W3C XML Query Working Group
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_value-union.html
+ : @param   $arg1 the first sequence
+ : @param   $arg2 the second sequence
+ :)
+declare function functx:value-union
+  ( $arg1 as xs:anyAtomicType* ,
+    $arg2 as xs:anyAtomicType* )  as xs:anyAtomicType* {
+
+  distinct-values(($arg1, $arg2))
+ } ;
+
+(:~
+ : The number of words
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_word-count.html
+ : @param   $arg the string to measure
+ :)
+declare function functx:word-count
+  ( $arg as xs:string? )  as xs:integer {
+
+   count(tokenize($arg, '\W+')[. != ''])
+ } ;
+
+(:~
+ : Turns a string of words into camelCase
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_words-to-camel-case.html
+ : @param   $arg the string to modify
+ :)
+declare function functx:words-to-camel-case
+  ( $arg as xs:string? )  as xs:string {
+
+     string-join((tokenize($arg,'\s+')[1],
+       for $word in tokenize($arg,'\s+')[position() > 1]
+       return functx:capitalize-first($word))
+      ,'')
+ } ;
+
+(:~
+ : Wraps a sequence of atomic values in XML elements
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_wrap-values-in-elements.html
+ : @param   $values the values to wrap in elements
+ : @param   $elementName the name of the elements to construct
+ :)
+declare function functx:wrap-values-in-elements
+  ( $values as xs:anyAtomicType* ,
+    $elementName as xs:QName )  as element()* {
+
+   for $value in $values
+   return element {$elementName} {$value}
+ } ;
+
+(:~
+ : Construct a yearMonthDuration from a number of years and months
+ :
+ : @author  Priscilla Walmsley, Datypic
+ : @version 1.0
+ : @see     http://www.xqueryfunctions.com/xq/functx_yearmonthduration.html
+ : @param   $years the number of years
+ : @param   $months the number of months
+ :)
+declare function functx:yearMonthDuration
+  ( $years as xs:decimal? ,
+    $months as xs:integer? )  as xs:yearMonthDuration {
+
+    (xs:yearMonthDuration('P1M') * functx:if-empty($months,0)) +
+    (xs:yearMonthDuration('P1Y') * functx:if-empty($years,0))
+ } ;
 
 (:~
 : User: George Sofianos

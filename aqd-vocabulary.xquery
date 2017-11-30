@@ -62,6 +62,10 @@ declare variable $vocabulary:ROD_PREFIX as xs:string := "http://rod.eionet.europ
 declare variable $vocabulary:SAMPLINGEQUIPMENT_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/samplingequipment/";
 declare variable $vocabulary:SOURCESECTORS_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/sourcesectors/";
 declare variable $vocabulary:SPACIALSCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/spatialscale/";
+<<<<<<< HEAD
+=======
+declare variable $vocabulary:STATUSAQPLAN_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/";
+>>>>>>> master
 declare variable $vocabulary:TIMESCALE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timescale/";
 declare variable $vocabulary:TIMEZONE_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/aq/timezone/";
 declare variable $vocabulary:UOM_CONCENTRATION_VOCABULARY := "http://dd.eionet.europa.eu/vocabulary/uom/concentration/";
