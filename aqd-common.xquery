@@ -256,6 +256,16 @@ declare function common:isInVocabulary(
     return $uri and $uri = $validUris
 };
 
+(: Check if the given node equals to a term that is defined in the vocabulary :)
+declare function common:isEqualToTermInVocabulary(
+        $uri as xs:string?,
+        $vocabularyName as xs:string,
+        $vocabularyTermUri as xs:string
+) as xs:boolean {
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris and $uri = $vocabularyTermUri
+};
+
 declare function common:isInVocabularyReport(
   $main as node()+,
   $vocabularyName as xs:string
@@ -277,37 +287,44 @@ declare function common:isInVocabularyReport(
     }
 };
 
-        (: (xs:string, xs:anyAtomicType)* :)
 
+(: Type independent method of getting value at index in an array or sequence :)
+declare function common:get(
+    $seq,
+    $index as xs:integer
+) {
+    if ($seq instance of array(*))
+    then
+        $seq($index)
+    else
+        $seq[$index]
+};
+
+
+(:~ Constructs table rows from provided title/value pairs :)
 declare function common:conditionalReportRow (
     $ok as xs:boolean,
     $vals as array(item()*)
 ) as element(tr)* {
     if (not($ok))
     then
-        let $tr :=
-            <tr>
-            {
-                for $i in 1 to array:size($vals)
-                let $row := array:get($vals, $i)
-                return
-                    if ($row instance of array(*))
-                    then
-                        <td title="{$row(1)}">
-                            {data($row(2))}
-                        </td>
-                    else
-                        <td title="{$row[1]}">
-                            {data($row[2])}
-                        </td>
-            }
-            </tr>
-        (:let $x := trace($tr, 'x:'):)
-        return $tr
+        <tr>{
+        array:flatten(
+            array:for-each($vals, function($row) {
+                <td title="{common:get($row, 1)}">
+                    {
+                    functx:if-empty(
+                        data(common:get($row, 2)),
+                        "no value provided"
+                    )
+                    }
+                </td>
+            })
+        )
+        }</tr>
     else
         ()
 };
-
 
 
 (: returns if a specific node exists in a parent :)
@@ -521,7 +538,7 @@ declare function common:has-content(
             let $attr := empty($node/@*)
             let $children := empty($node/*)
         return $attr or $children
-    return $res = true()
+    return exists($nodes) and ($res = true())
 };
 
 (:~ Returns true if provided pollutant is one of special values :)
@@ -534,5 +551,17 @@ declare function common:is-polutant-air(
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
         )
+    return $uri = $okv
+};
+
+(:~ Returns true if provided status is one of special values :)
+declare function common:is-status-in-progress(
+        $uri as xs:string
+) as xs:boolean {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation",
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process",
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision"
+    )
     return $uri = $okv
 };

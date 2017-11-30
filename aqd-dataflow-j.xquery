@@ -189,7 +189,7 @@ let $J2errorLevel :=
         ) > 0
         )
     then
-        $errors:K02
+        $errors:J2
     else
         $errors:INFO
 

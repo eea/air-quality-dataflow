@@ -62,6 +62,7 @@ let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
 let $reportingYear := common:getReportingYear($docRoot)
+let $node-name := 'aqd:AQD_Plan'
 let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $nameSpaces := distinct-values($docRoot//base:namespace)
@@ -107,7 +108,26 @@ let $H0 := try {
 
 let $isNewDelivery := errors:getMaxError($H0) = $errors:INFO
 
-(: H01 Number of AQ Plans reported :)
+let $deliveries := sparqlx:run(
+        query:sparql-objects-in-subject($cdrUrl || "h/", $node-name)
+)//sparql:binding[@name='inspireLabel']/sparql:literal
+
+let $latest-delivery := sparqlx:run(
+        query:sparql-objects-in-subject(
+                $latestEnvelopeByYearH,
+                $node-name
+        )
+)//sparql:binding[@name='inspireLabel']/sparql:literal
+
+let $knownPlans :=
+    if ($isNewDelivery) then
+        distinct-values(data($deliveries))
+    else
+        distinct-values(data($latest-delivery))
+
+(: H01
+Number of AQ Plans reported
+:)
 
 let $countPlans := count($docRoot//aqd:AQD_Plan)
 let $H01 := try {
@@ -127,6 +147,45 @@ let $H01 := try {
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
+
+(: H02
+Compile & feedback upon the total number of new plans records included in the delivery
+(compared to any delivery for the same reporting year)
+
+Number of new Plans compared to previous report(s).
+:)
+
+let $H02 := try {
+    for $el in $docRoot//aqd:AQD_Plan
+    let $x := $el/aqd:inspireId/base:Identifier
+    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+    let $ok := not($inspireId = $knownPlans)
+    return
+        common:conditionalReportRow(
+                $ok,
+                [
+                ("gml:id", data($el/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+                ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $H02errorLevel :=
+    if (
+        $isNewDelivery
+                and
+                count(
+                        for $x in $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier
+                        let $id := $x/base:namespace || "/" || $x/base:localId
+                        where query:existsViaNameLocalId($id, 'AQD_Plan')
+                        return 1
+                ) > 0
+    )
+    then
+        $errors:H02
+    else
+        $errors:INFO
 
 (: H03 Number of existing Plans compared to previous report (same reporting year). Blocker will be returned if
 XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
@@ -308,6 +367,76 @@ let $H10 := try {
             $ok,
             [
             ("base:namespace", $x)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H11
+If aqd:AQD_ReportingHeader/aqd:reportingPeriod => 2013 aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+attribute shall resolve to at least one  exceedance situation in dataset G via namespace/localId.
+
+If reporting period equal or greater than 2013, AQ must link to a valid exceedande situation (G)
+:)
+let $H11 := try{
+    let $year := if (empty($reportingYear)) then ()
+    else
+        if ($reportingYear castable as xs:integer) then xs:integer($reportingYear) else ()
+
+    for $el in $docRoot//aqd:AQD_Plan/aqd:exceedanceSituation
+
+    let $label := data($el/@xlink:href)
+    let $ok := (query:existsViaNameLocalId(
+            $label,
+            'AQD_Attainment')
+            and
+            ($year >= 2013)
+    )
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../@gml:id)),
+            ("aqd:exceedanceSituation", $el/@xlink:href)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H12
+If aqd:reportingPeriod < 2013 and aqd:AQD_Plan/aqd:exceedanceSituation is empty aqd:comment must be populated
+
+If reporting period before than 2013 and a valid exceedande situation is not provided, aqd:comment should be
+provided instead
+:)
+
+let $H12 := try {
+    let $year := if (empty($reportingYear)) then ()
+    else
+        if ($reportingYear castable as xs:integer) then xs:integer($reportingYear) else ()
+
+    for $el in $docRoot//aqd:AQD_Plan
+    let $main := $el/aqd:exceedanceSituation
+    let $comment := $el/aqd:comment
+
+    let $ok := (
+        not(empty($year))
+        and
+        $year < 2013
+        and
+        functx:if-empty(data($main),"") != ""
+        or
+        functx:if-empty(data($comment),"") != ""
+    )
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../@gml:id)),
+            ("aqd:exceedanceSituation", data($main)),
+            ("aqd:comment", data($comment))
             ]
     )
 } catch * {
@@ -509,6 +638,116 @@ let $H22 := try {
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
+
+(: H23
+Check and count expected combinations of Pollutant and ProtectionTarget at /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+Sulphur dioxide (1) + health
+Sulphur dioxide (1) + vegetation
+Ozone (7) + health
+Ozone (7) + vegetation
+Nitrogen dioxide (8) + health
+Nitrogen oxides (9) + vegetation
+Particulate matter < 10 µm (5) + health
+Particulate matter < 2.5 µm (6001) + health
+Carbon monoxide (10) + health
+Benzene (20) + health
+Lead in PM10 (5012) + health
+Arsenic in PM10 (5018) + health
+Cadmium in PM10 (5014) + health
+Nickel in PM10 (5015) + health
+Benzo(a)pyrene in PM10 (5029) + health
+
+
+Check and count expected combinations of Pollutant and ProtectionTarget
+:)
+
+let $H23 := ()
+
+(: H24
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
+shall be the same as those in the referenced data flow G xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+attribute (maybe multiple)
+
+AQ plan pollutant's should match those in the exceedance situation (G)
+:)
+
+let $H24 := ()
+
+(: H25
+aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition MUST be populated and its content in
+yyyy-mm-dd format if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href
+attribute not equal http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation,
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision
+
+Your reference year must be in yyyy-mm-dd format - rephrase it
+:)
+
+let $H25 := try {
+    for $node in $docRoot//aqd:AQD_Plan
+    let $link := $node/aqd:status/@xlink:href
+    let $not_needed := common:is-status-in-progress($link)
+
+    let $el := $node/aqd:adoptionDate/gml:TimeInstant/gml:timePosition
+    let $is-populated := common:has-content($el)
+
+    let $ok :=
+        if ($not_needed)
+        then
+            true()
+        else
+            if ($is-populated and data($el) castable as xs:date)
+            then
+                true()
+            else
+                false()
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            (node-name($el), $link)
+            ]
+    )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H26
+if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href attribute equal
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation,
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision
+
+aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition should not be populated
+:)
+
+let $H26 := try {
+    for $node in $docRoot//aqd:AQD_Plan
+    let $link := $node/aqd:status/@xlink:href
+    let $not_needed := not(common:is-status-in-progress($link))
+
+    let $el := $node/aqd:adoptionDate/gml:TimeInstant/gml:timePosition
+    let $is-populated := common:has-content($el)
+
+    let $ok :=
+        if ($not_needed and $is-populated)
+        then
+            false()
+        else
+            true()
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            (node-name($el), $link)
+            ]
+    )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 
 (: H27
 aqd:AQD_Plan/aqd:timeTable shall contain a text string
@@ -735,6 +974,7 @@ return
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0, string($H0/td), errors:getMaxError($H0))}
         {html:build1("H01", $labels:H01, $labels:H01_SHORT, $H01, "", string($countPlans), "", "", $errors:H01)}
+        {html:buildSimple("H02", $labels:H02, $labels:H02_SHORT, $H02, "", "", $H02errorLevel)}
         {html:buildSimple("H03", $labels:H03, $labels:H03_SHORT, $H03, "", "", $H03errorLevel)}
         {html:build1("H04", $labels:H04, $labels:H04_SHORT, $H04, "", string(count($H04)), " ", "", $errors:H04)}
         {html:build1("H05", $labels:H05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
@@ -743,8 +983,10 @@ return
         {html:build2("H08", $labels:H08, $labels:H08_SHORT, $H08, "No duplicate values found", " duplicate value", $errors:H08)}
         {html:buildUnique("H09", $labels:H09, $labels:H09_SHORT, $H09, "namespace", $errors:H09)}
         {html:build2("H10", $labels:H10, $labels:H10_SHORT, $H10, "All values are valid", " not conform to vocabulary", $errors:H10)}
+        {html:build2("H11", $labels:H11, $labels:H11_SHORT, $H11, "All values are valid", "needs valid input", $errors:H11)}
+        {html:build2("H12", $labels:H12, $labels:H12_SHORT, $H12, "All values are valid", "needs valid input", $errors:H12)}
         {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
-        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
+        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", "needs valid input", $errors:H14)}
         {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
         {html:build2("H16", $labels:H16, $labels:H16_SHORT, $H16, "All values are valid", "needs valid input", $errors:H16)}
         {html:build2("H17", $labels:H17, $labels:H17_SHORT, $H17, "All values are valid", "needs valid input", $errors:H17)}
@@ -753,6 +995,10 @@ return
         {html:build2("H20", $labels:H20, $labels:H20_SHORT, $H20, "All values are valid", "needs valid input", $errors:H20)}
         {html:build2("H21", $labels:H21, $labels:H21_SHORT, $H21, "All values are valid", "needs valid input", $errors:H21)}
         {html:build2("H22", $labels:H22, $labels:H22_SHORT, $H22, "All values are valid", "needs valid input", $errors:H22)}
+        {html:build2("H23", $labels:H23, $labels:H23_SHORT, $H23, "All values are valid", "needs valid input", $errors:H23)}
+        {html:build2("H24", $labels:H24, $labels:H24_SHORT, $H24, "All values are valid", "needs valid input", $errors:H24)}
+        {html:build2("H25", $labels:H25, $labels:H25_SHORT, $H25, "All values are valid", "needs valid input", $errors:H25)}
+        {html:build2("H26", $labels:H26, $labels:H26_SHORT, $H26, "All values are valid", "needs valid input", $errors:H26)}
         {html:build2("H27", $labels:H27, $labels:H27_SHORT, $H27, "All values are valid", "needs valid input", $errors:H27)}
         {html:build2("H28", $labels:H28, $labels:H28_SHORT, $H28, "All values are valid", "not valid", $errors:H28)}
         {html:build2("H29", $labels:H29, $labels:H29_SHORT, $H29, "All values are valid", "not valid", $errors:H29)}

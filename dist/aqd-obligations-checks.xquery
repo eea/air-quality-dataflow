@@ -448,8 +448,7 @@ declare variable $errors:I07 := errors:getError("I07");
 declare variable $errors:I08 := errors:getError("I08");
 declare variable $errors:I09 := errors:getError("I08");
 declare variable $errors:I10 := errors:getError("I10");
-declare variable $errors:I11a := errors:getError("I11a");
-declare variable $errors:I11b := errors:getError("I11b");
+declare variable $errors:I11 := errors:getError("I11");
 declare variable $errors:I12 := errors:getError("I12");
 declare variable $errors:I13 := errors:getError("I13");
 declare variable $errors:I14 := errors:getError("I14");
@@ -1964,6 +1963,16 @@ declare function common:isInVocabulary(
     return $uri and $uri = $validUris
 };
 
+(: Check if the given node equals to a term that is defined in the vocabulary :)
+declare function common:isEqualToTermInVocabulary(
+        $uri as xs:string?,
+        $vocabularyName as xs:string,
+        $vocabularyTermUri as xs:string
+) as xs:boolean {
+    let $validUris := dd:getValidConcepts($vocabularyName || "rdf")
+    return $uri and $uri = $validUris and $uri = $vocabularyTermUri
+};
+
 declare function common:isInVocabularyReport(
   $main as node()+,
   $vocabularyName as xs:string
@@ -1985,37 +1994,44 @@ declare function common:isInVocabularyReport(
     }
 };
 
-        (: (xs:string, xs:anyAtomicType)* :)
 
+(: Type independent method of getting value at index in an array or sequence :)
+declare function common:get(
+    $seq,
+    $index as xs:integer
+) {
+    if ($seq instance of array(*))
+    then
+        $seq($index)
+    else
+        $seq[$index]
+};
+
+
+(:~ Constructs table rows from provided title/value pairs :)
 declare function common:conditionalReportRow (
     $ok as xs:boolean,
     $vals as array(item()*)
 ) as element(tr)* {
     if (not($ok))
     then
-        let $tr :=
-            <tr>
-            {
-                for $i in 1 to array:size($vals)
-                let $row := array:get($vals, $i)
-                return
-                    if ($row instance of array(*))
-                    then
-                        <td title="{$row(1)}">
-                            {data($row(2))}
-                        </td>
-                    else
-                        <td title="{$row[1]}">
-                            {data($row[2])}
-                        </td>
-            }
-            </tr>
-        (:let $x := trace($tr, 'x:'):)
-        return $tr
+        <tr>{
+        array:flatten(
+            array:for-each($vals, function($row) {
+                <td title="{common:get($row, 1)}">
+                    {
+                    functx:if-empty(
+                        data(common:get($row, 2)),
+                        "no value provided"
+                    )
+                    }
+                </td>
+            })
+        )
+        }</tr>
     else
         ()
 };
-
 
 
 (: returns if a specific node exists in a parent :)
@@ -2229,7 +2245,7 @@ declare function common:has-content(
             let $attr := empty($node/@*)
             let $children := empty($node/*)
         return $attr or $children
-    return $res = true()
+    return exists($nodes) and ($res = true())
 };
 
 (:~ Returns true if provided pollutant is one of special values :)
@@ -2242,6 +2258,18 @@ declare function common:is-polutant-air(
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
         "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
         )
+    return $uri = $okv
+};
+
+(:~ Returns true if provided status is one of special values :)
+declare function common:is-status-in-progress(
+        $uri as xs:string
+) as xs:boolean {
+    let $okv := (
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation",
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process",
+        "http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision"
+    )
     return $uri = $okv
 };
 (:
@@ -10107,6 +10135,7 @@ let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $docRoot := doc($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
 let $reportingYear := common:getReportingYear($docRoot)
+let $node-name := 'aqd:AQD_Plan'
 let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $nameSpaces := distinct-values($docRoot//base:namespace)
@@ -10152,7 +10181,26 @@ let $H0 := try {
 
 let $isNewDelivery := errors:getMaxError($H0) = $errors:INFO
 
-(: H01 Number of AQ Plans reported :)
+let $deliveries := sparqlx:run(
+        query:sparql-objects-in-subject($cdrUrl || "h/", $node-name)
+)//sparql:binding[@name='inspireLabel']/sparql:literal
+
+let $latest-delivery := sparqlx:run(
+        query:sparql-objects-in-subject(
+                $latestEnvelopeByYearH,
+                $node-name
+        )
+)//sparql:binding[@name='inspireLabel']/sparql:literal
+
+let $knownPlans :=
+    if ($isNewDelivery) then
+        distinct-values(data($deliveries))
+    else
+        distinct-values(data($latest-delivery))
+
+(: H01
+Number of AQ Plans reported
+:)
 
 let $countPlans := count($docRoot//aqd:AQD_Plan)
 let $H01 := try {
@@ -10172,6 +10220,45 @@ let $H01 := try {
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
+
+(: H02
+Compile & feedback upon the total number of new plans records included in the delivery
+(compared to any delivery for the same reporting year)
+
+Number of new Plans compared to previous report(s).
+:)
+
+let $H02 := try {
+    for $el in $docRoot//aqd:AQD_Plan
+    let $x := $el/aqd:inspireId/base:Identifier
+    let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
+    let $ok := not($inspireId = $knownPlans)
+    return
+        common:conditionalReportRow(
+                $ok,
+                [
+                ("gml:id", data($el/@gml:id)),
+                ("aqd:inspireId", $inspireId)
+                ]
+        )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+let $H02errorLevel :=
+    if (
+        $isNewDelivery
+                and
+                count(
+                        for $x in $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier
+                        let $id := $x/base:namespace || "/" || $x/base:localId
+                        where query:existsViaNameLocalId($id, 'AQD_Plan')
+                        return 1
+                ) > 0
+    )
+    then
+        $errors:H02
+    else
+        $errors:INFO
 
 (: H03 Number of existing Plans compared to previous report (same reporting year). Blocker will be returned if
 XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
@@ -10353,6 +10440,76 @@ let $H10 := try {
             $ok,
             [
             ("base:namespace", $x)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H11
+If aqd:AQD_ReportingHeader/aqd:reportingPeriod => 2013 aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+attribute shall resolve to at least one  exceedance situation in dataset G via namespace/localId.
+
+If reporting period equal or greater than 2013, AQ must link to a valid exceedande situation (G)
+:)
+let $H11 := try{
+    let $year := if (empty($reportingYear)) then ()
+    else
+        if ($reportingYear castable as xs:integer) then xs:integer($reportingYear) else ()
+
+    for $el in $docRoot//aqd:AQD_Plan/aqd:exceedanceSituation
+
+    let $label := data($el/@xlink:href)
+    let $ok := (query:existsViaNameLocalId(
+            $label,
+            'AQD_Attainment')
+            and
+            ($year >= 2013)
+    )
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../@gml:id)),
+            ("aqd:exceedanceSituation", $el/@xlink:href)
+            ]
+    )
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H12
+If aqd:reportingPeriod < 2013 and aqd:AQD_Plan/aqd:exceedanceSituation is empty aqd:comment must be populated
+
+If reporting period before than 2013 and a valid exceedande situation is not provided, aqd:comment should be
+provided instead
+:)
+
+let $H12 := try {
+    let $year := if (empty($reportingYear)) then ()
+    else
+        if ($reportingYear castable as xs:integer) then xs:integer($reportingYear) else ()
+
+    for $el in $docRoot//aqd:AQD_Plan
+    let $main := $el/aqd:exceedanceSituation
+    let $comment := $el/aqd:comment
+
+    let $ok := (
+        not(empty($year))
+        and
+        $year < 2013
+        and
+        functx:if-empty(data($main),"") != ""
+        or
+        functx:if-empty(data($comment),"") != ""
+    )
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($el/../../@gml:id)),
+            ("aqd:exceedanceSituation", data($main)),
+            ("aqd:comment", data($comment))
             ]
     )
 } catch * {
@@ -10554,6 +10711,116 @@ let $H22 := try {
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
+
+(: H23
+Check and count expected combinations of Pollutant and ProtectionTarget at /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+Sulphur dioxide (1) + health
+Sulphur dioxide (1) + vegetation
+Ozone (7) + health
+Ozone (7) + vegetation
+Nitrogen dioxide (8) + health
+Nitrogen oxides (9) + vegetation
+Particulate matter < 10 µm (5) + health
+Particulate matter < 2.5 µm (6001) + health
+Carbon monoxide (10) + health
+Benzene (20) + health
+Lead in PM10 (5012) + health
+Arsenic in PM10 (5018) + health
+Cadmium in PM10 (5014) + health
+Nickel in PM10 (5015) + health
+Benzo(a)pyrene in PM10 (5029) + health
+
+
+Check and count expected combinations of Pollutant and ProtectionTarget
+:)
+
+let $H23 := ()
+
+(: H24
+aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
+shall be the same as those in the referenced data flow G xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+attribute (maybe multiple)
+
+AQ plan pollutant's should match those in the exceedance situation (G)
+:)
+
+let $H24 := ()
+
+(: H25
+aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition MUST be populated and its content in
+yyyy-mm-dd format if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href
+attribute not equal http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation,
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision
+
+Your reference year must be in yyyy-mm-dd format - rephrase it
+:)
+
+let $H25 := try {
+    for $node in $docRoot//aqd:AQD_Plan
+    let $link := $node/aqd:status/@xlink:href
+    let $not_needed := common:is-status-in-progress($link)
+
+    let $el := $node/aqd:adoptionDate/gml:TimeInstant/gml:timePosition
+    let $is-populated := common:has-content($el)
+
+    let $ok :=
+        if ($not_needed)
+        then
+            true()
+        else
+            if ($is-populated and data($el) castable as xs:date)
+            then
+                true()
+            else
+                false()
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            (node-name($el), $link)
+            ]
+    )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
+(: H26
+if /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:status  xlink:href attribute equal
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/preparation,
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/adoption-process or
+http://dd.eionet.europa.eu/vocabulary/aq/statusaqplan/under-revision
+
+aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition should not be populated
+:)
+
+let $H26 := try {
+    for $node in $docRoot//aqd:AQD_Plan
+    let $link := $node/aqd:status/@xlink:href
+    let $not_needed := not(common:is-status-in-progress($link))
+
+    let $el := $node/aqd:adoptionDate/gml:TimeInstant/gml:timePosition
+    let $is-populated := common:has-content($el)
+
+    let $ok :=
+        if ($not_needed and $is-populated)
+        then
+            false()
+        else
+            true()
+
+    return common:conditionalReportRow(
+            $ok,
+            [
+            ("gml:id", data($node/@gml:id)),
+            (node-name($el), $link)
+            ]
+    )
+}  catch * {
+    html:createErrorRow($err:code, $err:description)
+}
+
 
 (: H27
 aqd:AQD_Plan/aqd:timeTable shall contain a text string
@@ -10780,6 +11047,7 @@ return
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("H0", $labels:H0, $labels:H0_SHORT, $H0, string($H0/td), errors:getMaxError($H0))}
         {html:build1("H01", $labels:H01, $labels:H01_SHORT, $H01, "", string($countPlans), "", "", $errors:H01)}
+        {html:buildSimple("H02", $labels:H02, $labels:H02_SHORT, $H02, "", "", $H02errorLevel)}
         {html:buildSimple("H03", $labels:H03, $labels:H03_SHORT, $H03, "", "", $H03errorLevel)}
         {html:build1("H04", $labels:H04, $labels:H04_SHORT, $H04, "", string(count($H04)), " ", "", $errors:H04)}
         {html:build1("H05", $labels:H05, $labels:H05_SHORT, $H05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H05)}
@@ -10788,8 +11056,10 @@ return
         {html:build2("H08", $labels:H08, $labels:H08_SHORT, $H08, "No duplicate values found", " duplicate value", $errors:H08)}
         {html:buildUnique("H09", $labels:H09, $labels:H09_SHORT, $H09, "namespace", $errors:H09)}
         {html:build2("H10", $labels:H10, $labels:H10_SHORT, $H10, "All values are valid", " not conform to vocabulary", $errors:H10)}
+        {html:build2("H11", $labels:H11, $labels:H11_SHORT, $H11, "All values are valid", "needs valid input", $errors:H11)}
+        {html:build2("H12", $labels:H12, $labels:H12_SHORT, $H12, "All values are valid", "needs valid input", $errors:H12)}
         {html:build1("H13", $labels:H13, $labels:H13_SHORT, $H13, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H13)}
-        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", " not valid", $errors:H14)}
+        {html:build2("H14", $labels:H14, $labels:H14_SHORT, $H14, "All values are valid", "needs valid input", $errors:H14)}
         {html:build1("H15", $labels:H15, $labels:H15_SHORT, $H15, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:H15)}
         {html:build2("H16", $labels:H16, $labels:H16_SHORT, $H16, "All values are valid", "needs valid input", $errors:H16)}
         {html:build2("H17", $labels:H17, $labels:H17_SHORT, $H17, "All values are valid", "needs valid input", $errors:H17)}
@@ -10798,6 +11068,10 @@ return
         {html:build2("H20", $labels:H20, $labels:H20_SHORT, $H20, "All values are valid", "needs valid input", $errors:H20)}
         {html:build2("H21", $labels:H21, $labels:H21_SHORT, $H21, "All values are valid", "needs valid input", $errors:H21)}
         {html:build2("H22", $labels:H22, $labels:H22_SHORT, $H22, "All values are valid", "needs valid input", $errors:H22)}
+        {html:build2("H23", $labels:H23, $labels:H23_SHORT, $H23, "All values are valid", "needs valid input", $errors:H23)}
+        {html:build2("H24", $labels:H24, $labels:H24_SHORT, $H24, "All values are valid", "needs valid input", $errors:H24)}
+        {html:build2("H25", $labels:H25, $labels:H25_SHORT, $H25, "All values are valid", "needs valid input", $errors:H25)}
+        {html:build2("H26", $labels:H26, $labels:H26_SHORT, $H26, "All values are valid", "needs valid input", $errors:H26)}
         {html:build2("H27", $labels:H27, $labels:H27_SHORT, $H27, "All values are valid", "needs valid input", $errors:H27)}
         {html:build2("H28", $labels:H28, $labels:H28_SHORT, $H28, "All values are valid", "not valid", $errors:H28)}
         {html:build2("H29", $labels:H29, $labels:H29_SHORT, $H29, "All values are valid", "not valid", $errors:H29)}
@@ -11294,39 +11568,37 @@ declare function dataflowI:checkReport(
     (: I11b
 
     aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference
-    an existing exceedance situation delivered within a data flow G  and the
+    an existing exceedance situation delivered within a data flow G and the
     reporting year of G & I shall be the same year via namespace/localId.
 
     You must provide a reference to an exceedance situation from data flow G.
     The exceedance situation must have the same reporting year as the source
     apportionment and refer to the same pollutant.
 
-    TODO: this needs to be implemented properly
-
     BLOCKER
     :)
-    let $I11b := try{
-        for $el in $sources/aqd:parentExceedanceSituation
-            let $label := data($el/@xlink:href)
-            let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
-            (:
-            aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
-            :)
+    let $I12 := try{
+        for $node in $sources/aqd:parentExceedanceSituation
+            let $link := data($node/@xlink:href)
 
-            (: TODO: check that the reporting year is for same year :)
+            let $ok := query:existsViaNameLocalIdYear(
+                    $link,
+                    'AQD_Attainment',
+                    $reportingYear
+            )
 
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../@gml:id)),
-                ("aqd:parentExceedanceSituation", $el/@xlink:href)
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), $node/@xlink:href)
             ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
 
-    (: I12
+    (: I13
 
     aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition
     shall be a calendar year in yyyy format
@@ -11336,14 +11608,15 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
 
-    let $I12 := try {
-        for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := $el castable as xs:gYear
+    let $I13 := try {
+        for $node in $sources
+            let $el := $node/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := data($el) castable as xs:gYear
 
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("gml:timePosition", data($el))
             ]
         )
@@ -11369,23 +11642,16 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
     let $I15 := try {
-        let $nodes := $sources//aqd:QuantityCommented/aqd:quantity[@xsi:nil="false"]
-        let $errors := array {
-            for $node in $nodes
-            return
-                if (not(common:is-a-number(data($node))))
-                then
-                    [
-                        ("gml:id", data($node/../../@gml:id)),
-                        (node-name($node), data($node))
-                    ]
-                else
-                    ()
-        }
+
+        for $node in $sources//aqd:QuantityCommented/aqd:quantity[@xsi:nil="false"]
+            let $ok := common:is-a-number(data($node))
 
         return common:conditionalReportRow(
-            array:size($errors) = 0,
-            $errors
+            $ok,
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -11422,7 +11688,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($node/../@gml:id)),
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("aqd:quantity", data($node)),
                 ("nilReason", data($node/@nilReason))
             ]
@@ -11442,9 +11708,9 @@ declare function dataflowI:checkReport(
     :)
 
     let $I17 := try {
-        for $el in $docRoot//aqd:QuantityCommented
-            let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
-            let $hascomment := common:has-content($el/aqd:comment)
+        for $node in $docRoot//aqd:QuantityCommented
+            let $isnil := $node/aqd:quantity[@xsi:nil = "true"]
+            let $hascomment := common:has-content($node/aqd:comment)
 
             let $ok :=
                 if ($isnil)
@@ -11456,8 +11722,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../../@gml:id)),
-                (node-name($el), "needs comment")
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ("needs comment", node-name($node/..))
             ]
         )
     } catch * {
@@ -11520,19 +11786,24 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
-    TODO: improve reporting for this row
-
     :)
 
     let $I19 := try {
         for $x in $sources
             let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
-            let $total := data($rb/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $rb/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
+
+            let $fwm := $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity
+            let $trans := $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+            let $natural := $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity
+            let $other := $rb/aqd:other/aqd:QuantityCommented/aqd:quantity
+
             let $sum := common:sum-of-nodes((
-                $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:other/aqd:QuantityCommented/aqd:quantity
+                $fwm,
+                $trans,
+                $natural,
+                $other
             ))
 
             let $ok := $sum = $total
@@ -11541,7 +11812,12 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum),
+                ('aqd:fromWithinMS', data($fwm)),
+                ('aqd:transboundary', data($trans)),
+                ('aqd:natural', data($natural)),
+                ('aqd:other', data($other))
             ]
         )
     } catch * {
@@ -11571,17 +11847,29 @@ declare function dataflowI:checkReport(
     let $I20 := try {
         for $x in $sources
             let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
-            let $total := data($ub/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $ub/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
+
+            let $trafic := $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity
+            let $head := $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity
+            let $agr := $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity
+            let $comer := $ub/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity
+            let $ship := $ub/aqd:shipping/aqd:QuantityCommented/aqd:quantity
+            let $offroad := $ub/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity
+            let $natural := $ub/aqd:natural/aqd:QuantityCommented/aqd:quantity
+            let $transb := $ub/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+            let $other := $ub/aqd:other/aqd:QuantityCommented/aqd:quantity
+
             let $sum := common:sum-of-nodes((
-                $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:shipping/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:natural/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:other/aqd:QuantityCommented/aqd:quantity
+                $trafic,
+                $head,
+                $agr,
+                $comer,
+                $ship,
+                $offroad,
+                $natural,
+                $transb,
+                $other
             ))
 
             let $ok := $total = $sum
@@ -11590,7 +11878,17 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum),
+                ("aqd:traffic", data($trafic)),
+                ("aqd:heatAndPowerProduction", data($head)),
+                ("aqd:agriculture", data($agr)),
+                ("aqd:commercialAndResidential", data($comer)),
+                ("aqd:shipping", data($ship)),
+                ("aqd:offRoadMobileMachinery", data($offroad)),
+                ("aqd:natural", data($natural)),
+                ("aqd:transb", data($transb)),
+                ("aqd:other", data($other))
             ]
         )
     } catch * {
@@ -11621,7 +11919,8 @@ declare function dataflowI:checkReport(
     let $I21 := try {
         for $x in $sources
             let $li := $x/aqd:localIncrement/aqd:LocalIncrement
-            let $total := data($li/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $li/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
             let $sum := common:sum-of-nodes((
                 $li/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                 $li/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
@@ -11638,7 +11937,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum)
             ]
         )
     } catch * {
@@ -11692,16 +11992,18 @@ declare function dataflowI:checkReport(
 
     :)
     let $I23 := try {
-        for $x in $sources
-            let $a := data($x/aqd:macroExceedanceSituation/aqd:numericalExceedance)
-            let $b := data($x/aqd:macroExceedanceSituation/aqd:numberExceedances)
 
+        for $node in $sources/aqd:macroExceedanceSituation
+            let $a := data($node/aqd:numericalExceedance)
+            let $b := data($node/aqd:numberExceedances)
             let $ok := common:is-a-number($a) or common:is-a-number($b)
+
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($x/@gml:id)),
-            (node-name($x), $a or $b)
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ('aqd:numericalExceedance', $a),
+                ('aqd:numberExceedances', $b)
             ]
         )
     } catch * {
@@ -11729,7 +12031,7 @@ declare function dataflowI:checkReport(
                 <tr>
                     <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
                     <td title="xlink:href"> {$el/@xlink:href}</td>
-                    <td title="{node-name($el)}"> not conform to vocabulary</td>
+                    <td title="{node-name($el)}">not conform to vocabulary</td>
                 </tr>
             else
                 ()
@@ -11739,11 +12041,21 @@ declare function dataflowI:checkReport(
 
     (: I25
 
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+        aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:exceedanceArea/
+        aqd:ExceedanceArea/
+        aqd:areaClassification
     xlink:href attribute shall match those
-    /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+        /aqd:AQD_Attainment/
+        aqd:exceedanceDescriptionFinal/
+        aqd:ExceedanceDescription/
+        aqd:exceedanceArea/
+        aqd:ExceedanceArea/
+        aqd:areaClassification
     xlink:href attribute for the AQD_Attainment record cited by
-    ./aqd:parentExceedanceSituation
+        ./aqd:parentExceedanceSituation
 
     Area classification should match classification declared in the
     corresponding Attainment
@@ -11757,7 +12069,7 @@ declare function dataflowI:checkReport(
     let $I25 := try {
         for $node in $sources
             let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
-            let $ac := $el/@xlink:href
+            let $ac := data($el/@xlink:href)
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
             let $parent-ac := query:get-area-classifications-for-attainment($parent)
 
@@ -11765,7 +12077,11 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node/@gml:id)]
+            [
+                (node-name($node), data($node/@gml:id)),
+                (node-name($el), $ac),
+                ('AQD_Attainment classification', $parent-ac)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -11784,13 +12100,18 @@ declare function dataflowI:checkReport(
     let $I26 := try {
         for $node in $sources
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
-            let $uom := $area/@uom
-            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+            let $uom := string($area/@uom)
+            let $ok :=
+                if (exists($area))
+                    then $uom eq "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("uom", $uom)
+                ("gml:id", data($node/@gml:id)),
+                ("uom", $uom),
+                (node-name($area), data($area))
             ]
         )
     } catch * {
@@ -11810,12 +12131,17 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $length := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
             let $uom := $length/@uom
-            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+            let $ok :=
+                if (exists($length))
+                then
+                    $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("uom", $uom)
+                ("gml:id", data($node/@gml:id)),
+                ("uom", $uom)
             ]
         )
     } catch * {
@@ -11840,16 +12166,16 @@ declare function dataflowI:checkReport(
     :)
     let $I29 := try {
         for $node in $sources
-            let $area :=$node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
             let $st := common:has-content($area/aqd:stationUsed)
             let $mu := common:has-content($area/aqd:modelUsed)
             let $ok := $st or $mu
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("aqd:stationUsed", data($area/aqd:stationUsed)),
-            ("aqd:modelUsed", data($area/aqd:modelUsed))
+                ("gml:id", data($node/@gml:id)),
+                ("aqd:stationUsed", $area/aqd:stationUsed/@xlink:href),
+                ("aqd:modelUsed", $area/aqd:modelUsed/@xlink:href)
             ]
         )
     } catch * {
@@ -11858,12 +12184,15 @@ declare function dataflowI:checkReport(
 
     (: I30
 
-    If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid
-    elements:
+    If, aqd:stationUsed and/or aqd:modelUsed are populated,
+    these must be valid elements:
+
     stationUsed must link To SamplingPoint via namespace/localid
     modelUsed must link to AQD_Model via namespace/ localid
 
     If SamplingPoint(s) and/or Model(s) are provided, these must be valid
+
+    TODO: double check the existsViaNameLocalId
 
     ERROR
     :)
@@ -11871,28 +12200,28 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $a := $node//aqd:stationUsed
             let $a-ok :=
-                if (common:has-content($a))
+                if (exists($a/@xlink:href))
                 then
-                    query:existsViaNameLocalId($a/@xlink:href, "SamplingPoint")
+                    query:existsViaNameLocalId($a/@xlink:href, "AQD_SamplingPoint")
                 else
                     true()
 
             let $b := $node//aqd:modelUsed
             let $b-ok :=
-                if (common:has-content($a))
+                if (exists($b/@xlink:href))
                 then
                     query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
                 else
                     true()
 
-            let $ok := $a and $b
+            let $ok := $a-ok and $b-ok
 
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("aqd:stationUsed", data($node//aqd:stationUsed)),
-            ("aqd:modelUsed", data($node//aqd:modelUsed))
+                ("gml:id", data($node/@gml:id)),
+                ("aqd:stationUsed", $a/@xlink:href),
+                ("aqd:modelUsed", $b/@xlink:href)
             ]
         )
     } catch * {
@@ -11923,7 +12252,8 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: check reporting
+
+    TODO: check implementation
 
     :)
 
@@ -11932,10 +12262,20 @@ declare function dataflowI:checkReport(
             let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
             let $model := query:get-used-model-for-attainment($att-url)
-            let $ok := $mu = $model
+            let $ok :=
+                if (exists($mu))
+                then
+                    $mu/@xlink:href = $model
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($mu), $mu/@xlink:href),
+                ("parentExceedanceSituation", $att-url),
+                ("found model", $model)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -11967,20 +12307,24 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: implement this
+    TODO: properly implement this
     :)
 
     let $I32 := try {
 
-        for $node in $sources
-            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+        for $mu in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+            let $node := $mu/ancestor-or-self::aqd:AQD_SourceApportionment
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
             let $station := query:get-used-station-for-attainment($att-url)
-            let $ok := $mu = $station
+            let $ok := $mu/@xlink:href = $station
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($mu), data($mu)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($mu), $mu/@xlink:href),
+                ("used station", $station)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12002,12 +12346,19 @@ declare function dataflowI:checkReport(
     let $I33 := try {
         for $node in $sources
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
-            let $a := common:has-content($area/aqd:spatalExtent)
-            let $b := common:has-content($area/aqd:administrativeUnit)
-            let $ok := $a or $b
+
+            let $a := $area/aqd:spatialExtent
+            let $b := $area/aqd:administrativeUnit
+
+            let $ok := common:has-content($a) or common:has-content($b)
+
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ('aqd:spatialExtent', data($a)),
+                ('aqd:administrativeUnit', data($b))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12030,10 +12381,14 @@ declare function dataflowI:checkReport(
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
             let $a := $area/aqd:surfaceArea
             let $b := $area/aqd:roadLength
-            let $ok := false()
+            let $ok := common:has-content($a) or common:has-content($b)
         return common:conditionalReportRow(
             $ok,
-            [node-name($area), data($area)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ('aqd:surfaceArea', data($a)),
+                ('aqd:roadLength', data($b))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12066,7 +12421,11 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($a), data($a)),
+                ('aqd:populationExposed', data($b))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12085,11 +12444,21 @@ declare function dataflowI:checkReport(
 
     let $I36 := try {
         for $node in $sources
-            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
-            let $ok := common:has-content($area)
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+            let $ok :=
+                if (data($a) = "true")
+                then
+                    common:has-content($b)
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
-            [node-name($area), data($area)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($a), data($a)),
+                ('aqd:ecosystemAreaExposed', data($b))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12098,7 +12467,15 @@ declare function dataflowI:checkReport(
 
     (: I37
 
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    aqd:AQD_SourceApportionment/
+    aqd:macroExceedanceSituation/
+    aqd:ExceedanceDescription/
+    aqd:exceedanceExposure/
+    aqd:ExceedanceExposure/
+    aqd:referenceYear/
+    gml:TimeInstant/
+    gml:timePosition
+
     shall be a calendar year in yyyy format
 
     Reference year for the population/exposure data in yyyy format
@@ -12107,12 +12484,23 @@ declare function dataflowI:checkReport(
 
     :)
     let $I37 := try {
-        for $node in $sources
-            let $year := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := data($year) castable as xs:gYear
+        for $node in $sources/
+                aqd:macroExceedanceSituation/
+                aqd:ExceedanceDescription/
+                aqd:exceedanceExposure/
+                aqd:ExceedanceExposure/
+                aqd:referenceYear/
+                gml:TimeInstant/
+                gml:timePosition
+
+            let $ok := data($node) castable as xs:gYear
+
         return common:conditionalReportRow(
             $ok,
-            [node-name($year), data($year)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ('gml:timePosition', data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12130,16 +12518,18 @@ declare function dataflowI:checkReport(
 
     :)
     let $I38 := try {
-        for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
-            let $link := $el/@xlink:href
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+            let $link := $node/@xlink:href
             let $ok := common:isInVocabulary(
                 $link,
                 $vocabulary:EXCEEDANCEREASON_VOCABULARY
             )
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ('aqd:reason', $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12172,7 +12562,10 @@ declare function dataflowI:checkReport(
                     $needed and common:has-content($el)
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), data($el)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($el), data($el))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12211,7 +12604,10 @@ declare function dataflowI:checkReport(
                     )
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12245,7 +12641,10 @@ declare function dataflowI:checkReport(
                     $needed and common:has-content($el)
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12253,12 +12652,28 @@ declare function dataflowI:checkReport(
 
 
     (: I42
-    WHERE ./aqd:pollutant xlink:href attribute EQUALs
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), at least one of
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+
+    WHERE
+    ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+    (via …/aqd:parentExceedanceSituation),
+    at least one of
+        /aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:assessmentMethod/
+        aqd:AssessmentMethods/
+        aqd:samplingPointAssessmentMetadata/@xlink:href
     or
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+        /aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:assessmentMethod/
+        aqd:AssessmentMethods/
+        aqd:modelAssessmentMetadata/@xlink:href
     must be populated and correctly link to D/D1b.
 
     Cross check the links provided against D, all assessment methods must exist
@@ -12268,20 +12683,22 @@ declare function dataflowI:checkReport(
     in D or D1b is required via xlink:href attribute
 
     ERROR
-    TODO: check implementation
+
+    TODO: check implementation. The implementation has not been check properly
     :)
 
     let $I42 := try {
-        for $node in $sources
-            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+
+            let $a := $node/aqd:samplingPointAssessmentMetadata
             let $a-m := $a/@xlink:href
             let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
 
-            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata
+            let $b := $node/aqd:modelAssessmentMetadata
             let $b-m := $b/@xlink:href
             let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
 
-            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
             let $needed := common:is-polutant-air($pollutant)
 
@@ -12293,7 +12710,11 @@ declare function dataflowI:checkReport(
                     $a-ok or $b-ok
         return common:conditionalReportRow(
             $ok,
-            ["aqd:samplingPointAssessmentMetadata", data($a/@xlink:href)]
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ("aqd:samplingPointAssessmentMetadata", $a-m),
+                ("aqd:modelAssessmentMetadata", $b-m)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12302,9 +12723,9 @@ declare function dataflowI:checkReport(
     (: I43
 
     WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), the following elments must be empty or
-    not provided:
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+    (via …/aqd:parentExceedanceSituation),
+    the following elments must be empty or not provided:
     aqd:assessmentType
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
@@ -12312,8 +12733,9 @@ declare function dataflowI:checkReport(
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
 
     If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not
-    expected: assessmentType, link to adjusting sampling
-    point/model;assessmentTypeDescription;assessmentType
+    expected:
+        assessmentType,
+        link to adjusting sampling point/model;assessmentTypeDescription;assessmentType
 
     ERROR
     :)
@@ -12323,19 +12745,33 @@ declare function dataflowI:checkReport(
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
             let $check := not(common:is-polutant-air($pollutant))
+
             let $meths := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+
             let $values := (
                 $meths/aqd:samplingPointAssessmentMetadata/@xlink:href,
                 $meths/aqd:modelAssessmentMetadata/@xlink:href,
                 $meths/aqd:assessmentTypeDescription,
                 $meths/aqd:assessmentType
             )
+
             return
                 if ($check)
                 then
                     common:conditionalReportRow(
-                        not(empty($values)),
-                        [node-name($node), data($node)]
+                        not(exists($values)),
+                        [
+                            ("gml:id", data($node/@gml:id)),
+                            ("pollutant", $pollutant),
+                            ('aqd:samplingPointAssessmentMetadata',
+                             data($meths/aqd:samplingPointAssessmentMetadata/@xlink:href)),
+                            ('aqd:modelAssessmentMetadata',
+                             data($meths/aqd:modelAssessmentMetadata/@xlink:href)),
+                            ('aqd:assessmentTypeDescription',
+                             data($meths/aqd:assessmentTypeDescription)),
+                            ('aqd:assessmentType',
+                             data($meths/aqd:assessmentType))
+                        ]
                     )
                 else
                     ()
@@ -12346,10 +12782,19 @@ declare function dataflowI:checkReport(
     (: I44
 
     If
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
-    is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected"
+        aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:adjustmentType
+    is populated ,
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
+    (via …/aqd:parentExceedanceSituation),
+
+    the xlink:href must be "fullyCorrected"
+
     if another pollutant it must be "noneApplicable"
 
     If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod
@@ -12360,8 +12805,12 @@ declare function dataflowI:checkReport(
 
     let $I44 := try {
         for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
-            let $is-populated := common:has-content($el)
+            let $el := $node/
+                        aqd:macroExceedanceSituation/
+                        aqd:ExceedanceDescription/
+                        aqd:deductionAssessmentMethod/
+                        aqd:AdjustmentMethod/
+                        aqd:adjustmentType
             let $link := $el/@xlink:href
 
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
@@ -12371,19 +12820,23 @@ declare function dataflowI:checkReport(
             let $check :=
                 if ($needed)
                 then
-                    $link = "fullyCorrected"
+                    $link = "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/fullyCorrected"
                 else
-                    $link = "noneApplicable"
+                    $link = "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplicable"
 
             let $ok :=
-                if (not($is-populated))
+                if (not(exists($link)))
                 then
                     true()
                 else
                     $check
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                ("gml:id", data($node/@gml:id)),
+                ("pollutant", $pollutant),
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12430,7 +12883,10 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                ("gml:id", data($node/@gml:id)),
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -12450,20 +12906,23 @@ declare function dataflowI:checkReport(
         {html:build2("I07", $labels:I07, $labels:I07_SHORT, $I07, "No duplicate values found", " duplicate value", $errors:I07)}
         {html:build2("I08", $labels:I08, $labels:I08_SHORT, $I08invalid, "No duplicate values found", " duplicate value", $errors:I08)}
         {html:build2("I09", $labels:I09, $labels:I09_SHORT, $I09table, "namespace", "", $errors:I09)}
-        (: TODO: I don't think the label is ok here :)
+        { (: TODO: I don't think the label is ok here :) }
         {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
 
         {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,
-                     "All values are valid", "needs valid input", $errors:I11a)}
-        {html:build2("I11b", $labels:I11b, $labels:I11b_SHORT, $I11b,
-                     "All values are valid", "needs valid input", $errors:I11b)}
+                     "All values are valid", "needs valid input", $errors:I11)}
+        {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12,
+                     "All values are valid", "needs valid input", $errors:I12)}
 
-        {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12, "All values are valid", "needs valid input", $errors:I12)}
+        {html:build2("I13", $labels:I13, $labels:I13_SHORT, $I13, "All values are valid", "needs valid input", $errors:I13)}
         {html:build2("I15", $labels:I15, $labels:I15_SHORT, $I15, "All values are valid", "needs valid input", $errors:I15)}
         {html:build2("I16", $labels:I16, $labels:I16_SHORT, $I16, "All values are valid", "needs valid input", $errors:I16)}
+
         {html:build2("I17", $labels:I17, $labels:I17_SHORT, $I17, "All values are valid", "needs valid input", $errors:I17)}
+
         {html:build2("I18", $labels:I18, $labels:I18_SHORT, $I18, "All values are valid", "needs valid input", $errors:I18)}
         {html:build2("I19", $labels:I19, $labels:I19_SHORT, $I19, "All values are valid", "needs valid input", $errors:I19)}
+        {html:build2("I20", $labels:I20, $labels:I20_SHORT, $I20, "All values are valid", "needs valid input", $errors:I20)}
         {html:build2("I21", $labels:I21, $labels:I21_SHORT, $I21, "All values are valid", "needs valid input", $errors:I21)}
         {html:build2("I22", $labels:I22, $labels:I22_SHORT, $I22, "All values are valid", "needs valid input", $errors:I22)}
         {html:build2("I23", $labels:I23, $labels:I23_SHORT, $I23, "All values are valid", "needs valid input", $errors:I23)}
@@ -12471,9 +12930,11 @@ declare function dataflowI:checkReport(
         {html:build2("I25", $labels:I25, $labels:I25_SHORT, $I25, "All values are valid", "needs valid input", $errors:I25)}
         {html:build2("I26", $labels:I26, $labels:I26_SHORT, $I26, "All values are valid", "needs valid input", $errors:I26)}
         {html:build2("I27", $labels:I27, $labels:I27_SHORT, $I27, "All values are valid", "needs valid input", $errors:I27)}
+        {
         (: 28 is missing in XLS
         {html:build2("I28", $labels:I28, $labels:I28_SHORT, $I28, "All values are valid", "needs valid input", $errors:I28)}
         :)
+        }
         {html:build2("I29", $labels:I29, $labels:I29_SHORT, $I29, "All values are valid", "needs valid input", $errors:I29)}
         {html:build2("I30", $labels:I30, $labels:I30_SHORT, $I30, "All values are valid", "needs valid input", $errors:I30)}
         {html:build2("I31", $labels:I31, $labels:I31_SHORT, $I31, "All values are valid", "needs valid input", $errors:I31)}
@@ -12491,9 +12952,6 @@ declare function dataflowI:checkReport(
         {html:build2("I43", $labels:I43, $labels:I43_SHORT, $I43, "All values are valid", "needs valid input", $errors:I43)}
         {html:build2("I44", $labels:I44, $labels:I44_SHORT, $I44, "All values are valid", "needs valid input", $errors:I44)}
         {html:build2("I45", $labels:I45, $labels:I45_SHORT, $I45, "All values are valid", "needs valid input", $errors:I45)}
-
-        (:
-        :)
 
     </table>
 };
@@ -12672,7 +13130,7 @@ let $J2errorLevel :=
         ) > 0
         )
     then
-        $errors:K02
+        $errors:J2
     else
         $errors:INFO
 
@@ -16378,7 +16836,6 @@ declare function envelope:validateEnvelope($source_url as xs:string) as element(
 
 
 
-
 (: Returns error class if there are more than 0 error elements :)
 declare function errors:getClass($elems) {
   if (count($elems) > 0) then
@@ -16469,6 +16926,7 @@ declare function geox:compareLatLong($srsName as xs:string, $lat as xs:double, $
 : Date: 5/31/2016
 : Time: 11:48 AM
 :)
+
 
 
 declare function html:getHead() as element()* {
@@ -17004,7 +17462,7 @@ declare %private function html:buildGeneric(
                             <tr>{
                                 for $th in $records[1]//td return <th>{ data($th/@title) }</th>
                             }</tr>
-                            {$records}
+                            { functx:distinct-deep($records) }
                         </table>
                     </td>
                 </tr>

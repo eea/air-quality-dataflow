@@ -8,8 +8,10 @@ xquery version "3.0";
 :)
 
 module namespace html = "aqd-html";
-import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
+
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
+import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
 import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery";
 
 declare function html:getHead() as element()* {
@@ -545,7 +547,7 @@ declare %private function html:buildGeneric(
                             <tr>{
                                 for $th in $records[1]//td return <th>{ data($th/@title) }</th>
                             }</tr>
-                            {$records}
+                            { functx:distinct-deep($records) }
                         </table>
                     </td>
                 </tr>
