@@ -721,8 +721,6 @@ declare function dataflowI:checkReport(
 
     BLOCKER
 
-    TODO: improve reporting for this row
-
     :)
 
     let $I19 := try {
@@ -730,11 +728,17 @@ declare function dataflowI:checkReport(
             let $rb := $x/aqd:regionalBackground/aqd:RegionalBackground
             let $quantity := $rb/aqd:total/aqd:QuantityCommented/aqd:quantity
             let $total := data($quantity)
+
+            let $fwm := $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity
+            let $trans := $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+            let $natural := $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity
+            let $other := $rb/aqd:other/aqd:QuantityCommented/aqd:quantity
+
             let $sum := common:sum-of-nodes((
-                $rb/aqd:fromWithinMS/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:natural/aqd:QuantityCommented/aqd:quantity,
-                $rb/aqd:other/aqd:QuantityCommented/aqd:quantity
+                $fwm,
+                $trans,
+                $natural,
+                $other
             ))
 
             let $ok := $sum = $total
@@ -744,7 +748,11 @@ declare function dataflowI:checkReport(
             [
                 ("gml:id", data($x/@gml:id)),
                 (node-name($quantity), $total),
-                ("Sum of nodes", $sum)
+                ("Sum of nodes", $sum),
+                ('aqd:fromWithinMS', data($fwm)),
+                ('aqd:transboundary', data($trans)),
+                ('aqd:natural', data($natural)),
+                ('aqd:other', data($other))
             ]
         )
     } catch * {
@@ -776,16 +784,27 @@ declare function dataflowI:checkReport(
             let $ub := $x/aqd:urbanBackground/aqd:UrbanBackground
             let $quantity := $ub/aqd:total/aqd:QuantityCommented/aqd:quantity
             let $total := data($quantity)
+
+            let $trafic := $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity
+            let $head := $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity
+            let $agr := $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity
+            let $comer := $ub/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity
+            let $ship := $ub/aqd:shipping/aqd:QuantityCommented/aqd:quantity
+            let $offroad := $ub/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity
+            let $natural := $ub/aqd:natural/aqd:QuantityCommented/aqd:quantity
+            let $transb := $ub/aqd:transboundary/aqd:QuantityCommented/aqd:quantity
+            let $other := $ub/aqd:other/aqd:QuantityCommented/aqd:quantity
+
             let $sum := common:sum-of-nodes((
-                $ub/aqd:traffic/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:commercialAndResidential/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:shipping/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:offRoadMobileMachinery/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:natural/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:transboundary/aqd:QuantityCommented/aqd:quantity,
-                $ub/aqd:other/aqd:QuantityCommented/aqd:quantity
+                $trafic,
+                $head,
+                $agr,
+                $comer,
+                $ship,
+                $offroad,
+                $natural,
+                $transb,
+                $other
             ))
 
             let $ok := $total = $sum
@@ -795,7 +814,16 @@ declare function dataflowI:checkReport(
             [
                 ("gml:id", data($x/@gml:id)),
                 (node-name($quantity), $total),
-                ("Sum of nodes", $sum)
+                ("Sum of nodes", $sum),
+                ("aqd:traffic", data($trafic)),
+                ("aqd:heatAndPowerProduction", data($head)),
+                ("aqd:agriculture", data($agr)),
+                ("aqd:commercialAndResidential", data($comer)),
+                ("aqd:shipping", data($ship)),
+                ("aqd:offRoadMobileMachinery", data($offroad)),
+                ("aqd:natural", data($natural)),
+                ("aqd:transb", data($transb)),
+                ("aqd:other", data($other))
             ]
         )
     } catch * {
