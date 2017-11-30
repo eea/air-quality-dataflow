@@ -826,7 +826,8 @@ declare function dataflowI:checkReport(
     let $I21 := try {
         for $x in $sources
             let $li := $x/aqd:localIncrement/aqd:LocalIncrement
-            let $total := data($li/aqd:total/aqd:QuantityCommented/aqd:quantity)
+            let $quantity := $li/aqd:total/aqd:QuantityCommented/aqd:quantity
+            let $total := data($quantity)
             let $sum := common:sum-of-nodes((
                 $li/aqd:heatAndPowerProduction/aqd:QuantityCommented/aqd:quantity,
                 $li/aqd:agriculture/aqd:QuantityCommented/aqd:quantity,
@@ -843,7 +844,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
-                (node-name($x), $total)
+                (node-name($quantity), $total),
+                ("Sum of nodes", $sum)
             ]
         )
     } catch * {
@@ -1005,13 +1007,18 @@ declare function dataflowI:checkReport(
     let $I26 := try {
         for $node in $sources
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:surfaceArea
-            let $uom := $area/@uom
-            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+            let $uom := string($area/@uom)
+            let $ok :=
+                if (exists($area))
+                    then $uom eq "http://dd.eionet.europa.eu/vocabulary/uom/area/km2"
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/@gml:id)),
-                ("uom", $uom)
+                ("uom", $uom),
+                (node-name($area), data($area))
             ]
         )
     } catch * {
@@ -1031,7 +1038,12 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $length := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:roadLength
             let $uom := $length/@uom
-            let $ok := $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+            let $ok :=
+                if (exists($length))
+                then
+                    $uom = "http://dd.eionet.europa.eu/vocabulary/uom/length/km"
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
@@ -1061,7 +1073,7 @@ declare function dataflowI:checkReport(
     :)
     let $I29 := try {
         for $node in $sources
-            let $area :=$node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
+            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
             let $st := common:has-content($area/aqd:stationUsed)
             let $mu := common:has-content($area/aqd:modelUsed)
             let $ok := $st or $mu
@@ -1069,8 +1081,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/@gml:id)),
-                ("aqd:stationUsed", data($area/aqd:stationUsed)),
-                ("aqd:modelUsed", data($area/aqd:modelUsed))
+                ("aqd:stationUsed", $area/aqd:stationUsed/@xlink:href),
+                ("aqd:modelUsed", $area/aqd:modelUsed/@xlink:href)
             ]
         )
     } catch * {
