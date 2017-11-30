@@ -1498,12 +1498,28 @@ declare function dataflowI:checkReport(
 
 
     (: I42
-    WHERE ./aqd:pollutant xlink:href attribute EQUALs
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), at least one of
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
+
+    WHERE
+    ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+    (via …/aqd:parentExceedanceSituation),
+    at least one of
+        /aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:assessmentMethod/
+        aqd:AssessmentMethods/
+        aqd:samplingPointAssessmentMetadata/@xlink:href
     or
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
+        /aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:assessmentMethod/
+        aqd:AssessmentMethods/
+        aqd:modelAssessmentMetadata/@xlink:href
     must be populated and correctly link to D/D1b.
 
     Cross check the links provided against D, all assessment methods must exist
@@ -1513,20 +1529,22 @@ declare function dataflowI:checkReport(
     in D or D1b is required via xlink:href attribute
 
     ERROR
-    TODO: check implementation
+
+    TODO: check implementation. The implementation has not been check properly
     :)
 
     let $I42 := try {
-        for $node in $sources
-            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+
+            let $a := $node/aqd:samplingPointAssessmentMetadata
             let $a-m := $a/@xlink:href
             let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
 
-            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata
+            let $b := $node/aqd:modelAssessmentMetadata
             let $b-m := $b/@xlink:href
             let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
 
-            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
             let $needed := common:is-polutant-air($pollutant)
 
@@ -1539,7 +1557,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("aqd:samplingPointAssessmentMetadata", data($a/@xlink:href))
+                ("aqd:samplingPointAssessmentMetadata", $a-m),
+                ("aqd:modelAssessmentMetadata", $b-m)
             ]
         )
     } catch * {
@@ -1549,9 +1568,9 @@ declare function dataflowI:checkReport(
     (: I43
 
     WHERE ./aqd:pollutant xlink:href attribute does NOT EQUAL
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), the following elments must be empty or
-    not provided:
+    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+    (via …/aqd:parentExceedanceSituation),
+    the following elments must be empty or not provided:
     aqd:assessmentType
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:samplingPointAssessmentMetadata/@xlink:href
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:modelAssessmentMetadata/@xlink:href
@@ -1559,8 +1578,9 @@ declare function dataflowI:checkReport(
     ; /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods/aqd:assessmentType
 
     If the pollutant is NOT SO2, PM10, PM2.5 or CO the following elements are not
-    expected: assessmentType, link to adjusting sampling
-    point/model;assessmentTypeDescription;assessmentType
+    expected:
+        assessmentType,
+        link to adjusting sampling point/model;assessmentTypeDescription;assessmentType
 
     ERROR
     :)
@@ -1570,20 +1590,32 @@ declare function dataflowI:checkReport(
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
             let $check := not(common:is-polutant-air($pollutant))
+
             let $meths := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+
             let $values := (
                 $meths/aqd:samplingPointAssessmentMetadata/@xlink:href,
                 $meths/aqd:modelAssessmentMetadata/@xlink:href,
                 $meths/aqd:assessmentTypeDescription,
                 $meths/aqd:assessmentType
             )
+
             return
                 if ($check)
                 then
                     common:conditionalReportRow(
-                        not(empty($values)),
+                        not(exists($values)),
                         [
-                            (node-name($node), data($node))
+                            ("gml:id", data($node/@gml:id)),
+                            ("pollutant", $pollutant),
+                            ('aqd:samplingPointAssessmentMetadata',
+                             data($meths/aqd:samplingPointAssessmentMetadata/@xlink:href)),
+                            ('aqd:modelAssessmentMetadata',
+                             data($meths/aqd:modelAssessmentMetadata/@xlink:href)),
+                            ('aqd:assessmentTypeDescription',
+                             data($meths/aqd:assessmentTypeDescription)),
+                            ('aqd:assessmentType',
+                             data($meths/aqd:assessmentType))
                         ]
                     )
                 else
