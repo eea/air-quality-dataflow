@@ -1378,7 +1378,15 @@ declare function dataflowI:checkReport(
 
     (: I37
 
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+    aqd:AQD_SourceApportionment/
+    aqd:macroExceedanceSituation/
+    aqd:ExceedanceDescription/
+    aqd:exceedanceExposure/
+    aqd:ExceedanceExposure/
+    aqd:referenceYear/
+    gml:TimeInstant/
+    gml:timePosition
+
     shall be a calendar year in yyyy format
 
     Reference year for the population/exposure data in yyyy format
@@ -1387,14 +1395,22 @@ declare function dataflowI:checkReport(
 
     :)
     let $I37 := try {
-        for $node in $sources
-            let $year := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := data($year) castable as xs:gYear
+        for $node in $sources/
+                aqd:macroExceedanceSituation/
+                aqd:ExceedanceDescription/
+                aqd:exceedanceExposure/
+                aqd:ExceedanceExposure/
+                aqd:referenceYear/
+                gml:TimeInstant/
+                gml:timePosition
+
+            let $ok := data($node) castable as xs:gYear
+
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($year), data($year))
+                ('gml:timePosition', data($node))
             ]
         )
     } catch * {
@@ -1413,9 +1429,8 @@ declare function dataflowI:checkReport(
 
     :)
     let $I38 := try {
-        for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
-            let $link := $el/@xlink:href
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:reason
+            let $link := $node/@xlink:href
             let $ok := common:isInVocabulary(
                 $link,
                 $vocabulary:EXCEEDANCEREASON_VOCABULARY
