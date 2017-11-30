@@ -1091,12 +1091,15 @@ declare function dataflowI:checkReport(
 
     (: I30
 
-    If, aqd:stationUsed and/or aqd:modelUsed are populated, these must be valid
-    elements:
+    If, aqd:stationUsed and/or aqd:modelUsed are populated,
+    these must be valid elements:
+
     stationUsed must link To SamplingPoint via namespace/localid
     modelUsed must link to AQD_Model via namespace/ localid
 
     If SamplingPoint(s) and/or Model(s) are provided, these must be valid
+
+    TODO: double check the existsViaNameLocalId
 
     ERROR
     :)
@@ -1104,28 +1107,28 @@ declare function dataflowI:checkReport(
         for $node in $sources
             let $a := $node//aqd:stationUsed
             let $a-ok :=
-                if (common:has-content($a))
+                if (exists($a/@xlink:href))
                 then
-                    query:existsViaNameLocalId($a/@xlink:href, "SamplingPoint")
+                    query:existsViaNameLocalId($a/@xlink:href, "AQD_SamplingPoint")
                 else
                     true()
 
             let $b := $node//aqd:modelUsed
             let $b-ok :=
-                if (common:has-content($a))
+                if (exists($b/@xlink:href))
                 then
                     query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
                 else
                     true()
 
-            let $ok := $a and $b
+            let $ok := $a-ok and $b-ok
 
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/@gml:id)),
-                ("aqd:stationUsed", data($node//aqd:stationUsed)),
-                ("aqd:modelUsed", data($node//aqd:modelUsed))
+                ("aqd:stationUsed", $a/@xlink:href),
+                ("aqd:modelUsed", $b/@xlink:href)
             ]
         )
     } catch * {
@@ -1156,7 +1159,8 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: check reporting
+
+    TODO: check implementation
 
     :)
 
@@ -1165,12 +1169,19 @@ declare function dataflowI:checkReport(
             let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
             let $model := query:get-used-model-for-attainment($att-url)
-            let $ok := $mu = $model
+            let $ok :=
+                if (exists($mu))
+                then
+                    $mu/@xlink:href = $model
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($node), data($node))
+                (node-name($mu), $mu/@xlink:href),
+                ("parentExceedanceSituation", $att-url),
+                ("found model", $model)
             ]
         )
     } catch * {
@@ -1212,13 +1223,18 @@ declare function dataflowI:checkReport(
             let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
             let $station := query:get-used-station-for-attainment($att-url)
-            let $ok := $mu = $station
+            let $ok :=
+                if (exists($mu))
+                then
+                    $mu/@xlink:href = $station
+                else
+                    true()
 
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($mu), data($mu))
+                (node-name($mu), $mu/@xlink:href)
             ]
         )
     } catch * {
@@ -1241,14 +1257,18 @@ declare function dataflowI:checkReport(
     let $I33 := try {
         for $node in $sources
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
-            let $a := common:has-content($area/aqd:spatalExtent)
-            let $b := common:has-content($area/aqd:administrativeUnit)
-            let $ok := $a or $b
+
+            let $a := $area/aqd:spatialExtent
+            let $b := $area/aqd:administrativeUnit
+
+            let $ok := common:has-content($a) or common:has-content($b)
+
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($node), data($node))
+                ('aqd:spatialExtent', data($a)),
+                ('aqd:administrativeUnit', data($b))
             ]
         )
     } catch * {
@@ -1272,12 +1292,13 @@ declare function dataflowI:checkReport(
             let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea
             let $a := $area/aqd:surfaceArea
             let $b := $area/aqd:roadLength
-            let $ok := false()
+            let $ok := common:has-content($a) or common:has-content($b)
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($area), data($area))
+                ('aqd:surfaceArea', data($a)),
+                ('aqd:roadLength', data($b))
             ]
         )
     } catch * {
@@ -1313,7 +1334,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($node), data($node))
+                (node-name($a), data($a)),
+                ('aqd:populationExposed', data($b))
             ]
         )
     } catch * {
@@ -1333,13 +1355,20 @@ declare function dataflowI:checkReport(
 
     let $I36 := try {
         for $node in $sources
-            let $area := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
-            let $ok := common:has-content($area)
+            let $a := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedance
+            let $b := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceExposure/aqd:ExceedanceExposure/aqd:ecosystemAreaExposed
+            let $ok :=
+                if (data($a) = "true")
+                then
+                    common:has-content($b)
+                else
+                    true()
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($area), data($area))
+                (node-name($a), data($a)),
+                ('aqd:ecosystemAreaExposed', data($b))
             ]
         )
     } catch * {

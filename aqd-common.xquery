@@ -528,7 +528,7 @@ declare function common:has-content(
             let $attr := empty($node/@*)
             let $children := empty($node/*)
         return $attr or $children
-    return $res = true()
+    return exists($nodes) and ($res = true())
 };
 
 (:~ Returns true if provided pollutant is one of special values :)
