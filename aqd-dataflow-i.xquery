@@ -512,7 +512,7 @@ declare function dataflowI:checkReport(
 
     BLOCKER
     :)
-    let $I11b := try{
+    let $I12 := try{
         for $node in $sources/aqd:parentExceedanceSituation
             let $link := data($node/@xlink:href)
 
@@ -533,7 +533,7 @@ declare function dataflowI:checkReport(
         html:createErrorRow($err:code, $err:description)
     }
 
-    (: I12
+    (: I13
 
     aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition
     shall be a calendar year in yyyy format
@@ -543,10 +543,10 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
 
-    let $I12 := try {
+    let $I13 := try {
         for $node in $sources
             let $el := $node/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := $node castable as xs:gYear
+            let $ok := data($node) castable as xs:gYear
 
         return common:conditionalReportRow(
             $ok,
@@ -1379,7 +1379,7 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($el), $link)
+                ('aqd:reason', $link)
             ]
         )
     } catch * {
@@ -1761,11 +1761,11 @@ declare function dataflowI:checkReport(
         {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
 
         {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,
-                     "All values are valid", "needs valid input", $errors:I11a)}
-        {html:build2("I11b", $labels:I11b, $labels:I11b_SHORT, $I11b,
-                     "All values are valid", "needs valid input", $errors:I11b)}
+                     "All values are valid", "needs valid input", $errors:I11)}
+        {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12,
+                     "All values are valid", "needs valid input", $errors:I12)}
 
-        {html:build2("I12", $labels:I12, $labels:I12_SHORT, $I12, "All values are valid", "needs valid input", $errors:I12)}
+        {html:build2("I13", $labels:I13, $labels:I13_SHORT, $I13, "All values are valid", "needs valid input", $errors:I13)}
         {html:build2("I15", $labels:I15, $labels:I15_SHORT, $I15, "All values are valid", "needs valid input", $errors:I15)}
         {html:build2("I16", $labels:I16, $labels:I16_SHORT, $I16, "All values are valid", "needs valid input", $errors:I16)}
 
