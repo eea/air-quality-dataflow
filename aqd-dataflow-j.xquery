@@ -13,7 +13,7 @@ xquery version "3.0" encoding "UTF-8";
 
 module namespace dataflowJ = "http://converters.eionet.europa.eu/dataflowJ";
 
-import module namespace c = "aqd-common" at "aqd-common.xquery";
+import module namespace common = "aqd-common" at "aqd-common.xquery";
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace sparqlx = "aqd-sparql" at "aqd-sparql.xquery";
 import module namespace labels = "aqd-labels" at "aqd-labels.xquery";
@@ -61,19 +61,11 @@ declare function dataflowJ:checkReport($source_url as xs:string, $countryCode as
 let $docRoot := doc($source_url)
 let $evaluationScenario := $docRoot//aqd:AQD_EvaluationScenario
 (: example 2014 :)
-<<<<<<< HEAD
-let $reportingYear := c:getReportingYear($docRoot)
-(: example resources/dataflow-j/xml :)
-let $envelopeUrl := c:getEnvelopeXML($source_url)
-(: example cdr.eionet.europa.eu/be/eu/aqd/ :)
-let $cdrUrl := c:getCdrUrl($countryCode)
-=======
 let $reportingYear := common:getReportingYear($docRoot)
 (: example resources/dataflow-j/xml :)
 let $envelopeUrl := common:getEnvelopeXML($source_url)
 (: example cdr.eionet.europa.eu/be/eu/aqd/ :)
 let $cdrUrl := common:getCdrUrl($countryCode)
->>>>>>> master
 (: example http://cdr.eionet.europa.eu/be/eu/aqd/j/envwmp5lw :)
 let $latestEnvelopeByYearJ := query:getLatestEnvelope($cdrUrl || "j/", $reportingYear)
 
@@ -109,28 +101,6 @@ let $NSinvalid := try {
 
 (: J0
 Check if delivery if this is a new delivery or updated delivery (via reporting year)
-<<<<<<< HEAD
-
-Checks if this delivery is new or an update (on same reporting year)
-:)
-
-let $J0 := try {
-    if ($reportingYear = "")
-    then
-        c:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
-    else
-        if(query:deliveryExists($dataflowJ:OBLIGATIONS, $countryCode, "j/", $reportingYear))
-        then
-                c:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
-            else
-                c:checkDeliveryReport($errors:INFO, "New delivery for " || $reportingYear)
-
-
-} catch * {
-    html:createErrorRow($err:code, $err:description)
-}
-
-=======
 
 Checks if this delivery is new or an update (on same reporting year)
 :)
@@ -151,7 +121,6 @@ let $J0 := try {
     html:createErrorRow($err:code, $err:description)
 }
 
->>>>>>> master
 let $isNewDelivery := errors:getMaxError($J0) = $errors:INFO
 let $knownEvaluationScenarios :=
     if ($isNewDelivery)
@@ -170,37 +139,6 @@ let $countEvaluationScenario := count($docRoot//aqd:AQD_EvaluationScenario)
 let $J1 := try {
     for $rec in $docRoot//aqd:AQD_EvaluationScenario
         let $el := $rec/aqd:inspireId/base:Identifier
-<<<<<<< HEAD
-        return
-            c:conditionalReportRow(
-            false(),
-            [
-                ("gml:id", data($rec/@gml:id)),
-                ("base:localId", data($el/base:localId)),
-                ("base:namespace", data($el/base:namespace)),
-                ("base:versionId", data($el/base:versionId))
-            ]
-            )
-
-} catch * {
-    html:createErrorRow($err:code, $err:description)
-}
-
-(: J2
-Compile & feedback upon the total number of new EvaluationScenarios records included in the delivery.
-ERROR will be returned if XML is a new delivery and localId are not new compared to previous deliveries.
-
-Number of new EvaluationScenarios compared to previous report.
-:)
-
-let $J2 := try {
-    for $el in $docRoot//aqd:AQD_EvaluationScenario
-        let $x := $el/aqd:inspireId/base:Identifier
-        let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-        let $ok := not($inspireId = $knownEvaluationScenarios)
-        return
-            c:conditionalReportRow(
-=======
         return
             common:conditionalReportRow(
             false(),
@@ -230,7 +168,6 @@ let $J2 := try {
         let $ok := not($inspireId = $knownEvaluationScenarios)
         return
             common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/@gml:id)),
@@ -272,20 +209,12 @@ let $J3 := try {
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
         let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
         return
-<<<<<<< HEAD
-            c:conditionalReportRow(
-=======
             common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("gml:id", data($main/@gml:id)),
                 ("aqd:inspireId", $inspireId),
-<<<<<<< HEAD
-                ("aqd:classification", c:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
-=======
                 ("aqd:classification", common:checkLink(distinct-values(data($main/aqd:classification/@xlink:href))))
->>>>>>> master
             ]
             )
 } catch * {
@@ -317,11 +246,7 @@ let $J4 := try {
             and
             count(index-of($inspireIds, lower-case(normalize-space($inspireId)))) = 1
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
             not($ok),
             [
                 ("gml:id", data($x/@gml:id)),
@@ -363,22 +288,14 @@ let $J7 := try {
             return
                 for $v in distinct-values($values)
                     return
-<<<<<<< HEAD
-                        if (c:has-one-node($values, $v))
-=======
                         if (common:has-one-node($values, $v))
->>>>>>> master
                         then
                             ()
                         else
                             [$name, data($v)]
     }
 
-<<<<<<< HEAD
-    return c:conditionalReportRow(
-=======
     return common:conditionalReportRow(
->>>>>>> master
         array:size($errors) = 0,
         $errors
     )
@@ -402,11 +319,7 @@ let $J8 := try {
             and
             functx:if-empty($localID/text(), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("gml:id", data($x/@gml:id)),
@@ -428,11 +341,7 @@ let $J9 := try {
     for $namespace in distinct-values($docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier/base:namespace)
         let $localIds := $docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
         let $ok := false()
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("base:namespace", $namespace),
@@ -461,11 +370,7 @@ let $J10 := try {
             and
             $x = $altLabel
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("base:namespace", $x)
@@ -492,11 +397,7 @@ let $J11 := try {
                 'AQD_Plan',
                 $reportingYear
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     (node-name($el), $label)
@@ -523,11 +424,7 @@ let $J12 := try {
                 'AQD_SourceApportionment',
                 $reportingYear
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     (node-name($el), $label)
@@ -547,11 +444,7 @@ let $J13 := try {
     for $main in $evaluationScenario
         let $el := $main/aqd:codeOfScenario
         let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../@gml:id)),
@@ -574,11 +467,7 @@ let $J14 := try {
             and
             functx:if-empty(data($el), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -603,11 +492,7 @@ let $J15 := try {
             and
             functx:if-empty(data($el), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -631,11 +516,7 @@ let $J16 := try {
             and
             functx:if-empty(data($el), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -659,15 +540,9 @@ let $J17 := try {
         let $ok := (
             data($node) castable as xs:date
             or
-<<<<<<< HEAD
-            not(c:isInvalidYear(data($node)))
-        )
-        return c:conditionalReportRow(
-=======
             not(common:isInvalidYear(data($node)))
         )
         return common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("gml:id", data($node/../../../../../@gml:id)),
@@ -692,11 +567,7 @@ let $J18 := try {
             and
             functx:if-empty(data($el), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -720,15 +591,9 @@ let $J19 := try {
         let $ok := (
             functx:if-empty(data($el), "") != ""
             and
-<<<<<<< HEAD
-            c:includesURL(data($el))
-            )
-        return c:conditionalReportRow(
-=======
             common:includesURL(data($el))
             )
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -749,13 +614,8 @@ The year for which the projections are developed must be provided and the yyyy f
 let $J20 := try {
     let $main := $evaluationScenario/aqd:attainmentYear/gml:TimeInstant/gml:timePosition
     for $el in $main
-<<<<<<< HEAD
-        let $ok := not(c:isInvalidYear(data($el)))
-        return c:conditionalReportRow(
-=======
         let $ok := not(common:isInvalidYear(data($el)))
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -779,19 +639,11 @@ let $J21 := try {
     let $main := $evaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition
     for $el in $main
         let $ok := (
-<<<<<<< HEAD
-            not(c:isInvalidYear(data($el)))
-            and
-            functx:if-empty(data($el), "") != ""
-        )
-        return c:conditionalReportRow(
-=======
             not(common:isInvalidYear(data($el)))
             and
             functx:if-empty(data($el), "") != ""
         )
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -820,11 +672,7 @@ let $J22 := try {
                 'AQD_SourceApportionment',
                 $year
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                     $ok,
                     [
                         ("gml:id", data($el/../@gml:id)),
@@ -849,11 +697,7 @@ let $J23 := try {
             and
             functx:if-empty(data($el), "") != ""
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -884,20 +728,12 @@ let $J24 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_EMISSION_VOCABULARY
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -927,20 +763,12 @@ let $J25 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_CONCENTRATION_VOCABULARY
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -970,20 +798,12 @@ let $J26 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_STATISTICS
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -1011,11 +831,7 @@ let $J27 := try{
                 'AQD_Measures',
                 $reportingYear
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -1039,11 +855,7 @@ let $J28 := try {
         and
         functx:if-empty(data($el), "") != ""
     )
-<<<<<<< HEAD
-    return c:conditionalReportRow(
-=======
     return common:conditionalReportRow(
->>>>>>> master
             $ok,
             [
                 ("gml:id", data($el/../../../@gml:id)),
@@ -1075,20 +887,12 @@ let $J29 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_EMISSION_VOCABULARY
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -1118,20 +922,12 @@ let $J30 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_CONCENTRATION_VOCABULARY
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -1162,20 +958,12 @@ let $J31 := try {
             and
             data($el) >= 0
             and
-<<<<<<< HEAD
-            c:isInVocabulary(
-=======
             common:isInVocabulary(
->>>>>>> master
                     $el/@uom,
                     $vocabulary:UOM_STATISTICS
             )
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),
@@ -1203,11 +991,7 @@ let $J32 := try{
                 'AQD_Measures',
                 $reportingYear
         )
-<<<<<<< HEAD
-        return c:conditionalReportRow(
-=======
         return common:conditionalReportRow(
->>>>>>> master
                 $ok,
                 [
                     ("gml:id", data($el/../../../@gml:id)),

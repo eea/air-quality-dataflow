@@ -10,11 +10,7 @@ import module namespace vocabulary = "aqd-vocabulary" at "aqd-vocabulary.xquery"
 import module namespace query = "aqd-query" at "aqd-query.xquery";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
 import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";
-<<<<<<< HEAD
-(: import module namespace functx = "http://www.functx.com" at "aqd-functx.xq"; :)
-=======
 (:import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";:)
->>>>>>> master
 import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 
 declare namespace aqd = "http://dd.eionet.europa.eu/schemaset/id2011850eu-1.0";

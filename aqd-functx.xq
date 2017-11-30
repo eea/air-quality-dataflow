@@ -19,15 +19,6 @@ declare function functx:escape-for-regex($arg as xs:string?) as xs:string {
 };
 
 declare function functx:if-empty
-<<<<<<< HEAD
-  ( $arg as item()* ,
-    $value as item()* )  as item()* {
-
-  if (string($arg) != '')
-  then data($arg)
-  else $value
- } ;
-=======
  ( $arg as item()* ,
    $value as item()* )  as item()* {
 
@@ -35,4 +26,3 @@ declare function functx:if-empty
         then data($arg)
         else $value
 };
->>>>>>> master
