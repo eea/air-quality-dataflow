@@ -513,8 +513,8 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
     let $I11b := try{
-        for $el in $sources/aqd:parentExceedanceSituation
-            let $link := data($el/@xlink:href)
+        for $node in $sources/aqd:parentExceedanceSituation
+            let $link := data($node/@xlink:href)
 
             let $ok := query:existsViaNameLocalIdYear(
                     $link,
@@ -525,8 +525,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
-                (node-name($el), $el/@xlink:href)
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), $node/@xlink:href)
             ]
         )
     } catch * {
@@ -544,13 +544,14 @@ declare function dataflowI:checkReport(
     :)
 
     let $I12 := try {
-        for $el in $sources/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := $el castable as xs:gYear
+        for $node in $sources
+            let $el := $node/aqd:referenceYear/gml:TimeInstant/gml:timePosition
+            let $ok := $node castable as xs:gYear
 
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("gml:timePosition", data($el))
             ]
         )
@@ -576,23 +577,16 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
     let $I15 := try {
-        let $nodes := $sources//aqd:QuantityCommented/aqd:quantity[@xsi:nil="false"]
-        let $errors := array {
-            for $node in $nodes
-            return
-                if (not(common:is-a-number(data($node))))
-                then
-                    [
-                        ("gml:id", data($node/../../@gml:id)),
-                        (node-name($node), data($node))
-                    ]
-                else
-                    ()
-        }
+
+        for $node in $sources//aqd:QuantityCommented/aqd:quantity[@xsi:nil="false"]
+            let $ok := common:is-a-number(data($node))
 
         return common:conditionalReportRow(
-            array:size($errors) = 0,
-            $errors
+            $ok,
+            [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -629,7 +623,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($node/../@gml:id)),
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("aqd:quantity", data($node)),
                 ("nilReason", data($node/@nilReason))
             ]
@@ -649,9 +643,9 @@ declare function dataflowI:checkReport(
     :)
 
     let $I17 := try {
-        for $el in $docRoot//aqd:QuantityCommented
-            let $isnil := $el/aqd:quantity[@xsi:nil = "true"]
-            let $hascomment := common:has-content($el/aqd:comment)
+        for $node in $docRoot//aqd:QuantityCommented
+            let $isnil := $node/aqd:quantity[@xsi:nil = "true"]
+            let $hascomment := common:has-content($node/aqd:comment)
 
             let $ok :=
                 if ($isnil)
@@ -663,8 +657,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
-                ("node", node-name($el/..) || " needs comment")
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                ("node", node-name($node/..) || " needs comment")
             ]
         )
     } catch * {
@@ -900,15 +894,15 @@ declare function dataflowI:checkReport(
     :)
     let $I23 := try {
 
-        for $x in $sources/aqd:macroExceedanceSituation
-            let $a := data($x/aqd:numericalExceedance)
-            let $b := data($x/aqd:numberExceedances)
+        for $node in $sources/aqd:macroExceedanceSituation
+            let $a := data($node/aqd:numericalExceedance)
+            let $b := data($node/aqd:numberExceedances)
             let $ok := common:is-a-number($a) or common:is-a-number($b)
 
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($x/../@gml:id)),
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ('aqd:numericalExceedance', $a),
                 ('aqd:numberExceedances', $b)
             ]
@@ -1012,8 +1006,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("uom", $uom)
+                ("gml:id", data($node/@gml:id)),
+                ("uom", $uom)
             ]
         )
     } catch * {
@@ -1037,8 +1031,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("uom", $uom)
+                ("gml:id", data($node/@gml:id)),
+                ("uom", $uom)
             ]
         )
     } catch * {
@@ -1070,9 +1064,9 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("aqd:stationUsed", data($area/aqd:stationUsed)),
-            ("aqd:modelUsed", data($area/aqd:modelUsed))
+                ("gml:id", data($node/@gml:id)),
+                ("aqd:stationUsed", data($area/aqd:stationUsed)),
+                ("aqd:modelUsed", data($area/aqd:modelUsed))
             ]
         )
     } catch * {
@@ -1113,9 +1107,9 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
-            ("aqd:stationUsed", data($node//aqd:stationUsed)),
-            ("aqd:modelUsed", data($node//aqd:modelUsed))
+                ("gml:id", data($node/@gml:id)),
+                ("aqd:stationUsed", data($node//aqd:stationUsed)),
+                ("aqd:modelUsed", data($node//aqd:modelUsed))
             ]
         )
     } catch * {
@@ -1159,6 +1153,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($node), data($node))
             ]
         )
@@ -1192,7 +1187,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: implement this
+    TODO: properly implement this
     :)
 
     let $I32 := try {
@@ -1206,6 +1201,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($mu), data($mu))
             ]
         )
@@ -1235,6 +1231,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($node), data($node))
             ]
         )
@@ -1263,6 +1260,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($area), data($area))
             ]
         )
@@ -1298,6 +1296,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($node), data($node))
             ]
         )
@@ -1323,6 +1322,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($area), data($area))
             ]
         )
@@ -1348,6 +1348,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($year), data($year))
             ]
         )
@@ -1377,6 +1378,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($el), $link)
             ]
         )
@@ -1412,6 +1414,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($el), data($el))
             ]
         )
@@ -1453,6 +1456,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($el), $link)
             ]
         )
@@ -1489,6 +1493,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 (node-name($node), data($node))
             ]
         )
@@ -1557,6 +1562,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("aqd:samplingPointAssessmentMetadata", $a-m),
                 ("aqd:modelAssessmentMetadata", $b-m)
             ]
@@ -1627,10 +1633,19 @@ declare function dataflowI:checkReport(
     (: I44
 
     If
-    aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
-    is populated ,  WHERE ./aqd:pollutant xlink:href attribute EQUALs
-    http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
-    …/aqd:parentExceedanceSituation), the xlink:href must be "fullyCorrected"
+        aqd:AQD_SourceApportionment/
+        aqd:macroExceedanceSituation/
+        aqd:ExceedanceDescription/
+        aqd:deductionAssessmentMethod/
+        aqd:AdjustmentMethod/
+        aqd:adjustmentType
+    is populated ,
+    WHERE ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
+    (via …/aqd:parentExceedanceSituation),
+
+    the xlink:href must be "fullyCorrected"
+
     if another pollutant it must be "noneApplicable"
 
     If the pollutant is SO2, PM10, PM2.5 or CO and DeductionAssessmentMethod
@@ -1665,7 +1680,8 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($node), data($node))
+                ("gml:id", data($node/@gml:id)),
+                (node-name($el), data($el))
             ]
         )
     } catch * {
@@ -1714,6 +1730,7 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
+                ("gml:id", data($node/@gml:id)),
                 (node-name($el), $link)
             ]
         )
