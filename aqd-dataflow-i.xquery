@@ -1656,8 +1656,12 @@ declare function dataflowI:checkReport(
 
     let $I44 := try {
         for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:adjustmentType
-            let $is-populated := common:has-content($el)
+            let $el := $node/
+                        aqd:macroExceedanceSituation/
+                        aqd:ExceedanceDescription/
+                        aqd:deductionAssessmentMethod/
+                        aqd:AdjustmentMethod/
+                        aqd:adjustmentType
             let $link := $el/@xlink:href
 
             let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
@@ -1667,12 +1671,12 @@ declare function dataflowI:checkReport(
             let $check :=
                 if ($needed)
                 then
-                    $link = "fullyCorrected"
+                    $link = "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/fullyCorrected"
                 else
-                    $link = "noneApplicable"
+                    $link = "http://dd.eionet.europa.eu/vocabulary/aq/adjustmenttype/noneApplicable"
 
             let $ok :=
-                if (not($is-populated))
+                if (not(exists($link)))
                 then
                     true()
                 else
@@ -1681,7 +1685,8 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/@gml:id)),
-                (node-name($el), data($el))
+                ("pollutant", $pollutant),
+                (node-name($el), $link)
             ]
         )
     } catch * {
