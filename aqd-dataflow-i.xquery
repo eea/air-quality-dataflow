@@ -503,32 +503,30 @@ declare function dataflowI:checkReport(
     (: I11b
 
     aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation shall reference
-    an existing exceedance situation delivered within a data flow G  and the
+    an existing exceedance situation delivered within a data flow G and the
     reporting year of G & I shall be the same year via namespace/localId.
 
     You must provide a reference to an exceedance situation from data flow G.
     The exceedance situation must have the same reporting year as the source
     apportionment and refer to the same pollutant.
 
-    TODO: this needs to be implemented properly
-
     BLOCKER
     :)
     let $I11b := try{
         for $el in $sources/aqd:parentExceedanceSituation
-            let $label := data($el/@xlink:href)
-            let $ok := query:existsViaNameLocalId($label, 'AQD_Attainment')
-            (:
-            aqd:AQD_Attainment[aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription]
-            :)
+            let $link := data($el/@xlink:href)
 
-            (: TODO: check that the reporting year is for same year :)
+            let $ok := query:existsViaNameLocalIdYear(
+                    $link,
+                    'AQD_Attainment',
+                    $reportingYear
+            )
 
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../@gml:id)),
-                ("aqd:parentExceedanceSituation", $el/@xlink:href)
+                ("gml:id", data($el/../../../@gml:id)),
+                (node-name($el), $el/@xlink:href)
             ]
         )
     } catch * {
