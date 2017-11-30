@@ -896,13 +896,14 @@ declare function dataflowI:checkReport(
     :)
 
     let $I22 := try {
-        for $x in $sources
-            let $ok := not(empty($x/aqd:macroExceedanceSituation))
+        for $node in $sources
+            let $ok := exists($node/aqd:macroExceedanceSituation)
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($x/@gml:id)),
-                (node-name($x), $x)
+                ("gml:id", data($node/@gml:id)),
+                ('aqd:macroExceedanceSituation',
+                    data($node/aqd:macroExceedanceSituation))
             ]
         )
     } catch * {
@@ -923,15 +924,12 @@ declare function dataflowI:checkReport(
 
     ERROR
 
-    TODO: check a better replacement for is-a-number
-    TODO: improve reporting
-
     :)
     let $I23 := try {
 
         for $node in $sources/aqd:macroExceedanceSituation
-            let $a := data($node/aqd:numericalExceedance)
-            let $b := data($node/aqd:numberExceedances)
+            let $a := data($node//aqd:numericalExceedance)
+            let $b := data($node//aqd:numberExceedances)
             let $ok := common:is-a-number($a) or common:is-a-number($b)
 
         return common:conditionalReportRow(

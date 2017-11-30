@@ -131,8 +131,16 @@ declare function common:checkLink($text as xs:string*) as element(span)*{
         }</span>
 };
 
-declare function common:is-a-number( $value as xs:anyAtomicType? ) as xs:boolean {
-    string(number($value)) != 'NaN'
+(:~ Test if a given value matches a positive number (either integer or decimal)
+(with two places after dot)
+:)
+declare function common:is-a-number(
+    $value as xs:anyAtomicType?
+) as xs:boolean {
+    let $n := string(number($value))
+    let $matches := matches($n, "^\d+(\.\d\d?){0,1}$")
+    let $positive := number($value) > 0
+    return $matches and $positive
 };
 
 declare function common:includesURL($x as xs:string) {
