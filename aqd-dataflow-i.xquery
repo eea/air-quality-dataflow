@@ -1158,7 +1158,9 @@ declare function dataflowI:checkReport(
             let $ok := $mu = $model
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1203,7 +1205,9 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($mu), data($mu)]
+            [
+                (node-name($mu), data($mu))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1230,7 +1234,9 @@ declare function dataflowI:checkReport(
             let $ok := $a or $b
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1256,7 +1262,9 @@ declare function dataflowI:checkReport(
             let $ok := false()
         return common:conditionalReportRow(
             $ok,
-            [node-name($area), data($area)]
+            [
+                (node-name($area), data($area))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1289,7 +1297,9 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1312,7 +1322,9 @@ declare function dataflowI:checkReport(
             let $ok := common:has-content($area)
         return common:conditionalReportRow(
             $ok,
-            [node-name($area), data($area)]
+            [
+                (node-name($area), data($area))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1335,7 +1347,9 @@ declare function dataflowI:checkReport(
             let $ok := data($year) castable as xs:gYear
         return common:conditionalReportRow(
             $ok,
-            [node-name($year), data($year)]
+            [
+                (node-name($year), data($year))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1362,7 +1376,9 @@ declare function dataflowI:checkReport(
             )
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1395,7 +1411,9 @@ declare function dataflowI:checkReport(
                     $needed and common:has-content($el)
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), data($el)]
+            [
+                (node-name($el), data($el))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1434,7 +1452,9 @@ declare function dataflowI:checkReport(
                     )
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1468,7 +1488,9 @@ declare function dataflowI:checkReport(
                     $needed and common:has-content($el)
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1516,7 +1538,9 @@ declare function dataflowI:checkReport(
                     $a-ok or $b-ok
         return common:conditionalReportRow(
             $ok,
-            ["aqd:samplingPointAssessmentMetadata", data($a/@xlink:href)]
+            [
+                ("aqd:samplingPointAssessmentMetadata", data($a/@xlink:href))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1558,7 +1582,9 @@ declare function dataflowI:checkReport(
                 then
                     common:conditionalReportRow(
                         not(empty($values)),
-                        [node-name($node), data($node)]
+                        [
+                            (node-name($node), data($node))
+                        ]
                     )
                 else
                     ()
@@ -1606,7 +1632,9 @@ declare function dataflowI:checkReport(
                     $check
         return common:conditionalReportRow(
             $ok,
-            [node-name($node), data($node)]
+            [
+                (node-name($node), data($node))
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
@@ -1653,7 +1681,9 @@ declare function dataflowI:checkReport(
 
         return common:conditionalReportRow(
             $ok,
-            [node-name($el), $link]
+            [
+                (node-name($el), $link)
+            ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
