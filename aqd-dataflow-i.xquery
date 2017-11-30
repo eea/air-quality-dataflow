@@ -546,7 +546,7 @@ declare function dataflowI:checkReport(
     let $I13 := try {
         for $node in $sources
             let $el := $node/aqd:referenceYear/gml:TimeInstant/gml:timePosition
-            let $ok := data($node) castable as xs:gYear
+            let $ok := data($el) castable as xs:gYear
 
         return common:conditionalReportRow(
             $ok,
