@@ -678,16 +678,16 @@ declare function dataflowI:checkReport(
     The unit of measurement of the Source Apportioment must match recommended
     unit for the pollutant
 
-    TODO: doublecheck with test
-
     BLOCKER
     :)
 
     let $I18 := try {
-        for $x in $sources
-            let $quants := $x//aqd:QuantityCommented/aqd:quantity
-            let $uom := data($quants/@uom)
-            let $att-url := data($x/aqd:parentExceedanceSituation/@xlink:href)
+        for $quant in $sources//aqd:QuantityCommented/aqd:quantity
+
+            let $uom := data($quant/@uom)
+
+            let $node := $quant/ancestor::aqd:AQD_SourceApportionment
+            let $att-url := data($node/aqd:parentExceedanceSituation/@xlink:href)
             let $pollutant-code := query:get-pollutant-for-attainment($att-url)
             let $pollutant := dd:getNameFromPollutantCode($pollutant-code)
             let $rec-uom := dd:getRecommendedUnit($pollutant-code)
@@ -697,8 +697,9 @@ declare function dataflowI:checkReport(
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($x/@gml:id)),
-                (node-name($x), $uom)
+                ("gml:id", data($node/@gml:id)),
+                (node-name($quant), $uom),
+                ('recommended', $rec-uom)
             ]
         )
 
