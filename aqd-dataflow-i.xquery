@@ -1012,6 +1012,7 @@ declare function dataflowI:checkReport(
 
     TODO: check get-area-classifications-for-attainment, it returns a list
     because of how it gets Attainments
+    See comments on ticket https://taskman.eionet.europa.eu/issues/89179
 
     :)
 
@@ -1256,7 +1257,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: properly implement this
+    TODO: check implementation
     :)
 
     let $I32 := try {
@@ -1513,7 +1514,9 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($el), data($el))
+                (node-name($el), data($el)),
+                ('pollutant', $pollutant),
+                ('needed', $needed)
             ]
         )
     } catch * {
@@ -1603,8 +1606,11 @@ declare function dataflowI:checkReport(
     (: I42
 
     WHERE
-    ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
+        ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
     (via …/aqd:parentExceedanceSituation),
+
     at least one of
         /aqd:AQD_SourceApportionment/
         aqd:macroExceedanceSituation/
@@ -1614,7 +1620,9 @@ declare function dataflowI:checkReport(
         aqd:assessmentMethod/
         aqd:AssessmentMethods/
         aqd:samplingPointAssessmentMetadata/@xlink:href
+
     or
+
         /aqd:AQD_SourceApportionment/
         aqd:macroExceedanceSituation/
         aqd:ExceedanceDescription/
@@ -1623,6 +1631,7 @@ declare function dataflowI:checkReport(
         aqd:assessmentMethod/
         aqd:AssessmentMethods/
         aqd:modelAssessmentMetadata/@xlink:href
+
     must be populated and correctly link to D/D1b.
 
     Cross check the links provided against D, all assessment methods must exist
@@ -1644,11 +1653,15 @@ declare function dataflowI:checkReport(
 
             let $a := $node/aqd:samplingPointAssessmentMetadata
             let $a-m := $a/@xlink:href
-            let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
+            let $a-ok := common:has-content($a-m)
+            (: TODO: this implements the "correctly link in D/D1b :)
+            (: and ($a-m = $samplingPointAssessmentMetadata) :)
 
             let $b := $node/aqd:modelAssessmentMetadata
             let $b-m := $b/@xlink:href
-            let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
+            let $b-ok := common:has-content($b-m)
+            (: TODO: this implements the "correctly link in D/D1b :)
+            (: and ($b-m = $assessmentMetadata) :)
 
             let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
@@ -1858,7 +1871,6 @@ declare function dataflowI:checkReport(
         {html:build2("I07", $labels:I07, $labels:I07_SHORT, $I07, "No duplicate values found", " duplicate value", $errors:I07)}
         {html:build2("I08", $labels:I08, $labels:I08_SHORT, $I08invalid, "No duplicate values found", " duplicate value", $errors:I08)}
         {html:build2("I09", $labels:I09, $labels:I09_SHORT, $I09table, "namespace", "", $errors:I09)}
-        { (: TODO: I don't think the label is ok here :) }
         {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
 
         {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,

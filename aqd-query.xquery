@@ -143,6 +143,7 @@ declare function query:getModel($url as xs:string) as xs:string {
 };
 
 (: Checks if X references an existing Y via namespace/localid :)
+(: TODO: look at this for inspiration on how to find the AQD_Attainment for a AQD_SourceApportionment :)
 declare function query:existsViaNameLocalId(
         $label as xs:string,
         $name as xs:string
@@ -975,8 +976,6 @@ WHERE {
 
 (: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
 };
-
-
 
 
 (:~ Returns the areaClassification for a given attainment
