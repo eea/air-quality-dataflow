@@ -180,6 +180,20 @@ declare function dataflowI:checkReport(
         else
             distinct-values(data($latest-delivery))
 
+    let $attainments := sparqlx:run(
+        query:getAttainment($cdrUrl || "g/")
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $latest-attainment := sparqlx:run(
+        query:getAttainment($latestEnvelopeByYearI)
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $knownAttainments :=
+        if ($isNewDelivery) then
+            distinct-values(data($attainments))
+        else
+            distinct-values(data($latest-attainment))
+
     (: I1
 
     Compile & feedback upon the total number of Source Apportionments included
@@ -996,7 +1010,8 @@ declare function dataflowI:checkReport(
 
     WARNING
 
-    TODO: check this
+    TODO: check get-area-classifications-for-attainment, it returns a list
+    because of how it gets Attainments
 
     :)
 
@@ -1619,6 +1634,9 @@ declare function dataflowI:checkReport(
     ERROR
 
     TODO: check implementation. The implementation has not been check properly
+
+    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not
+    filled in
     :)
 
     let $I42 := try {
