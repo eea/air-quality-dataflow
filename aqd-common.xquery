@@ -246,7 +246,7 @@ declare function common:needsValidString(
         if (string-length(normalize-space($el/text())) = 0)
         then
             <tr>
-                <td title="gml:id">{$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}">{$nodeName} needs a valid input</td>
             </tr>
         else
@@ -277,7 +277,7 @@ declare function common:isInVocabularyReport(
             if (not(common:isInVocabulary($uri, $vocabularyName)))
             then
                 <tr>
-                    <td title="gml:id">{$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{node-name($el)}"> not conform to vocabulary</td>
                 </tr>
             else
@@ -347,7 +347,7 @@ declare function common:isNodeNotInParentReport(
             if (not(common:isNodeInParent($el, $nodeName)))
             then
                 <tr>
-                    <td title="gml:id">{$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{$nodeName}"> needs valid input</td>
                 </tr>
             else
@@ -380,7 +380,7 @@ declare function common:maybeNodeValueIsIntegerReport(
         if (not(common:maybeNodeValueIsInteger($el)))
         then
             <tr>
-                <td title="gml:id">{$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}"> needs valid input</td>
             </tr>
         else
@@ -417,7 +417,7 @@ declare function common:validatePossibleNodeValueReport(
         if (not(common:validatePossibleNodeValue($el, $validator)))
         then
             <tr>
-                <td title="gml:id"> {$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                <td title="gml:id"> {data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}"> needs valid input</td>
             </tr>
         else
@@ -442,7 +442,7 @@ declare function common:validateMaybeNodeWithValueReport(
             if (not($val))
             then
                 <tr>
-                    <td title="gml:id"> {$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                    <td title="gml:id"> {data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{$nodeName}"> needs valid input</td>
                 </tr>
             else
@@ -484,7 +484,7 @@ declare function common:isDateFullISOReport(
             if (not(common:isDateFullISO($date)))
             then
                 <tr>
-                    <td title="gml:id">{$el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{node-name($el)}">{$date}</td>
                 </tr>
             else
