@@ -438,15 +438,15 @@ declare variable $errors:H33 := errors:getError("H33");
 declare variable $errors:H34 := errors:getError("H34");
 declare variable $errors:H35 := errors:getError("H35");
 declare variable $errors:I0 := errors:getError("I0");
-declare variable $errors:I01 := errors:getError("I01");
-declare variable $errors:I02 := errors:getError("I02");
-declare variable $errors:I03 := errors:getError("I03");
-declare variable $errors:I04 := errors:getError("I04");
-declare variable $errors:I05 := errors:getError("I05");
-declare variable $errors:I06 := errors:getError("I06");
-declare variable $errors:I07 := errors:getError("I07");
-declare variable $errors:I08 := errors:getError("I08");
-declare variable $errors:I09 := errors:getError("I08");
+declare variable $errors:I1 := errors:getError("I1");
+declare variable $errors:I2 := errors:getError("I2");
+declare variable $errors:I3 := errors:getError("I3");
+declare variable $errors:I4 := errors:getError("I4");
+declare variable $errors:I5 := errors:getError("I5");
+declare variable $errors:I6 := errors:getError("I6");
+declare variable $errors:I7 := errors:getError("I7");
+declare variable $errors:I8 := errors:getError("I8");
+declare variable $errors:I9 := errors:getError("I9");
 declare variable $errors:I10 := errors:getError("I10");
 declare variable $errors:I11 := errors:getError("I11");
 declare variable $errors:I12 := errors:getError("I12");
@@ -1345,30 +1345,28 @@ declare variable $labels:H35 := labels:getDefinition("H35");
 declare variable $labels:H35_SHORT := labels:getPrefLabel("H35");
 declare variable $labels:I0 := labels:getDefinition("I0");
 declare variable $labels:I0_SHORT := labels:getPrefLabel("I0");
-declare variable $labels:I01 := labels:getDefinition("I01");
-declare variable $labels:I01_SHORT := labels:getPrefLabel("I01");
-declare variable $labels:I02 := labels:getDefinition("I02");
-declare variable $labels:I02_SHORT := labels:getPrefLabel("I02");
-declare variable $labels:I03 := labels:getDefinition("I03");
-declare variable $labels:I03_SHORT := labels:getPrefLabel("I03");
-declare variable $labels:I04 := labels:getDefinition("I04");
-declare variable $labels:I04_SHORT := labels:getPrefLabel("I04");
-declare variable $labels:I05 := labels:getDefinition("I05");
-declare variable $labels:I05_SHORT := labels:getPrefLabel("I05");
-declare variable $labels:I06 := labels:getDefinition("I06");
-declare variable $labels:I06_SHORT := labels:getPrefLabel("I06");
-declare variable $labels:I07 := labels:getDefinition("I07");
-declare variable $labels:I07_SHORT := labels:getPrefLabel("I07");
-declare variable $labels:I08 := labels:getDefinition("I08");
-declare variable $labels:I08_SHORT := labels:getPrefLabel("I08");
-declare variable $labels:I09 := labels:getDefinition("I09");
-declare variable $labels:I09_SHORT := labels:getPrefLabel("I09");
+declare variable $labels:I1 := labels:getDefinition("I1");
+declare variable $labels:I1_SHORT := labels:getPrefLabel("I0");
+declare variable $labels:I2 := labels:getDefinition("I2");
+declare variable $labels:I2_SHORT := labels:getPrefLabel("I0");
+declare variable $labels:I3 := labels:getDefinition("I0");
+declare variable $labels:I3_SHORT := labels:getPrefLabel("I3");
+declare variable $labels:I4 := labels:getDefinition("I4");
+declare variable $labels:I4_SHORT := labels:getPrefLabel("I4");
+declare variable $labels:I5 := labels:getDefinition("I5");
+declare variable $labels:I5_SHORT := labels:getPrefLabel("I5");
+declare variable $labels:I6 := labels:getDefinition("I6");
+declare variable $labels:I6_SHORT := labels:getPrefLabel("I6");
+declare variable $labels:I7 := labels:getDefinition("I7");
+declare variable $labels:I7_SHORT := labels:getPrefLabel("I7");
+declare variable $labels:I8 := labels:getDefinition("I8");
+declare variable $labels:I8_SHORT := labels:getPrefLabel("I8");
+declare variable $labels:I9 := labels:getDefinition("I9");
+declare variable $labels:I9_SHORT := labels:getPrefLabel("I9");
 declare variable $labels:I10 := labels:getDefinition("I10");
 declare variable $labels:I10_SHORT := labels:getPrefLabel("I10");
 declare variable $labels:I11 := labels:getDefinition("I11");
 declare variable $labels:I11_SHORT := labels:getPrefLabel("I11");
-declare variable $labels:I11b := labels:getDefinition("I11b");
-declare variable $labels:I11b_SHORT := labels:getPrefLabel("I11b");
 declare variable $labels:I12 := labels:getDefinition("I12");
 declare variable $labels:I12_SHORT := labels:getPrefLabel("I12");
 declare variable $labels:I13 := labels:getDefinition("I13");
@@ -1944,7 +1942,8 @@ declare function common:checkDeliveryReport (
 (: TODO: test if node doesn't exist :)
 declare function common:needsValidString(
     $parent as node()*,
-    $nodeName as xs:string
+    $nodeName as xs:string,
+    $ancestor-name as xs:string
 ) as element(tr)* {
     let $main := $parent/*[name() = $nodeName]
     for $el in $main
@@ -1952,7 +1951,7 @@ declare function common:needsValidString(
         if (string-length(normalize-space($el/text())) = 0)
         then
             <tr>
-                <td title="gml:id">{data($el/../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}">{$nodeName} needs a valid input</td>
             </tr>
         else
@@ -1973,7 +1972,8 @@ declare function common:isInVocabulary(
 
 declare function common:isInVocabularyReport(
   $main as node()+,
-  $vocabularyName as xs:string
+  $vocabularyName as xs:string,
+  $ancestor-name as xs:string
 ) as element(tr)* {
     try {
         for $el in $main
@@ -1982,7 +1982,7 @@ declare function common:isInVocabularyReport(
             if (not(common:isInVocabulary($uri, $vocabularyName)))
             then
                 <tr>
-                    <td title="gml:id">{data($el/../@gml:id)}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{node-name($el)}"> not conform to vocabulary</td>
                 </tr>
             else
@@ -2043,7 +2043,8 @@ declare function common:isNodeInParent(
 (: prints error if a specific node does not exist in a parent :)
 declare function common:isNodeNotInParentReport(
     $parent as node()*,
-    $nodeName as xs:string
+    $nodeName as xs:string,
+    $ancestor-name as xs:string
 ) as element(tr)* {
     try {
         for $el in $parent
@@ -2051,7 +2052,7 @@ declare function common:isNodeNotInParentReport(
             if (not(common:isNodeInParent($el, $nodeName)))
             then
                 <tr>
-                    <td title="gml:id">{data($el/@gml:id)}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{$nodeName}"> needs valid input</td>
                 </tr>
             else
@@ -2076,13 +2077,15 @@ declare function common:maybeNodeValueIsInteger($el) as xs:boolean {
 (: prints error if a specific node has value and is not an integer :)
 declare function common:maybeNodeValueIsIntegerReport(
     $parent as node()?,
-    $nodeName as xs:string
+    $nodeName as xs:string,
+    $ancestor-name
 ) as element(tr)* {
     let $el := $parent/*[name() = $nodeName]
     return try {
         if (not(common:maybeNodeValueIsInteger($el)))
         then
             <tr>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}"> needs valid input</td>
             </tr>
         else
@@ -2110,7 +2113,8 @@ declare function common:validatePossibleNodeValue(
 declare function common:validatePossibleNodeValueReport(
     $parent as node()*,
     $nodeName as xs:string,
-    $validator as function(item()) as xs:boolean
+    $validator as function(item()) as xs:boolean,
+    $ancestor-name as xs:string
 ) {
     let $main := $parent/*[name() = $nodeName]
     for $el in $main
@@ -2118,7 +2122,7 @@ declare function common:validatePossibleNodeValueReport(
         if (not(common:validatePossibleNodeValue($el, $validator)))
         then
             <tr>
-                <td title="gml:id"> {data($el/../../../../@gml:id)}</td>
+                <td title="gml:id"> {data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{$nodeName}"> needs valid input</td>
             </tr>
         else
@@ -2133,7 +2137,8 @@ declare function common:validatePossibleNodeValueReport(
 declare function common:validateMaybeNodeWithValueReport(
     $parent as node()?,
     $nodeName as xs:string,
-    $val as xs:boolean
+    $val as xs:boolean,
+    $ancestor-name as xs:string
 ) as element(tr)* {
     let $el := $parent/*[name() = $nodeName]
     return try {
@@ -2142,7 +2147,7 @@ declare function common:validateMaybeNodeWithValueReport(
             if (not($val))
             then
                 <tr>
-                    <td title="gml:id"> {data($el/../../../@gml:id)}</td>
+                    <td title="gml:id"> {data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{$nodeName}"> needs valid input</td>
                 </tr>
             else
@@ -2173,7 +2178,8 @@ declare function common:isDateFullISO(
 };
 (: Create report :)
 declare function common:isDateFullISOReport(
-    $main as node()*
+    $main as node()*,
+    $ancestor-name as xs:string
 ) as element(tr)*
 {
     for $el in $main
@@ -2183,7 +2189,7 @@ declare function common:isDateFullISOReport(
             if (not(common:isDateFullISO($date)))
             then
                 <tr>
-                    <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                    <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                     <td title="{node-name($el)}">{$date}</td>
                 </tr>
             else
@@ -10437,6 +10443,7 @@ let $H10 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($x/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("base:namespace", $x)
             ]
     )
@@ -10468,7 +10475,7 @@ let $H11 := try{
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("aqd:exceedanceSituation", $el/@xlink:href)
             ]
     )
@@ -10505,7 +10512,7 @@ let $H12 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("aqd:exceedanceSituation", data($main)),
             ("aqd:comment", data($comment))
             ]
@@ -10530,6 +10537,7 @@ let $H14 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10558,7 +10566,7 @@ let $H16 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10583,7 +10591,7 @@ let $H17 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10609,7 +10617,7 @@ let $H18 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10632,6 +10640,7 @@ let $H19 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), data($el))
             ]
     )
@@ -10652,7 +10661,7 @@ let $H20 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -10676,7 +10685,7 @@ let $H21 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -10700,7 +10709,7 @@ let $H22 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -10841,7 +10850,7 @@ let $H25 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $link)
             ]
     )
@@ -10927,6 +10936,7 @@ let $H28 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10954,6 +10964,7 @@ let $H29 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -10978,6 +10989,7 @@ let $H30 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11001,6 +11013,7 @@ let $H31 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11024,6 +11037,7 @@ let $H32 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11049,6 +11063,7 @@ let $H33 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($node/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($node), data($node))
             ]
     )
@@ -11072,6 +11087,7 @@ let $H34 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11097,6 +11113,7 @@ let $H35 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11343,7 +11360,7 @@ declare function dataflowI:checkReport(
             html:createErrorRow($err:code, $err:description)
         }
 
-    (: I02
+    (: I2
 
     Compile & feedback upon the total number of new  Source Apportionments
     records included in the delivery. ERROR will be returned if XML is a new
@@ -11356,7 +11373,7 @@ declare function dataflowI:checkReport(
     BLOCKER
 
     :)
-    let $I02table :=
+    let $I2table :=
         try {
             for $x in $sources
             let $inspireId := concat(
@@ -11373,7 +11390,7 @@ declare function dataflowI:checkReport(
         } catch * {
             html:createErrorRow($err:code, $err:description)
         }
-    let $I02errorLevel :=
+    let $I2errorLevel :=
         if ($isNewDelivery and count(
             for $x in $sources
                 let $id := $x/aqd:inspireId/base:Identifier/base:namespace
@@ -11381,11 +11398,11 @@ declare function dataflowI:checkReport(
                             || $x/aqd:inspireId/base:Identifier/base:localId
             where ($allSources = $id)
             return 1) > 0) then
-                $errors:I02
+                $errors:I2
             else
                 $errors:INFO
 
-    (: I03
+    (: I3
 
     Compile & feedback upon the total number of updated Source Apportionments
     included in the delivery. ERROR will be returned if XML is an update and
@@ -11400,7 +11417,7 @@ declare function dataflowI:checkReport(
     TODO: please check
 
     - :)
-    let $I03table :=
+    let $I3table :=
         try {
             for $x in $sources
             let $inspireId := data($x/aqd:inspireId/base:Identifier/base:namespace)
@@ -11415,13 +11432,13 @@ declare function dataflowI:checkReport(
         } catch * {
             html:createErrorRow($err:code, $err:description)
         }
-    let $I03errorLevel :=
-        if (not($isNewDelivery) and count($I03table) = 0) then
-            $errors:I03
+    let $I3errorLevel :=
+        if (not($isNewDelivery) and count($I3table) = 0) then
+            $errors:I3
         else
             $errors:INFO
 
-    (: I04
+    (: I4
 
     Compile & feedback a list of the unique identifier information for all
     Source Apportionments records included in the delivery. Feedback report
@@ -11439,7 +11456,7 @@ declare function dataflowI:checkReport(
     BLOCKER
 
     :)
-    let $I04table :=
+    let $I4table :=
         try {
             let $gmlIds := $sources/lower-case(normalize-space(@gml:id))
             let $inspireIds := $sources/lower-case(normalize-space(aqd:inspireId))
@@ -11476,13 +11493,13 @@ declare function dataflowI:checkReport(
             html:createErrorRow($err:code, $err:description)
         }
 
-    (: I05 reserved :)
-    let $I05 := ()
+    (: I5 reserved :)
+    let $I5 := ()
 
-    (: I06 reserved :)
-    let $I06 := ()
+    (: I6 reserved :)
+    let $I6 := ()
 
-    (: I07
+    (: I7
 
     All gml:id attributes, ef:inspireId and aqd:inspireId elements shall have
     unique content
@@ -11492,7 +11509,7 @@ declare function dataflowI:checkReport(
     BLOCKER
 
     :)
-    let $I07 := try {
+    let $I7 := try {
         let $checks := ('gml:id', 'aqd:inspireId', 'ef:inspireId')
 
         let $errors := array {
@@ -11518,7 +11535,7 @@ declare function dataflowI:checkReport(
         html:createErrorRow($err:code, $err:description)
     }
 
-    (: I08
+    (: I8
 
     ./aqd:inspireId/base:Identifier/base:localId must be unique code for the
     Plans records
@@ -11527,7 +11544,7 @@ declare function dataflowI:checkReport(
 
     BLOCKER
     :)
-    let $I08invalid:= try {
+    let $I8invalid:= try {
         let $localIds := $sources/aqd:inspireId/base:Identifier/lower-case(normalize-space(base:localId))
         for $x in $sources
             let $localID := $x/aqd:inspireId/base:Identifier/base:localId
@@ -11549,7 +11566,7 @@ declare function dataflowI:checkReport(
     }
 
 
-    (: I09
+    (: I9
 
     ./aqd:inspireId/base:Identifier/base:namespace
 
@@ -11561,7 +11578,7 @@ declare function dataflowI:checkReport(
     BLOCKER
     :)
 
-    let $I09table := try {
+    let $I9table := try {
         for $namespace in distinct-values($sources/aqd:inspireId/base:Identifier/base:namespace)
             let $localIds := $sources/aqd:inspireId/base:Identifier[base:namespace = $namespace]/base:localId
             let $ok := false()
@@ -12990,15 +13007,15 @@ declare function dataflowI:checkReport(
 
         {html:build2("NS", $labels:NAMESPACES, $labels:NAMESPACES_SHORT, $NSinvalid, "All values are valid", "record", $errors:NS)}
         {html:build3("I0", $labels:I0, $labels:I0_SHORT, $I0table, string($I0table/td), errors:getMaxError($I0table))}
-        {html:build1("I01", $labels:I01, $labels:I01_SHORT, $tblAllSources, "", string($countSources), "", "", $errors:I01)}
-        {html:buildSimple("I02", $labels:I02, $labels:I02_SHORT, $I02table, "", "report", $I02errorLevel)}
-        {html:buildSimple("I03", $labels:I03, $labels:I03_SHORT, $I03table, "", "", $I03errorLevel)}
-        {html:build1("I04", $labels:I04, $labels:I04_SHORT, $I04table, "", string(count($I04table)), " ", "", $errors:I04)}
-        {html:build1("I05", $labels:I05, $labels:I05_SHORT, $I05, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I05)}
-        {html:build1("I06", $labels:I06, $labels:I06_SHORT, $I06, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I06)}
-        {html:build2("I07", $labels:I07, $labels:I07_SHORT, $I07, "No duplicate values found", " duplicate value", $errors:I07)}
-        {html:build2("I08", $labels:I08, $labels:I08_SHORT, $I08invalid, "No duplicate values found", " duplicate value", $errors:I08)}
-        {html:build2("I09", $labels:I09, $labels:I09_SHORT, $I09table, "namespace", "", $errors:I09)}
+        {html:build1("I1", $labels:I1, $labels:I1_SHORT, $tblAllSources, "", string($countSources), "", "", $errors:I1)}
+        {html:buildSimple("I2", $labels:I2, $labels:I2_SHORT, $I2table, "", "report", $I2errorLevel)}
+        {html:buildSimple("I3", $labels:I3, $labels:I3_SHORT, $I3table, "", "", $I3errorLevel)}
+        {html:build1("I4", $labels:I4, $labels:I4_SHORT, $I4table, "", string(count($I4table)), " ", "", $errors:I4)}
+        {html:build1("I5", $labels:I5, $labels:I5_SHORT, $I5, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I5)}
+        {html:build1("I6", $labels:I6, $labels:I6_SHORT, $I6, "RESERVE", "RESERVE", "RESERVE", "RESERVE", $errors:I6)}
+        {html:build2("I7", $labels:I7, $labels:I7_SHORT, $I7, "No duplicate values found", " duplicate value", $errors:I7)}
+        {html:build2("I8", $labels:I8, $labels:I8_SHORT, $I8invalid, "No duplicate values found", " duplicate value", $errors:I8)}
+        {html:build2("I9", $labels:I9, $labels:I9_SHORT, $I9table, "namespace", "", $errors:I9)}
         {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
 
         {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,
@@ -13101,6 +13118,7 @@ let $envelopeUrl := common:getEnvelopeXML($source_url)
 let $cdrUrl := common:getCdrUrl($countryCode)
 (: example http://cdr.eionet.europa.eu/be/eu/aqd/j/envwmp5lw :)
 let $latestEnvelopeByYearJ := query:getLatestEnvelope($cdrUrl || "j/", $reportingYear)
+let $ancestor-name := "aqd:AQD_EvaluationScenario"
 
 (: NS
 Check prefix and namespaces of the gml:featureCollection according to expected root elements
@@ -13433,6 +13451,7 @@ let $J11 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $label)
                 ]
             )
@@ -13460,6 +13479,7 @@ let $J12 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $label)
                 ]
             )
@@ -13480,7 +13500,7 @@ let $J13 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../@gml:id)),
+                    ("gml:id", $main/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13503,7 +13523,7 @@ let $J14 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), data($el))
                 ]
             )
@@ -13528,7 +13548,7 @@ let $J15 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13552,7 +13572,7 @@ let $J16 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13578,7 +13598,7 @@ let $J17 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($node/../../../../../@gml:id)),
+                ("gml:id", $node/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 (node-name($node), data($node))
             ]
         )
@@ -13603,7 +13623,7 @@ let $J18 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13629,7 +13649,7 @@ let $J19 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13651,7 +13671,7 @@ let $J20 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13679,7 +13699,7 @@ let $J21 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13708,7 +13728,7 @@ let $J22 := try {
         return common:conditionalReportRow(
                     $ok,
                     [
-                        ("gml:id", data($el/../@gml:id)),
+                        ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                         (node-name($el), $el/@xlink:href)
                     ]
                 )
@@ -13733,7 +13753,7 @@ let $J23 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el)
                 ]
             )
@@ -13769,7 +13789,7 @@ let $J24 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:totalEmissions", $el),
                     ("uom", $el/@uom)
                 ]
@@ -13804,7 +13824,7 @@ let $J25 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:expectedConcentration", $el),
                     ("uom", $el/@uom)
                 ]
@@ -13839,7 +13859,7 @@ let $J26 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:expectedExceedances", $el),
                     ("uom", $el/@uom)
                 ]
@@ -13867,7 +13887,7 @@ let $J27 := try{
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el/@xlink:href)
                 ]
             )
@@ -13891,7 +13911,7 @@ let $J28 := try {
     return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 (node-name($el), $el)
             ]
         )
@@ -13928,7 +13948,7 @@ let $J29 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:totalEmissions", $el),
                     ("uom", $el/@uom)
                 ]
@@ -13963,7 +13983,7 @@ let $J30 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:expectedConcentration", $el),
                     ("uom", $el/@uom)
                 ]
@@ -13999,7 +14019,7 @@ let $J31 := try {
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     ("aqd:expectedExceedances", $el),
                     ("uom", $el/@uom)
                 ]
@@ -14027,7 +14047,7 @@ let $J32 := try{
         return common:conditionalReportRow(
                 $ok,
                 [
-                    ("gml:id", data($el/../../../@gml:id)),
+                    ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                     (node-name($el), $el/@xlink:href)
                 ]
             )
@@ -14138,6 +14158,7 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
 let $namespaces := distinct-values($docRoot//base:namespace)
+let $ancestor-name := "aqd:AQD_Measures"
 
 (: File prefix/namespace check :)
 
@@ -14170,7 +14191,7 @@ let $K0table := try {
     then
         common:checkDeliveryReport($errors:ERROR, "Reporting Year is missing.")
     else
-        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "j/", $reportingYear))
+        if (query:deliveryExists($dataflowK:OBLIGATIONS, $countryCode, "k/", $reportingYear))
             then
                 common:checkDeliveryReport($errors:WARNING, "Updating delivery for " || $reportingYear)
             else
@@ -14463,7 +14484,7 @@ let $K11 := try{
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 (node-name($el), $el/@xlink:href)
             ]
         )
@@ -14488,7 +14509,7 @@ let $K12 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 (node-name($el), $el/@xlink:href)
             ]
         )
@@ -14529,28 +14550,32 @@ let $K13invalid := try {
 (: K14 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
 let $K14invalid := common:needsValidString(
-        $docRoot//aqd:AQD_Measures, 'aqd:name'
+        $docRoot//aqd:AQD_Measures, 'aqd:name',
+        $ancestor-name
         )
 
 (: K15 aqd:AQD_Measures/aqd:name must be populated with a text string
 A short name for the measure :)
 let $K15invalid := common:needsValidString(
         $docRoot//aqd:AQD_Measures,
-        'aqd:description'
+        'aqd:description',
+        $ancestor-name
         )
 
 (: K16 aqd:AQD_Measures/aqd:classification shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measureclassification/
 Measure classification should conform to vocabulary :)
 let $K16 := common:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:classification,
-        $vocabulary:MEASURECLASSIFICATION_VOCABULARY
+        $vocabulary:MEASURECLASSIFICATION_VOCABULARY,
+        $ancestor-name
         )
 
 (: K17 aqd:AQD_Measures/aqd:measureType shall resolve to the codelist http://dd.eionet.europa.eu/vocabulary/aq/measuretype/
 Measure type should conform to vocabulary :)
 let $K17 := common:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:measureType,
-        $vocabulary:MEASURETYPE_VOCABULARY
+        $vocabulary:MEASURETYPE_VOCABULARY,
+        $ancestor-name
         )
 
 
@@ -14560,7 +14585,8 @@ Administrative level should conform to vocabulary
 :)
 let $K18 := common:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:administrativeLevel,
-        $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY
+        $vocabulary:ADMINISTRATIVE_LEVEL_VOCABULARY,
+        $ancestor-name
         )
 
 (: K19
@@ -14569,7 +14595,8 @@ The measure's timescale should conform to vocabulary
 :)
 let $K19 := common:isInVocabularyReport(
         $docRoot//aqd:AQD_Measures/aqd:timeScale,
-        $vocabulary:TIMESCALE_VOCABULARY
+        $vocabulary:TIMESCALE_VOCABULARY,
+        $ancestor-name
         )
 
 
@@ -14578,7 +14605,8 @@ Information on the cost of the measure should be provided
 :)
 let $K20 := common:isNodeNotInParentReport(
         $docRoot//aqd:AQD_Measures,
-        'aqd:costs'
+        'aqd:costs',
+        $ancestor-name
         )
 
 (: K21
@@ -14644,16 +14672,13 @@ If populated,
 integer number
 If the final total costs of the measure is provided, this nneeds to be a number
 
-let $K22 := c:maybeNodeValueIsIntegerReport(
-    $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
-    'aqd:finalImplementationCosts'
-)
 :)
 
 let $K22 := common:validatePossibleNodeValueReport(
     $docRoot//aqd:AQD_Measures/aqd:costs/aqd:Costs,
     'aqd:finalImplementationCosts',
-    common:is-a-number#1
+    common:is-a-number#1,
+    $ancestor-name
 )
 
 (: K23
@@ -14675,7 +14700,8 @@ let $K23 := (
         common:isInVocabulary(
             $el/aqd:currency/@xlink:href,
             $vocabulary:CURRENCIES
-        )
+        ),
+        $ancestor-name
     )
 )
 
@@ -14689,7 +14715,8 @@ Source sector should conform to vocabulary
 
 let $K24 := common:isInVocabularyReport(
     $docRoot//aqd:AQD_Measures/aqd:sourceSectors,
-    $vocabulary:SOURCESECTORS_VOCABULARY
+    $vocabulary:SOURCESECTORS_VOCABULARY,
+    $ancestor-name
     )
 
 (: K25
@@ -14701,7 +14728,8 @@ Spatial scale should conform to vocabulary
 
 let $K25 := common:isInVocabularyReport(
     $docRoot//aqd:AQD_Measures/aqd:spatialScale,
-    $vocabulary:SPACIALSCALE_VOCABULARY
+    $vocabulary:SPACIALSCALE_VOCABULARY,
+    $ancestor-name
     )
 
 (: K26
@@ -14719,7 +14747,7 @@ let $K26 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../@gml:id)}</td>
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -14736,7 +14764,8 @@ The planned start date for the measure should be provided
 :)
 
 let $K27 := common:isDateFullISOReport(
-    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationPlannedTimePeriod/gml:TimePeriod/gml:beginPosition,
+    $ancestor-name
 )
 
 (: K28
@@ -14763,7 +14792,7 @@ let $K28 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("gml:beginPosition", data($begin)),
                 ("gml:endPosition", data($end))
             ]
@@ -14779,7 +14808,8 @@ must be a date in full ISO date format
 The planned start date for the measure should be provided
 :)
 let $K29 := common:isDateFullISOReport(
-    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition
+    $docRoot//aqd:AQD_Measures/aqd:plannedImplementation/aqd:PlannedImplementation/aqd:implementationActualTimePeriod/gml:TimePeriod/gml:beginPosition,
+    $ancestor-name
 )
 
 (:
@@ -14813,7 +14843,7 @@ let $K30 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("gml:beginPosition", data($begin)),
                 ("gml:endPosition", data($end))
             ]
@@ -14841,7 +14871,7 @@ let $K31 := try {
     return common:conditionalReportRow(
         $ok,
         [
-            ("gml:id", data($node/../../../../../@gml:id)),
+            ("gml:id", $node/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
             (node-name($node), data($node))
         ]
     )
@@ -14877,7 +14907,7 @@ let $K33 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:monitoringProgressIndicators", data($main)),
                 ("aqd:comment", data($comment))
             ]
@@ -14915,7 +14945,7 @@ let $K34 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($node/../../../@gml:id)),
+                ("gml:id", $node/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:quantity", data($node)),
                 ("xsi:nil", $node/@xsi:nil)
             ]
@@ -14953,7 +14983,7 @@ let $K35 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($node/../../../@gml:id)),
+                ("gml:id", $node/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:quantity", data($node)),
                 ("xsi:nil", data($node/@xsi:nil)),
                 ("nilReason", data($node/@nilReason))
@@ -14988,7 +15018,7 @@ let $K36 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($main/../../@gml:id)),
+                ("gml:id", $main/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:quantity", data($quantity)),
                 ("aqd:comment", data($comment))
             ]
@@ -15013,7 +15043,7 @@ let $K37 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:quantity", data($el)),
                 ("uom", data($uri))
             ]
@@ -15053,7 +15083,7 @@ let $K38 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:levelOfConcentration", data($el)),
                 ("uom", data($uri))
             ]
@@ -15092,7 +15122,7 @@ let $K39 := try {
         return common:conditionalReportRow(
             $ok,
             [
-                ("gml:id", data($el/../../../@gml:id)),
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
                 ("aqd:numberOfExceedances", data($el)),
                 ("uom", data($uri))
             ]
@@ -17807,9 +17837,6 @@ declare function html:createErrorRow(
 
 
 (: QC Labels :)
-
-
-
 
 
 

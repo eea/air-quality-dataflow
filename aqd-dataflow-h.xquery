@@ -366,6 +366,7 @@ let $H10 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($x/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("base:namespace", $x)
             ]
     )
@@ -397,7 +398,7 @@ let $H11 := try{
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("aqd:exceedanceSituation", $el/@xlink:href)
             ]
     )
@@ -434,7 +435,7 @@ let $H12 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("aqd:exceedanceSituation", data($main)),
             ("aqd:comment", data($comment))
             ]
@@ -459,6 +460,7 @@ let $H14 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -487,7 +489,7 @@ let $H16 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -512,7 +514,7 @@ let $H17 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -538,7 +540,7 @@ let $H18 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -561,6 +563,7 @@ let $H19 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), data($el))
             ]
     )
@@ -581,7 +584,7 @@ let $H20 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -605,7 +608,7 @@ let $H21 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -629,7 +632,7 @@ let $H22 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
         then
             <tr>
-                <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
@@ -770,7 +773,7 @@ let $H25 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($node/@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $link)
             ]
     )
@@ -856,6 +859,7 @@ let $H28 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -883,6 +887,7 @@ let $H29 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -907,6 +912,7 @@ let $H30 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -930,6 +936,7 @@ let $H31 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -953,6 +960,7 @@ let $H32 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -978,6 +986,7 @@ let $H33 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($node/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($node), data($node))
             ]
     )
@@ -1001,6 +1010,7 @@ let $H34 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -1026,6 +1036,7 @@ let $H35 := try {
     return common:conditionalReportRow(
             $ok,
             [
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
