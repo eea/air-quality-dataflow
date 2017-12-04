@@ -10549,7 +10549,7 @@ You must provide the name of the organisation responsible for the plan
 :)
 
 let $H16 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -10574,7 +10574,7 @@ You must provide a contact point within the organisation responsible for the pla
 :)
 
 let $H17 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -10600,7 +10600,7 @@ a generic telephone number.
 :)
 
 let $H18 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -10624,7 +10624,7 @@ Your reference year must be in yyyy format
 :)
 
 let $H19 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
+    for $el in $docRoot//aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
     let $ok := functx:if-empty(data($el), "") != ""
             and
             $el castable as xs:gYear
@@ -10646,14 +10646,14 @@ Your plan status should use one of those listed at http://dd.eionet.europa.eu/vo
 :)
 
 let $H20 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:status
+    for $el in $docRoot//aqd:AQD_Plan/aqd:status
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -10670,14 +10670,14 @@ Your plan status should use one of those listed at http://dd.eionet.europa.eu/vo
 :)
 
 let $H21 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+    for $el in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -10694,14 +10694,14 @@ Your protection target should use one of those listed at http://dd.eionet.europa
 :)
 
 let $H22 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
+    for $el in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -10732,7 +10732,46 @@ Benzo(a)pyrene in PM10 (5029) + health
 Check and count expected combinations of Pollutant and ProtectionTarget
 :)
 
-let $H23 := ()
+let $H23 := try {
+    let $accepted_health := (
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001'
+    )
+
+    let $accepted_vegetation := (
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9'
+    )
+
+    for $polluant in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+    let $pollutantCode := $polluant/aqd:pollutantCode/@xlink:href
+    let $protectionTarget := $polluant/aqd:protectionTarget/@xlink:href
+    return
+        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H' and not($pollutantCode = $accepted_health))
+            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V' and not($pollutantCode = $accepted_vegetation)))
+        then
+            <tr>
+                <td title="gml:id">{data($polluant/../../@gml:id)}</td>
+                <td title="pollutantCode xlink:href">{data($pollutantCode)}</td>
+                <td title="protectionTarget xlink:href">{data($protectionTarget)}</td>
+                <td title="error"> not accepted</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H24
 aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
@@ -10742,7 +10781,33 @@ attribute (maybe multiple)
 AQ plan pollutant's should match those in the exceedance situation (G)
 :)
 
-let $H24 := ()
+let $H24 := try {
+    for $plan in $docRoot//aqd:AQD_Plan
+        let $dataflow-g-pollutant :=
+            for $ex in $plan/aqd:exceedanceSituation
+                return try {
+                    doc($ex/@xlink:href/string())//aqd:pollutant/@xlink:href/string()
+                } catch * {
+                    ('Exceedance Situation - broken link')
+                }
+        return
+            if ($dataflow-g-pollutant = 'Exceedance Situation - broken link')
+            then
+                html:createErrorRow('404', 'Exceedance Situation - broken link')
+            else
+                for $polluant in $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+                    return if (not($polluant/@xlink:href/string() = $dataflow-g-pollutant))
+                    then
+                        <tr>
+                            <td title="gml:id">{data($polluant/../../../@gml:id)}</td>
+                            <td title="pollutantCode xlink:href">{data($polluant/@xlink:href)}</td>
+                            <td title="error"> not in dataflow G</td>
+                        </tr>
+                    else
+                        ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H25
 aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition MUST be populated and its content in
@@ -10827,7 +10892,7 @@ Must contain a short textual description of timetable for the implementation of 
 :)
 
 let $H27 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:timeTable
+    let $main := $docRoot//aqd:AQD_Plan/aqd:timeTable
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -11242,6 +11307,20 @@ declare function dataflowI:checkReport(
             distinct-values(data($deliveries))
         else
             distinct-values(data($latest-delivery))
+
+    let $attainments := sparqlx:run(
+        query:getAttainment($cdrUrl || "g/")
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $latest-attainment := sparqlx:run(
+        query:getAttainment($latestEnvelopeByYearI)
+    )//sparql:binding[@name='inspireLabel']/sparql:literal
+
+    let $knownAttainments :=
+        if ($isNewDelivery) then
+            distinct-values(data($attainments))
+        else
+            distinct-values(data($latest-attainment))
 
     (: I1
 
@@ -12059,7 +12138,9 @@ declare function dataflowI:checkReport(
 
     WARNING
 
-    TODO: check this
+    TODO: check get-area-classifications-for-attainment, it returns a list
+    because of how it gets Attainments
+    See comments on ticket https://taskman.eionet.europa.eu/issues/89179
 
     :)
 
@@ -12304,7 +12385,7 @@ declare function dataflowI:checkReport(
     G instead
 
     WARNING
-    TODO: properly implement this
+    TODO: check implementation
     :)
 
     let $I32 := try {
@@ -12561,7 +12642,9 @@ declare function dataflowI:checkReport(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($el), data($el))
+                (node-name($el), data($el)),
+                ('pollutant', $pollutant),
+                ('needed', $needed)
             ]
         )
     } catch * {
@@ -12651,8 +12734,11 @@ declare function dataflowI:checkReport(
     (: I42
 
     WHERE
-    ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
+        ./aqd:pollutant xlink:href attribute EQUALs http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]
+
     (via …/aqd:parentExceedanceSituation),
+
     at least one of
         /aqd:AQD_SourceApportionment/
         aqd:macroExceedanceSituation/
@@ -12662,7 +12748,9 @@ declare function dataflowI:checkReport(
         aqd:assessmentMethod/
         aqd:AssessmentMethods/
         aqd:samplingPointAssessmentMetadata/@xlink:href
+
     or
+
         /aqd:AQD_SourceApportionment/
         aqd:macroExceedanceSituation/
         aqd:ExceedanceDescription/
@@ -12671,6 +12759,7 @@ declare function dataflowI:checkReport(
         aqd:assessmentMethod/
         aqd:AssessmentMethods/
         aqd:modelAssessmentMetadata/@xlink:href
+
     must be populated and correctly link to D/D1b.
 
     Cross check the links provided against D, all assessment methods must exist
@@ -12682,6 +12771,9 @@ declare function dataflowI:checkReport(
     ERROR
 
     TODO: check implementation. The implementation has not been check properly
+
+    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not
+    filled in
     :)
 
     let $I42 := try {
@@ -12689,11 +12781,15 @@ declare function dataflowI:checkReport(
 
             let $a := $node/aqd:samplingPointAssessmentMetadata
             let $a-m := $a/@xlink:href
-            let $a-ok := common:has-content($a-m) and ($a-m = $samplingPointAssessmentMetadata)
+            let $a-ok := common:has-content($a-m)
+            (: TODO: this implements the "correctly link in D/D1b :)
+            (: and ($a-m = $samplingPointAssessmentMetadata) :)
 
             let $b := $node/aqd:modelAssessmentMetadata
             let $b-m := $b/@xlink:href
-            let $b-ok := common:has-content($b-m) and ($b-m = $assessmentMetadata)
+            let $b-ok := common:has-content($b-m)
+            (: TODO: this implements the "correctly link in D/D1b :)
+            (: and ($b-m = $assessmentMetadata) :)
 
             let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parent)
@@ -12903,7 +12999,6 @@ declare function dataflowI:checkReport(
         {html:build2("I07", $labels:I07, $labels:I07_SHORT, $I07, "No duplicate values found", " duplicate value", $errors:I07)}
         {html:build2("I08", $labels:I08, $labels:I08_SHORT, $I08invalid, "No duplicate values found", " duplicate value", $errors:I08)}
         {html:build2("I09", $labels:I09, $labels:I09_SHORT, $I09table, "namespace", "", $errors:I09)}
-        { (: TODO: I don't think the label is ok here :) }
         {html:build2("I10", $labels:I10, $labels:I10_SHORT, $I10invalid, "All values are valid", " not conform to vocabulary", $errors:I10)}
 
         {html:build2("I11", $labels:I11, $labels:I11_SHORT, $I11,
@@ -14009,6 +14104,8 @@ return
  :
  : @author Laszlo Cseh
  :)
+
+
 
 
 
@@ -19079,6 +19176,7 @@ declare function query:getModel($url as xs:string) as xs:string {
 };
 
 (: Checks if X references an existing Y via namespace/localid :)
+(: TODO: look at this for inspiration on how to find the AQD_Attainment for a AQD_SourceApportionment :)
 declare function query:existsViaNameLocalId(
         $label as xs:string,
         $name as xs:string
@@ -19483,6 +19581,8 @@ SELECT distinct
 WHERE {
  ?s ?p ?o .
 
+ aqd:inspireId ?inspireId .
+ ?inspireId rdfs:label ?inspireLabel .
  optional { ?s aqd:declarationFor ?uf}
  optional { ?s aqd:pollutant ?pollutant}
 
@@ -19913,8 +20013,6 @@ WHERE {
 };
 
 
-
-
 (:~ Returns the areaClassification for a given attainment
 
 /aqd:AQD_Attainment/aqd:exceedanceDescriptionFinal/aqd:ExceedanceDescription/
@@ -19946,7 +20044,7 @@ WHERE {
 }
 "
     let $res := sparqlx:run($query)
-    return data($res//sparql:binding[@name='area_classification']/sparql:literal)
+    return data($res//sparql:binding[@name='area_classification']/sparql:uri)
 };
 
 (:~

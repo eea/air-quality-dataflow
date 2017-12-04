@@ -478,7 +478,7 @@ You must provide the name of the organisation responsible for the plan
 :)
 
 let $H16 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:organisationName/gco:CharacterString
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -503,7 +503,7 @@ You must provide a contact point within the organisation responsible for the pla
 :)
 
 let $H17 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:individualName/gco:CharacterString
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -529,7 +529,7 @@ a generic telephone number.
 :)
 
 let $H18 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
+    let $main := $docRoot//aqd:AQD_Plan/aqd:competentAuthority/base2:RelatedParty/base2:contact/base2:Contact/base2:electronicMailAddress
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
@@ -553,7 +553,7 @@ Your reference year must be in yyyy format
 :)
 
 let $H19 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
+    for $el in $docRoot//aqd:AQD_Plan/aqd:firstExceedanceYear/gml:TimeInstant/gml:timePosition
     let $ok := functx:if-empty(data($el), "") != ""
             and
             $el castable as xs:gYear
@@ -575,14 +575,14 @@ Your plan status should use one of those listed at http://dd.eionet.europa.eu/vo
 :)
 
 let $H20 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:status
+    for $el in $docRoot//aqd:AQD_Plan/aqd:status
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:STATUSAQPLAN_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -599,14 +599,14 @@ Your plan status should use one of those listed at http://dd.eionet.europa.eu/vo
 :)
 
 let $H21 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+    for $el in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:POLLUTANT_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -623,14 +623,14 @@ Your protection target should use one of those listed at http://dd.eionet.europa
 :)
 
 let $H22 := try {
-    for $el in $docRoot/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
+    for $el in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:protectionTarget
     let $uri := $el/@xlink:href
     return
         if (not(common:isInVocabulary($uri, $vocabulary:PROTECTIONTARGET_VOCABULARY)))
         then
             <tr>
                 <td title="gml:id">{data($el/../../../../../@gml:id)}</td>
-                <td title="xlink:href"> {$el/@xlink:href}</td>
+                <td title="xlink:href"> {data($el/@xlink:href)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -661,7 +661,46 @@ Benzo(a)pyrene in PM10 (5029) + health
 Check and count expected combinations of Pollutant and ProtectionTarget
 :)
 
-let $H23 := ()
+let $H23 := try {
+    let $accepted_health := (
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001'
+    )
+
+    let $accepted_vegetation := (
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7',
+        'http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9'
+    )
+
+    for $polluant in $docRoot//aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+    let $pollutantCode := $polluant/aqd:pollutantCode/@xlink:href
+    let $protectionTarget := $polluant/aqd:protectionTarget/@xlink:href
+    return
+        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H' and not($pollutantCode = $accepted_health))
+            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V' and not($pollutantCode = $accepted_vegetation)))
+        then
+            <tr>
+                <td title="gml:id">{data($polluant/../../@gml:id)}</td>
+                <td title="pollutantCode xlink:href">{data($pollutantCode)}</td>
+                <td title="protectionTarget xlink:href">{data($protectionTarget)}</td>
+                <td title="error"> not accepted</td>
+            </tr>
+        else
+            ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H24
 aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
@@ -671,7 +710,33 @@ attribute (maybe multiple)
 AQ plan pollutant's should match those in the exceedance situation (G)
 :)
 
-let $H24 := ()
+let $H24 := try {
+    for $plan in $docRoot//aqd:AQD_Plan
+        let $dataflow-g-pollutant :=
+            for $ex in $plan/aqd:exceedanceSituation
+                return try {
+                    doc($ex/@xlink:href/string())//aqd:pollutant/@xlink:href/string()
+                } catch * {
+                    ('Exceedance Situation - broken link')
+                }
+        return
+            if ($dataflow-g-pollutant = 'Exceedance Situation - broken link')
+            then
+                html:createErrorRow('404', 'Exceedance Situation - broken link')
+            else
+                for $polluant in $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
+                    return if (not($polluant/@xlink:href/string() = $dataflow-g-pollutant))
+                    then
+                        <tr>
+                            <td title="gml:id">{data($polluant/../../../@gml:id)}</td>
+                            <td title="pollutantCode xlink:href">{data($polluant/@xlink:href)}</td>
+                            <td title="error"> not in dataflow G</td>
+                        </tr>
+                    else
+                        ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}
 
 (: H25
 aqd:AQD_Plan/aqd:adoptionDate/gml:TimeInstant/gml:timePosition MUST be populated and its content in
@@ -756,7 +821,7 @@ Must contain a short textual description of timetable for the implementation of 
 :)
 
 let $H27 := try {
-    let $main := $docRoot/aqd:AQD_Plan/aqd:timeTable
+    let $main := $docRoot//aqd:AQD_Plan/aqd:timeTable
     for $el in $main
     let $ok := (data($el) castable as xs:string
             and
