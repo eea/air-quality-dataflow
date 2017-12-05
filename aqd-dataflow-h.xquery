@@ -747,10 +747,6 @@ let $H24 := try {
         let $pollutantCodes := $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode/@xlink:href
         for $exceedanceSituation in $plan/aqd:exceedanceSituation/@xlink:href
             let $pollutants := query:getPollutants("AQD_Attainment", $exceedanceSituation)
-            let $assdf := trace($exceedanceSituation, "exceedanceSituation: ")
-            let $assdfg := trace($pollutantCodes, "pollutantCodes: ")
-            let $assdfgh := trace($pollutants, "pollutants: ")
-            let $asd := trace(count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))), "#count: ")
             let $ok := count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))) = 1
             return
                 if(not($ok))
@@ -858,7 +854,7 @@ let $H27 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
