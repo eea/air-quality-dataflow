@@ -366,7 +366,6 @@ let $H10 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($x/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             ("base:namespace", $x)
             ]
     )
@@ -455,7 +454,8 @@ We recommend you start you codes with the 2-digit country code according to ISO 
 :)
 
 let $H14 := try {
-    let $el := $docRoot//aqd:AQD_Plan/aqd:code
+    for $main in $docRoot//aqd:AQD_Plan
+    let $el := $main/aqd:code
     let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
     return common:conditionalReportRow(
             $ok,
@@ -921,7 +921,7 @@ let $H33 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
+            ("gml:id", data($node/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($node), data($node))
             ]
     )

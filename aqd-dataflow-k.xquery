@@ -26,7 +26,7 @@ module namespace dataflowK = "http://converters.eionet.europa.eu/dataflowK";
 (:declare namespace sams="http://www.opengis.net/samplingSpatial/2.0";:)
 (:declare namespace swe = "http://www.opengis.net/swe/2.0";:)
 (:import module namespace filter = "aqd-filter" at "aqd-filter.xquery";:)
-(:import module namespace geox = "aqd-geo" at "aqd-geo.xquery";
+(:import module namespace geox = "aqd-geo" at "aqd-geo.xquery";:)
 (:import module namespace schemax = "aqd-schema" at "aqd-schema.xquery";:)
 
 declare namespace adms = "http://www.w3.org/ns/adms#";
@@ -42,7 +42,7 @@ declare namespace xlink = "http://www.w3.org/1999/xlink";
 import module namespace common = "aqd-common" at "aqd-common.xquery";
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 import module namespace errors = "aqd-errors" at "aqd-errors.xquery";
-import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";:)
+(:import module namespace functx = "http://www.functx.com" at "aqd-functx.xq";:)
 import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 import module namespace html = "aqd-html" at "aqd-html.xquery";
 import module namespace labels = "aqd-labels" at "aqd-labels.xquery";

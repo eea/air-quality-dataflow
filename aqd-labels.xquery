@@ -7,7 +7,7 @@ xquery version "3.0";
 : Time: 1:32 PM
 :)
 module namespace labels = "aqd-labels";
-import module namespace eionet = "eionet-config" at "eionet-config.xq";
+(:import module namespace eionet = "eionet-config" at "eionet-config.xq";:)
 import module namespace dd = "aqd-dd" at "aqd-dd.xquery";
 
 (: HTML Labels :)
