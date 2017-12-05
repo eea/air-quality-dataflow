@@ -217,6 +217,28 @@ declare function query:getAttainment($url as xs:string) as xs:string {
    }"
 };
 
+(: H :)
+(: H24 :)
+declare function query:getPollutants(
+        $type as xs:string,
+        $label as xs:string
+) as xs:string* {
+    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+       SELECT distinct ?pollutant
+       WHERE {
+?scenariosXMLURI a aq:" || $type ||";
+aq:inspireId ?inspireId ;
+aq:pollutant ?pollutant .
+?inspireId rdfs:label ?label .
+?inspireId aq:namespace ?name .
+?inspireId aq:localId ?localId .
+FILTER (concat(?name,'/',?localId) = '" || $label || "')
+   }"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='pollutant']/sparql:uri)
+};
+
 (:~ Creates a SPARQL query string to query all objects of given type in a URL
 
 The result is a list of inspireLabels

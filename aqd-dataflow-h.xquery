@@ -694,7 +694,7 @@ let $H23 := try {
             or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V' and not($pollutantCode = $accepted_vegetation)))
         then
             <tr>
-                <td title="gml:id">{data($polluant/../../@gml:id)}</td>
+                <td title="gml:id">{data($polluant/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="pollutantCode xlink:href">{data($pollutantCode)}</td>
                 <td title="protectionTarget xlink:href">{data($protectionTarget)}</td>
                 <td title="error"> not accepted</td>
@@ -713,6 +713,7 @@ attribute (maybe multiple)
 AQ plan pollutant's should match those in the exceedance situation (G)
 :)
 
+(: OLD H24
 let $H24 := try {
     for $plan in $docRoot//aqd:AQD_Plan
         let $dataflow-g-pollutant :=
@@ -731,9 +732,33 @@ let $H24 := try {
                     return if (not($polluant/@xlink:href/string() = $dataflow-g-pollutant))
                     then
                         <tr>
-                            <td title="gml:id">{data($polluant/../../../@gml:id)}</td>
+                            <td title="gml:id">{data($polluant/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                             <td title="pollutantCode xlink:href">{data($polluant/@xlink:href)}</td>
                             <td title="error"> not in dataflow G</td>
+                        </tr>
+                    else
+                        ()
+} catch * {
+    html:createErrorRow($err:code, $err:description)
+}:)
+
+let $H24 := try {
+    for $plan in $docRoot//aqd:AQD_Plan
+        let $pollutantCodes := $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode/@xlink:href
+        for $exceedanceSituation in $plan/aqd:exceedanceSituation/@xlink:href
+            let $pollutants := query:getPollutants("AQD_Attainment", $exceedanceSituation)
+            let $assdf := trace($exceedanceSituation, "exceedanceSituation: ")
+            let $assdfg := trace($pollutantCodes, "pollutantCodes: ")
+            let $assdfgh := trace($pollutants, "pollutants: ")
+            let $asd := trace(count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))), "#count: ")
+            let $ok := count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))) = 1
+            return
+                if(not($ok))
+                    then
+                        <tr>
+                            <td title="gml:id">{data($plan/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
+                            <td title="aqd:exceedanceSituation">{data($exceedanceSituation)}</td>
+                            <td title="pollutantCode xlink:href">{data($pollutantCodes)}</td>
                         </tr>
                     else
                         ()
