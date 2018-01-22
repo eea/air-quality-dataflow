@@ -70,6 +70,7 @@ declare function dataflowI:checkReport(
     let $namespaces := distinct-values($docRoot//base:namespace)
 
     let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
+    let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
 
     let $node-name := 'aqd:AQD_SourceApportionment'
     let $sources := $docRoot//aqd:AQD_SourceApportionment
@@ -1018,20 +1019,32 @@ declare function dataflowI:checkReport(
     :)
 
     let $I25 := try {
-        for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
-            let $ac := data($el/@xlink:href)
-            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
-            let $parent-ac := query:get-area-classifications-for-attainment($parent)
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $areaClassification := data($node/@xlink:href)
+            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
+            let $parentAreaClassification := query:get-area-classifications-for-attainment($parent)
 
-            let $ok := $ac = $parent-ac
+            let $latestParentAreaClassifications :=
+                for $result in $parentAreaClassification
+                    let $envelope := functx:substring-before-last($result/sparql:binding[@name="aqd_attainment"]/sparql:uri, "/")
+                    (:let $asd := trace($result, "result: "):)
+                    (:let $asd := trace($envelope, "envelope: "):)
+                    (:let $asd := trace($result//sparql:binding, "result/bindig: "):)
+                    return
+                    if($envelope = $latestEnvelopesG)
+                    then
+                        $result/sparql:binding[@name="areaClassification"]/sparql:uri
+                    else
+                        ()
+
+            let $ok := $areaClassification = $latestParentAreaClassifications
 
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($node), data($node/@gml:id)),
-                (node-name($el), $ac),
-                ('AQD_Attainment classification', $parent-ac)
+                (node-name($node/ancestor::aqd:AQD_SourceApportionment), data($node/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), $areaClassification),
+                ('AQD_Attainment classification', string-join($latestParentAreaClassifications, "&#xa;"))
             ]
         )
     } catch * {
@@ -1180,8 +1193,6 @@ declare function dataflowI:checkReport(
     }
 
 
-    let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
-
     (: I31
 
     The subject of
@@ -1207,8 +1218,8 @@ declare function dataflowI:checkReport(
 
     WARNING
 
-    TODO: check implementation - TIBI
-    TODO: changed implementation, now should work - LACI
+    TODO: check implementation
+    TODO: implementation changed, now works but not 100% sure if it's OK
 
     :)
 
@@ -1269,6 +1280,7 @@ declare function dataflowI:checkReport(
 
     WARNING
     TODO: check implementation
+    TODO: implementation changed, now works but not 100% sure if it's OK
     :)
 
     let $I32 := try {
@@ -1666,41 +1678,45 @@ declare function dataflowI:checkReport(
 
     TODO: check implementation. The implementation has not been check properly
 
-    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not
-    filled in
+    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not filled in
     :)
 
     let $I42 := try {
-        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
-
-            let $a := $node/aqd:samplingPointAssessmentMetadata
-            let $a-m := $a/@xlink:href
-            let $a-ok := common:has-content($a-m)
-            (: TODO: this implements the "correctly link in D/D1b :)
-            (: and ($a-m = $samplingPointAssessmentMetadata) :)
-
-            let $b := $node/aqd:modelAssessmentMetadata
-            let $b-m := $b/@xlink:href
-            let $b-ok := common:has-content($b-m)
-            (: TODO: this implements the "correctly link in D/D1b :)
-            (: and ($b-m = $assessmentMetadata) :)
-
-            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
-            let $pollutant := query:get-pollutant-for-attainment($parent)
-            let $needed := common:is-polutant-air($pollutant)
-
+        let $pollutants := (
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+        for $node in $sources
+            (:/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods:)
+            let $parentExceedanceSituation := $node/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parentExceedanceSituation)
             let $ok :=
-                if (not($needed))
+                if($pollutant = $pollutants)
                 then
-                    true()
+                    let $a := $node/aqd:samplingPointAssessmentMetadata
+                    let $a-m := $a/@xlink:href
+                    let $a-ok := common:has-content($a-m)
+                    (: TODO: this implements the "correctly link in D/D1b :)
+                    (: and ($a-m = $samplingPointAssessmentMetadata) :)
+
+                    let $b := $node/aqd:modelAssessmentMetadata
+                    let $b-m := $b/@xlink:href
+                    let $b-ok := common:has-content($b-m)
+                    (: TODO: this implements the "correctly link in D/D1b :)
+                    (: and ($b-m = $assessmentMetadata) :)
+
+                    return false()
                 else
-                    $a-ok or $b-ok
+                    true()
+
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                ("aqd:samplingPointAssessmentMetadata", $a-m),
-                ("aqd:modelAssessmentMetadata", $b-m)
+                ("aqd:pollutant", $pollutant),
+                ("aqd:parentExceedanceSituation", $parentExceedanceSituation)
             ]
         )
     } catch * {

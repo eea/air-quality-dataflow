@@ -553,33 +553,22 @@ declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:str
 };
 
 (:~ Returns the pollutants for an attainment
-TODO: rewrite query, I think it runs slow
 :)
 declare function query:get-pollutant-for-attainment(
-    $subj-url as xs:string
-) as xs:string {
+    $url as xs:string?
+) as xs:string? {
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT distinct
-
-  ?pollutant
-
+SELECT distinct(?pollutant)
 WHERE {
- ?s ?p ?o .
-
- aqd:inspireId ?inspireId .
- ?inspireId rdfs:label ?inspireLabel .
- optional { ?s aqd:declarationFor ?uf}
- optional { ?s aqd:pollutant ?pollutant}
-
- filter(?p = <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>).
- filter(?o = aqd:AQD_Attainment) .
- filter(contains(str(?uf), '" || $subj-url || "'))
-
-} LIMIT 50
+?sourceApportionment a aq:AQD_Attainment;
+    aq:pollutant ?pollutant;
+    aq:inspireId ?inspireId.
+?inspireId rdfs:label ?label
+FILTER(?label = '" || $url || "')
+}
 "
   let $res := sparqlx:run($query)
   return data($res//sparql:binding[@name='pollutant']/sparql:uri)
@@ -1072,30 +1061,25 @@ WHERE {
     aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
 :)
 declare function query:get-area-classifications-for-attainment(
-    $uri as xs:string
-) as item()* {
+    $uri as xs:string?
+) as element()* {
 
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT DISTINCT ?area_classification
+SELECT DISTINCT ?aqd_attainment, ?areaClassification
 WHERE {
     ?aqd_attainment a aqd:AQD_Attainment .
-
-    ?aqd_attainment aqd:declarationFor ?attainment .
-    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
-    ?desc_final aqd:exceedanceArea ?exceedance_area .
-    ?excedance_area aqd:areaClassification ?area_classification .
-
-    # optional, just for double-checking
-
-    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
-
-    filter(contains(str(?attainment), '" || $uri || "'))
+    ?aqd_attainment aqd:inspireId ?inspireId.
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?exceedanceDescriptionFinal .
+    ?inspireId rdfs:label ?label.
+    ?exceedanceDescriptionFinal aqd:exceedanceArea ?exceedanceArea .
+    ?exceedanceArea aqd:areaClassification ?areaClassification .
+    FILTER(?label = '" || $uri || "')
 }
 "
     let $res := sparqlx:run($query)
-    return data($res//sparql:binding[@name='area_classification']/sparql:uri)
+    return $res
 };
