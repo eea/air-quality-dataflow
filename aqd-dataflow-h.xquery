@@ -366,8 +366,7 @@ let $H10 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($x/ancestor-or-self::*[name() = $node-name]/@gml:id)),
-            ("base:namespace", $x)
+                ("base:namespace", $x)
             ]
     )
 } catch * {
@@ -455,7 +454,8 @@ We recommend you start you codes with the 2-digit country code according to ISO 
 :)
 
 let $H14 := try {
-    let $el := $docRoot//aqd:AQD_Plan/aqd:code
+    let $seq := $docRoot//aqd:AQD_Plan/aqd:code
+    for $el in $seq
     let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
     return common:conditionalReportRow(
             $ok,
@@ -643,7 +643,8 @@ let $H22 := try {
 }
 
 (: H23
-Check and count expected combinations of Pollutant and ProtectionTarget at /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+Check and count expected combinations of Pollutant and ProtectionTarget at
+/gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
 Sulphur dioxide (1) + health
 Sulphur dioxide (1) + vegetation
 Ozone (7) + health
