@@ -194,9 +194,6 @@ WHERE {
     FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
 }
 "
-
-(: TODO: is correct to use scenariosXMLURI  ? :)
-
     let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
     return $count > 0
 };
@@ -263,6 +260,26 @@ declare function query:sparql-objects-in-subject(
       FILTER (CONTAINS(str(?s), '" || $url || "'))
    }"
 };
+
+declare function query:getAllEnvelopesForObjectViaLabel(
+        $label as xs:string,
+        $type as xs:string
+) as element()* {
+    let $query :="
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+    SELECT ?s
+    WHERE {
+        ?s a aqd:" || $type || ";
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?inspireLabel .
+        FILTER(?label = '" || $label || "')
+    }"
+    let $res := sparqlx:run($query)
+    return $res
+} ;
 
 (:~ Creates a SPARQL query to return all inspireIds for given aqd:namespace
 
