@@ -9,6 +9,7 @@ xquery version "3.0" encoding "UTF-8";
 module namespace query = "aqd-query";
 import module namespace sparqlx = "aqd-sparql" at "aqd-sparql.xquery";
 import module namespace common = "aqd-common" at "aqd-common.xquery";
+import module namespace functx = "http://www.functx.com" at "functx-1.0-doc-2007-01.xq";
 declare namespace sparql = "http://www.w3.org/2005/sparql-results#";
 
 (: Normal InspireId Fetch - This should be the default :)
@@ -146,15 +147,16 @@ declare function query:getModel($url as xs:string) as xs:string {
 (: TODO: look at this for inspiration on how to find the AQD_Attainment for a AQD_SourceApportionment :)
 declare function query:existsViaNameLocalId(
         $label as xs:string,
-        $name as xs:string
+        $name as xs:string,
+        $latestEnvelopes as xs:string*
 ) as xs:boolean {
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT count(?label) as ?cnt
+SELECT ?subject
 WHERE {
-    ?scenariosXMLURI a aq:" || $name ||";
+    ?subject a aq:" || $name ||";
     aq:inspireId ?inspireId.
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
@@ -162,40 +164,44 @@ WHERE {
     FILTER (concat(?name,'/',?localId) = '" || $label || "')
 }"
 
-    let $res := sparqlx:run($query)
-    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
-    return
-        if ($count > 0)
-            then
-                true()
-            else
-                false()
+    let $results := sparqlx:run($query)
+
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
+
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
 };
 
 (: Checks if X references an existing Y via namespace/localid and reporting year :)
 declare function query:existsViaNameLocalIdYear(
-        $label as xs:string,
-        $type as xs:string,
-        $year as xs:string
+    $label as xs:string,
+    $type as xs:string,
+    $year as xs:string,
+    $latestEnvelopes as xs:string*
 ) as xs:boolean {
-
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT count(?label) as ?cnt
+SELECT ?subject
 WHERE {
-    ?scenariosXMLURI a aq:" || $type ||";
+    ?subject a aq:" || $type ||";
     aq:inspireId ?inspireId.
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
     ?inspireId aq:localId ?localId
     FILTER (concat(?name,'/',?localId) = '" || $label || "')
-    FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
+    FILTER (CONTAINS(str(?subject), '" || $year || "'))
 }
 "
-    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
-    return $count > 0
+    let $results := sparqlx:run($query)
+
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
+
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
 };
 
 

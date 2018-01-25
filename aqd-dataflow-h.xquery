@@ -67,6 +67,9 @@ let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportin
 
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 
+let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
+let $latestEnvelopesH := query:getLatestEnvelopesForObligation("680")
+
 (: File prefix/namespace check :)
 let $NSinvalid := try {
     let $XQmap := inspect:static-context((), 'namespaces')
@@ -178,7 +181,7 @@ let $H02errorLevel :=
                 count(
                         for $x in $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier
                         let $id := $x/base:namespace || "/" || $x/base:localId
-                        where query:existsViaNameLocalId($id, 'AQD_Plan')
+                        where query:existsViaNameLocalId($id, 'AQD_Plan', $latestEnvelopesH)
                         return 1
                 ) > 0
     )
@@ -194,7 +197,7 @@ let $H03 := try {
     let $main := $docRoot//aqd:AQD_Plan
     for $x in $main/aqd:inspireId/base:Identifier
     let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan'))
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan', $latestEnvelopesH))
     return
         common:conditionalReportRow(
                 $ok,
@@ -389,7 +392,8 @@ let $H11 := try{
     let $label := data($el/@xlink:href)
     let $ok := (query:existsViaNameLocalId(
             $label,
-            'AQD_Attainment')
+            'AQD_Attainment',
+            $latestEnvelopesG)
             and
             ($year >= 2013)
     )

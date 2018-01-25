@@ -70,9 +70,10 @@ declare function dataflowI:checkReport(
     let $namespaces := distinct-values($docRoot//base:namespace)
 
     let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
-    let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
     let $latestEnvelopesD := query:getLatestEnvelopesForObligation("672")
     let $latestEnvelopesD1 := query:getLatestEnvelopesForObligation("742")
+    let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
+    let $latestEnvelopesH := query:getLatestEnvelopesForObligation("680")
 
     let $node-name := 'aqd:AQD_SourceApportionment'
     let $sources := $docRoot//aqd:AQD_SourceApportionment
@@ -503,7 +504,8 @@ declare function dataflowI:checkReport(
             let $ok := query:existsViaNameLocalIdYear(
                 $label,
                 'AQD_Plan',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesH
             )
 
         return common:conditionalReportRow(
@@ -537,7 +539,8 @@ declare function dataflowI:checkReport(
             let $ok := query:existsViaNameLocalIdYear(
                     $link,
                     'AQD_Attainment',
-                    $reportingYear
+                    $reportingYear,
+                    $latestEnvelopesG
             )
 
         return common:conditionalReportRow(
@@ -1035,7 +1038,6 @@ declare function dataflowI:checkReport(
                         $result/sparql:binding[@name="areaClassification"]/sparql:uri
                     else
                         ()
-
             let $ok := $areaClassification = $latestParentAreaClassifications
 
         return common:conditionalReportRow(
