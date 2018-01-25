@@ -328,6 +328,40 @@ declare function query:getEvaluationScenarios($url as xs:string) as xs:string {
    }"
 };
 
+(: J22 :)
+declare function query:isTimePositionValid(
+    $object as xs:string,
+    $label as xs:string,
+    $timePosition as xs:integer,
+    $latestEnvelopes as xs:string*
+) as xs:boolean {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?subject
+WHERE {
+?subject a aq:" || $object || ";
+    aq:inspireId ?inspireId;
+    aq:referenceYear ?referenceYear.
+?referenceYear aq:timePosition ?timePosition.
+?inspireId rdfs:label ?label.
+?inspireId aq:namespace ?name.
+?inspireId aq:localId ?localId
+FILTER (concat(?name,'/',?localId) = '" || $label || "')
+FILTER(?timePosition = " || $timePosition || ")
+}
+"
+    let $results := sparqlx:run($query)
+
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
+
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
+
+};
+
 (: K :)
 declare function query:getMeasures($url as xs:string) as xs:string {
   "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -1106,3 +1140,4 @@ WHERE {
     let $res := sparqlx:run($query)
     return $res
 };
+

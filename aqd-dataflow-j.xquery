@@ -678,19 +678,19 @@ let $J22 := try {
     for $node in $evaluationScenario
         let $el := $node/aqd:sourceApportionment
         let $year := $node/aqd:startYear/gml:TimeInstant/gml:timePosition
-        let $ok := query:existsViaNameLocalIdYear(
-                $el/@xlink:href,
-                'AQD_SourceApportionment',
-                $year,
-                $latestEnvelopesI
+        let $ok := query:isTimePositionValid(
+            'AQD_SourceApportionment',
+            $el/@xlink:href,
+            $year,
+            $latestEnvelopesI
         )
         return common:conditionalReportRow(
-                    $ok,
-                    [
-                        ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
-                        (node-name($el), $el/@xlink:href)
-                    ]
-                )
+            $ok,
+            [
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
