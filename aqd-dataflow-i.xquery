@@ -1157,8 +1157,6 @@ declare function dataflowI:checkReport(
 
     If SamplingPoint(s) and/or Model(s) are provided, these must be valid
 
-    TODO: double check the getAllEnvelopesForObjectViaLabel
-
     ERROR
     :)
     let $I30 := try {

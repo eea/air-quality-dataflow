@@ -390,13 +390,15 @@ let $H11 := try{
     for $el in $docRoot//aqd:AQD_Plan/aqd:exceedanceSituation
 
     let $label := data($el/@xlink:href)
-    let $ok := (query:existsViaNameLocalId(
-            $label,
-            'AQD_Attainment',
-            $latestEnvelopesG)
-            and
-            ($year >= 2013)
-    )
+    let $ok := if($year>=2013)
+        then
+            query:existsViaNameLocalId(
+                $label,
+                'AQD_Attainment',
+                $latestEnvelopesG
+            )
+        else
+            true()
 
     return common:conditionalReportRow(
             $ok,
@@ -695,8 +697,10 @@ let $H23 := try {
     let $pollutantCode := $polluant/aqd:pollutantCode/@xlink:href
     let $protectionTarget := $polluant/aqd:protectionTarget/@xlink:href
     return
-        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H' and not($pollutantCode = $accepted_health))
-            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V' and not($pollutantCode = $accepted_vegetation)))
+        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H'
+                and not($pollutantCode = $accepted_health))
+            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V'
+                and not($pollutantCode = $accepted_vegetation)))
         then
             <tr>
                 <td title="gml:id">{data($polluant/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
@@ -712,47 +716,19 @@ let $H23 := try {
 
 (: H24
 aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
-shall be the same as those in the referenced data flow G xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+shall be the same as those in the referenced data flow G
+xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
 attribute (maybe multiple)
 
 AQ plan pollutant's should match those in the exceedance situation (G)
 :)
-
-(: OLD H24
-let $H24 := try {
-    for $plan in $docRoot//aqd:AQD_Plan
-        let $dataflow-g-pollutant :=
-            for $ex in $plan/aqd:exceedanceSituation
-                return try {
-                    doc($ex/@xlink:href/string())//aqd:pollutant/@xlink:href/string()
-                } catch * {
-                    ('Exceedance Situation - broken link')
-                }
-        return
-            if ($dataflow-g-pollutant = 'Exceedance Situation - broken link')
-            then
-                html:createErrorRow('404', 'Exceedance Situation - broken link')
-            else
-                for $polluant in $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
-                    return if (not($polluant/@xlink:href/string() = $dataflow-g-pollutant))
-                    then
-                        <tr>
-                            <td title="gml:id">{data($polluant/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
-                            <td title="pollutantCode xlink:href">{data($polluant/@xlink:href)}</td>
-                            <td title="error"> not in dataflow G</td>
-                        </tr>
-                    else
-                        ()
-} catch * {
-    html:createErrorRow($err:code, $err:description)
-}:)
 
 let $H24 := try {
     for $plan in $docRoot//aqd:AQD_Plan
         let $pollutantCodes := $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode/@xlink:href
         for $exceedanceSituation in $plan/aqd:exceedanceSituation/@xlink:href
             let $pollutants := query:getPollutants("AQD_Attainment", $exceedanceSituation)
-            let $ok := count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))) = 1
+            let $ok := count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))) > 0
             return
                 if(not($ok))
                     then

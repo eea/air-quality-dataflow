@@ -673,7 +673,6 @@ referenced via the xlink of (aqd:AQD_EvaluationScenario/aqd:sourceApportionment)
 Check if start year of the evaluation scenario is the same as
 the source apportionment reference year
 :)
-(: TODO implementation not correct!!! :)
 let $J22 := try {
     for $node in $evaluationScenario
         let $el := $node/aqd:sourceApportionment

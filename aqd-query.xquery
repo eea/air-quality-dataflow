@@ -161,7 +161,7 @@ WHERE {
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
     ?inspireId aq:localId ?localId
-    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (?label = '" || $label || "')
 }"
 
     let $results := sparqlx:run($query)
@@ -191,7 +191,7 @@ WHERE {
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
     ?inspireId aq:localId ?localId
-    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (?label = '" || $label || "')
     FILTER (CONTAINS(str(?subject), '" || $year || "'))
 }
 "
@@ -236,7 +236,7 @@ aq:pollutant ?pollutant .
 ?inspireId rdfs:label ?label .
 ?inspireId aq:namespace ?name .
 ?inspireId aq:localId ?localId .
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
+FILTER (?label = '" || $label || "')
    }"
     let $res := sparqlx:run($query)
     return data($res//sparql:binding[@name='pollutant']/sparql:uri)
@@ -348,7 +348,7 @@ WHERE {
 ?inspireId rdfs:label ?label.
 ?inspireId aq:namespace ?name.
 ?inspireId aq:localId ?localId
-FILTER (concat(?name,'/',?localId) = '" || $label || "')
+FILTER (?label = '" || $label || "')
 FILTER(?timePosition = " || $timePosition || ")
 }
 "
