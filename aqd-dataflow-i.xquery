@@ -1172,7 +1172,6 @@ declare function dataflowI:checkReport(
                     query:getAllEnvelopesForObjectViaLabel($elem/@xlink:href, "AQD_SamplingPoint")
                 for $result in $allResults
                 let $envelope := functx:substring-before-last($result/sparql:binding[@name="s"]/sparql:uri, "/")
-                let $asd := trace($envelope, "envelope: ")
                 return
                     if($envelope = $latestEnvelopesD)
                     then $envelope
@@ -1183,7 +1182,6 @@ declare function dataflowI:checkReport(
                         query:getAllEnvelopesForObjectViaLabel($elem/@xlink:href, "AQD_Model")
                     for $result in $allResults
                     let $envelope := functx:substring-before-last($result/sparql:binding[@name="s"]/sparql:uri, "/")
-                    let $asd := trace($envelope, "envelope: ")
                     return
                         if($envelope = $latestEnvelopesD1)
                         then $envelope
@@ -1698,28 +1696,43 @@ declare function dataflowI:checkReport(
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
-            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8"
         )
-        for $node in $sources
-            (:/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods:)
-            let $parentExceedanceSituation := $node/aqd:parentExceedanceSituation/@xlink:href
+        let $seq :=
+            $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+
+        (: modelAssessmentMetadata :)
+        (: samplingPointAssessmentMetadata :)
+        for $node in $seq
+            let $parentExceedanceSituation := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
             let $pollutant := query:get-pollutant-for-attainment($parentExceedanceSituation)
             let $ok :=
                 if($pollutant = $pollutants)
                 then
-                    let $a := $node/aqd:samplingPointAssessmentMetadata
-                    let $a-m := $a/@xlink:href
-                    let $a-ok := common:has-content($a-m)
-                    (: TODO: this implements the "correctly link in D/D1b :)
-                    (: and ($a-m = $samplingPointAssessmentMetadata) :)
+                    let $samplingPointAssessmentMetadata := $node/aqd:samplingPointAssessmentMetadata/@xlink:href
+                    let $ok-spa := if(functx:if-empty($samplingPointAssessmentMetadata, "") != "")
+                        then
+                            query:existsViaNameLocalId(
+                            $samplingPointAssessmentMetadata,
+                            "AQD_SamplingPoint",
+                            $latestEnvelopesD
+                            )
+                        else
+                            true()
 
-                    let $b := $node/aqd:modelAssessmentMetadata
-                    let $b-m := $b/@xlink:href
-                    let $b-ok := common:has-content($b-m)
-                    (: TODO: this implements the "correctly link in D/D1b :)
-                    (: and ($b-m = $assessmentMetadata) :)
+                    let $modelAssessmentMetadata := $node/aqd:modelAssessmentMetadata/@xlink:href
+                    let $ok-ma := if(functx:if-empty($modelAssessmentMetadata, "") != "")
+                        then
+                            query:existsViaNameLocalId(
+                            $modelAssessmentMetadata,
+                            "AQD_Model",
+                            $latestEnvelopesD1
+                            )
+                        else
+                            true()
 
-                    return false()
+                    return $ok-spa and $ok-ma
                 else
                     true()
 
@@ -1728,7 +1741,9 @@ declare function dataflowI:checkReport(
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
                 ("aqd:pollutant", $pollutant),
-                ("aqd:parentExceedanceSituation", $parentExceedanceSituation)
+                ("aqd:parentExceedanceSituation", $parentExceedanceSituation),
+                ("aqd:samplingPointAssessmentMetadata", $node/aqd:samplingPointAssessmentMetadata/@xlink:href),
+                ("aqd:modelAssessmentMetadata", $node/aqd:modelAssessmentMetadata/@xlink:href)
             ]
         )
     } catch * {

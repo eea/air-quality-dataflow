@@ -280,7 +280,7 @@ declare function query:getAllEnvelopesForObjectViaLabel(
     WHERE {
         ?s a aqd:" || $type || ";
         aqd:inspireId ?inspireId .
-        ?inspireId rdfs:label ?inspireLabel .
+        ?inspireId rdfs:label ?label .
         FILTER(?label = '" || $label || "')
     }"
     let $res := sparqlx:run($query)
