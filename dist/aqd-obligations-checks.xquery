@@ -2276,6 +2276,22 @@ declare function common:is-status-in-progress(
     )
     return $uri = $okv
 };
+
+(: Given a list of envelopes, returns true if is lates envelope :)
+declare function common:isLatestEnvelope(
+    $envelopes as xs:string*,
+    $latestEnvelopes as xs:string*
+) as xs:boolean {
+    let $result :=
+        for $envelope in $envelopes
+            return
+            if($envelope = $latestEnvelopes)
+            then
+                $envelope
+            else
+                ()
+    return exists($result)
+};
 (:
  : Module Name: Implementing Decision 2011/850/EU: AQ info exchange & reporting (Library module)
  :
@@ -10144,6 +10160,9 @@ let $latestEnvelopeByYearH := query:getLatestEnvelope($cdrUrl || "k/", $reportin
 
 let $nameSpaces := distinct-values($docRoot//base:namespace)
 
+let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
+let $latestEnvelopesH := query:getLatestEnvelopesForObligation("680")
+
 (: File prefix/namespace check :)
 let $NSinvalid := try {
     let $XQmap := inspect:static-context((), 'namespaces')
@@ -10255,7 +10274,7 @@ let $H02errorLevel :=
                 count(
                         for $x in $docRoot//aqd:AQD_Plan/aqd:inspireId/base:Identifier
                         let $id := $x/base:namespace || "/" || $x/base:localId
-                        where query:existsViaNameLocalId($id, 'AQD_Plan')
+                        where query:existsViaNameLocalId($id, 'AQD_Plan', $latestEnvelopesH)
                         return 1
                 ) > 0
     )
@@ -10271,7 +10290,7 @@ let $H03 := try {
     let $main := $docRoot//aqd:AQD_Plan
     for $x in $main/aqd:inspireId/base:Identifier
     let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan'))
+    let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Plan', $latestEnvelopesH))
     return
         common:conditionalReportRow(
                 $ok,
@@ -10443,8 +10462,7 @@ let $H10 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($x/ancestor-or-self::*[name() = $node-name]/@gml:id)),
-            ("base:namespace", $x)
+                ("base:namespace", $x)
             ]
     )
 } catch * {
@@ -10465,12 +10483,15 @@ let $H11 := try{
     for $el in $docRoot//aqd:AQD_Plan/aqd:exceedanceSituation
 
     let $label := data($el/@xlink:href)
-    let $ok := (query:existsViaNameLocalId(
-            $label,
-            'AQD_Attainment')
-            and
-            ($year >= 2013)
-    )
+    let $ok := if($year>=2013)
+        then
+            query:existsViaNameLocalId(
+                $label,
+                'AQD_Attainment',
+                $latestEnvelopesG
+            )
+        else
+            true()
 
     return common:conditionalReportRow(
             $ok,
@@ -10532,7 +10553,8 @@ We recommend you start you codes with the 2-digit country code according to ISO 
 :)
 
 let $H14 := try {
-    let $el := $docRoot//aqd:AQD_Plan/aqd:code
+    let $seq := $docRoot//aqd:AQD_Plan/aqd:code
+    for $el in $seq
     let $ok := fn:lower-case($countryCode) = fn:lower-case(fn:substring(data($el), 1, 2))
     return common:conditionalReportRow(
             $ok,
@@ -10720,7 +10742,8 @@ let $H22 := try {
 }
 
 (: H23
-Check and count expected combinations of Pollutant and ProtectionTarget at /gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
+Check and count expected combinations of Pollutant and ProtectionTarget at
+/gml:FeatureCollection/gml:featureMember/aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant
 Sulphur dioxide (1) + health
 Sulphur dioxide (1) + vegetation
 Ozone (7) + health
@@ -10767,11 +10790,13 @@ let $H23 := try {
     let $pollutantCode := $polluant/aqd:pollutantCode/@xlink:href
     let $protectionTarget := $polluant/aqd:protectionTarget/@xlink:href
     return
-        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H' and not($pollutantCode = $accepted_health))
-            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V' and not($pollutantCode = $accepted_vegetation)))
+        if (($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/H'
+                and not($pollutantCode = $accepted_health))
+            or ($protectionTarget = 'http://dd.eionet.europa.eu/vocabulary/aq/protectiontarget/V'
+                and not($pollutantCode = $accepted_vegetation)))
         then
             <tr>
-                <td title="gml:id">{data($polluant/../../@gml:id)}</td>
+                <td title="gml:id">{data($polluant/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
                 <td title="pollutantCode xlink:href">{data($pollutantCode)}</td>
                 <td title="protectionTarget xlink:href">{data($protectionTarget)}</td>
                 <td title="error"> not accepted</td>
@@ -10784,7 +10809,8 @@ let $H23 := try {
 
 (: H24
 aqd:AQD_Plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode xlink:href attribute (may be multiple)
-shall be the same as those in the referenced data flow G xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
+shall be the same as those in the referenced data flow G
+xlinked via aqd:AQD_Plan/aqd:exceedanceSituation@xlink:href
 attribute (maybe multiple)
 
 AQ plan pollutant's should match those in the exceedance situation (G)
@@ -10792,25 +10818,17 @@ AQ plan pollutant's should match those in the exceedance situation (G)
 
 let $H24 := try {
     for $plan in $docRoot//aqd:AQD_Plan
-        let $dataflow-g-pollutant :=
-            for $ex in $plan/aqd:exceedanceSituation
-                return try {
-                    doc($ex/@xlink:href/string())//aqd:pollutant/@xlink:href/string()
-                } catch * {
-                    ('Exceedance Situation - broken link')
-                }
-        return
-            if ($dataflow-g-pollutant = 'Exceedance Situation - broken link')
-            then
-                html:createErrorRow('404', 'Exceedance Situation - broken link')
-            else
-                for $polluant in $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode
-                    return if (not($polluant/@xlink:href/string() = $dataflow-g-pollutant))
+        let $pollutantCodes := $plan/aqd:pollutants/aqd:Pollutant/aqd:pollutantCode/@xlink:href
+        for $exceedanceSituation in $plan/aqd:exceedanceSituation/@xlink:href
+            let $pollutants := query:getPollutants("AQD_Attainment", $exceedanceSituation)
+            let $ok := count(index-of($pollutantCodes, functx:if-empty($pollutants, ""))) > 0
+            return
+                if(not($ok))
                     then
                         <tr>
-                            <td title="gml:id">{data($polluant/../../../@gml:id)}</td>
-                            <td title="pollutantCode xlink:href">{data($polluant/@xlink:href)}</td>
-                            <td title="error"> not in dataflow G</td>
+                            <td title="gml:id">{data($plan/ancestor-or-self::*[name() = $node-name]/@gml:id)}</td>
+                            <td title="aqd:exceedanceSituation">{data($exceedanceSituation)}</td>
+                            <td title="pollutantCode xlink:href">{data($pollutantCodes)}</td>
                         </tr>
                     else
                         ()
@@ -10910,7 +10928,7 @@ let $H27 := try {
     return common:conditionalReportRow(
             $ok,
             [
-            ("gml:id", data($el/../../../@gml:id)),
+            ("gml:id", data($el/ancestor-or-self::*[name() = $node-name]/@gml:id)),
             (node-name($el), $el)
             ]
     )
@@ -11201,6 +11219,7 @@ declare variable $dataflowI:ISO2_CODES as xs:string* := ("AL","AT","BA","BE","BG
 declare variable $dataflowI:OBLIGATIONS as xs:string* :=
     ($vocabulary:ROD_PREFIX || "681");
 
+
 (: Rule implementations :)
 declare function dataflowI:checkReport(
     $source_url as xs:string,
@@ -11214,6 +11233,10 @@ declare function dataflowI:checkReport(
     let $namespaces := distinct-values($docRoot//base:namespace)
 
     let $latestEnvelopeByYearI := query:getLatestEnvelope($cdrUrl || "i/", $reportingYear)
+    let $latestEnvelopesD := query:getLatestEnvelopesForObligation("672")
+    let $latestEnvelopesD1 := query:getLatestEnvelopesForObligation("742")
+    let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
+    let $latestEnvelopesH := query:getLatestEnvelopesForObligation("680")
 
     let $node-name := 'aqd:AQD_SourceApportionment'
     let $sources := $docRoot//aqd:AQD_SourceApportionment
@@ -11644,7 +11667,8 @@ declare function dataflowI:checkReport(
             let $ok := query:existsViaNameLocalIdYear(
                 $label,
                 'AQD_Plan',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesH
             )
 
         return common:conditionalReportRow(
@@ -11678,7 +11702,8 @@ declare function dataflowI:checkReport(
             let $ok := query:existsViaNameLocalIdYear(
                     $link,
                     'AQD_Attainment',
-                    $reportingYear
+                    $reportingYear,
+                    $latestEnvelopesG
             )
 
         return common:conditionalReportRow(
@@ -12162,20 +12187,28 @@ declare function dataflowI:checkReport(
     :)
 
     let $I25 := try {
-        for $node in $sources
-            let $el := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
-            let $ac := data($el/@xlink:href)
-            let $parent := $node/aqd:parentExceedanceSituation/@xlink:href
-            let $parent-ac := query:get-area-classifications-for-attainment($parent)
+        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
+            let $areaClassification := data($node/@xlink:href)
+            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
+            let $parentAreaClassification := query:get-area-classifications-for-attainment($parent)
 
-            let $ok := $ac = $parent-ac
+            let $latestParentAreaClassifications :=
+                for $result in $parentAreaClassification
+                    let $envelope := functx:substring-before-last($result/sparql:binding[@name="aqd_attainment"]/sparql:uri, "/")
+                    return
+                    if($envelope = $latestEnvelopesG)
+                    then
+                        $result/sparql:binding[@name="areaClassification"]/sparql:uri
+                    else
+                        ()
+            let $ok := $areaClassification = $latestParentAreaClassifications
 
         return common:conditionalReportRow(
             $ok,
             [
-                (node-name($node), data($node/@gml:id)),
-                (node-name($el), $ac),
-                ('AQD_Attainment classification', $parent-ac)
+                (node-name($node/ancestor::aqd:AQD_SourceApportionment), data($node/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
+                (node-name($node), $areaClassification),
+                ('AQD_Attainment classification', string-join($latestParentAreaClassifications, "&#xa;"))
             ]
         )
     } catch * {
@@ -12287,41 +12320,50 @@ declare function dataflowI:checkReport(
 
     If SamplingPoint(s) and/or Model(s) are provided, these must be valid
 
-    TODO: double check the existsViaNameLocalId
-
     ERROR
     :)
     let $I30 := try {
-        for $node in $sources
-            let $a := $node//aqd:stationUsed
-            let $a-ok :=
-                if (exists($a/@xlink:href))
+        let $elements := (
+            "stationUsed",
+            "modelUsed"
+        )
+        for $elem in $sources//*[local-name() = $elements]
+        let $ok :=
+            if (local-name($elem) = "stationUsed")
+            then
+                let $allResults :=
+                    query:getAllEnvelopesForObjectViaLabel($elem/@xlink:href, "AQD_SamplingPoint")
+                for $result in $allResults
+                let $envelope := functx:substring-before-last($result/sparql:binding[@name="s"]/sparql:uri, "/")
+                return
+                    if($envelope = $latestEnvelopesD)
+                    then $envelope
+                    else ()
+            else if(local-name($elem) = "modelUsed")
                 then
-                    query:existsViaNameLocalId($a/@xlink:href, "AQD_SamplingPoint")
-                else
-                    true()
-
-            let $b := $node//aqd:modelUsed
-            let $b-ok :=
-                if (exists($b/@xlink:href))
-                then
-                    query:existsViaNameLocalId($b/@xlink:href, "AQD_Model")
-                else
-                    true()
-
-            let $ok := $a-ok and $b-ok
+                    let $allResults :=
+                        query:getAllEnvelopesForObjectViaLabel($elem/@xlink:href, "AQD_Model")
+                    for $result in $allResults
+                    let $envelope := functx:substring-before-last($result/sparql:binding[@name="s"]/sparql:uri, "/")
+                    return
+                        if($envelope = $latestEnvelopesD1)
+                        then $envelope
+                        else ()
+            else
+                ()
 
         return common:conditionalReportRow(
-            $ok,
+            exists($ok),
             [
-                ("gml:id", data($node/@gml:id)),
-                ("aqd:stationUsed", $a/@xlink:href),
-                ("aqd:modelUsed", $b/@xlink:href)
+                ("gml:id", data($elem/ancestor::aqd:AQD_SourceApportionment/@gml:id)),
+                ("element name", node-name($elem)),
+                ("element value", $elem/@xlink:href)
             ]
         )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
+
 
     (: I31
 
@@ -12349,29 +12391,36 @@ declare function dataflowI:checkReport(
     WARNING
 
     TODO: check implementation
+    TODO: implementation changed, now works but not 100% sure if it's OK
 
     :)
 
     let $I31 := try {
         for $node in $sources
-            let $mu := $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
-            let $model := query:get-used-model-for-attainment($att-url)
-            let $ok :=
-                if (exists($mu))
-                then
-                    $mu/@xlink:href = $model
-                else
-                    true()
-        return common:conditionalReportRow(
-            $ok,
-            [
-                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($mu), $mu/@xlink:href),
-                ("parentExceedanceSituation", $att-url),
-                ("found model", $model)
-            ]
-        )
+            for $modelUsed in $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
+                (:let $model := query:get-used-model-for-attainment($att-url):)
+                let $attainmentsFound := query:getAttainmentForExceedanceArea($att-url,local-name($modelUsed), $modelUsed/@xlink:href)
+                let $attainmentLatest :=
+                    for $attainment in $attainmentsFound
+                        return
+                        if(functx:substring-before-last($attainment, "/") = $latestEnvelopesG)
+                        then 1
+                        else ()
+                let $ok := (
+                    count($attainmentsFound) > 0
+                    and
+                    count($attainmentLatest) > 0
+                )
+                return common:conditionalReportRow(
+                    $ok,
+                    [
+                        ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                        (node-name($modelUsed), $modelUsed/@xlink:href),
+                        ("parentExceedanceSituation", $att-url)
+                        (:("found model", $model):)
+                    ]
+                )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -12403,24 +12452,36 @@ declare function dataflowI:checkReport(
 
     WARNING
     TODO: check implementation
+    TODO: implementation changed, now works but not 100% sure if it's OK
     :)
 
     let $I32 := try {
-
-        for $mu in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:modelUsed
-            let $node := $mu/ancestor-or-self::aqd:AQD_SourceApportionment
+        for $node in $sources
             let $att-url := $node/aqd:parentExceedanceSituation/@xlink:href
-            let $station := query:get-used-station-for-attainment($att-url)
-            let $ok := $mu/@xlink:href = $station
+            for $stationUsed in $node/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:exceedanceArea/aqd:ExceedanceArea/aqd:stationUsed
+                (:let $model := query:get-used-model-for-attainment($att-url):)
+                let $attainmentsFound := query:getAttainmentForExceedanceArea($att-url,local-name($stationUsed), $stationUsed/@xlink:href)
+                let $attainmentLatest :=
+                    for $attainment in $attainmentsFound
+                        return
+                        if(functx:substring-before-last($attainment, "/") = $latestEnvelopesG)
+                        then 1
+                        else ()
+                let $ok := (
+                    count($attainmentsFound) > 0
+                    and
+                    count($attainmentLatest) > 0
+                )
+                return common:conditionalReportRow(
+                    $ok,
+                    [
+                        ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
+                        (node-name($stationUsed), $stationUsed/@xlink:href),
+                        ("parentExceedanceSituation", $att-url)
+                        (:("found model", $model):)
+                    ]
+                )
 
-        return common:conditionalReportRow(
-            $ok,
-            [
-                ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                (node-name($mu), $mu/@xlink:href),
-                ("used station", $station)
-            ]
-        )
     } catch * {
         html:createErrorRow($err:code, $err:description)
     }
@@ -12632,7 +12693,8 @@ declare function dataflowI:checkReport(
 
 
     (: I39
-    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
+    /aqd:AQD_SourceApportionment/aqd:macroExceedanceSituation/aqd:ExceedanceDescription
+    /aqd:deductionAssessmentMethod/aqd:AdjustmentMethod
     may be populated if ./aqd:pollutant xlink:href attribute EQUALs
     http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[1,5,10,6001]  (via
     …/aqd:parentExceedanceSituation)
@@ -12789,41 +12851,61 @@ declare function dataflowI:checkReport(
 
     TODO: check implementation. The implementation has not been check properly
 
-    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not
-    filled in
+    TODO: $samplingPointAssessmentMetadata and $assessmentMetadata are not filled in
     :)
 
     let $I42 := try {
-        for $node in $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
+        let $pollutants := (
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
+        )
+        let $seq :=
+            $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
 
-            let $a := $node/aqd:samplingPointAssessmentMetadata
-            let $a-m := $a/@xlink:href
-            let $a-ok := common:has-content($a-m)
-            (: TODO: this implements the "correctly link in D/D1b :)
-            (: and ($a-m = $samplingPointAssessmentMetadata) :)
-
-            let $b := $node/aqd:modelAssessmentMetadata
-            let $b-m := $b/@xlink:href
-            let $b-ok := common:has-content($b-m)
-            (: TODO: this implements the "correctly link in D/D1b :)
-            (: and ($b-m = $assessmentMetadata) :)
-
-            let $parent := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
-            let $pollutant := query:get-pollutant-for-attainment($parent)
-            let $needed := common:is-polutant-air($pollutant)
-
+        (: modelAssessmentMetadata :)
+        (: samplingPointAssessmentMetadata :)
+        for $node in $seq
+            let $parentExceedanceSituation := $node/ancestor::aqd:AQD_SourceApportionment/aqd:parentExceedanceSituation/@xlink:href
+            let $pollutant := query:get-pollutant-for-attainment($parentExceedanceSituation)
             let $ok :=
-                if (not($needed))
+                if($pollutant = $pollutants)
                 then
-                    true()
+                    let $samplingPointAssessmentMetadata := $node/aqd:samplingPointAssessmentMetadata/@xlink:href
+                    let $ok-spa := if(functx:if-empty($samplingPointAssessmentMetadata, "") != "")
+                        then
+                            query:existsViaNameLocalId(
+                            $samplingPointAssessmentMetadata,
+                            "AQD_SamplingPoint",
+                            $latestEnvelopesD
+                            )
+                        else
+                            true()
+
+                    let $modelAssessmentMetadata := $node/aqd:modelAssessmentMetadata/@xlink:href
+                    let $ok-ma := if(functx:if-empty($modelAssessmentMetadata, "") != "")
+                        then
+                            query:existsViaNameLocalId(
+                            $modelAssessmentMetadata,
+                            "AQD_Model",
+                            $latestEnvelopesD1
+                            )
+                        else
+                            true()
+
+                    return $ok-spa and $ok-ma
                 else
-                    $a-ok or $b-ok
+                    true()
+
         return common:conditionalReportRow(
             $ok,
             [
                 ("gml:id", data($node/ancestor-or-self::aqd:AQD_SourceApportionment/@gml:id)),
-                ("aqd:samplingPointAssessmentMetadata", $a-m),
-                ("aqd:modelAssessmentMetadata", $b-m)
+                ("aqd:pollutant", $pollutant),
+                ("aqd:parentExceedanceSituation", $parentExceedanceSituation),
+                ("aqd:samplingPointAssessmentMetadata", $node/aqd:samplingPointAssessmentMetadata/@xlink:href),
+                ("aqd:modelAssessmentMetadata", $node/aqd:modelAssessmentMetadata/@xlink:href)
             ]
         )
     } catch * {
@@ -13120,6 +13202,11 @@ let $cdrUrl := common:getCdrUrl($countryCode)
 let $latestEnvelopeByYearJ := query:getLatestEnvelope($cdrUrl || "j/", $reportingYear)
 let $ancestor-name := "aqd:AQD_EvaluationScenario"
 
+let $latestEnvelopesH := query:getLatestEnvelopesForObligation("680")
+let $latestEnvelopesI := query:getLatestEnvelopesForObligation("681")
+let $latestEnvelopesJ := query:getLatestEnvelopesForObligation("682")
+let $latestEnvelopesK := query:getLatestEnvelopesForObligation("683")
+
 (: NS
 Check prefix and namespaces of the gml:featureCollection according to expected root elements
 (More information at http://www.eionet.europa.eu/aqportal/datamodel)
@@ -13235,7 +13322,7 @@ let $J2errorLevel :=
         count(
             for $x in $docRoot//aqd:AQD_EvaluationScenario/aqd:inspireId/base:Identifier
                 let $id := $x/base:namespace || "/" || $x/base:localId
-                where query:existsViaNameLocalId($id, 'AQD_EvaluationScenario')
+                where query:existsViaNameLocalId($id, 'AQD_EvaluationScenario', $latestEnvelopesJ)
                 return 1
         ) > 0
         )
@@ -13258,7 +13345,7 @@ let $J3 := try {
     for $main in $docRoot//aqd:AQD_EvaluationScenario
         let $x := $main/aqd:inspireId/base:Identifier
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario'))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_EvaluationScenario', $latestEnvelopesJ))
         return
             common:conditionalReportRow(
             $ok,
@@ -13446,7 +13533,8 @@ let $J11 := try {
         let $ok := query:existsViaNameLocalIdYear(
                 $label,
                 'AQD_Plan',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesH
         )
         return common:conditionalReportRow(
                 $ok,
@@ -13474,7 +13562,8 @@ let $J12 := try {
         let $ok := query:existsViaNameLocalIdYear(
                 $label,
                 'AQD_SourceApportionment',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesI
         )
         return common:conditionalReportRow(
                 $ok,
@@ -13713,25 +13802,26 @@ Check aqd:AQD_EvaluationScenario/aqd:startYear/gml:TimeInstant/gml:timePosition 
 aqd:AQD_SourceApportionment/aqd:referenceYear/gml:TimeInstant/gml:timePosition
 referenced via the xlink of (aqd:AQD_EvaluationScenario/aqd:sourceApportionment)
 
-Check if start year of the evaluation scenario is the same as the source apportionment reference year
+Check if start year of the evaluation scenario is the same as
+the source apportionment reference year
 :)
-
 let $J22 := try {
     for $node in $evaluationScenario
         let $el := $node/aqd:sourceApportionment
         let $year := $node/aqd:startYear/gml:TimeInstant/gml:timePosition
-        let $ok := query:existsViaNameLocalIdYear(
-                $el/@xlink:href,
-                'AQD_SourceApportionment',
-                $year
+        let $ok := query:isTimePositionValid(
+            'AQD_SourceApportionment',
+            $el/@xlink:href,
+            $year,
+            $latestEnvelopesI
         )
         return common:conditionalReportRow(
-                    $ok,
-                    [
-                        ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
-                        (node-name($el), $el/@xlink:href)
-                    ]
-                )
+            $ok,
+            [
+                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
+                (node-name($el), $el/@xlink:href)
+            ]
+        )
 
 } catch * {
     html:createErrorRow($err:code, $err:description)
@@ -13882,7 +13972,8 @@ let $J27 := try{
         let $ok := query:existsViaNameLocalIdYear(
                 $el/@xlink:href,
                 'AQD_Measures',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesK
         )
         return common:conditionalReportRow(
                 $ok,
@@ -14042,7 +14133,8 @@ let $J32 := try{
         let $ok := query:existsViaNameLocalIdYear(
                 $el/@xlink:href,
                 'AQD_Measures',
-                $reportingYear
+                $reportingYear,
+                $latestEnvelopesK
         )
         return common:conditionalReportRow(
                 $ok,
@@ -14157,6 +14249,11 @@ let $zonesNamespaces := distinct-values($docRoot//aqd:AQD_Zone/am:inspireId/base
 
 let $latestEnvelopeByYearK := query:getLatestEnvelope($cdrUrl || "k/", $reportingYear)
 
+let $latestEnvelopesG := query:getLatestEnvelopesForObligation("679")
+let $latestEnvelopesI := query:getLatestEnvelopesForObligation("681")
+let $latestEnvelopesJ := query:getLatestEnvelopesForObligation("682")
+let $latestEnvelopesK := query:getLatestEnvelopesForObligation("683")
+
 let $namespaces := distinct-values($docRoot//base:namespace)
 let $ancestor-name := "aqd:AQD_Measures"
 
@@ -14255,7 +14352,7 @@ let $K02errorLevel :=
             for $x in $docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier
                 let $id := $x/base:namespace || "/" || $x/base:localId
                 (:where ($allMeasures = $id):)
-                where query:existsViaNameLocalId($id, 'AQD_Measures')
+                where query:existsViaNameLocalId($id, 'AQD_Measures', $latestEnvelopesK)
                 return 1
         ) > 0
         )
@@ -14265,13 +14362,14 @@ let $K02errorLevel :=
         $errors:INFO
 
 (: K03 Compile & feedback upon the total number of updated Measures included in the delivery.
-ERROR will be returned if XML is an update and ALL localId (100%) are different to previous delivery (for the same YEAR). :)
+ERROR will be returned if XML is an update and ALL localId (100%)
+are different to previous delivery (for the same YEAR). :)
 
 let $K03table := try {
     for $main in $docRoot//aqd:AQD_Measures
         let $x := $main/aqd:inspireId/base:Identifier
         let $inspireId := concat(data($x/base:namespace), "/", data($x/base:localId))
-        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures'))
+        let $ok := not(query:existsViaNameLocalId($inspireId, 'AQD_Measures', $latestEnvelopesK))
         return
             common:conditionalReportRow(
             $ok,
@@ -14292,7 +14390,10 @@ let $K03errorLevel :=
         $errors:INFO
 
 (: K04 Compile & feedback a list of the unique identifier information for all Measures records included in the delivery.
-Feedback report shall include the gml:id attribute, ./aqd:inspireId, aqd:AQD_SourceApportionment (via ./exceedanceAffected), aqd:AQD_Scenario (via aqd:usedForScenario) :)
+Feedback report shall include the gml:id attribute,
+./aqd:inspireId,
+aqd:AQD_SourceApportionment (via ./exceedanceAffected),
+aqd:AQD_Scenario (via aqd:usedForScenario) :)
 
 let $K04table := try {
     let $gmlIds := $docRoot//aqd:AQD_Measures/lower-case(normalize-space(@gml:id))
@@ -14350,14 +14451,6 @@ let $K07 := try {
     let $errors := array {
 
         for $name in $checks
-        (: TODO: would be nice to have something like this, but we have no value for error row
-            return
-                if has-duplicate-children-values($main, $name)
-                then
-                    [$name, $name]
-                else
-                    ()
-        :)
             let $name := lower-case(normalize-space($name))
             let $values := $main//(*[lower-case(normalize-space(name())) = $name] |
                                    @*[lower-case(normalize-space(name())) = $name])
@@ -14376,31 +14469,6 @@ let $K07 := try {
         $errors
     )
 
-    (:
-    let $gmlIds := $main//lower-case(normalize-space(@gml:id))
-    let $inspireIds := $main//lower-case(normalize-space(aqd:inspireId))
-    let $efInspireIds := $main//lower-case(normalize-space(ef:inspireId))
-    for $el in $main
-        let $id := $el/@gml:id
-        let $inspireId := $el/aqd:inspireId
-        let $efInspireId := $el/ef:inspireId
-
-        let $ok := (
-            c:has-one($gmlIds, $id)
-            and
-            c:has-one($inspireIds, $inspireId)
-            and
-            c:has-one($efInspireIds, $efInspireId)
-        )
-        return c:conditionalReportRow(
-            $ok,
-            [
-                (name($id), data($id)),
-                (node-name($inspireId), data($inspireId)),
-                (node-name($efInspireId), data($efInspireId))
-            ]
-        )
-    :)
 } catch * {
     html:createErrorRow($err:code, $err:description)
 }
@@ -14430,7 +14498,8 @@ let $K08invalid:= try {
     html:createErrorRow($err:code, $err:description)
 }
 
-(: K09 ./aqd:inspireId/base:Identifier/base:namespace List base:namespace and count the number of base:localId assigned to each base:namespace.  :)
+(: K09 ./aqd:inspireId/base:Identifier/base:namespace List base:namespace
+and count the number of base:localId assigned to each base:namespace.  :)
 
 let $K09table := try {
     for $namespace in distinct-values($docRoot//aqd:AQD_Measures/aqd:inspireId/base:Identifier/base:namespace)
@@ -14447,7 +14516,8 @@ let $K09table := try {
     html:createErrorRow($err:code, $err:description)
 }
 
-(: K10 Check that namespace is registered in vocabulary (http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
+(: K10 Check that namespace is registered in vocabulary
+(http://dd.eionet.europa.eu/vocabulary/aq/namespace/view) :)
 
 let $K10invalid := try {
     let $vocDoc := doc($vocabulary:NAMESPACE || "rdf")
@@ -14479,7 +14549,7 @@ let $K11 := try{
     let $main := $docRoot//aqd:AQD_Measures/aqd:exceedanceAffected
     for $el in $main
         let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment')
+        let $ok := query:existsViaNameLocalId($label, 'AQD_SourceApportionment', $latestEnvelopesI)
 
         return common:conditionalReportRow(
             $ok,
@@ -14504,7 +14574,7 @@ let $K12 := try {
     let $main := $docRoot//aqd:AQD_Measures/aqd:usedForScenario
     for $el in $main
         let $label := data($el/@xlink:href)
-        let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario')
+        let $ok := query:existsViaNameLocalId($label, 'AQD_EvaluationScenario', $latestEnvelopesJ)
 
         return common:conditionalReportRow(
             $ok,
@@ -14747,7 +14817,7 @@ let $K26 := try {
         if (not(common:isInVocabulary($uri, $vocabulary:MEASUREIMPLEMENTATIONSTATUS_VOCABULARY)))
         then
             <tr>
-                ("gml:id", $el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id),
+                <td title="gml:id">{data($el/ancestor-or-self::*[name() = $ancestor-name]/@gml:id)}</td>
                 <td title="{node-name($el)}"> not conform to vocabulary</td>
             </tr>
         else
@@ -16046,7 +16116,7 @@ return
 declare function dd:getValid($url as xs:string) {
     doc($url || "rdf")//skos:Concept[adms:status/@rdf:resource = $dd:VALIDRESOURCE]
 };
-declare function dd:getNameFromPollutantCode($code as xs:string) as xs:string? {
+declare function dd:getNameFromPollutantCode($code as xs:string?) as xs:string? {
     let $code := tokenize($code, "/")[last()]
     let $codes := doc(concat($vocabulary:POLLUTANT_VOCABULARY, "/rdf"))    
     let $num := concat($vocabulary:POLLUTANT_VOCABULARY, $code)
@@ -16253,9 +16323,9 @@ declare function envelope:checkFileReportingHeader($envelope as element(envelope
 };
 
 declare function envelope:getObligationMinMaxYear($envelope as element(envelope)) as element(year) {
-    let $part1_deadline := xs:date("2017-02-15")
-    let $part3_deadline := xs:date("2017-05-31")
-    let $deadline := 2017
+    let $deadline := 2018
+    let $part1_deadline := xs:date(concat($deadline, "-01-31"))
+    let $part3_deadline := xs:date(concat($deadline, "-03-31"))
     let $id := substring-after($envelope/obligation, $vocabulary:OBLIGATIONS)
     let $part1 := ("670", "671", "672", "673", "674", "675", "679", "742")
     let $part2 := ("680", "681", "682", "683")
@@ -19206,59 +19276,61 @@ declare function query:getModel($url as xs:string) as xs:string {
 (: TODO: look at this for inspiration on how to find the AQD_Attainment for a AQD_SourceApportionment :)
 declare function query:existsViaNameLocalId(
         $label as xs:string,
-        $name as xs:string
+        $name as xs:string,
+        $latestEnvelopes as xs:string*
 ) as xs:boolean {
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT count(?label) as ?cnt
+SELECT ?subject
 WHERE {
-    ?scenariosXMLURI a aq:" || $name ||";
+    ?subject a aq:" || $name ||";
     aq:inspireId ?inspireId.
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
     ?inspireId aq:localId ?localId
-    FILTER (concat(?name,'/',?localId) = '" || $label || "')
+    FILTER (?label = '" || $label || "')
 }"
 
-    let $res := sparqlx:run($query)
-    let $count := data($res//sparql:binding[@name='cnt']/sparql:literal)
-    return
-        if ($count > 0)
-            then
-                true()
-            else
-                false()
+    let $results := sparqlx:run($query)
+
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
+
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
 };
 
 (: Checks if X references an existing Y via namespace/localid and reporting year :)
 declare function query:existsViaNameLocalIdYear(
-        $label as xs:string,
-        $type as xs:string,
-        $year as xs:string
+    $label as xs:string,
+    $type as xs:string,
+    $year as xs:string,
+    $latestEnvelopes as xs:string*
 ) as xs:boolean {
-
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT count(?label) as ?cnt
+SELECT ?subject
 WHERE {
-    ?scenariosXMLURI a aq:" || $type ||";
+    ?subject a aq:" || $type ||";
     aq:inspireId ?inspireId.
     ?inspireId rdfs:label ?label.
     ?inspireId aq:namespace ?name.
     ?inspireId aq:localId ?localId
-    FILTER (concat(?name,'/',?localId) = '" || $label || "')
-    FILTER (CONTAINS(str(?scenariosXMLURI), '" || $year || "'))
+    FILTER (?label = '" || $label || "')
+    FILTER (CONTAINS(str(?subject), '" || $year || "'))
 }
 "
+    let $results := sparqlx:run($query)
 
-(: TODO: is correct to use scenariosXMLURI  ? :)
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
 
-    let $count := data(sparqlx:run($query)//sparql:binding[@name='cnt']/sparql:literal)
-    return $count > 0
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
 };
 
 
@@ -19275,6 +19347,28 @@ declare function query:getAttainment($url as xs:string) as xs:string {
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?attainment), '" || $url || "'))
    }"
+};
+
+(: H :)
+(: H24 :)
+declare function query:getPollutants(
+        $type as xs:string,
+        $label as xs:string
+) as xs:string* {
+    let $query := "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+       SELECT distinct ?pollutant
+       WHERE {
+?scenariosXMLURI a aq:" || $type ||";
+aq:inspireId ?inspireId ;
+aq:pollutant ?pollutant .
+?inspireId rdfs:label ?label .
+?inspireId aq:namespace ?name .
+?inspireId aq:localId ?localId .
+FILTER (?label = '" || $label || "')
+   }"
+    let $res := sparqlx:run($query)
+    return data($res//sparql:binding[@name='pollutant']/sparql:uri)
 };
 
 (:~ Creates a SPARQL query string to query all objects of given type in a URL
@@ -19301,6 +19395,26 @@ declare function query:sparql-objects-in-subject(
       FILTER (CONTAINS(str(?s), '" || $url || "'))
    }"
 };
+
+declare function query:getAllEnvelopesForObjectViaLabel(
+        $label as xs:string,
+        $type as xs:string
+) as element()* {
+    let $query :="
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
+    PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+    SELECT ?s
+    WHERE {
+        ?s a aqd:" || $type || ";
+        aqd:inspireId ?inspireId .
+        ?inspireId rdfs:label ?label .
+        FILTER(?label = '" || $label || "')
+    }"
+    let $res := sparqlx:run($query)
+    return $res
+} ;
 
 (:~ Creates a SPARQL query to return all inspireIds for given aqd:namespace
 
@@ -19341,6 +19455,40 @@ declare function query:getEvaluationScenarios($url as xs:string) as xs:string {
       ?inspireId rdfs:label ?inspireLabel .
       FILTER (CONTAINS(str(?EvaluationScenario), '" || $url || "'))
    }"
+};
+
+(: J22 :)
+declare function query:isTimePositionValid(
+    $object as xs:string,
+    $label as xs:string,
+    $timePosition as xs:integer,
+    $latestEnvelopes as xs:string*
+) as xs:boolean {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?subject
+WHERE {
+?subject a aq:" || $object || ";
+    aq:inspireId ?inspireId;
+    aq:referenceYear ?referenceYear.
+?referenceYear aq:timePosition ?timePosition.
+?inspireId rdfs:label ?label.
+?inspireId aq:namespace ?name.
+?inspireId aq:localId ?localId
+FILTER (?label = '" || $label || "')
+FILTER(?timePosition = " || $timePosition || ")
+}
+"
+    let $results := sparqlx:run($query)
+
+    let $envelopes :=
+        for $result in $results
+        return functx:substring-before-last($result/sparql:binding[@name="subject"]/sparql:uri, "/")
+
+    return common:isLatestEnvelope($envelopes, $latestEnvelopes)
+
 };
 
 (: K :)
@@ -19591,33 +19739,22 @@ declare function query:getAllAttainmentIds2($namespaces as xs:string*) as xs:str
 };
 
 (:~ Returns the pollutants for an attainment
-TODO: rewrite query, I think it runs slow
 :)
 declare function query:get-pollutant-for-attainment(
-    $subj-url as xs:string
-) as xs:string {
+    $url as xs:string?
+) as xs:string? {
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
-PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT distinct
-
-  ?pollutant
-
+SELECT distinct(?pollutant)
 WHERE {
- ?s ?p ?o .
-
- aqd:inspireId ?inspireId .
- ?inspireId rdfs:label ?inspireLabel .
- optional { ?s aqd:declarationFor ?uf}
- optional { ?s aqd:pollutant ?pollutant}
-
- filter(?p = <http://www.w3.org/1999/02/22-rdf-syntax-ns#type>).
- filter(?o = aqd:AQD_Attainment) .
- filter(contains(str(?uf), '" || $subj-url || "'))
-
-} LIMIT 50
+?sourceApportionment a aq:AQD_Attainment;
+    aq:pollutant ?pollutant;
+    aq:inspireId ?inspireId.
+?inspireId rdfs:label ?label
+FILTER(?label = '" || $url || "')
+}
 "
   let $res := sparqlx:run($query)
   return data($res//sparql:binding[@name='pollutant']/sparql:uri)
@@ -19999,10 +20136,74 @@ WHERE {
 }
 "
     let $res := sparqlx:run($query)
-    return data($res//sparql:binding[@name='model_used']/sparql:literal)
+    return data($res//sparql:binding[@name='model_used']/sparql:uri)
 
 (: http://environment.data.gov.uk/air-quality/so/GB_Attainment_4934 :)
 };
+declare function query:getAttainmentForExceedanceArea(
+    $uri as xs:string,
+    $objectName as xs:string,
+    $objectlUsed as xs:string
+) as item()* {
+    let $query := "
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX aq: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
+
+SELECT ?attainment
+WHERE {
+
+?sourceApportionment a aq:AQD_SourceApportionment;
+    aq:parentExceedanceSituation ?parentExceedanceSituation;
+    aq:macroExceedanceSituation ?macroExceedanceSituation.
+?macroExceedanceSituation aq:exceedanceArea ?exceedanceArea.
+?exceedanceArea aq:" || $objectName || " ?modelUsed.
+
+?attainment a aq:AQD_Attainment;
+    aq:exceedanceDescriptionFinal ?exceedanceDescriptionFinal;
+    aq:inspireId ?inspireId.
+?inspireId rdfs:label ?label.
+?exceedanceDescriptionFinal aq:exceedanceArea ?exceedanceAreaAttainment.
+?exceedanceAreaAttainment aq:" || $objectName || " ?modelUsedAttainment.
+
+FILTER(regex(?parentExceedanceSituation, ?label))
+FILTER(?modelUsedAttainment = ?modelUsed)
+FILTER(regex(?modelUsedAttainment, '" || $objectlUsed || "'))
+FILTER(?label = '" || $uri || "')
+}
+"
+    return data(sparqlx:run($query)//sparql:binding[@name='attainment']/sparql:uri)
+};
+declare function query:getLatestEnvelopesForObligation(
+    $obligation as xs:string
+) as item()* {
+    let $query := "
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rod: <http://rod.eionet.europa.eu/schema.rdf#>
+PREFIX obligation: <http://rod.eionet.europa.eu/obligations/>
+
+SELECT DISTINCT
+?envelope
+WHERE {{
+  SELECT DISTINCT
+    ?Country
+    YEAR(?startOfPeriod) as ?reportingYear
+    max(?released) as ?released
+  WHERE {
+    ?envelope rod:released ?released .
+    ?envelope rod:startOfPeriod ?startOfPeriod .
+    ?envelope rod:obligation ?obligation .
+    ?envelope rod:locality ?locality .
+    FILTER (?obligation = obligation:" || $obligation || ")
+    ?locality rod:localityName ?Country .
+  } GROUP BY ?Country YEAR(?startOfPeriod)
+}
+?envelope rod:released ?released .
+?envelope rdf:type rod:Delivery .
+}
+"
+    return data(sparqlx:run($query)//sparql:binding[@name='envelope']/sparql:uri)
+};
+
 
 (:~ Returns the URIs for the aqd:stationUsed used for the given Attainment
 
@@ -20046,33 +20247,29 @@ WHERE {
     aqd:exceedanceArea/aqd:ExceedanceArea/aqd:areaClassification
 :)
 declare function query:get-area-classifications-for-attainment(
-    $uri as xs:string
-) as item()* {
+    $uri as xs:string?
+) as element()* {
 
     let $query := "
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX cr: <http://cr.eionet.europa.eu/ontologies/contreg.rdf#>
 PREFIX aqd: <http://rdfdata.eionet.europa.eu/airquality/ontology/>
 
-SELECT DISTINCT ?area_classification
+SELECT DISTINCT ?aqd_attainment, ?areaClassification
 WHERE {
     ?aqd_attainment a aqd:AQD_Attainment .
-
-    ?aqd_attainment aqd:declarationFor ?attainment .
-    ?aqd_attainment aqd:exceedanceDescriptionFinal ?desc_final .
-    ?desc_final aqd:exceedanceArea ?exceedance_area .
-    ?excedance_area aqd:areaClassification ?area_classification .
-
-    # optional, just for double-checking
-
-    ?source_apportionment aqd:parentExceedanceSituation ?attainment .
-
-    filter(contains(str(?attainment), '" || $uri || "'))
+    ?aqd_attainment aqd:inspireId ?inspireId.
+    ?aqd_attainment aqd:exceedanceDescriptionFinal ?exceedanceDescriptionFinal .
+    ?inspireId rdfs:label ?label.
+    ?exceedanceDescriptionFinal aqd:exceedanceArea ?exceedanceArea .
+    ?exceedanceArea aqd:areaClassification ?areaClassification .
+    FILTER(?label = '" || $uri || "')
 }
 "
     let $res := sparqlx:run($query)
-    return data($res//sparql:binding[@name='area_classification']/sparql:uri)
+    return $res
 };
+
 
 (:~
 : User: George Sofianos
