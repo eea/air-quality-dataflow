@@ -1696,8 +1696,7 @@ declare function dataflowI:checkReport(
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1",
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5",
             "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10",
-            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001",
-            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8"
+            "http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001"
         )
         let $seq :=
             $sources/aqd:macroExceedanceSituation/aqd:ExceedanceDescription/aqd:deductionAssessmentMethod/aqd:AdjustmentMethod/aqd:assessmentMethod/aqd:AssessmentMethods
